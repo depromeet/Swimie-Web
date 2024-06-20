@@ -1,0 +1,27 @@
+{
+  "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off", // import React from 'react' 안해도 되게 만들어줌.
+    "simple-import-sort/imports": "error", // import 구문 순서 엉망이면 에러 냄.
+    "simple-import-sort/exports": "error", // export 구문도 순서 엉망이면 에러 냄.
+    "@typescript-eslint/no-unused-vars": "error", // 안 쓰는 변수 그대로 두면 에러 냄.
+    "@typescript-eslint/no-explicit-any": "error" // any 쓰면 에러 냄.
+  }
+}
