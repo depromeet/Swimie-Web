@@ -8,6 +8,8 @@ const styles = css({
   color: 'green.50',
 })
 
+var b = 1
+
 export default function Home() {
   return <main className={styles}>2팀 웹 파이팅~~</main>
 }
