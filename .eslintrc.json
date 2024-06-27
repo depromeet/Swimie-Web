@@ -23,5 +23,6 @@
     "simple-import-sort/exports": "error", // export 구문도 순서 엉망이면 에러 냄.
     "@typescript-eslint/no-unused-vars": "error", // 안 쓰는 변수 그대로 두면 에러 냄.
     "@typescript-eslint/no-explicit-any": "error" // any 쓰면 에러 냄.
-  }
+  },
+  "ignorePatterns": ["**/*.cjs", "commitlint.config.js"]
 }
