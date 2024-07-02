@@ -1,0 +1,16 @@
+name: 'Auto Assignees'
+on:
+  pull_request:
+    types: [opened, ready_for_review, edited]
+
+jobs:
+  register-assignees:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
