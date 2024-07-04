@@ -1,11 +1,11 @@
-import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
+import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
     w: 'full',
     h: 'full',
   },
-})
+});
 
 export default defineConfig({
   // Whether to use css reset
@@ -34,4 +34,4 @@ export default defineConfig({
 
   // The output directory for your css system
   outdir: 'styled-system',
-})
+});
