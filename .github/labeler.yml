@@ -10,40 +10,40 @@ labels:
   # Chores
   'chore':
     include:
-      - '\bchore\b'
+      - '^chore\b'
   # Continuos Integration
   'ci':
     include:
-      - '\bci\b'
+      - '^ci\b'
   # Modify docs
   'docs':
     include:
-      - '\bdocs\b'
+      - '^docs\b'
   # Add feature
   'feat':
     include:
-      - '\bfeat\b'
+      - '^feat\b'
   # Fix bug
   'fix':
     include:
-      - '\bfix\b'
+      - '^fix\b'
   # Refactor code
   'refactor':
     include:
-      - '\brefactor\b'
+      - '^refactor\b'
   # Revert commit
   'revert':
     include:
-      - '\brevert\b'
+      - '^revert\b'
   # Style code (code formatting)
   'style':
     include:
-      - '\bstyle\b'
+      - '^style\b'
   # Modifying style code
   'design':
     include:
-      - '\bdesign\b'
+      - '^design\b'
   # Add test code
   'test':
     include:
-      - '\btest\b'
+      - '^test\b'
