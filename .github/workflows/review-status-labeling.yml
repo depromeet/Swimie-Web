@@ -1,0 +1,95 @@
+name: 'Review Status Labeling'
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**'
+    types: [opened, edited]
+  pull_request_review:
+    types: [submitted, edited]
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Count Approvals
+        id: count_approvals
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.ACTIONS_TOKEN }}
+          script: |
+            const reviewsResponse = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            const approvedReviews = reviewsResponse.data.filter(review => review.state === 'APPROVED');
+            console.log(approvedReviews);
+
+            return approvedReviews.length;
+
+      - name: Get Labels
+        id: get_labels
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.ACTIONS_TOKEN }}
+          script: |
+            const labelsResponse = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            console.log(labelsResponse);
+
+            return labelsResponse.data.labels.map(label => label.name);
+
+      - name: Apply Labels
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.ACTIONS_TOKEN }}
+          script: |
+            const labelNameList = ${{ steps.get_labels.outputs.result }};
+
+            if (${{ steps.count_approvals.outputs.result }} === '0') {
+              if (labelNameList.includes('Approved 🆗')) {
+                await github.rest.issues.removeLabel({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'Approved 🆗'
+                });
+              }
+
+              if (labelNameList.includes('Review Plz🙏') === false) {
+                await github.rest.issues.addLabels({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['Review Plz🙏']
+                });
+              }
+            } else {
+              if (labelNameList.includes('Approved 🆗')) {
+                await github.rest.issues.removeLabel({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'Review Plz🙏'
+                });
+              }
+
+              if (labelNameList.includes('Approved 🆗') === false) {
+                await github.rest.issues.addLabels({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['Approved 🆗']
+                });
+              }
+            }
