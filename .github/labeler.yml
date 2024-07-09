@@ -6,44 +6,44 @@ labels:
   # Build files
   'build':
     include:
-      - '\bbuild\b'
+      - '\bbuild:\b'
   # Chores
   'chore':
     include:
-      - '\bchore\b'
+      - '\bchore:\b'
   # Continuos Integration
   'ci':
     include:
-      - '\bci\b'
+      - '\bci:\b'
   # Modify docs
   'docs':
     include:
-      - '\bdocs\b'
+      - '\bdocs:\b'
   # Add feature
   'feat':
     include:
-      - '\bfeat\b'
+      - '\bfeat:\b'
   # Fix bug
   'fix':
     include:
-      - '\bfix\b'
+      - '\bfix:\b'
   # Refactor code
   'refactor':
     include:
-      - '\brefactor\b'
+      - '\brefactor:\b'
   # Revert commit
   'revert':
     include:
-      - '\brevert\b'
+      - '\brevert:\b'
   # Style code (code formatting)
   'style':
     include:
-      - '\bstyle\b'
+      - '\bstyle:\b'
   # Modifying style code
   'design':
     include:
-      - '\bdesign\b'
+      - '\bdesign:\b'
   # Add test code
   'test':
     include:
-      - '\btest\b'
+      - '\btest:\b'
