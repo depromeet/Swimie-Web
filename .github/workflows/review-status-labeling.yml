@@ -47,7 +47,7 @@ jobs:
 
             console.log(labelsResponse);
 
-            return labelsResponse.data.labels.map(label => label.name);
+            return labelsResponse.data.map(label => label.name);
 
       - name: Apply Labels
         uses: actions/github-script@v6
@@ -66,7 +66,7 @@ jobs:
                 });
               }
 
-              if (labelNameList.includes('Review Plz🙏') === false) {
+              if (labelNameList.length === 0 || labelNameList.includes('Review Plz🙏') === false) {
                 await github.rest.issues.addLabels({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
