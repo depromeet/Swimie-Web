@@ -60,12 +60,14 @@ jobs:
                 });
               }
 
-              await github.rest.issues.addLabels({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                labels: ['Review Plz🙏']
-              });
+              if (labelNameList.includes('Review Plz🙏') === false) {
+                await github.rest.issues.addLabels({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['Review Plz🙏']
+                });
+              }
             } else {
               if (labelNameList.includes('Approved 🆗')) {
                 await github.rest.issues.removeLabel({
@@ -76,10 +78,12 @@ jobs:
                 });
               }
 
-              await github.rest.issues.addLabels({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                labels: ['Approved 🆗']
-              });
+              if (labelNameList.includes('Approved 🆗') === false) {
+                await github.rest.issues.addLabels({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ['Approved 🆗']
+                });
+              }
             }
