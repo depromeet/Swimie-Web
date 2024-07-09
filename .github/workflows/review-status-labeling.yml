@@ -58,6 +58,7 @@ jobs:
 
             if (${{ steps.count_approvals.outputs.result }} === '0') {
               if (labelNameList.includes('Approved 🆗') === true) {
+                console.log(1);
                 await github.rest.issues.removeLabel({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
@@ -67,6 +68,7 @@ jobs:
               }
 
               if (labelNameList.length === 0 || labelNameList.includes('Review Plz🙏') === false) {
+                console.log(2);
                 await github.rest.issues.addLabels({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
@@ -76,6 +78,7 @@ jobs:
               }
             } else {
               if (labelNameList.includes('Approved 🆗') === true) {
+                console.log(3);
                 await github.rest.issues.removeLabel({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
@@ -85,6 +88,7 @@ jobs:
               }
 
               if (labelNameList.includes('Approved 🆗') === false) {
+                console.log(4);
                 await github.rest.issues.addLabels({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
