@@ -1,15 +1,11 @@
 name: 'Auto Labeling'
 on:
   pull_request:
-    types: [opened, edited]
+    types: [opened, synchronize]
 
 jobs:
   labeler:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
       - name: Check Labels
         id: labeler
