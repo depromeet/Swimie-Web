@@ -5,34 +5,34 @@ enable:
 labels:
   'build':
     include:
-      - '\bbuild:\b'
+      - '\bbuild\b'
   'chore':
     include:
-      - '\bchore:\b'
+      - '\bchore\b'
   'ci':
     include:
-      - '\bci:\b'
+      - '\bci\b'
   'docs':
     include:
-      - '\bdocs:\b'
+      - '\bdocs\b'
   'feat':
     include:
-      - '\bfeat:\b'
+      - '\bfeat\b'
   'fix':
     include:
-      - '\bfix:\b'
+      - '\bfix\b'
   'refactor':
     include:
-      - '\brefactor:\b'
+      - '\brefactor\b'
   'revert':
     include:
-      - '\brevert:\b'
+      - '\brevert\b'
   'style':
     include:
-      - '\bstyle:\b'
+      - '\bstyle\b'
   'design':
     include:
-      - '\bdesign:\b'
+      - '\bdesign\b'
   'test':
     include:
-      - '\btest:\b'
+      - '\btest\b'
