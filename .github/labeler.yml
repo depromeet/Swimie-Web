@@ -35,4 +35,4 @@ labels:
       - '\bdesign\b'
   'test':
     include:
-      - '^test:\b'
+      - '\btest:\b'
