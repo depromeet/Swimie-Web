@@ -41,7 +41,7 @@ jobs:
               issue_number: context.issue.number,
             });
 
-            return labelsReponse.data.labels.map(label => label.name);
+            return labelsResponse.data.labels.map(label => label.name);
 
       - name: Apply Labels
         uses: actions/github-script@v6
