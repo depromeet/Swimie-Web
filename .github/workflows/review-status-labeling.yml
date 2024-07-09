@@ -29,7 +29,6 @@ jobs:
             });
 
             const approvedReviews = reviewsResponse.data.filter(review => review.state === 'APPROVED');
-            console.log(approvedReviews);
 
             return approvedReviews.length;
 
@@ -45,8 +44,6 @@ jobs:
               issue_number: context.issue.number,
             });
 
-            console.log(labelsResponse);
-
             return labelsResponse.data.map(label => label.name);
 
       - name: Apply Labels
@@ -56,8 +53,11 @@ jobs:
           script: |
             const labelNameList = ${{ steps.get_labels.outputs.result }};
 
+            console.log(labelNameList);
+            console.log(${{ steps.count_approvals.outputs.result }});
+
             if (${{ steps.count_approvals.outputs.result }} === '0') {
-              if (labelNameList.includes('Approved 🆗')) {
+              if (labelNameList.includes('Approved 🆗') === true) {
                 await github.rest.issues.removeLabel({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
@@ -75,7 +75,7 @@ jobs:
                 });
               }
             } else {
-              if (labelNameList.includes('Approved 🆗')) {
+              if (labelNameList.includes('Approved 🆗') === true) {
                 await github.rest.issues.removeLabel({
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
