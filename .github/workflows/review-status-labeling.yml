@@ -77,7 +77,7 @@ jobs:
                 });
               }
             } else {
-              if (labelNameList.includes('Approved 🆗') === true) {
+              if (labelNameList.includes('Review Plz🙏') === true) {
                 console.log(3);
                 await github.rest.issues.removeLabel({
                   issue_number: context.issue.number,
