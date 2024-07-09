@@ -56,7 +56,7 @@ jobs:
             console.log(labelNameList);
             console.log(${{ steps.count_approvals.outputs.result }});
 
-            if (${{ steps.count_approvals.outputs.result }} === '0') {
+            if (${{ steps.count_approvals.outputs.result }} === 0) {
               if (labelNameList.includes('Approved 🆗') === true) {
                 console.log(1);
                 await github.rest.issues.removeLabel({
