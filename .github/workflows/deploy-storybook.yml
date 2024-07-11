@@ -1,0 +1,49 @@
+name: 'Deploy Storybook with Chromatic'
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.stories.tsx'
+  push:
+    branches: [main]
+    paths:
+      - '**.stories.tsx'
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}-storybook
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: Publish to chromatic
+        id: chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          onlyChanged: true
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        with:
+          message: '🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}'
