@@ -1,6 +1,6 @@
 'use client';
 
-import { TextInput } from '@/components/molecules';
+import { SelectInput } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 interface RecordFormProps {
@@ -8,21 +8,38 @@ interface RecordFormProps {
 }
 
 export function RecordForm({ styles }: RecordFormProps) {
-  const abc = (text: string) => {
-    console.log(text);
-  };
   return (
-    <form className={css(recordFormStyles, styles)}>
-      <TextInput
-        label="수영 거리"
+    <form className={css(styles)}>
+      <SelectInput
+        value=""
+        isRequired
+        label="수영 날짜"
+        wrapperStyles={css.raw({ marginBottom: '24px' })}
+      />
+      <SelectInput
+        value=""
+        isRequired
+        label="수영 시간"
+        wrapperStyles={css.raw({ marginBottom: '24px' })}
+      />
+      <SelectInput
+        value=""
+        placeholder="(선택)"
+        label="수영장"
+        wrapperStyles={css.raw({ marginBottom: '24px' })}
+      />
+      <SelectInput
+        value=""
+        label="레일 길이"
+        wrapperStyles={css.raw({ marginBottom: '24px' })}
+      />
+      <SelectInput
+        value=""
         placeholder="거리입력(선택)"
-        maxLength={10}
-        onChange={abc}
+        label="수영 거리"
+        hasDownArrow={false}
+        wrapperStyles={css.raw({ marginBottom: '24px' })}
       />
     </form>
   );
 }
-
-const recordFormStyles = css.raw({
-  padding: '0px 20px',
-});

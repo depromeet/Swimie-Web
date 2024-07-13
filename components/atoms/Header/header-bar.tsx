@@ -23,10 +23,9 @@ const headerBarStyles = css.raw({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '9px 0px',
 });
 
 const arrowIconStyles = css.raw({
   position: 'absolute',
-  left: '16px',
+  left: '3px',
 });
