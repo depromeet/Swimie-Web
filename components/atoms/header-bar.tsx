@@ -5,7 +5,7 @@ import { css } from '@/styled-system/css';
 
 interface HeaderBarProps {
   styles?: object;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export function HeaderBar({ styles, children }: HeaderBarProps) {
