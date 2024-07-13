@@ -7,7 +7,7 @@ interface RecordFormProps {
   styles?: object;
 }
 
-export default function RecordForm({ styles }: RecordFormProps) {
+export function RecordForm({ styles }: RecordFormProps) {
   const abc = (text: string) => {
     console.log(text);
   };

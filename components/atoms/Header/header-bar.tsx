@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
-import { NavigateBackArrow } from '@/components/atoms';
 import { css } from '@/styled-system/css';
+
+import { NavigateBackArrow } from './navigate-back-arrow';
 
 interface HeaderBarProps {
   styles?: object;

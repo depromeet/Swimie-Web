@@ -1,5 +1,5 @@
 import { HeaderBar } from '@/components/atoms';
-import RecordForm from '@/features/record/organisms/record-form';
+import { RecordForm } from '@/features';
 import { css } from '@/styled-system/css';
 
 export default function RecordPage() {

@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { LeftArrow } from '@/assets';
 import { css } from '@/styled-system/css';
+
+import { LeftArrow } from '../Icons';
 
 interface NavigateBackArrowProps {
   styles?: object;

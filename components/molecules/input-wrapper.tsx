@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { InputProps } from '../atoms/input/type';
+import { InputProps } from '@/components/atoms';
 
 interface InputWrapperProps extends Pick<InputProps, 'label'> {
   children: ReactNode;
