@@ -1,11 +1,11 @@
-import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
+import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
     w: 'full',
     h: 'full',
   },
-})
+});
 
 export default defineConfig({
   // Whether to use css reset
@@ -14,7 +14,11 @@ export default defineConfig({
   preflight: true,
 
   // Where to look for your css declarations
-  include: ['./app/**/*.{js,jsx,ts,tsx}', './pages/**/*.{js,jsx,ts,tsx}'],
+  include: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+    './features/**/*.{js,jsx,ts,tsx}',
+  ],
 
   // Files to exclude
   exclude: [],
@@ -34,4 +38,4 @@ export default defineConfig({
 
   // The output directory for your css system
   outdir: 'styled-system',
-})
+});

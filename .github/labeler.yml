@@ -1,0 +1,38 @@
+enable:
+  issues: false
+  prs: true
+
+labels:
+  'build':
+    include:
+      - '\bbuild\b'
+  'chore':
+    include:
+      - '\bchore\b'
+  'ci':
+    include:
+      - '\bci\b'
+  'docs':
+    include:
+      - '\bdocs\b'
+  'feat':
+    include:
+      - '\bfeat\b'
+  'fix':
+    include:
+      - '\bfix\b'
+  'refactor':
+    include:
+      - '\brefactor\b'
+  'revert':
+    include:
+      - '\brevert\b'
+  'style':
+    include:
+      - '\bstyle\b'
+  'design':
+    include:
+      - '\bdesign\b'
+  'test':
+    include:
+      - '\btest\b'
