@@ -1,9 +1,13 @@
 'use client';
 
-import { DownArrow, InputProps, InputWrapper } from '@/components/atoms';
+import {
+  DownArrow,
+  TextFieldProps,
+  TextFieldWrapper,
+} from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
-interface OptionsInputProps extends Omit<InputProps, 'maxLength'> {
+interface OptionsInputProps extends Omit<TextFieldProps, 'maxLength'> {
   value: string;
   label: string;
   wrapperStyles?: object;
@@ -11,7 +15,7 @@ interface OptionsInputProps extends Omit<InputProps, 'maxLength'> {
   onClick?: () => void;
 }
 
-export function SelectInput({
+export function SelectTextField({
   isRequired = false,
   value = '',
   placeholder,
@@ -27,7 +31,7 @@ export function SelectInput({
   };
 
   return (
-    <InputWrapper
+    <TextFieldWrapper
       isRequired={isRequired}
       label={label}
       wrapperStyles={wrapperStyles}
@@ -36,7 +40,7 @@ export function SelectInput({
         <span>{value === '' ? placeholder : value}</span>
         {hasDownArrow && <DownArrow />}
       </div>
-    </InputWrapper>
+    </TextFieldWrapper>
   );
 }
 

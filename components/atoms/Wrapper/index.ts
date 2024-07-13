@@ -1,2 +1,2 @@
-export { InputWrapper } from './input-wrapper';
+export { TextFieldWrapper } from './text-field-wrapper';
 export * from './type';
