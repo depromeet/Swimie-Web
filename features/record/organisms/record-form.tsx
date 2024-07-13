@@ -1,6 +1,6 @@
 'use client';
 
-import { TextInput } from '@/components/atoms';
+import { TextInput } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 interface RecordFormProps {

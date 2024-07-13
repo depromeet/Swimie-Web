@@ -1,2 +1,2 @@
-export { TextInput } from './text-input';
+export { InputWrapper } from './input-wrapper';
 export * from './type';

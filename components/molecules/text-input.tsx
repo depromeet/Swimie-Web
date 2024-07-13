@@ -2,10 +2,10 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { InputWrapper } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { InputProps } from './type';
+import { InputWrapper } from '../atoms';
+import { InputProps } from '../atoms/Input/type';
 
 interface TextInputProps extends InputProps {
   onChange: (text: string) => void;
