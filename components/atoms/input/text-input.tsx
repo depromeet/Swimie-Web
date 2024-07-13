@@ -12,6 +12,7 @@ interface TextInputProps extends InputProps {
 }
 
 export function TextInput({
+  isRequired = false,
   label,
   placeholder,
   maxLength,
@@ -30,7 +31,7 @@ export function TextInput({
   };
 
   return (
-    <InputWrapper label={label}>
+    <InputWrapper isRequired={isRequired} label={label}>
       <input
         type="text"
         placeholder={placeholder}
