@@ -22,7 +22,7 @@ const headerBarStyles = css.raw({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  paddingY: '9px',
+  padding: '9px 0px',
 });
 
 const arrowIconStyles = css.raw({
