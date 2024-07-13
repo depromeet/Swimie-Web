@@ -1,35 +1,17 @@
 import { HeaderBar } from '@/components/atoms';
+import RecordForm from '@/features/record/organisms/record-form';
+import { css } from '@/styled-system/css';
 
 export default function RecordPage() {
   return (
     <main>
-      <HeaderBar>
+      <HeaderBar styles={css.raw({ marginBottom: '24px' })}>
         <h1>수영 기록하기</h1>
       </HeaderBar>
+      <h1 className={css({ padding: '0px 20px', marginBottom: '23px' })}>
+        기본정보
+      </h1>
+      <RecordForm />
     </main>
   );
 }
-
-// 'use client';
-
-// import { TextInput } from '@/components/atoms';
-// import { css } from '@/styled-system/css';
-
-// interface RecordFormProps {
-//   styles?: object;
-// }
-
-// export default function RecordForm({ styles }: RecordFormProps) {
-//   const abc = (text: string) => {
-//     console.log(text);
-//   };
-//   return (
-//     <form className={css(recordFormStyles, styles)}>
-//       <TextInput placeholder="거리입력(선택)" maxLength={10} onChange={abc} />
-//     </form>
-//   );
-// }
-
-// const recordFormStyles = css.raw({
-//   padding: '0px 20px',
-// });

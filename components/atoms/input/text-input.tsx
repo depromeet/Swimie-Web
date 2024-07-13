@@ -2,16 +2,17 @@
 
 import { ChangeEvent, useState } from 'react';
 
+import { InputWrapper } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-interface TextInputProps {
-  placeholder: string;
-  maxLength: number;
-  styles?: object;
+import { InputProps } from './type';
+
+interface TextInputProps extends InputProps {
   onChange: (text: string) => void;
 }
 
 export function TextInput({
+  label,
   placeholder,
   maxLength,
   styles,
@@ -29,17 +30,21 @@ export function TextInput({
   };
 
   return (
-    <input
-      type="text"
-      placeholder={placeholder}
-      onChange={handleChange}
-      value={value}
-      maxLength={maxLength}
-      className={css(textInputStyles, styles)}
-    />
+    <InputWrapper label={label}>
+      <input
+        type="text"
+        placeholder={placeholder}
+        onChange={handleChange}
+        value={value}
+        maxLength={maxLength}
+        className={css(textInputStyles, styles)}
+      />
+    </InputWrapper>
   );
 }
 
 const textInputStyles = {
   width: '100%',
+  padding: '6px 0px',
+  borderBottom: '1px solid black',
 };
