@@ -1,9 +1,7 @@
 'use client';
 
+import { DownArrow, InputProps, InputWrapper } from '@/components/atoms';
 import { css } from '@/styled-system/css';
-
-import { DownArrow, InputWrapper } from '../atoms';
-import { InputProps } from '../atoms/Input/type';
 
 interface OptionsInputProps extends Omit<InputProps, 'maxLength'> {
   value: string;
