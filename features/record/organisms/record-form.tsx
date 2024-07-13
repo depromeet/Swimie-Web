@@ -11,14 +11,14 @@ export function RecordForm({ styles }: RecordFormProps) {
   return (
     <form className={css(styles)}>
       <SelectInput
-        value=""
         isRequired
+        value=""
         label="수영 날짜"
         wrapperStyles={css.raw({ marginBottom: '24px' })}
       />
       <SelectInput
-        value=""
         isRequired
+        value=""
         label="수영 시간"
         wrapperStyles={css.raw({ marginBottom: '24px' })}
       />

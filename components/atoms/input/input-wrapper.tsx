@@ -18,7 +18,7 @@ export function InputWrapper({
   return (
     <section className={css(wrapperStyles)}>
       <span>{label}</span>
-      {isRequired && <span>*</span>}
+      {isRequired && <span className={css({ color: 'red' })}> *</span>}
       {children}
     </section>
   );
