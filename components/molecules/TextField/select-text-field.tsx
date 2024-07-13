@@ -17,7 +17,7 @@ interface OptionsInputProps extends Omit<TextFieldProps, 'maxLength'> {
 
 export function SelectTextField({
   isRequired = false,
-  value = '',
+  value,
   placeholder,
   label,
   styles,

@@ -1,1 +1,1 @@
-export { RecordForm } from './record-form';
+export * from './RecordForm';
