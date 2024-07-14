@@ -12,7 +12,7 @@ interface HeaderBarProps {
 export function HeaderBar({ addStyles, children }: HeaderBarProps) {
   return (
     <header className={css(headerBarStyles, addStyles)}>
-      <NavigateBackArrow styles={arrowIconStyles} />
+      <NavigateBackArrow addStyles={arrowIconStyles} />
       {children}
     </header>
   );
