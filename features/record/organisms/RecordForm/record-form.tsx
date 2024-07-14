@@ -1,7 +1,6 @@
 'use client';
 
-import { DropDown } from '@/components/atoms/DropDown/drop-down';
-import { SelectTextField } from '@/components/molecules';
+import { DropDown, SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import { railLengthOptions } from '../RecordBottomSheet';
