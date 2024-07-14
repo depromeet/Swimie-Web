@@ -41,6 +41,8 @@ export function DropDown({
 const dropDownStyles = css.raw({
   width: '100%',
   backgroundColor: 'white',
+  border: '1px solid',
+  padding: '10px',
 });
 
 const listStyles = cva({

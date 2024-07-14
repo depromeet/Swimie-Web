@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { DropDown } from '@/components/atoms/DropDown/drop-down';
 import { SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
@@ -15,10 +13,7 @@ interface RecordFormProps {
 
 export function RecordForm({ addStyles }: RecordFormProps) {
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
-  const [railLengthDropDownOpen, setRailLengthDropDownOpen] = useState(false);
-  const handleChangeRailLengthClick = () => {
-    setRailLengthDropDownOpen((prev) => !prev);
-  };
+
   return (
     <form className={css(addStyles)}>
       <SelectTextField
@@ -52,15 +47,19 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         value={railLengthOptions[recordInfo.railLengthOption].label}
         label="레일 길이"
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
-        onClick={handleChangeRailLengthClick}
+        dropDownComponent={
+          <DropDown
+            options={railLengthOptions}
+            value={recordInfo.railLengthOption}
+            addStyles={css.raw({
+              position: 'absolute',
+              top: '44px',
+              zIndex: 1,
+            })}
+            onSelect={handlers.changeRailLength}
+          />
+        }
       />
-      {railLengthDropDownOpen && (
-        <DropDown
-          options={railLengthOptions}
-          value={recordInfo.railLengthOption}
-          onSelect={handlers.changeRailLength}
-        />
-      )}
       <SelectTextField
         value={recordInfo.distance}
         placeholder="거리입력(선택)"

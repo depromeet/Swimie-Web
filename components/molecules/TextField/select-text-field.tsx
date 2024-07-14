@@ -1,5 +1,7 @@
 'use client';
 
+import { ReactNode, useState } from 'react';
+
 import {
   DownArrow,
   TextFieldProps,
@@ -12,6 +14,7 @@ interface SelectTextFieldProps extends Omit<TextFieldProps, 'maxLength'> {
   label: string;
   addWrapperStyles?: object;
   hasDownArrow?: boolean;
+  dropDownComponent?: ReactNode;
   onClick?: () => void;
 }
 
@@ -23,10 +26,13 @@ export function SelectTextField({
   addStyles,
   addWrapperStyles,
   hasDownArrow = true,
+  dropDownComponent,
   onClick,
 }: SelectTextFieldProps) {
+  const [dropDownOpen, setDropDownOpen] = useState(false);
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    setDropDownOpen((prev) => !prev);
     onClick && onClick();
   };
 
@@ -39,12 +45,14 @@ export function SelectTextField({
       <div className={css(inputStyles, addStyles)} onClick={handleInputClick}>
         <span>{value === '' ? placeholder : value}</span>
         {hasDownArrow && <DownArrow />}
+        {dropDownOpen && dropDownComponent}
       </div>
     </TextFieldWrapper>
   );
 }
 
 const inputStyles = css.raw({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
