@@ -7,17 +7,17 @@ import { css } from '@/styled-system/css';
 import { LeftArrow } from '../Icons';
 
 interface NavigateBackArrowProps {
-  styles?: object;
+  addStyles?: object;
 }
 
-export function NavigateBackArrow({ styles }: NavigateBackArrowProps) {
+export function NavigateBackArrow({ addStyles }: NavigateBackArrowProps) {
   const router = useRouter();
 
-  const navigateBack = () => {
+  const handleNavigateBackClick = () => {
     router.back();
   };
   return (
-    <div className={css(styles)} onClick={navigateBack}>
+    <div className={css(addStyles)} onClick={handleNavigateBackClick}>
       <LeftArrow />
     </div>
   );

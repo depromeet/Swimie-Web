@@ -7,10 +7,10 @@ import {
 } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
-interface OptionsInputProps extends Omit<TextFieldProps, 'maxLength'> {
+interface SelectTextFieldProps extends Omit<TextFieldProps, 'maxLength'> {
   value: string;
   label: string;
-  wrapperStyles?: object;
+  addWrapperStyles?: object;
   hasDownArrow?: boolean;
   onClick?: () => void;
 }
@@ -20,11 +20,11 @@ export function SelectTextField({
   value,
   placeholder,
   label,
-  styles,
-  wrapperStyles,
+  addStyles,
+  addWrapperStyles,
   hasDownArrow = true,
   onClick,
-}: OptionsInputProps) {
+}: SelectTextFieldProps) {
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     onClick && onClick();
@@ -34,9 +34,9 @@ export function SelectTextField({
     <TextFieldWrapper
       isRequired={isRequired}
       label={label}
-      wrapperStyles={wrapperStyles}
+      addWrapperStyles={addWrapperStyles}
     >
-      <div className={css(inputStyles, styles)} onClick={handleInputClick}>
+      <div className={css(inputStyles, addStyles)} onClick={handleInputClick}>
         <span>{value === '' ? placeholder : value}</span>
         {hasDownArrow && <DownArrow />}
       </div>

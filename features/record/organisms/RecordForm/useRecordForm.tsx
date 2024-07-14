@@ -7,7 +7,7 @@ interface RecordInfoProps {
   startTime: string;
   endTime: string;
   pool: string;
-  railLength: string;
+  railLengthOption: number;
   distance: string;
 }
 
@@ -17,7 +17,7 @@ export function UseRecordForm(date: string) {
     startTime: '',
     endTime: '',
     pool: '',
-    railLength: '',
+    railLengthOption: 0,
     distance: '',
   });
 
@@ -33,8 +33,8 @@ export function UseRecordForm(date: string) {
     setRecordInfo((prev) => ({ ...prev, pool }));
   };
 
-  const changeRailLength = (railLength: string) => {
-    setRecordInfo((prev) => ({ ...prev, railLength }));
+  const changeRailLength = (railLengthOption: number) => {
+    setRecordInfo((prev) => ({ ...prev, railLengthOption }));
   };
 
   const changeDistance = (distance: string) => {

@@ -5,13 +5,13 @@ import { css } from '@/styled-system/css';
 import { NavigateBackArrow } from './navigate-back-arrow';
 
 interface HeaderBarProps {
-  styles?: object;
+  addStyles?: object;
   children?: ReactNode;
 }
 
-export function HeaderBar({ styles, children }: HeaderBarProps) {
+export function HeaderBar({ addStyles, children }: HeaderBarProps) {
   return (
-    <header className={css(headerBarStyles, styles)}>
+    <header className={css(headerBarStyles, addStyles)}>
       <NavigateBackArrow styles={arrowIconStyles} />
       {children}
     </header>
