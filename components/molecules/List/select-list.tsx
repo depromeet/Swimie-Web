@@ -1,4 +1,4 @@
-import { SelectElement } from '@/components/atoms/Element';
+import { SelectElement } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
 import { SelectListProps } from './type';

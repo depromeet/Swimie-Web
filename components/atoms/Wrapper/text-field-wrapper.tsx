@@ -1,23 +1,15 @@
-import { ReactNode } from 'react';
-
 import { css } from '@/styled-system/css';
 
-import { TextFieldProps } from './type';
-
-interface TextFieldWrapperProps extends Pick<TextFieldProps, 'isRequired'> {
-  label: string;
-  addWrapperStyles?: object;
-  children: ReactNode;
-}
+import { TextFieldWrapperProps } from './type';
 
 export function TextFieldWrapper({
   isRequired,
   label,
-  addWrapperStyles,
+  addStyles,
   children,
 }: TextFieldWrapperProps) {
   return (
-    <section className={css(addWrapperStyles)}>
+    <section className={css(addStyles)}>
       <span>{label}</span>
       {isRequired && <span className={css({ color: 'red' })}> *</span>}
       {children}

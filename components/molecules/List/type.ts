@@ -1,7 +1,7 @@
-export interface SelectListProps {
-  options: { value: number; label: string }[];
-  value: number;
+import { DropDownProps } from '../DropDown';
+
+export interface SelectListProps
+  extends Omit<DropDownProps, 'addStyles' | 'addListStyles'> {
   addStyles?: object;
   addListElementStyles?: object;
-  onSelect?: (value: number) => void;
 }

@@ -1,22 +1,11 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
-import {
-  DownArrow,
-  TextFieldProps,
-  TextFieldWrapper,
-} from '@/components/atoms';
+import { DownArrowIcon, TextFieldWrapper } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
-interface SelectTextFieldProps extends Omit<TextFieldProps, 'maxLength'> {
-  value: string;
-  label: string;
-  addWrapperStyles?: object;
-  hasDownArrow?: boolean;
-  dropDownComponent?: ReactNode;
-  onClick?: () => void;
-}
+import { SelectTextFieldProps } from './type';
 
 export function SelectTextField({
   isRequired = false,
@@ -40,11 +29,11 @@ export function SelectTextField({
     <TextFieldWrapper
       isRequired={isRequired}
       label={label}
-      addWrapperStyles={addWrapperStyles}
+      addStyles={addWrapperStyles}
     >
       <div className={css(inputStyles, addStyles)} onClick={handleInputClick}>
         <span>{value === '' ? placeholder : value}</span>
-        {hasDownArrow && <DownArrow />}
+        {hasDownArrow && <DownArrowIcon />}
         {dropDownOpen && dropDownComponent}
       </div>
     </TextFieldWrapper>

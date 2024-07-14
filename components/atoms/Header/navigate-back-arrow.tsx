@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { css } from '@/styled-system/css';
 
-import { LeftArrow } from '../Icons';
+import { LeftArrowIcon } from '../Icons';
 
 interface NavigateBackArrowProps {
   addStyles?: object;
@@ -18,7 +18,7 @@ export function NavigateBackArrow({ addStyles }: NavigateBackArrowProps) {
   };
   return (
     <div className={css(addStyles)} onClick={handleNavigateBackClick}>
-      <LeftArrow />
+      <LeftArrowIcon />
     </div>
   );
 }
