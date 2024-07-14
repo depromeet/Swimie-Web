@@ -4,5 +4,5 @@ export interface SelectElementProps
   extends Pick<SelectListProps, 'value' | 'onSelect'> {
   isSelected: boolean;
   label: string;
-  addStyles?: string;
+  addStyles?: object;
 }
