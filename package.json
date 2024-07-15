@@ -14,6 +14,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@mobiscroll/react": "npm:@mobiscroll/react-next-trial@5.31.2",
     "@tanstack/react-query": "^5.45.1",
     "@tanstack/react-query-devtools": "^5.45.1",
     "next": "14.2.4",

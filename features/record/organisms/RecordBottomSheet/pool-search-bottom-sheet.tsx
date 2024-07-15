@@ -37,6 +37,7 @@ export function PoolSearchBottomSheet({
     closeBottomSheet && closeBottomSheet();
   };
   return isOpen ? (
+    //지영's Bottom Sheet로 대체
     <div className={css(PoolSearchBottomSheetStyles)}>
       <h2 className={css(titleStyles)}>{title}</h2>
       <SearchBar placeholder={placeholder} onChange={handlePoolNameChange} />

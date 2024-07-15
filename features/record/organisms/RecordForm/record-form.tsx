@@ -1,12 +1,17 @@
 'use client';
 
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+
 import { DropDown, SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import {
   PoolSearchBottomSheet,
+  UseEndTimeBottomSheet,
   UsePoolSearchBottomSheet,
+  UseStartTimeBottomSheet,
 } from '../RecordBottomSheet';
+import { TimeBottomSheet } from '../RecordBottomSheet/time-bottom-sheet';
 import { railLengthOptions } from './options';
 import { UseRecordForm } from './useRecordForm';
 
@@ -16,6 +21,14 @@ interface RecordFormProps {
 
 export function RecordForm({ addStyles }: RecordFormProps) {
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
+  const {
+    isOpen: isStartTimeBottomSheetOpen,
+    handlers: startTimeBottomSheetHandlers,
+  } = UseStartTimeBottomSheet();
+  const {
+    isOpen: isEndTimeBottomSheetOpen,
+    handlers: endTimeBottomSheetHandlers,
+  } = UseEndTimeBottomSheet();
   const {
     isOpen: isPoolSearchBottomSheetOpen,
     handlers: poolSearchBottomSheetHandlers,
@@ -35,13 +48,15 @@ export function RecordForm({ addStyles }: RecordFormProps) {
           value={recordInfo.startTime}
           label="수영 시간"
           addWrapperStyles={timeTextFieldStyles}
+          onClick={startTimeBottomSheetHandlers.openBottomSheet}
         />
         <span className={css({ fontSize: '30px' })}>-</span>
         <SelectTextField
           isRequired
-          value={recordInfo.startTime}
+          value={recordInfo.endTime}
           label="수영 시간"
           addWrapperStyles={timeTextFieldStyles}
+          onClick={endTimeBottomSheetHandlers.openBottomSheet}
         />
       </div>
       <SelectTextField
@@ -75,12 +90,23 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         hasDownArrow={false}
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
       />
+      {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
       <PoolSearchBottomSheet
         isOpen={isPoolSearchBottomSheetOpen}
         title="어디서 수영을 했나요?"
         placeholder="수영장 검색"
         changePool={handlers.changePool}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
+      />
+      <TimeBottomSheet
+        isOpen={isStartTimeBottomSheetOpen}
+        changeTime={handlers.changeStartTime}
+        closeBottomSheet={startTimeBottomSheetHandlers.closeBottomSheet}
+      />
+      <TimeBottomSheet
+        isOpen={isEndTimeBottomSheetOpen}
+        changeTime={handlers.changeEndTime}
+        closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
     </form>
   );
