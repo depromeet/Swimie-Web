@@ -1,13 +1,7 @@
-import { ReactNode } from 'react';
-
 import { css } from '@/styled-system/css';
 
 import { NavigateBackArrow } from './navigate-back-arrow';
-
-interface HeaderBarProps {
-  addStyles?: object;
-  children?: ReactNode;
-}
+import { HeaderBarProps } from './type';
 
 export function HeaderBar({ addStyles, children }: HeaderBarProps) {
   return (

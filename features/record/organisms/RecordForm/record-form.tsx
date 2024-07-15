@@ -15,11 +15,8 @@ import {
 } from '../RecordBottomSheet';
 import { TimeBottomSheet } from '../RecordBottomSheet/time-bottom-sheet';
 import { railLengthOptions } from './options';
+import { RecordFormProps } from './type';
 import { UseRecordForm } from './useRecordForm';
-
-interface RecordFormProps {
-  addStyles?: object;
-}
 
 export function RecordForm({ addStyles }: RecordFormProps) {
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
