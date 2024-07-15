@@ -5,20 +5,20 @@ import { useState } from 'react';
 import { SearchBar } from '@/components/molecules/Search';
 import { css } from '@/styled-system/css';
 
-interface PoolSearchBottomSheetProps {
-  isOpen: boolean;
+import { BottomSheetProps } from './type';
+
+interface PoolSearchBottomSheetProps extends BottomSheetProps<string> {
   title: string;
   placeholder: string;
-  changePool?: (pool: string) => void;
-  closeBottomSheet?: () => void;
 }
 
 export function PoolSearchBottomSheet({
   isOpen,
   title,
   placeholder,
-  changePool,
+  modifyValue,
   closeBottomSheet,
+  addStyles,
 }: PoolSearchBottomSheetProps) {
   //추후 api 통신으로 대체
   const [searchPoolName, setSearchPoolName] = useState<string>('');
@@ -33,12 +33,12 @@ export function PoolSearchBottomSheet({
   };
 
   const handleClickPoolListElement = (pool: string) => {
-    changePool && changePool(pool);
+    modifyValue && modifyValue(pool);
     closeBottomSheet && closeBottomSheet();
   };
   return isOpen ? (
     //지영's Bottom Sheet로 대체
-    <div className={css(PoolSearchBottomSheetStyles)}>
+    <div className={css(PoolSearchBottomSheetStyles, addStyles)}>
       <h2 className={css(titleStyles)}>{title}</h2>
       <SearchBar placeholder={placeholder} onChange={handlePoolNameChange} />
       <ul>
@@ -63,7 +63,7 @@ const PoolSearchBottomSheetStyles = css.raw({
   width: '100%',
   height: '15rem',
   backgroundColor: 'white',
-  border: '1px solid black',
+  border: '1.5px solid black',
   bottom: 0,
   left: 0,
   padding: '10px',

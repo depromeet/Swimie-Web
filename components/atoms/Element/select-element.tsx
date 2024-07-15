@@ -8,9 +8,11 @@ export function SelectElement({
   label,
   addStyles,
   onSelect,
+  closeWrapper,
 }: SelectElementProps) {
   const handleListClick = (value: number) => {
     onSelect && onSelect(value);
+    closeWrapper && closeWrapper();
   };
   return (
     <li

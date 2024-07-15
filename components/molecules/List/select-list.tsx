@@ -9,6 +9,7 @@ export function SelectList({
   addStyles,
   addListElementStyles,
   onSelect,
+  closeWrapper,
 }: SelectListProps) {
   return (
     <ul className={css(addStyles)}>
@@ -20,6 +21,7 @@ export function SelectList({
           label={option.label}
           addStyles={addListElementStyles}
           onSelect={onSelect}
+          closeWrapper={closeWrapper}
         />
       ))}
     </ul>

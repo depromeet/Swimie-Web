@@ -7,26 +7,21 @@ import { useState } from 'react';
 
 import { css } from '@/styled-system/css';
 
-interface TimeBottomSheetProps {
-  isOpen: boolean;
-  addStyles?: object;
-  changeTime?: (time: string) => void;
-  closeBottomSheet: () => void;
-}
+import { BottomSheetProps } from './type';
 
 export function TimeBottomSheet({
   isOpen,
-  addStyles,
-  changeTime,
+  modifyValue,
   closeBottomSheet,
-}: TimeBottomSheetProps) {
+  addStyles,
+}: BottomSheetProps<string>) {
   const [time, setTime] = useState('');
   const handleTimeChange = (args: MbscDatepickerChangeEvent) => {
     setTime(args.valueText ? args.valueText : '');
   };
 
   const handleClickButton = () => {
-    changeTime && changeTime(time);
+    modifyValue && modifyValue(time);
     closeBottomSheet && closeBottomSheet();
   };
 

@@ -2,13 +2,15 @@
 
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
-import { DropDown, SelectTextField } from '@/components/molecules';
+import { SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import {
   PoolSearchBottomSheet,
+  RailLengthBottomSheet,
   UseEndTimeBottomSheet,
   UsePoolSearchBottomSheet,
+  UseRailLengthBottomSheet,
   UseStartTimeBottomSheet,
 } from '../RecordBottomSheet';
 import { TimeBottomSheet } from '../RecordBottomSheet/time-bottom-sheet';
@@ -33,6 +35,10 @@ export function RecordForm({ addStyles }: RecordFormProps) {
     isOpen: isPoolSearchBottomSheetOpen,
     handlers: poolSearchBottomSheetHandlers,
   } = UsePoolSearchBottomSheet();
+  const {
+    isOpen: isRailLengthBottomSheetOpen,
+    handlers: railLengthBottomSheetHandlers,
+  } = UseRailLengthBottomSheet();
 
   return (
     <form className={css(formStyles, addStyles)}>
@@ -40,6 +46,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         isRequired
         value={recordInfo.date}
         label="수영 날짜"
+        hasDownArrow={false}
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
       />
       <div className={css(timeTextFieldLayoutStyles)}>
@@ -70,18 +77,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         value={railLengthOptions[recordInfo.railLengthOption].label}
         label="레일 길이"
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
-        dropDownComponent={
-          <DropDown
-            options={railLengthOptions}
-            value={recordInfo.railLengthOption}
-            addStyles={css.raw({
-              position: 'absolute',
-              top: '44px',
-              zIndex: 1,
-            })}
-            onSelect={handlers.changeRailLength}
-          />
-        }
+        onClick={railLengthBottomSheetHandlers.openBottomSheet}
       />
       <SelectTextField
         value={recordInfo.distance}
@@ -91,21 +87,27 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
       />
       {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
+      <RailLengthBottomSheet
+        value={recordInfo.railLengthOption}
+        isOpen={isRailLengthBottomSheetOpen}
+        modifyValue={handlers.changeRailLength}
+        closeBottomSheet={railLengthBottomSheetHandlers.closeBottomSheet}
+      />
       <PoolSearchBottomSheet
         isOpen={isPoolSearchBottomSheetOpen}
         title="어디서 수영을 했나요?"
         placeholder="수영장 검색"
-        changePool={handlers.changePool}
+        modifyValue={handlers.changePool}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet
         isOpen={isStartTimeBottomSheetOpen}
-        changeTime={handlers.changeStartTime}
+        modifyValue={handlers.changeStartTime}
         closeBottomSheet={startTimeBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet
         isOpen={isEndTimeBottomSheetOpen}
-        changeTime={handlers.changeEndTime}
+        modifyValue={handlers.changeEndTime}
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
     </form>
