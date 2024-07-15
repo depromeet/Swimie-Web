@@ -3,7 +3,11 @@
 import { DropDown, SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { railLengthOptions } from '../RecordBottomSheet';
+import {
+  PoolSearchBottomSheet,
+  UsePoolSearchBottomSheet,
+} from '../RecordBottomSheet';
+import { railLengthOptions } from './options';
 import { UseRecordForm } from './useRecordForm';
 
 interface RecordFormProps {
@@ -12,9 +16,13 @@ interface RecordFormProps {
 
 export function RecordForm({ addStyles }: RecordFormProps) {
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
+  const {
+    isOpen: isPoolSearchBottomSheetOpen,
+    handlers: poolSearchBottomSheetHandlers,
+  } = UsePoolSearchBottomSheet();
 
   return (
-    <form className={css(addStyles)}>
+    <form className={css(formStyles, addStyles)}>
       <SelectTextField
         isRequired
         value={recordInfo.date}
@@ -41,6 +49,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         placeholder="(선택)"
         label="수영장"
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
+        onClick={poolSearchBottomSheetHandlers.openBottomSheet}
       />
       <SelectTextField
         value={railLengthOptions[recordInfo.railLengthOption].label}
@@ -66,9 +75,20 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         hasDownArrow={false}
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
       />
+      <PoolSearchBottomSheet
+        isOpen={isPoolSearchBottomSheetOpen}
+        title="어디서 수영을 했나요?"
+        placeholder="수영장 검색"
+        changePool={handlers.changePool}
+        closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
+      />
     </form>
   );
 }
+
+const formStyles = css.raw({
+  width: '100%',
+});
 
 const timeTextFieldLayoutStyles = css.raw({
   display: 'flex',
