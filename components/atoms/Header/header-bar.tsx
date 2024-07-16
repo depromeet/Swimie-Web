@@ -14,12 +14,11 @@ export function HeaderBar({ addStyles, children }: HeaderBarProps) {
 
 const headerBarStyles = css.raw({
   position: 'relative',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  padding: '8px 0px',
 });
 
 const arrowIconStyles = css.raw({
   position: 'absolute',
-  left: '3px',
+  top: '4px',
+  left: '4px',
 });

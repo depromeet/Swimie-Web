@@ -1,8 +1,7 @@
 'use client';
 
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-
-import { Datepicker, MbscDatepickerChangeEvent } from '@mobiscroll/react';
+import { TimePicker } from 'antd';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { css } from '@/styled-system/css';
@@ -16,10 +15,10 @@ export function TimeBottomSheet({
   addStyles,
 }: BottomSheetProps<string>) {
   const [time, setTime] = useState('');
-  const handleTimeChange = (args: MbscDatepickerChangeEvent) => {
-    setTime(args.valueText ? args.valueText : '');
-  };
 
+  const handleTimeChange = (date: dayjs.Dayjs) => {
+    setTime(date.format('HH:MM'));
+  };
   const handleClickButton = () => {
     modifyValue && modifyValue(time);
     closeBottomSheet && closeBottomSheet();
@@ -28,10 +27,13 @@ export function TimeBottomSheet({
   return isOpen ? (
     //지영's Bottom Sheet로 대체
     <div className={css(timeBottomSheetStyles, addStyles)}>
-      <Datepicker
-        controls={['time']}
-        touchUi={true}
-        display="inline"
+      <TimePicker
+        placeholder="시간 설정"
+        format="HH:mm"
+        use12Hours
+        autoFocus
+        showNow={false}
+        size="large"
         onChange={handleTimeChange}
       />
       <button className={css(buttonStyles)} onClick={handleClickButton}>
@@ -46,12 +48,14 @@ const timeBottomSheetStyles = css.raw({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'space-around',
+  height: '200px',
   backgroundColor: 'white',
   bottom: 0,
   left: 0,
   width: '100%',
   border: '1.5px solid',
-  padding: '10px 0px',
+  padding: '10px 15px',
 });
 
 const buttonStyles = css.raw({

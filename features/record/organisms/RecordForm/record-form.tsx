@@ -1,6 +1,6 @@
 'use client';
 
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { CSSTransition } from 'react-transition-group';
 
 import { SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
@@ -8,12 +8,16 @@ import { css } from '@/styled-system/css';
 import {
   PoolSearchBottomSheet,
   RailLengthBottomSheet,
+  TimeBottomSheet,
   UseEndTimeBottomSheet,
   UsePoolSearchBottomSheet,
   UseRailLengthBottomSheet,
   UseStartTimeBottomSheet,
 } from '../RecordBottomSheet';
-import { TimeBottomSheet } from '../RecordBottomSheet/time-bottom-sheet';
+import {
+  RecordDistancePageModal,
+  UseRecordDistancePageModal,
+} from '../RecordDistancePageModal';
 import { railLengthOptions } from './options';
 import { RecordFormProps } from './type';
 import { UseRecordForm } from './useRecordForm';
@@ -36,6 +40,11 @@ export function RecordForm({ addStyles }: RecordFormProps) {
     isOpen: isRailLengthBottomSheetOpen,
     handlers: railLengthBottomSheetHandlers,
   } = UseRailLengthBottomSheet();
+  const {
+    isOpen: isRecordDistancePageModalOpen,
+    jumpDirection,
+    handlers: recordDistancePageModalHandlers,
+  } = UseRecordDistancePageModal();
 
   return (
     <form className={css(formStyles, addStyles)}>
@@ -82,6 +91,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         label="수영 거리"
         hasDownArrow={false}
         addWrapperStyles={css.raw({ marginBottom: '24px' })}
+        onClick={recordDistancePageModalHandlers.openPageModal}
       />
       {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
       <RailLengthBottomSheet
@@ -107,6 +117,18 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         modifyValue={handlers.changeEndTime}
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
+      <CSSTransition
+        classNames={`record-distance-jump-${jumpDirection}`}
+        timeout={300}
+        in={isRecordDistancePageModalOpen}
+        mountOnEnter
+        unmountOnExit
+      >
+        <RecordDistancePageModal
+          closePageModal={recordDistancePageModalHandlers.closePageModal}
+        />
+      </CSSTransition>
+      {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
     </form>
   );
 }

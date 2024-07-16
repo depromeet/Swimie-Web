@@ -5,12 +5,7 @@ import { useState } from 'react';
 import { SearchBar } from '@/components/molecules/Search';
 import { css } from '@/styled-system/css';
 
-import { BottomSheetProps } from './type';
-
-interface PoolSearchBottomSheetProps extends BottomSheetProps<string> {
-  title: string;
-  placeholder: string;
-}
+import { PoolSearchBottomSheetProps } from './type';
 
 export function PoolSearchBottomSheet({
   isOpen,

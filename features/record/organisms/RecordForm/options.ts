@@ -11,12 +11,4 @@ export const railLengthOptions = [
     value: 2,
     label: '100m',
   },
-  {
-    value: 3,
-    label: '500m',
-  },
-  {
-    value: 4,
-    label: '1000m',
-  },
 ];

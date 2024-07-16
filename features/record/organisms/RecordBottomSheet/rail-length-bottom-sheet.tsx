@@ -2,11 +2,7 @@ import { SelectList } from '@/components/molecules/List';
 import { css } from '@/styled-system/css';
 
 import { railLengthOptions } from '../RecordForm';
-import { BottomSheetProps } from './type';
-
-interface RailLengthBottomSheetProps extends BottomSheetProps<number> {
-  value: number;
-}
+import { RailLengthBottomSheetProps } from './type';
 
 export function RailLengthBottomSheet({
   isOpen,

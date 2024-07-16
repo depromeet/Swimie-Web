@@ -14,12 +14,14 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@mobiscroll/react": "npm:@mobiscroll/react-next-trial@5.31.2",
     "@tanstack/react-query": "^5.45.1",
     "@tanstack/react-query-devtools": "^5.45.1",
+    "antd": "^5.19.2",
+    "dayjs": "^1.11.11",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
@@ -37,6 +39,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-transition-group": "^4.4.10",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "chromatic": "^11.5.5",
