@@ -1,7 +1,5 @@
 'use client';
 
-import { CSSTransition } from 'react-transition-group';
-
 import { SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
@@ -117,17 +115,11 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         modifyValue={handlers.changeEndTime}
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
-      <CSSTransition
-        classNames={`record-distance-jump-${jumpDirection}`}
-        timeout={300}
-        in={isRecordDistancePageModalOpen}
-        mountOnEnter
-        unmountOnExit
-      >
-        <RecordDistancePageModal
-          closePageModal={recordDistancePageModalHandlers.closePageModal}
-        />
-      </CSSTransition>
+      <RecordDistancePageModal
+        isOpen={isRecordDistancePageModalOpen}
+        jumpDirection={jumpDirection}
+        closePageModal={recordDistancePageModalHandlers.closePageModal}
+      />
       {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
     </form>
   );
