@@ -1,5 +1,6 @@
-import { css, cva } from '@/styled-system/css';
+import { css } from '@/styled-system/css';
 
+import { CheckIcon } from '../Icons';
 import { SelectElementProps } from './type';
 
 export function SelectElement({
@@ -15,28 +16,9 @@ export function SelectElement({
     closeWrapper && closeWrapper();
   };
   return (
-    <li
-      className={css(
-        isSelected
-          ? listElementStyles.raw({ selected: true })
-          : listElementStyles.raw({ selected: false }),
-        addStyles,
-      )}
-      onClick={() => handleListClick(value)}
-    >
+    <li className={css(addStyles)} onClick={() => handleListClick(value)}>
       {label}
+      {isSelected && <CheckIcon />}
     </li>
   );
 }
-
-const listElementStyles = cva({
-  base: {
-    padding: '6px 10px',
-  },
-  variants: {
-    selected: {
-      true: { color: 'red' },
-      false: { color: 'gray' },
-    },
-  },
-});

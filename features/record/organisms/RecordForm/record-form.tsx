@@ -97,6 +97,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <RailLengthBottomSheet
+        title="레인 길이를 선택해주세요"
         value={recordInfo.railLengthOption}
         isOpen={isRailLengthBottomSheetOpen}
         modifyValue={handlers.changeRailLength}

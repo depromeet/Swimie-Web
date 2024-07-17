@@ -11,5 +11,6 @@ export interface PoolSearchBottomSheetProps extends BottomSheetProps<string> {
 }
 
 export interface RailLengthBottomSheetProps extends BottomSheetProps<number> {
+  title: string;
   value: number;
 }
