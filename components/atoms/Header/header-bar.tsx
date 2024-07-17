@@ -3,10 +3,17 @@ import { css } from '@/styled-system/css';
 import { NavigateBackArrow } from './navigate-back-arrow';
 import { HeaderBarProps } from './type';
 
-export function HeaderBar({ addStyles, children }: HeaderBarProps) {
+export function HeaderBar({
+  addStyles,
+  children,
+  backArrowClick,
+}: HeaderBarProps) {
   return (
     <header className={css(headerBarStyles, addStyles)}>
-      <NavigateBackArrow addStyles={arrowIconStyles} />
+      <NavigateBackArrow
+        backArrowClick={backArrowClick}
+        addStyles={arrowIconStyles}
+      />
       {children}
     </header>
   );

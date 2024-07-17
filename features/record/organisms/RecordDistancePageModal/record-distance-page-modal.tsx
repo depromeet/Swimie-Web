@@ -5,8 +5,12 @@ import './page-modal.css';
 import { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
+import { HeaderBar } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
+import { AddField } from './add-field';
+import { strokeOptions } from './options';
+import { RecordSwimField } from './record-swim-field';
 import { RecordDistancePageModalProps } from './type';
 
 export function RecordDistancePageModal({
@@ -15,9 +19,6 @@ export function RecordDistancePageModal({
   closePageModal,
 }: RecordDistancePageModalProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const handleDoneButtonClick = () => {
-    closePageModal && closePageModal();
-  };
   return (
     <CSSTransition
       nodeRef={ref}
@@ -28,10 +29,18 @@ export function RecordDistancePageModal({
       unmountOnExit
     >
       <div className={css(RecordDistancePageModalStyles)} ref={ref}>
-        <h1 className={css({ marginTop: '24px' })}>거리 입력 페이지 모달</h1>
-        <div className={css(buttonStyles)} onClick={handleDoneButtonClick}>
-          거리 입력 완료
-        </div>
+        <HeaderBar backArrowClick={closePageModal} />
+        <h1 className={css(titleStyles)}>수영 거리를 입력해주세요</h1>
+        <section className={css(recordSwimFieldsStyles)}>
+          {strokeOptions.map((option) => (
+            <RecordSwimField
+              key={option}
+              label={option}
+              addStyles={css.raw({ marginBottom: '16px' })}
+            />
+          ))}
+          <AddField text="영법 추가" />
+        </section>
       </div>
     </CSSTransition>
   );
@@ -46,9 +55,12 @@ const RecordDistancePageModalStyles = css.raw({
   backgroundColor: 'white',
 });
 
-const buttonStyles = css.raw({
-  width: '130px',
-  height: '50px',
-  backgroundColor: 'skyblue',
-  borderRadius: '4px',
+const titleStyles = css.raw({
+  marginTop: '24px',
+  padding: '0 20px',
+});
+
+const recordSwimFieldsStyles = css.raw({
+  padding: '20px',
+  marginBottom: '16px',
 });

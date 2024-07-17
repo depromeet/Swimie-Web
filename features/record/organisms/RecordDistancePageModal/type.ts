@@ -3,3 +3,13 @@ export interface RecordDistancePageModalProps {
   jumpDirection: 'forward' | 'backward';
   closePageModal?: () => void;
 }
+
+export interface RecordSwimFieldProps {
+  label: string;
+  addStyles?: object;
+}
+
+export interface AddFieldProps {
+  text: string;
+  onClick?: () => void;
+}

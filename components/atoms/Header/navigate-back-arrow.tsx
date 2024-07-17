@@ -8,13 +8,17 @@ import { LeftArrowIcon } from '../Icons';
 
 interface NavigateBackArrowProps {
   addStyles?: object;
+  backArrowClick?: () => void;
 }
 
-export function NavigateBackArrow({ addStyles }: NavigateBackArrowProps) {
+export function NavigateBackArrow({
+  addStyles,
+  backArrowClick,
+}: NavigateBackArrowProps) {
   const router = useRouter();
 
   const handleNavigateBackClick = () => {
-    router.back();
+    backArrowClick ? backArrowClick() : router.back();
   };
   return (
     <div className={css(addStyles)} onClick={handleNavigateBackClick}>
