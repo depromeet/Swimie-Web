@@ -2,6 +2,7 @@
 
 import './page-modal.css';
 
+import { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { css } from '@/styled-system/css';
@@ -13,18 +14,20 @@ export function RecordDistancePageModal({
   jumpDirection,
   closePageModal,
 }: RecordDistancePageModalProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const handleDoneButtonClick = () => {
     closePageModal && closePageModal();
   };
   return (
     <CSSTransition
+      nodeRef={ref}
       classNames={`record-distance-jump-${jumpDirection}`}
       timeout={300}
       in={isOpen}
       mountOnEnter
       unmountOnExit
     >
-      <div className={css(RecordDistancePageModalStyles)}>
+      <div className={css(RecordDistancePageModalStyles)} ref={ref}>
         <h1 className={css({ marginTop: '24px' })}>거리 입력 페이지 모달</h1>
         <div className={css(buttonStyles)} onClick={handleDoneButtonClick}>
           거리 입력 완료
