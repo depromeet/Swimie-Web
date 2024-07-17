@@ -45,53 +45,57 @@ export function RecordForm({ addStyles }: RecordFormProps) {
   } = UseRecordDistancePageModal();
 
   return (
-    <form className={css(formStyles, addStyles)}>
-      <SelectTextField
-        isRequired
-        value={recordInfo.date}
-        label="수영 날짜"
-        hasDownArrow={false}
-        addWrapperStyles={css.raw({ marginBottom: '24px' })}
-      />
-      <div className={css(timeTextFieldLayoutStyles)}>
+    <>
+      <form className={css(formStyles, addStyles)}>
         <SelectTextField
           isRequired
-          value={recordInfo.startTime}
-          label="수영 시간"
-          addWrapperStyles={timeTextFieldStyles}
-          onClick={startTimeBottomSheetHandlers.openBottomSheet}
+          value={recordInfo.date}
+          label="수영 날짜"
+          hasDownArrow={false}
+          addWrapperStyles={css.raw({ marginBottom: '24px' })}
         />
-        <span className={css({ fontSize: '30px' })}>-</span>
+        <div className={css(timeTextFieldLayoutStyles)}>
+          <SelectTextField
+            isRequired
+            value={recordInfo.startTime}
+            label="수영 시간"
+            placeholder="00:00"
+            addWrapperStyles={timeTextFieldStyles}
+            onClick={startTimeBottomSheetHandlers.openBottomSheet}
+          />
+          <span className={css({ fontSize: '30px' })}>-</span>
+          <SelectTextField
+            isRequired
+            value={recordInfo.endTime}
+            label="수영 시간"
+            placeholder="00:00"
+            addWrapperStyles={timeTextFieldStyles}
+            onClick={endTimeBottomSheetHandlers.openBottomSheet}
+          />
+        </div>
         <SelectTextField
-          isRequired
-          value={recordInfo.endTime}
-          label="수영 시간"
-          addWrapperStyles={timeTextFieldStyles}
-          onClick={endTimeBottomSheetHandlers.openBottomSheet}
+          value={recordInfo.pool}
+          placeholder="(선택)"
+          label="수영장"
+          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          onClick={poolSearchBottomSheetHandlers.openBottomSheet}
         />
-      </div>
-      <SelectTextField
-        value={recordInfo.pool}
-        placeholder="(선택)"
-        label="수영장"
-        addWrapperStyles={css.raw({ marginBottom: '24px' })}
-        onClick={poolSearchBottomSheetHandlers.openBottomSheet}
-      />
-      <SelectTextField
-        value={railLengthOptions[recordInfo.railLengthOption].label}
-        label="레일 길이"
-        addWrapperStyles={css.raw({ marginBottom: '24px' })}
-        onClick={railLengthBottomSheetHandlers.openBottomSheet}
-      />
-      <SelectTextField
-        value={recordInfo.distance}
-        placeholder="거리입력(선택)"
-        label="수영 거리"
-        hasDownArrow={false}
-        addWrapperStyles={css.raw({ marginBottom: '24px' })}
-        onClick={recordDistancePageModalHandlers.openPageModal}
-      />
-      {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
+        <SelectTextField
+          value={railLengthOptions[recordInfo.railLengthOption].label}
+          label="레일 길이"
+          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          onClick={railLengthBottomSheetHandlers.openBottomSheet}
+        />
+        <SelectTextField
+          value={recordInfo.distance}
+          placeholder="거리입력(선택)"
+          label="수영 거리"
+          hasDownArrow={false}
+          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          onClick={recordDistancePageModalHandlers.openPageModal}
+        />
+      </form>
+      {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <RailLengthBottomSheet
         value={recordInfo.railLengthOption}
         isOpen={isRailLengthBottomSheetOpen}
@@ -121,7 +125,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         closePageModal={recordDistancePageModalHandlers.closePageModal}
       />
       {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
-    </form>
+    </>
   );
 }
 

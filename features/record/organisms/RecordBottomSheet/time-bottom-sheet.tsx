@@ -17,7 +17,7 @@ export function TimeBottomSheet({
   const [time, setTime] = useState('');
 
   const handleTimeChange = (date: dayjs.Dayjs) => {
-    setTime(date.format('HH:MM'));
+    setTime(date.format('HH:mm'));
   };
   const handleClickButton = () => {
     modifyValue && modifyValue(time);

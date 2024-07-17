@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { SearchBar } from '@/components/molecules/Search';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 
 import { PoolSearchBottomSheetProps } from './type';
 
@@ -35,12 +35,20 @@ export function PoolSearchBottomSheet({
     //지영's Bottom Sheet로 대체
     <div className={css(PoolSearchBottomSheetStyles, addStyles)}>
       <h2 className={css(titleStyles)}>{title}</h2>
-      <SearchBar placeholder={placeholder} onChange={handlePoolNameChange} />
-      <ul>
-        {dummyResult.map((result) => (
+      <SearchBar
+        placeholder={placeholder}
+        onChange={handlePoolNameChange}
+        addStyles={css.raw({ marginBottom: '12px' })}
+      />
+      <ul className={css(listStyles)}>
+        {dummyResult.map((result, i: number) => (
           <li
             key={result}
-            className={css(listStyles)}
+            className={css(
+              dummyResult.length - 1 !== i
+                ? listElementStyles.raw({ notLast: true })
+                : listElementStyles.raw(),
+            )}
             onClick={() => handleClickPoolListElement(result)}
           >
             {result}
@@ -52,22 +60,36 @@ export function PoolSearchBottomSheet({
 }
 
 const PoolSearchBottomSheetStyles = css.raw({
-  position: 'absolute',
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  height: '15rem',
+  height: '317px',
   backgroundColor: 'white',
   border: '1.5px solid black',
-  bottom: 0,
-  left: 0,
-  padding: '10px',
+  borderRadius: '20px 20px 0 0',
+  padding: '32px 20px',
 });
 
 const titleStyles = css.raw({
-  marginBottom: '10px',
+  marginBottom: '16px',
 });
 
 const listStyles = css.raw({
-  padding: '4px 0',
+  padding: '8px 0',
+  marginBottom: '8px',
+  overflow: 'auto',
+});
+
+const listElementStyles = cva({
+  base: {
+    padding: '6px 10px',
+  },
+  variants: {
+    notLast: {
+      true: { marginBottom: '8px' },
+    },
+  },
 });

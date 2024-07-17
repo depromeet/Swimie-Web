@@ -38,10 +38,10 @@ const searchBarStyles = css.raw({
   alignItems: 'center',
   width: '100%',
   height: '2rem',
-  padding: '10px 12px',
+  padding: '12px 16px',
   paddingRight: 0,
-  backgroundColor: '#EFEFEF',
-  borderRadius: '10px',
+  backgroundColor: '#F6F6F6',
+  borderRadius: '12px',
 });
 
 const inputStyles = css.raw({

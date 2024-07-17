@@ -5,7 +5,7 @@ const styles = css({
   h: 'full',
   fontSize: '40px',
   fontWeight: '600',
-  color: 'green.50',
+  color: 'green.70',
 });
 
 export default function Home() {
