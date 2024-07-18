@@ -10,7 +10,7 @@ export function TextFieldWrapper({
   children,
 }: TextFieldWrapperProps) {
   return (
-    <section className={css(addStyles)}>
+    <section className={css(textFieldWrapperStyles, addStyles)}>
       <span
         className={css(
           changeLabelColor && labelStyles.raw({ changeLabelColor: true }),
@@ -25,6 +25,10 @@ export function TextFieldWrapper({
     </section>
   );
 }
+
+const textFieldWrapperStyles = css.raw({
+  position: 'relative',
+});
 
 const labelStyles = cva({
   base: {},

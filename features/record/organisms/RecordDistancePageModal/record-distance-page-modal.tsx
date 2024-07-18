@@ -9,6 +9,7 @@ import { HeaderBar } from '@/components/atoms';
 import { UseTab } from '@/components/molecules';
 import Tab from '@/components/molecules/Tab/Tab';
 import { TabItem } from '@/components/molecules/Tab/TabItem';
+import { InputTextField } from '@/components/molecules/TextField/input-text-field';
 import { css } from '@/styled-system/css';
 
 import { AddField } from './add-field';
@@ -67,16 +68,23 @@ export function RecordDistancePageModal({
             />
           </Tab>
         </section>
-        <section className={css(recordSwimFieldsStyles)}>
-          {strokeOptions.map((option) => (
-            <RecordSwimField
-              key={option}
-              label={option}
-              addStyles={css.raw({ marginBottom: '16px' })}
-            />
-          ))}
-          <AddField text="영법 추가" />
-        </section>
+        {secondaryTabIndex === 0 && (
+          <section className={css(recordSectionStyles)}>
+            <InputTextField unit="m" />
+          </section>
+        )}
+        {secondaryTabIndex === 1 && (
+          <section className={css(recordSectionStyles)}>
+            {strokeOptions.map((option) => (
+              <RecordSwimField
+                key={option}
+                label={option}
+                addStyles={css.raw({ marginBottom: '16px' })}
+              />
+            ))}
+            <AddField text="영법 추가" />
+          </section>
+        )}
       </div>
     </CSSTransition>
   );
@@ -101,7 +109,7 @@ const tabSectionStyles = css.raw({
   padding: '0 20px',
 });
 
-const recordSwimFieldsStyles = css.raw({
+const recordSectionStyles = css.raw({
   padding: '20px',
   marginBottom: '16px',
 });

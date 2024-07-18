@@ -12,24 +12,34 @@ export function InputTextField({
   isRequired = false,
   subText,
   placeholder,
+  unit,
   maxLength,
   addWrapperStyles,
   addStyles,
   onChange,
 }: InputTextFieldProps) {
   const [text, setText] = useState('');
+  const [focused, setFocused] = useState(false);
+
+  const isWritten = text.trim().length > 0 ? true : false;
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     setText(newText);
     onChange && onChange(newText);
   };
-  const isWritten = text.trim().length > 0 ? true : false;
+  const handleFocus = () => {
+    setFocused(true);
+  };
+  const handleBlur = () => {
+    setFocused(false);
+  };
 
   return (
     <TextFieldWrapper
       isRequired={isRequired}
       label={label}
-      changeLabelColor={isWritten}
+      changeLabelColor={isWritten || focused}
       addStyles={addWrapperStyles}
     >
       <input
@@ -38,13 +48,16 @@ export function InputTextField({
         placeholder={placeholder}
         maxLength={maxLength}
         onChange={handleInputChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className={css(
-          isWritten
+          isWritten || focused
             ? inputStyles.raw({ isWritten: true })
             : inputStyles.raw({}),
           addStyles,
         )}
       />
+      <span className={css(unitStyles)}>{unit}</span>
       <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
@@ -71,4 +84,10 @@ const inputStyles = cva({
 
 const subTextStyles = css.raw({
   color: 'text.alternative',
+});
+
+const unitStyles = css.raw({
+  position: 'absolute',
+  bottom: '6px',
+  right: 0,
 });
