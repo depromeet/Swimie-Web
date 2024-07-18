@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from 'react';
 
 import { TextFieldWrapper } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 
 import { InputTextFieldProps } from './type';
 
@@ -23,11 +23,13 @@ export function InputTextField({
     setText(newText);
     onChange && onChange(newText);
   };
+  const isWritten = text.trim().length > 0 ? true : false;
 
   return (
     <TextFieldWrapper
       isRequired={isRequired}
       label={label}
+      changeLabelColor={isWritten}
       addStyles={addWrapperStyles}
     >
       <input
@@ -36,20 +38,35 @@ export function InputTextField({
         placeholder={placeholder}
         maxLength={maxLength}
         onChange={handleInputChange}
-        className={css(inputStyles, addStyles)}
+        className={css(
+          isWritten
+            ? inputStyles.raw({ isWritten: true })
+            : inputStyles.raw({}),
+          addStyles,
+        )}
       />
       <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
 }
 
-const inputStyles = css.raw({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '10px 0px',
-  borderBottom: '1px solid',
+const inputStyles = cva({
+  base: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'center',
+    padding: '10px 0px',
+    borderBottom: '2px solid',
+    borderBottomColor: 'line.alternative',
+    outline: 'none',
+  },
+  variants: {
+    isWritten: {
+      true: { borderBottom: '2px solid', borderBottomColor: 'blue.60' },
+    },
+  },
 });
 
 const subTextStyles = css.raw({

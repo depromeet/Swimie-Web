@@ -1,7 +1,7 @@
 'use client';
 
-import { StarIcon } from '@/components/atoms';
 import { SelectTextField } from '@/components/molecules';
+import { InputTextField } from '@/components/molecules/TextField/input-text-field';
 import { css } from '@/styled-system/css';
 
 import {
@@ -95,6 +95,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
           onClick={recordDistancePageModalHandlers.openPageModal}
         />
+        <InputTextField label="abc" placeholder="ssg" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <RailLengthBottomSheet
@@ -126,7 +127,6 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}
       />
-      <StarIcon />
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
     </>
   );
