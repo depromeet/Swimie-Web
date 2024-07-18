@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export interface TextFieldProps {
   label: string;
   isRequired?: boolean;
+  subText?: string;
   placeholder?: string;
   maxLength?: number;
   addStyles?: object;
@@ -11,7 +12,6 @@ export interface TextFieldProps {
 
 export interface SelectTextFieldProps
   extends Omit<TextFieldProps, 'maxLength'> {
-  subText?: string;
   value: string;
   hasDownArrow?: boolean;
   dropDownComponent?: ReactNode;
