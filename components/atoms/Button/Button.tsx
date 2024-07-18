@@ -48,13 +48,7 @@ const Button = ({
           : type === 'secondary'
             ? 'blue.60'
             : 'text.normal',
-    width: size
-      ? size
-      : size === 'large'
-        ? '149px'
-        : size === 'medium'
-          ? '125px'
-          : '102px',
+    width: size === 'large' ? '149px' : size === 'medium' ? '125px' : '102px',
     height: size === 'large' ? '48px' : size === 'medium' ? '40px' : '32px',
     padding:
       size === 'large'
