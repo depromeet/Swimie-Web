@@ -1,5 +1,6 @@
 'use client';
 
+import { StarIcon } from '@/components/atoms';
 import { SelectTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
@@ -21,6 +22,7 @@ import { RecordFormProps } from './type';
 import { UseRecordForm } from './useRecordForm';
 
 export function RecordForm({ addStyles }: RecordFormProps) {
+  //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
   const {
     isOpen: isStartTimeBottomSheetOpen,
@@ -124,6 +126,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}
       />
+      <StarIcon />
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
     </>
   );
