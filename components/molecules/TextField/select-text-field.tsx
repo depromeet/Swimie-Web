@@ -7,6 +7,7 @@ import { SelectTextFieldProps } from './type';
 
 export function SelectTextField({
   isRequired = false,
+  subText,
   value,
   placeholder,
   label,
@@ -30,6 +31,7 @@ export function SelectTextField({
         <span>{value === '' ? placeholder : value}</span>
         {hasDownArrow && <DownArrowIcon />}
       </div>
+      <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
 }
@@ -41,4 +43,8 @@ const inputStyles = css.raw({
   alignItems: 'center',
   padding: '10px 0px',
   borderBottom: '1px solid',
+});
+
+const subTextStyles = css.raw({
+  color: 'text.alternative',
 });

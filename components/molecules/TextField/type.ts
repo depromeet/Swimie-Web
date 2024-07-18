@@ -11,6 +11,7 @@ export interface TextFieldProps {
 
 export interface SelectTextFieldProps
   extends Omit<TextFieldProps, 'maxLength'> {
+  subText?: string;
   value: string;
   hasDownArrow?: boolean;
   dropDownComponent?: ReactNode;
