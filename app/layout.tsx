@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
 import ReactQueryProvider from './providers/ReactQueryProvider';
+import { pretendard } from './styles/font';
 
 export const metadata: Metadata = {
   title: '2팀 최고~',
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={pretendard.className}>
       <body>
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
