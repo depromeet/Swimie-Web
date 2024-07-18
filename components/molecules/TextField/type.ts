@@ -5,6 +5,7 @@ export interface TextFieldProps {
   placeholder?: string;
   maxLength?: number;
   addWrapperStyles?: object;
+  addTextStyles?: object;
   addStyles?: object;
 }
 

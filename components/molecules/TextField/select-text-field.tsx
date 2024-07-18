@@ -1,7 +1,7 @@
 'use client';
 
 import { DownArrowIcon, TextFieldWrapper } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 
 import { SelectTextFieldProps } from './type';
 
@@ -12,10 +12,12 @@ export function SelectTextField({
   placeholder,
   label,
   addStyles,
+  addTextStyles,
   addWrapperStyles,
   hasDownArrow = true,
   onClick,
 }: SelectTextFieldProps) {
+  const hasValue = value === '';
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     onClick && onClick();
@@ -28,7 +30,16 @@ export function SelectTextField({
       addStyles={addWrapperStyles}
     >
       <div className={css(inputStyles, addStyles)} onClick={handleInputClick}>
-        <span>{value === '' ? placeholder : value}</span>
+        <span
+          className={css(
+            hasValue
+              ? textStyles.raw({ variant: 'placeholder' })
+              : textStyles.raw({ variant: 'value' }),
+            addTextStyles,
+          )}
+        >
+          {hasValue ? placeholder : value}
+        </span>
         {hasDownArrow && <DownArrowIcon />}
       </div>
       <span className={css(subTextStyles)}>{subText}</span>
@@ -42,7 +53,18 @@ const inputStyles = css.raw({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '10px 0px',
-  borderBottom: '1px solid',
+  borderBottom: '2px solid',
+  borderBottomColor: 'line.alternative',
+});
+
+const textStyles = cva({
+  base: {},
+  variants: {
+    variant: {
+      placeholder: { color: '#8B95A1' },
+      value: { color: 'text.normal' },
+    },
+  },
 });
 
 const subTextStyles = css.raw({
