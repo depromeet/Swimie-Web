@@ -15,8 +15,9 @@ export function TimeBottomSheet({
   addStyles,
 }: BottomSheetProps<string>) {
   const [time, setTime] = useState('');
-
+  console.log(time);
   const handleTimeChange = (date: dayjs.Dayjs) => {
+    console.log('hi');
     setTime(date.format('HH:mm'));
   };
   const handleClickButton = () => {
@@ -34,7 +35,11 @@ export function TimeBottomSheet({
         autoFocus
         showNow={false}
         size="large"
+        placement="bottomLeft"
+        needConfirm={false}
+        inputReadOnly
         onChange={handleTimeChange}
+        className={css({ width: '100%' })}
       />
       <button className={css(buttonStyles)} onClick={handleClickButton}>
         확인
@@ -49,11 +54,11 @@ const timeBottomSheetStyles = css.raw({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'space-around',
-  height: '200px',
   backgroundColor: 'white',
   bottom: 0,
   left: 0,
   width: '100%',
+  height: '400px',
   border: '1.5px solid',
   padding: '10px 15px',
 });
