@@ -16,8 +16,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.45.1",
     "@tanstack/react-query-devtools": "^5.45.1",
+    "@types/lodash": "^4.17.7",
     "antd": "^5.19.2",
     "dayjs": "^1.11.11",
+    "lodash": "^4.17.21",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",

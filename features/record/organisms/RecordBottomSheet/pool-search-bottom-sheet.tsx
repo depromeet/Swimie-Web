@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { debounce } from 'lodash';
+import { Suspense, useState } from 'react';
 
 import { SearchBar } from '@/components/molecules/Search';
 import { css, cva } from '@/styled-system/css';
 
+import useSearchPool from '../../queries/useSearchPool';
 import { PoolSearchBottomSheetProps } from './type';
 
 export function PoolSearchBottomSheet({
@@ -17,15 +19,10 @@ export function PoolSearchBottomSheet({
 }: PoolSearchBottomSheetProps) {
   //추후 api 통신으로 대체
   const [searchPoolName, setSearchPoolName] = useState<string>('');
-  const dummyResult = [
-    searchPoolName + '1',
-    searchPoolName + '2',
-    searchPoolName + '3',
-  ];
-
-  const handlePoolNameChange = (text: string) => {
+  const { data } = useSearchPool(searchPoolName);
+  const handlePoolNameChange = debounce((text: string) => {
     setSearchPoolName(text);
-  };
+  }, 300);
 
   const handleClickPoolListElement = (pool: string) => {
     modifyValue && modifyValue(pool);
@@ -41,19 +38,21 @@ export function PoolSearchBottomSheet({
         addStyles={css.raw({ marginBottom: '12px' })}
       />
       <ul className={css(listStyles)}>
-        {dummyResult.map((result, i: number) => (
-          <li
-            key={result}
-            className={css(
-              dummyResult.length - 1 !== i
-                ? listElementStyles.raw({ notLast: true })
-                : listElementStyles.raw(),
-            )}
-            onClick={() => handleClickPoolListElement(result)}
-          >
-            {result}
-          </li>
-        ))}
+        <Suspense fallback={'스켈레톤 컴포넌트'}>
+          {data?.data.poolInfos.map((info, i: number) => (
+            <li
+              key={info.poolId}
+              className={css(
+                data?.data.poolInfos.length - 1 !== i
+                  ? listElementStyles.raw({ notLast: true })
+                  : listElementStyles.raw(),
+              )}
+              onClick={() => handleClickPoolListElement(info.name)}
+            >
+              {info.name}
+            </li>
+          ))}
+        </Suspense>
       </ul>
     </div>
   ) : null;

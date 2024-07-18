@@ -43,7 +43,6 @@ export function RecordForm({ addStyles }: RecordFormProps) {
     jumpDirection,
     handlers: recordDistancePageModalHandlers,
   } = UseRecordDistancePageModal();
-
   return (
     <>
       <form className={css(formStyles, addStyles)}>
@@ -125,7 +124,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}
       />
-      {/* BottomSheet 관리 -> 전역 상태 관리 도입 고민 필요 */}
+      {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
     </>
   );
 }
