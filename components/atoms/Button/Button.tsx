@@ -4,7 +4,7 @@ import { css } from '@/styled-system/css';
 
 import { ButtonPropsWithIcons } from './type';
 
-const Button = ({
+export const Button = ({
   size,
   disabled,
   leftIcon,
@@ -107,5 +107,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;

@@ -13,6 +13,7 @@ export interface ClickTabItemProps extends TabItemProps {
 export type TabProps = {
   variant?: 'fill' | 'fit-content';
   children?: React.ReactNode;
+  addStyles?: object;
 };
 
 export type TabTypeProps = {

@@ -59,6 +59,7 @@ export const TabItem = ({
           : type === 'assistive' && selected
             ? 'background.white'
             : 'text.normal',
+    whiteSpace: 'nowrap',
   });
 
   return (

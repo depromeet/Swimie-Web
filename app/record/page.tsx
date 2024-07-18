@@ -4,7 +4,7 @@ import { css } from '@/styled-system/css';
 
 export default function RecordPage() {
   return (
-    <main>
+    <div>
       <HeaderBar addStyles={css.raw({ marginBottom: '24px' })}>
         <div className={css(titleWrapperStyles)}>
           <h1>수영 기록하기</h1>
@@ -14,7 +14,7 @@ export default function RecordPage() {
         기본정보
       </h1>
       <RecordForm addStyles={css.raw({ padding: '0px 20px' })} />
-    </main>
+    </div>
   );
 }
 
