@@ -71,7 +71,7 @@ export function RecordDistancePageModal({
         <section className={css(recordSectionStyles)}>
           {secondaryTabIndex === 0 && (
             <InputTextField
-              unit="m"
+              unit="미터(m)"
               addWrapperStyles={css.raw({ marginTop: '30px' })}
             />
           )}

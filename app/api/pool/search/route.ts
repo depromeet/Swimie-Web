@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
         'Content-Type': 'application/json',
         // 임시 토큰
         Authorization:
-          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkcG0xNTJiZSIsInN1YiI6IjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyMTI4OTM1NiwiZXhwIjoxNzIxMjkyOTU2fQ.j24CIOM8ByGYVE0wmvCf8Pd7HEfvNW9k3KuF53TVxVhlJPwLVItE1c2CjOrVnZJ8gK55fCjVqdV3WDC2v11aeQ',
+          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkcG0xNTJiZSIsInN1YiI6IjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyMTM2OTU2MCwiZXhwIjoxNzMzNDY1NTYwfQ.uiRq1PkjCl4ZdZjwFkzdnl1L_C4jSnGAFpbFkokjeK1NMjM4DjA01K7VFu0fCACftfHUX8kVppzjXyKIX1p2QA',
       },
       cache: 'no-store',
     },

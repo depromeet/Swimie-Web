@@ -52,7 +52,7 @@ const inputStyles = css.raw({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '10px 0px',
+  padding: '4px 0px',
   borderBottom: '2px solid',
   borderBottomColor: 'line.alternative',
 });
