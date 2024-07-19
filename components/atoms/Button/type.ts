@@ -5,7 +5,7 @@ export type ButtonProps = {
   leftIcon?: boolean;
   rightIcon?: boolean;
   interaction: 'normal' | 'hovered' | 'focused' | 'pressed';
-  variant?: 'solid' | 'outlined';
+  variant?: 'solid' | 'outlined' | 'text';
   type?: 'primary' | 'secondary' | 'assistive';
 };
 

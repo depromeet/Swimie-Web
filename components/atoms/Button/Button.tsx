@@ -5,7 +5,7 @@ import { css } from '@/styled-system/css';
 import { ButtonPropsWithIcons } from './type';
 
 const Button = ({
-  size,
+  size = 'medium',
   disabled,
   leftIcon,
   rightIcon,
@@ -15,56 +15,81 @@ const Button = ({
   variant = 'solid',
   type = 'primary',
 }: ButtonPropsWithIcons) => {
-  const buttonStyles = css({
-    backgroundColor:
-      variant === 'solid' ? (disabled ? 'fill.disable' : 'blue.60') : 'white',
-    border:
-      variant === 'solid'
-        ? disabled
-          ? 'none '
-          : 'none'
-        : type === 'primary'
-          ? '1px solid'
-          : type === 'secondary'
-            ? '1px solid'
-            : '1px solid',
-    borderColor:
-      variant === 'solid'
-        ? disabled
-          ? 'none '
-          : 'none'
-        : type === 'primary'
-          ? '#3385FF'
-          : type === 'secondary'
-            ? '#70737C38'
-            : '#70737C38',
-    color:
-      variant === 'solid'
-        ? disabled
-          ? 'text.placeHolder'
-          : 'white'
-        : type === 'primary'
+  const sizeStyles = {
+    large: {
+      width: '149px',
+      height: '48px',
+      padding: '12px 28px',
+      borderRadius: '10px',
+      iconSize: 20,
+    },
+    medium: {
+      width: '125px',
+      height: '40px',
+      padding: '9px 20px',
+      borderRadius: '8px',
+      iconSize: 18,
+    },
+    small: {
+      width: '102px',
+      height: '32px',
+      padding: '7px 14px',
+      borderRadius: '6px',
+      iconSize: 16,
+    },
+  };
+
+  const colorStyles = {
+    solid: {
+      backgroundColor: disabled ? 'fill.disable' : 'blue.60',
+      color: disabled ? 'text.placeHolder' : 'white',
+      border: 'none',
+      borderColor: 'transparent',
+    },
+    outlined: {
+      backgroundColor: 'white',
+      border: '1px solid',
+      borderColor: disabled
+        ? 'line.normal'
+        : type === 'primary' || type === 'secondary'
           ? 'blue.60'
-          : type === 'secondary'
-            ? 'blue.60'
-            : 'text.normal',
-    width: size === 'large' ? '149px' : size === 'medium' ? '125px' : '102px',
-    height: size === 'large' ? '48px' : size === 'medium' ? '40px' : '32px',
-    padding:
-      size === 'large'
-        ? '12px 28px'
-        : size === 'medium'
-          ? '9px 20px'
-          : '7px 14px',
-    borderRadius: size === 'large' ? '10px' : size === 'small' ? '6px' : '4px',
-    position: 'relative',
+          : 'line.normal',
+      color: disabled
+        ? 'text.placeHolder'
+        : type === 'primary' || type === 'secondary'
+          ? 'blue.60'
+          : 'text.normal',
+    },
+    text: {
+      backgroundColor: 'transparent',
+      border: 'none',
+      borderColor: 'transparent',
+      color: disabled
+        ? 'text.placeHolder'
+        : type === 'primary' || type === 'secondary'
+          ? 'blue.60'
+          : 'text.alternative',
+    },
+  };
+
+  const { width, height, padding, borderRadius, iconSize } = sizeStyles[size];
+  const { backgroundColor, border, borderColor, color } = colorStyles[variant];
+
+  const buttonStyles = css({
+    backgroundColor,
+    border,
+    borderColor,
+    color,
+    width,
+    height,
+    padding,
+    borderRadius,
     display: 'flex',
     alignItems: 'center',
     justifyContent: leftIcon && rightIcon ? 'space-between' : 'center',
     cursor: disabled ? 'not-allowed' : 'pointer',
+    position: 'relative',
   });
-
-  const iconSize = size === 'large' ? 20 : size === 'medium' ? 18 : 16;
 
   const iconWrapperStyles = css({
     width: `${iconSize}px`,
@@ -76,7 +101,7 @@ const Button = ({
   });
 
   return (
-    <button className={buttonStyles}>
+    <button className={buttonStyles} disabled={disabled}>
       {leftIcon && leftIconSrc && (
         <div className={iconWrapperStyles}>
           <Image
