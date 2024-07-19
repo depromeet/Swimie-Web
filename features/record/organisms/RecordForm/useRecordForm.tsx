@@ -2,23 +2,41 @@
 
 import { useState } from 'react';
 
+import { railLengthOptions } from './options';
+
 interface RecordInfoProps {
-  date: string;
-  startTime: string;
-  endTime: string;
-  pool: string;
-  railLengthOption: number;
-  distance: string;
+  poolId: number | null;
+  item: string | null;
+  heartRate: number | null;
+  pace: string | null;
+  kcal: number | null;
+  recordAt: string; // 필수
+  startTime: string; // 필수
+  endTime: string; // 필수
+  lane: number;
+  diary: string | null;
+  strokes: {
+    name: string;
+    laps: number;
+    meter: number;
+  }[];
+  imageIdList: number[];
 }
 
 export function UseRecordForm(date: string) {
   const [recordInfo, setRecordInfo] = useState<RecordInfoProps>({
-    date,
-    startTime: '',
-    endTime: '',
-    pool: '',
-    railLengthOption: 0,
-    distance: '',
+    poolId: null,
+    item: null,
+    heartRate: null,
+    pace: null,
+    kcal: null,
+    recordAt: date, // 필수
+    startTime: '', // 필수
+    endTime: '', // 필수
+    lane: 25,
+    diary: null,
+    strokes: [],
+    imageIdList: [],
   });
 
   const changeStartTime = (startTime: string) => {
@@ -33,8 +51,11 @@ export function UseRecordForm(date: string) {
     setRecordInfo((prev) => ({ ...prev, pool }));
   };
 
-  const changeRailLength = (railLengthOption: number) => {
-    setRecordInfo((prev) => ({ ...prev, railLengthOption }));
+  const changeRailLength = (value: number) => {
+    setRecordInfo((prev) => ({
+      ...prev,
+      lane: Number(railLengthOptions[value].label.slice(0, -1)),
+    }));
   };
 
   const changeDistance = (distance: string) => {

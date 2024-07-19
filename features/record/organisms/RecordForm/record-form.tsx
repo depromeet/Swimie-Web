@@ -1,6 +1,6 @@
 'use client';
 
-import { SelectTextField } from '@/components/molecules';
+import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import {
@@ -46,24 +46,26 @@ export function RecordForm() {
   return (
     <>
       <form className={css(formStyles)}>
-        <SelectTextField
+        <TextField
+          variant="select"
           isRequired
-          value={recordInfo.date}
+          placeholder={recordInfo.recordAt}
           label="수영 날짜"
-          hasDownArrow={false}
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
         />
         <div className={css(timeTextFieldLayoutStyles)}>
-          <SelectTextField
+          <TextField
+            variant="select"
             isRequired
             value={recordInfo.startTime}
-            label="수영 시간"
             placeholder="00:00"
+            label="수영 시간"
             addWrapperStyles={timeTextFieldStyles}
             onClick={startTimeBottomSheetHandlers.openBottomSheet}
           />
           <span className={css({ fontSize: '30px' })}>-</span>
-          <SelectTextField
+          <TextField
+            variant="select"
             isRequired
             value={recordInfo.endTime}
             label="수영 시간"
@@ -72,24 +74,25 @@ export function RecordForm() {
             onClick={endTimeBottomSheetHandlers.openBottomSheet}
           />
         </div>
-        <SelectTextField
-          value={recordInfo.pool}
+        <TextField
+          variant="select"
+          value={''}
           placeholder="(선택)"
           label="수영장"
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
           onClick={poolSearchBottomSheetHandlers.openBottomSheet}
         />
-        <SelectTextField
-          value={railLengthOptions[recordInfo.railLengthOption].label}
+        <TextField
+          variant="select"
+          value={String(recordInfo.lane) + 'm'}
           label="레일 길이"
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
           onClick={railLengthBottomSheetHandlers.openBottomSheet}
         />
-        <SelectTextField
-          value={recordInfo.distance}
+        <TextField
+          value={''}
           placeholder="거리입력(선택)"
           label="수영 거리"
-          hasDownArrow={false}
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
           onClick={recordDistancePageModalHandlers.openPageModal}
         />
@@ -97,7 +100,11 @@ export function RecordForm() {
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <RailLengthBottomSheet
         title="레인 길이를 선택해주세요"
-        value={recordInfo.railLengthOption}
+        value={
+          recordInfo.lane === Number(railLengthOptions[0].label.slice(0, -1))
+            ? 0
+            : 1
+        }
         isOpen={isRailLengthBottomSheetOpen}
         modifyValue={handlers.changeRailLength}
         closeBottomSheet={railLengthBottomSheetHandlers.closeBottomSheet}

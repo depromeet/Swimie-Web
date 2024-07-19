@@ -6,10 +6,9 @@ import { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { HeaderBar } from '@/components/atoms';
-import { UseTab } from '@/components/molecules';
+import { TextField, UseTab } from '@/components/molecules';
 import Tab from '@/components/molecules/Tab/Tab';
 import { TabItem } from '@/components/molecules/Tab/TabItem';
-import { InputTextField } from '@/components/molecules/TextField/input-text-field';
 import { css } from '@/styled-system/css';
 
 import { AddField } from './add-field';
@@ -70,8 +69,8 @@ export function RecordDistancePageModal({
         </section>
         <section className={css(recordSectionStyles)}>
           {secondaryTabIndex === 0 && (
-            <InputTextField
-              type="number"
+            <TextField
+              inputType="number"
               unit={assistiveTabIndex === 0 ? '미터(m)' : '바퀴'}
               addWrapperStyles={css.raw({ marginTop: '30px' })}
             />

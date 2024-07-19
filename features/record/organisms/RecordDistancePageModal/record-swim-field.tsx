@@ -1,4 +1,4 @@
-import { InputTextField } from '@/components/molecules/TextField/input-text-field';
+import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import { SwimBadge } from '../../atoms';
@@ -15,8 +15,8 @@ export function RecordSwimField({
         <SwimBadge />
         <span className={css(labelStyles)}>{label}</span>
       </div>
-      <InputTextField
-        type="number"
+      <TextField
+        inputType="number"
         placeholder="0"
         unit={assistiveTabIndex === 0 ? 'm' : '바퀴'}
         addStyles={css.raw({ width: '100px' })}

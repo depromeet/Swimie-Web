@@ -2,23 +2,26 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { TextFieldWrapper } from '@/components/atoms';
+import { DownArrowIcon, TextFieldWrapper } from '@/components/atoms';
 import { css, cva } from '@/styled-system/css';
 
-import { InputTextFieldProps } from './type';
+import { TextFieldProps } from './type';
 
-export function InputTextField({
+export function TextField({
+  variant,
+  inputType = 'text',
   label,
   isRequired = false,
+  value,
   subText,
-  type = 'text',
   placeholder,
   unit,
   maxLength,
   addWrapperStyles,
   addStyles,
+  onClick,
   onChange,
-}: InputTextFieldProps) {
+}: TextFieldProps) {
   const [text, setText] = useState('');
   const [focused, setFocused] = useState(false);
 
@@ -44,21 +47,26 @@ export function InputTextField({
       addStyles={addWrapperStyles}
     >
       <input
-        type={type}
-        value={text}
+        readOnly={variant === 'select'}
+        type={inputType}
+        value={value ? value : text}
         placeholder={placeholder}
         maxLength={maxLength}
         onChange={handleInputChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onFocus={variant === 'text' ? handleFocus : undefined}
+        onBlur={variant === 'text' ? handleBlur : undefined}
         className={css(
           isWritten || focused
             ? inputStyles.raw({ isWritten: true })
             : inputStyles.raw({}),
           addStyles,
         )}
+        onClick={onClick}
       />
-      <span className={css(unitStyles)}>{unit}</span>
+      <span className={css(absoluteStyles)}>
+        {variant === 'select' && <DownArrowIcon />}
+      </span>
+      <span className={css(absoluteStyles)}>{unit}</span>
       <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
@@ -87,7 +95,7 @@ const subTextStyles = css.raw({
   color: 'text.alternative',
 });
 
-const unitStyles = css.raw({
+const absoluteStyles = css.raw({
   position: 'absolute',
   bottom: '6px',
   right: 0,

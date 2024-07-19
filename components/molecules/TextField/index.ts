@@ -1,2 +1,2 @@
-export { SelectTextField } from './select-text-field';
+export { TextField } from './text-field';
 export * from './type';
