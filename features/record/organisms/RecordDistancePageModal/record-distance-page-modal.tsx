@@ -68,23 +68,26 @@ export function RecordDistancePageModal({
             />
           </Tab>
         </section>
-        {secondaryTabIndex === 0 && (
-          <section className={css(recordSectionStyles)}>
-            <InputTextField unit="m" />
-          </section>
-        )}
-        {secondaryTabIndex === 1 && (
-          <section className={css(recordSectionStyles)}>
-            {strokeOptions.map((option) => (
-              <RecordSwimField
-                key={option}
-                label={option}
-                addStyles={css.raw({ marginBottom: '16px' })}
-              />
-            ))}
-            <AddField text="영법 추가" />
-          </section>
-        )}
+        <section className={css(recordSectionStyles)}>
+          {secondaryTabIndex === 0 && (
+            <InputTextField
+              unit="m"
+              addWrapperStyles={css.raw({ marginTop: '30px' })}
+            />
+          )}
+          {secondaryTabIndex === 1 && (
+            <>
+              {strokeOptions.map((option) => (
+                <RecordSwimField
+                  key={option}
+                  label={option}
+                  addStyles={css.raw({ marginBottom: '16px' })}
+                />
+              ))}
+              <AddField text="영법 추가" />
+            </>
+          )}
+        </section>
       </div>
     </CSSTransition>
   );
