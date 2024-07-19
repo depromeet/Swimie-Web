@@ -4,7 +4,11 @@ import { css } from '@/styled-system/css';
 import { SwimBadge } from '../../atoms';
 import { RecordSwimFieldProps } from './type';
 
-export function RecordSwimField({ label, addStyles }: RecordSwimFieldProps) {
+export function RecordSwimField({
+  label,
+  assistiveTabIndex,
+  addStyles,
+}: RecordSwimFieldProps) {
   return (
     <div className={css(recordSwimFieldStyles, addStyles)}>
       <div className={css(badgeStyles)}>
@@ -12,8 +16,9 @@ export function RecordSwimField({ label, addStyles }: RecordSwimFieldProps) {
         <span className={css(labelStyles)}>{label}</span>
       </div>
       <InputTextField
+        type="number"
         placeholder="0"
-        unit="m"
+        unit={assistiveTabIndex === 0 ? 'm' : '바퀴'}
         addStyles={css.raw({ width: '100px' })}
       />
     </div>

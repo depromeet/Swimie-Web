@@ -6,6 +6,7 @@ export interface RecordDistancePageModalProps {
 
 export interface RecordSwimFieldProps {
   label: string;
+  assistiveTabIndex: number;
   addStyles?: object;
 }
 

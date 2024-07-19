@@ -17,6 +17,7 @@ export interface SelectTextFieldProps
 }
 
 export interface InputTextFieldProps extends TextFieldProps {
+  type?: string;
   unit?: string;
   onChange?: (text: string) => void;
 }

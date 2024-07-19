@@ -17,10 +17,9 @@ import {
   UseRecordDistancePageModal,
 } from '../RecordDistancePageModal';
 import { railLengthOptions } from './options';
-import { RecordFormProps } from './type';
 import { UseRecordForm } from './useRecordForm';
 
-export function RecordForm({ addStyles }: RecordFormProps) {
+export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
   const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
   const {
@@ -46,7 +45,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
   } = UseRecordDistancePageModal();
   return (
     <>
-      <form className={css(formStyles, addStyles)}>
+      <form className={css(formStyles)}>
         <SelectTextField
           isRequired
           value={recordInfo.date}
@@ -132,6 +131,7 @@ export function RecordForm({ addStyles }: RecordFormProps) {
 
 const formStyles = css.raw({
   width: '100%',
+  padding: '0px 20px',
 });
 
 const timeTextFieldLayoutStyles = css.raw({

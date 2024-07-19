@@ -13,7 +13,7 @@ export default function RecordPage() {
       <h1 className={css({ padding: '0px 20px', marginBottom: '23px' })}>
         기본정보
       </h1>
-      <RecordForm addStyles={css.raw({ padding: '0px 20px' })} />
+      <RecordForm />
     </div>
   );
 }

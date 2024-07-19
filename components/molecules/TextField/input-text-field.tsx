@@ -11,6 +11,7 @@ export function InputTextField({
   label,
   isRequired = false,
   subText,
+  type = 'text',
   placeholder,
   unit,
   maxLength,
@@ -43,7 +44,7 @@ export function InputTextField({
       addStyles={addWrapperStyles}
     >
       <input
-        type="text"
+        type={type}
         value={text}
         placeholder={placeholder}
         maxLength={maxLength}

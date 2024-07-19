@@ -71,7 +71,8 @@ export function RecordDistancePageModal({
         <section className={css(recordSectionStyles)}>
           {secondaryTabIndex === 0 && (
             <InputTextField
-              unit="미터(m)"
+              type="number"
+              unit={assistiveTabIndex === 0 ? '미터(m)' : '바퀴'}
               addWrapperStyles={css.raw({ marginTop: '30px' })}
             />
           )}
@@ -81,6 +82,7 @@ export function RecordDistancePageModal({
                 <RecordSwimField
                   key={option}
                   label={option}
+                  assistiveTabIndex={assistiveTabIndex}
                   addStyles={css.raw({ marginBottom: '16px' })}
                 />
               ))}
