@@ -21,7 +21,8 @@ import { UseRecordForm } from './useRecordForm';
 
 export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
-  const { recordInfo, handlers } = UseRecordForm('2024년 7월 -일');
+  const { recordInfo, subInfo, handlers } = UseRecordForm('2024년 7월 -일');
+  console.log(recordInfo);
   const {
     isOpen: isStartTimeBottomSheetOpen,
     handlers: startTimeBottomSheetHandlers,
@@ -76,7 +77,7 @@ export function RecordForm() {
         </div>
         <TextField
           variant="select"
-          value={''}
+          value={subInfo.poolName}
           placeholder="(선택)"
           label="수영장"
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
@@ -113,7 +114,7 @@ export function RecordForm() {
         isOpen={isPoolSearchBottomSheetOpen}
         title="어디서 수영을 했나요?"
         placeholder="수영장 검색"
-        modifyValue={handlers.changePool}
+        modifyValue={handlers.changePoolId}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet

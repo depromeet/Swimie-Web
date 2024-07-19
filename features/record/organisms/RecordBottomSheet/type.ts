@@ -1,11 +1,12 @@
-export interface BottomSheetProps<T> {
+export interface BottomSheetProps<T, K = unknown> {
   isOpen: boolean;
-  modifyValue?: (value: T) => void;
+  modifyValue?: (value: T, value2: K) => void;
   closeBottomSheet?: () => void;
   addStyles?: object;
 }
 
-export interface PoolSearchBottomSheetProps extends BottomSheetProps<string> {
+export interface PoolSearchBottomSheetProps
+  extends BottomSheetProps<string, number> {
   title: string;
   placeholder: string;
 }

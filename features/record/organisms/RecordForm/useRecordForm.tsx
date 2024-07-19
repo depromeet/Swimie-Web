@@ -23,6 +23,10 @@ interface RecordInfoProps {
   imageIdList: number[];
 }
 
+interface SubInfoProps {
+  poolName: string;
+}
+
 export function UseRecordForm(date: string) {
   const [recordInfo, setRecordInfo] = useState<RecordInfoProps>({
     poolId: null,
@@ -38,6 +42,9 @@ export function UseRecordForm(date: string) {
     strokes: [],
     imageIdList: [],
   });
+  const [subInfo, setSubInfo] = useState<SubInfoProps>({
+    poolName: '',
+  });
 
   const changeStartTime = (startTime: string) => {
     setRecordInfo((prev) => ({ ...prev, startTime }));
@@ -47,8 +54,9 @@ export function UseRecordForm(date: string) {
     setRecordInfo((prev) => ({ ...prev, endTime }));
   };
 
-  const changePool = (pool: string) => {
-    setRecordInfo((prev) => ({ ...prev, pool }));
+  const changePoolId = (name: string, poolId: number) => {
+    setRecordInfo((prev) => ({ ...prev, poolId }));
+    setSubInfo((prev) => ({ ...prev, poolName: name }));
   };
 
   const changeRailLength = (value: number) => {
@@ -64,10 +72,11 @@ export function UseRecordForm(date: string) {
 
   return {
     recordInfo,
+    subInfo,
     handlers: {
       changeStartTime,
       changeEndTime,
-      changePool,
+      changePoolId,
       changeRailLength,
       changeDistance,
     },

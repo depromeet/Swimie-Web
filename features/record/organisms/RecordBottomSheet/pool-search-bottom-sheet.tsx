@@ -19,13 +19,15 @@ export function PoolSearchBottomSheet({
 }: PoolSearchBottomSheetProps) {
   //추후 api 통신으로 대체
   const [searchPoolName, setSearchPoolName] = useState<string>('');
+
   const { data } = useSearchPool(searchPoolName);
+
   const handlePoolNameChange = debounce((text: string) => {
     setSearchPoolName(text);
   }, 300);
 
-  const handleClickPoolListElement = (pool: string) => {
-    modifyValue && modifyValue(pool);
+  const handleClickPoolListElement = (name: string, poolId: number) => {
+    modifyValue && modifyValue(name, poolId);
     closeBottomSheet && closeBottomSheet();
   };
   return isOpen ? (
@@ -47,7 +49,7 @@ export function PoolSearchBottomSheet({
                   ? listElementStyles.raw({ notLast: true })
                   : listElementStyles.raw(),
               )}
-              onClick={() => handleClickPoolListElement(info.name)}
+              onClick={() => handleClickPoolListElement(info.name, info.poolId)}
             >
               {info.name}
             </li>
