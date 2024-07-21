@@ -25,9 +25,12 @@ interface RecordInfoProps {
 
 interface SubInfoProps {
   poolName: string;
+  totalMeters: number;
+  totalLaps: number;
 }
 
 export function UseRecordForm(date: string) {
+  //처음 기록 or 두번째 이상 기록일 때 default 값 달라져야함
   const [recordInfo, setRecordInfo] = useState<RecordInfoProps>({
     poolId: null,
     item: null,
@@ -44,6 +47,8 @@ export function UseRecordForm(date: string) {
   });
   const [subInfo, setSubInfo] = useState<SubInfoProps>({
     poolName: '',
+    totalMeters: 0,
+    totalLaps: 0,
   });
 
   const changeStartTime = (startTime: string) => {
@@ -66,8 +71,12 @@ export function UseRecordForm(date: string) {
     }));
   };
 
-  const changeDistance = (distance: string) => {
-    setRecordInfo((prev) => ({ ...prev, distance }));
+  const changeTotalMeters = (totalMeters: number) => {
+    setSubInfo((prev) => ({ ...prev, totalMeters }));
+  };
+
+  const changeTotalLaps = (totalLaps: number) => {
+    setSubInfo((prev) => ({ ...prev, totalLaps }));
   };
 
   return {
@@ -78,7 +87,8 @@ export function UseRecordForm(date: string) {
       changeEndTime,
       changePoolId,
       changeRailLength,
-      changeDistance,
+      changeTotalMeters,
+      changeTotalLaps,
     },
   };
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { DownArrowIcon, TextFieldWrapper } from '@/components/atoms';
 import { css, cva } from '@/styled-system/css';
@@ -8,12 +8,13 @@ import { css, cva } from '@/styled-system/css';
 import { TextFieldProps } from './type';
 
 export function TextField({
-  variant,
+  variant = 'text',
   inputType = 'text',
   label,
   isRequired = false,
   value,
   subText,
+  hasDownArrow = false,
   placeholder,
   unit,
   maxLength,
@@ -24,9 +25,7 @@ export function TextField({
 }: TextFieldProps) {
   const [text, setText] = useState('');
   const [focused, setFocused] = useState(false);
-
   const isWritten = text.trim().length > 0 ? true : false;
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     setText(newText);
@@ -39,34 +38,53 @@ export function TextField({
     setFocused(false);
   };
 
+  //variant==='text' 이고 값이 있으면 border가 blue.60으로 되어있도록
+  useEffect(() => {
+    if (value) setText(value);
+  }, [value]);
+
   return (
     <TextFieldWrapper
       isRequired={isRequired}
       label={label}
-      changeLabelColor={isWritten || focused}
+      changeLabelColor={(variant === 'text' && isWritten) || focused}
       addStyles={addWrapperStyles}
     >
       <input
         readOnly={variant === 'select'}
         type={inputType}
-        value={value ? value : text}
+        value={value}
         placeholder={placeholder}
         maxLength={maxLength}
         onChange={handleInputChange}
         onFocus={variant === 'text' ? handleFocus : undefined}
         onBlur={variant === 'text' ? handleBlur : undefined}
         className={css(
-          isWritten || focused
+          (variant === 'text' && isWritten) || focused
             ? inputStyles.raw({ isWritten: true })
             : inputStyles.raw({}),
           addStyles,
         )}
         onClick={onClick}
       />
-      <span className={css(absoluteStyles)}>
-        {variant === 'select' && <DownArrowIcon />}
+      <span
+        className={css(
+          subText
+            ? absoluteStyles.raw({ hasSubText: true })
+            : absoluteStyles.raw({ hasSubText: false }),
+        )}
+      >
+        {variant === 'select' && hasDownArrow && <DownArrowIcon />}
       </span>
-      <span className={css(absoluteStyles)}>{unit}</span>
+      <span
+        className={css(
+          subText
+            ? absoluteStyles.raw({ hasSubText: true })
+            : absoluteStyles.raw({ hasSubText: false }),
+        )}
+      >
+        {unit}
+      </span>
       <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
@@ -79,7 +97,8 @@ const inputStyles = cva({
     justifyContent: 'space-between',
     width: '100%',
     alignItems: 'center',
-    padding: '4px 0px',
+    padding: '5px 0px',
+    marginBottom: '3px',
     borderBottom: '2px solid',
     borderBottomColor: 'line.alternative',
     outline: 'none',
@@ -95,8 +114,12 @@ const subTextStyles = css.raw({
   color: 'text.alternative',
 });
 
-const absoluteStyles = css.raw({
-  position: 'absolute',
-  bottom: '6px',
-  right: 0,
+const absoluteStyles = cva({
+  base: { position: 'absolute', right: 0 },
+  variants: {
+    hasSubText: {
+      true: { bottom: '32px' },
+      false: { bottom: '10px' },
+    },
+  },
 });

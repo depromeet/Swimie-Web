@@ -1,4 +1,7 @@
 export interface RecordDistancePageModalProps {
+  currentLane: number;
+  modifyTotalMeters: (totalMeters: number) => void;
+  modifyTotalLaps: (totalLaps: number) => void;
   isOpen: boolean;
   jumpDirection: 'forward' | 'backward';
   closePageModal?: () => void;

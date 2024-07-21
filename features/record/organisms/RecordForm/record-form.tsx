@@ -22,7 +22,6 @@ import { UseRecordForm } from './useRecordForm';
 export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
   const { recordInfo, subInfo, handlers } = UseRecordForm('2024년 7월 -일');
-  console.log(recordInfo);
   const {
     isOpen: isStartTimeBottomSheetOpen,
     handlers: startTimeBottomSheetHandlers,
@@ -58,6 +57,7 @@ export function RecordForm() {
           <TextField
             variant="select"
             isRequired
+            hasDownArrow
             value={recordInfo.startTime}
             placeholder="00:00"
             label="수영 시간"
@@ -68,6 +68,7 @@ export function RecordForm() {
           <TextField
             variant="select"
             isRequired
+            hasDownArrow
             value={recordInfo.endTime}
             label="수영 시간"
             placeholder="00:00"
@@ -78,6 +79,7 @@ export function RecordForm() {
         <TextField
           variant="select"
           value={subInfo.poolName}
+          hasDownArrow
           placeholder="(선택)"
           label="수영장"
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
@@ -87,11 +89,17 @@ export function RecordForm() {
           variant="select"
           value={String(recordInfo.lane) + 'm'}
           label="레일 길이"
+          hasDownArrow
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
           onClick={railLengthBottomSheetHandlers.openBottomSheet}
         />
         <TextField
-          value={''}
+          variant="select"
+          value={
+            subInfo.totalMeters > 0
+              ? String(subInfo.totalMeters) + 'm'
+              : undefined
+          }
           placeholder="거리입력(선택)"
           label="수영 거리"
           addWrapperStyles={css.raw({ marginBottom: '24px' })}
@@ -128,6 +136,9 @@ export function RecordForm() {
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
       <RecordDistancePageModal
+        currentLane={recordInfo.lane}
+        modifyTotalMeters={handlers.changeTotalMeters}
+        modifyTotalLaps={handlers.changeTotalLaps}
         isOpen={isRecordDistancePageModalOpen}
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}

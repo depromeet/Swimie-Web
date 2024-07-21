@@ -2,7 +2,7 @@
 
 import './page-modal.css';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { HeaderBar } from '@/components/atoms';
@@ -17,14 +17,33 @@ import { RecordSwimField } from './record-swim-field';
 import { RecordDistancePageModalProps } from './type';
 
 export function RecordDistancePageModal({
+  currentLane,
+  modifyTotalMeters,
+  modifyTotalLaps,
   isOpen,
   jumpDirection,
   closePageModal,
 }: RecordDistancePageModalProps) {
+  const [totalMeters, setTotalMeters] = useState<number>(0);
+  const [totalLaps, setTotalLaps] = useState<number>(0);
   const ref = useRef<HTMLDivElement>(null);
+
   const { tabIndex: secondaryTabIndex, handlers: secondaryHandlers } = UseTab();
   const { tabIndex: assistiveTabIndex, handlers: assistiveHandlers } = UseTab();
 
+  const handleTotalMetersChange = (text: string) => {
+    setTotalLaps(0);
+    setTotalMeters(Number(text));
+  };
+  const handleTotalLapsChange = (text: string) => {
+    setTotalMeters(0);
+    setTotalLaps(Number(text));
+  };
+  const handleBackArrowClick = () => {
+    modifyTotalMeters(totalMeters);
+    modifyTotalLaps(totalLaps);
+    closePageModal && closePageModal();
+  };
   return (
     <CSSTransition
       nodeRef={ref}
@@ -35,7 +54,7 @@ export function RecordDistancePageModal({
       unmountOnExit
     >
       <div className={css(RecordDistancePageModalStyles)} ref={ref}>
-        <HeaderBar backArrowClick={closePageModal} />{' '}
+        <HeaderBar backArrowClick={handleBackArrowClick} />{' '}
         <h1 className={css(titleStyles)}>수영 거리 입력</h1>
         <section className={css(tabSectionStyles)}>
           <Tab type="secondary" addStyles={css.raw({ marginBottom: '12px' })}>
@@ -68,11 +87,24 @@ export function RecordDistancePageModal({
           </Tab>
         </section>
         <section className={css(recordSectionStyles)}>
-          {secondaryTabIndex === 0 && (
+          {secondaryTabIndex === 0 && assistiveTabIndex === 0 && (
             <TextField
               inputType="number"
-              unit={assistiveTabIndex === 0 ? '미터(m)' : '바퀴'}
+              subText={`${currentLane}m 레인 기준`}
+              value={totalMeters === 0 ? '' : String(totalMeters)}
+              unit="미터(m)"
               addWrapperStyles={css.raw({ marginTop: '30px' })}
+              onChange={handleTotalMetersChange}
+            />
+          )}
+          {secondaryTabIndex === 0 && assistiveTabIndex === 1 && (
+            <TextField
+              inputType="number"
+              subText={`${currentLane}m 레인 기준`}
+              value={totalLaps === 0 ? '' : String(totalLaps)}
+              unit="바퀴"
+              addWrapperStyles={css.raw({ marginTop: '30px' })}
+              onChange={handleTotalLapsChange}
             />
           )}
           {secondaryTabIndex === 1 && (

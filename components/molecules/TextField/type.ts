@@ -6,6 +6,7 @@ export interface TextFieldProps {
   inputType?: string;
   unit?: string;
   subText?: string;
+  hasDownArrow?: boolean;
   placeholder?: string;
   maxLength?: number;
   addWrapperStyles?: object;
