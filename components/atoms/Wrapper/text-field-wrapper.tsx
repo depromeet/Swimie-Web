@@ -32,6 +32,10 @@ const textFieldWrapperStyles = css.raw({
 });
 
 const labelStyles = cva({
+  base: {
+    textStyle: 'label1.normal',
+    fontWeight: '500',
+  },
   variants: {
     changeLabelColor: {
       true: { color: 'blue.60' },

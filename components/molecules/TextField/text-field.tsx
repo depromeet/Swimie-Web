@@ -51,14 +51,7 @@ export function TextField({
       changeLabelColor={(variant === 'text' && isWritten) || focused}
       addStyles={addWrapperStyles}
     >
-      <div
-        className={css({
-          position: 'relative',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-        })}
-      >
+      <div className={css(inputWrapperStyles)}>
         <input
           readOnly={variant === 'select'}
           type={inputType}
@@ -87,6 +80,14 @@ export function TextField({
   );
 }
 
+const inputWrapperStyles = css.raw({
+  position: 'relative',
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: '2px',
+});
+
 const inputStyles = cva({
   base: {
     position: 'relative',
@@ -98,6 +99,8 @@ const inputStyles = cva({
     borderBottom: '2px solid',
     marginBottom: '3px',
     outline: 'none',
+    textStyle: 'heading3',
+    fontWeight: '500',
   },
   variants: {
     isWritten: {
@@ -110,8 +113,12 @@ const inputStyles = cva({
 const absoluteStyles = css.raw({
   position: 'absolute',
   right: 0,
+  textStyle: 'heading4',
+  fontWeight: '500',
 });
 
 const subTextStyles = css.raw({
   color: 'text.alternative',
+  textStyle: 'label1.normal',
+  fontWeight: '500',
 });
