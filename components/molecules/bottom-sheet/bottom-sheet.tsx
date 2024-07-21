@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { MAX_LOOT_LAYOUT } from '@/constants';
 import { css, cx } from '@/styled-system/css';
 
 import { Dim } from './sheet-dim';
@@ -82,7 +81,7 @@ const getTranslateY = (direction: Direction, isOpen: boolean) => {
 };
 
 const containerStyle = css({
-  maxWidth: `${MAX_LOOT_LAYOUT}px`,
+  maxWidth: 'maxWidth',
   margin: '0 auto',
   height: 'auto',
   position: 'fixed',

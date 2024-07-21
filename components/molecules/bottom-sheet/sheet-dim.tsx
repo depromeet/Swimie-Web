@@ -1,4 +1,3 @@
-import { MAX_LOOT_LAYOUT } from '@/constants';
 import { css } from '@/styled-system/css';
 
 const dimStyle = css({
@@ -7,7 +6,7 @@ const dimStyle = css({
   zIndex: '800',
   display: 'block',
   width: '100%',
-  maxWidth: `${MAX_LOOT_LAYOUT}px`,
+  maxWidth: 'maxWidth',
   height: '100%',
   margin: '0 auto',
   backgroundColor: 'rgb(0 0 0 / 40%)',

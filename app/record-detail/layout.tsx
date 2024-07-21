@@ -2,9 +2,15 @@ import { ReactNode } from 'react';
 
 import { css } from '@/styled-system/css';
 
+const rootStyle = css({
+  maxWidth: 'maxWidth',
+  width: '100%',
+  margin: '0 auto',
+});
+
 const DetailLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div className={rootStyle}>
       <Appbar />
       <div className={childrenWrapperStyle}>{children}</div>
     </div>

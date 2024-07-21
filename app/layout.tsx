@@ -3,9 +3,8 @@ import './styles/global.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
-import { css, cx } from '@/styled-system/css';
+import { css } from '@/styled-system/css';
 
-import { MAX_LOOT_LAYOUT } from '../constants';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 import { pretendard } from './styles/font';
 
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const rootStyle = css({
-  maxWidth: `${MAX_LOOT_LAYOUT}px`,
+  maxWidth: 'maxWidth',
   width: '100%',
   margin: '0 auto',
 });
@@ -26,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={cx(pretendard.className, rootStyle)}>
+    <html lang="ko" className={pretendard.className}>
       <body className={rootStyle}>
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
