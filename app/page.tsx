@@ -1,3 +1,4 @@
+import { TextField } from '@/components/molecules/TextFields';
 import { css } from '@/styled-system/css';
 
 const styles = css({
@@ -9,5 +10,10 @@ const styles = css({
 });
 
 export default function Home() {
-  return <main className={styles}>2팀 웹 파이팅~~</main>;
+  return (
+    <main className={styles}>
+      2팀 웹 파이팅~~
+      <TextField />
+    </main>
+  );
 }
