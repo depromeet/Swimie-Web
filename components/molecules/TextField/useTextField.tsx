@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * text-field 컴포넌트 관리 용도의 custom-hook.
+ * @param value 초기 값
+ * @returns input의 text값, focus 여부, input에 값이 있는지 여부, text와 focus를 관리하는 handlers
+ */
 export function UseTextField(value?: string) {
   const [text, setText] = useState('');
   const [focused, setFocused] = useState(false);

@@ -9,6 +9,25 @@ import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
 import { UseTextField } from './useTextField';
 
+/**
+ * text-field 컴포넌트.
+ * @param variant text-field의 종류(default: 'text')
+ * @param inputType input 태그의 type(default: 'text')
+ * @param label 라벨 이름
+ * @param isRequired 필수 여부
+ * @param value 초기 값
+ * @param subText 추가 설명 텍스트
+ * @param hasDownArrow variant==='select'일 때 화살표 표시 여부
+ * @param placeholder placeholder 값
+ * @param unit variant==='type' 일 때 입력값 단위
+ * @param maxLength input의 최대길이
+ * @param addStyles input태그 추가 스타일
+ * @param addWrapperStyles text-field-wrapper 컴포넌트 추가 스타일 부여
+ * @param addAbsoluteStyles 화살표 icon / unit 문자 추가 스타일 부여
+ * @param addSubTextStyles 추가 설명 텍스트 추가 스타일
+ * @param onClick variant==='select' 일 때 click 이벤트
+ * @param onChange variant==='text' 일 때 change 이벤트
+ */
 export function TextField({
   variant = 'text',
   inputType = 'text',
@@ -20,8 +39,10 @@ export function TextField({
   placeholder,
   unit,
   maxLength,
-  addWrapperStyles,
   addStyles,
+  addWrapperStyles,
+  addAbsoluteStyles,
+  addSubTextStyles,
   onClick,
   onChange,
 }: TextFieldProps) {
@@ -63,12 +84,12 @@ export function TextField({
           onClick={onClick}
         />
         {/* span태그 컴포넌트로 공통 생성 시 수정 */}
-        <span className={css(absoluteStyles)}>
+        <span className={css(absoluteStyles, addAbsoluteStyles)}>
           {variant === 'select' && hasDownArrow && <DownArrowIcon />}
           {unit}
         </span>
       </div>
-      <span className={css(subTextStyles)}>{subText}</span>
+      <span className={css(subTextStyles, addSubTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
 }
@@ -86,8 +107,8 @@ const inputStyles = cva({
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
-    width: '100%',
     alignItems: 'center',
+    width: '100%',
     padding: '4px 0px',
     borderBottom: '2px solid',
     marginBottom: '3px',

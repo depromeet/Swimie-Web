@@ -11,9 +11,10 @@ export interface TextFieldProps {
   hasDownArrow?: boolean;
   placeholder?: string;
   maxLength?: number;
-  addWrapperStyles?: object;
-  addTextStyles?: object;
   addStyles?: object;
+  addWrapperStyles?: object;
+  addAbsoluteStyles?: object;
+  addSubTextStyles?: object;
   onClick?: () => void;
   onChange?: (text: string) => void;
 }
