@@ -61,7 +61,7 @@ export function TextField({
       changeLabelColor={(variant === 'text' && isWritten) || focused}
       className={wrapperClassName}
     >
-      <div className={cx(inputWrapperStyles)}>
+      <div className={inputWrapperStyles}>
         <input
           readOnly={variant === 'select'}
           type={inputType}

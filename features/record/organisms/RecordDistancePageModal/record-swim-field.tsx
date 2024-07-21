@@ -1,5 +1,5 @@
 import { TextField } from '@/components/molecules';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { SwimBadge } from '../../atoms';
 import { RecordSwimFieldProps } from './type';
@@ -7,20 +7,20 @@ import { RecordSwimFieldProps } from './type';
 export function RecordSwimField({
   label,
   assistiveTabIndex,
-  addStyles,
+  className,
 }: RecordSwimFieldProps) {
   return (
-    <div className={css(recordSwimFieldStyles, addStyles)}>
-      <div className={css(badgeStyles)}>
+    <div className={cx(recordSwimFieldStyles, className)}>
+      <div className={badgeStyles}>
         <SwimBadge />
-        <span className={css(labelStyles)}>{label}</span>
+        <span className={labelStyles}>{label}</span>
       </div>
       {assistiveTabIndex === 0 && (
         <TextField
           inputType="number"
           placeholder="0"
           unit="m"
-          addStyles={css.raw({ width: '100px' })}
+          className={css({ width: '100px' })}
         />
       )}
       {assistiveTabIndex === 1 && (
@@ -28,24 +28,24 @@ export function RecordSwimField({
           inputType="number"
           placeholder="0"
           unit="바퀴"
-          addStyles={css.raw({ width: '100px' })}
+          className={css({ width: '100px' })}
         />
       )}
     </div>
   );
 }
 
-const recordSwimFieldStyles = css.raw({
+const recordSwimFieldStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
 
-const badgeStyles = css.raw({
+const badgeStyles = css({
   display: 'flex',
   alignItems: 'center',
 });
 
-const labelStyles = css.raw({
+const labelStyles = css({
   marginLeft: '10px',
 });

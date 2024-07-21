@@ -45,15 +45,15 @@ export function RecordForm() {
   } = UseRecordDistancePageModal();
   return (
     <>
-      <form className={css(formStyles)}>
+      <form className={formStyles}>
         <TextField
           variant="select"
           isRequired
           placeholder={recordInfo.recordAt}
           label="수영 날짜"
-          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          wrapperClassName={css({ marginBottom: '24px' })}
         />
-        <div className={css(timeTextFieldLayoutStyles)}>
+        <div className={timeTextFieldLayoutStyles}>
           <TextField
             variant="select"
             isRequired
@@ -61,7 +61,7 @@ export function RecordForm() {
             value={recordInfo.startTime}
             placeholder="00:00"
             label="수영 시간"
-            addWrapperStyles={timeTextFieldStyles}
+            wrapperClassName={timeTextFieldStyles}
             onClick={startTimeBottomSheetHandlers.openBottomSheet}
           />
           <span className={css({ fontSize: '30px' })}>-</span>
@@ -72,7 +72,7 @@ export function RecordForm() {
             value={recordInfo.endTime}
             label="수영 시간"
             placeholder="00:00"
-            addWrapperStyles={timeTextFieldStyles}
+            wrapperClassName={timeTextFieldStyles}
             onClick={endTimeBottomSheetHandlers.openBottomSheet}
           />
         </div>
@@ -82,7 +82,7 @@ export function RecordForm() {
           hasDownArrow
           placeholder="(선택)"
           label="수영장"
-          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          wrapperClassName={css({ marginBottom: '24px' })}
           onClick={poolSearchBottomSheetHandlers.openBottomSheet}
         />
         <TextField
@@ -90,7 +90,7 @@ export function RecordForm() {
           value={String(recordInfo.lane) + 'm'}
           label="레일 길이"
           hasDownArrow
-          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          wrapperClassName={css({ marginBottom: '24px' })}
           onClick={railLengthBottomSheetHandlers.openBottomSheet}
         />
         <TextField
@@ -102,7 +102,7 @@ export function RecordForm() {
           }
           placeholder="거리입력(선택)"
           label="수영 거리"
-          addWrapperStyles={css.raw({ marginBottom: '24px' })}
+          wrapperClassName={css({ marginBottom: '24px' })}
           onClick={recordDistancePageModalHandlers.openPageModal}
         />
       </form>
@@ -149,18 +149,18 @@ export function RecordForm() {
   );
 }
 
-const formStyles = css.raw({
+const formStyles = css({
   width: '100%',
   padding: '0px 20px',
 });
 
-const timeTextFieldLayoutStyles = css.raw({
+const timeTextFieldLayoutStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
 
-const timeTextFieldStyles = css.raw({
+const timeTextFieldStyles = css({
   width: '42%',
   marginBottom: '24px',
 });

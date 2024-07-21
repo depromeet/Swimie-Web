@@ -5,18 +5,18 @@ import { AddFieldProps } from './type';
 
 export function AddField({ text }: AddFieldProps) {
   return (
-    <div className={css(addFieldStyles)}>
+    <div className={addFieldStyles}>
       <AddButton />
-      <span className={css(textStyles)}>{text}</span>
+      <span className={textStyles}>{text}</span>
     </div>
   );
 }
 
-const addFieldStyles = css.raw({
+const addFieldStyles = css({
   display: 'flex',
   alignItems: 'center',
 });
 
-const textStyles = css.raw({
+const textStyles = css({
   marginLeft: '11px',
 });

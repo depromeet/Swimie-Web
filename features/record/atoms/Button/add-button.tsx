@@ -3,13 +3,13 @@ import { css } from '@/styled-system/css';
 
 export function AddButton() {
   return (
-    <button className={css(buttonStyles)}>
+    <button className={buttonStyles}>
       <PlusIcon />
     </button>
   );
 }
 
-const buttonStyles = css.raw({
+const buttonStyles = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

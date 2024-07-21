@@ -63,7 +63,7 @@ export function RecordDistancePageModal({
         <HeaderBar backArrowClick={handleBackArrowClick} />{' '}
         <h1 className={css(titleStyles)}>수영 거리 입력</h1>
         <section className={css(tabSectionStyles)}>
-          <Tab type="secondary" addStyles={css.raw({ marginBottom: '12px' })}>
+          <Tab type="secondary" className={css({ marginBottom: '12px' })}>
             <TabItem
               type="secondary"
               text="총거리"
@@ -99,7 +99,7 @@ export function RecordDistancePageModal({
               subText={`${currentLane}m 레인 기준`}
               value={totalMeters === 0 ? '' : String(totalMeters)}
               unit="미터(m)"
-              addWrapperStyles={css.raw({ marginTop: '30px' })}
+              wrapperClassName={css({ marginTop: '30px' })}
               onChange={handleTotalMetersChange}
             />
           )}
@@ -109,7 +109,7 @@ export function RecordDistancePageModal({
               subText={`${currentLane}m 레인 기준`}
               value={totalLaps === 0 ? '' : String(totalLaps)}
               unit="바퀴"
-              addWrapperStyles={css.raw({ marginTop: '30px' })}
+              wrapperClassName={css({ marginTop: '30px' })}
               onChange={handleTotalLapsChange}
             />
           )}
@@ -120,7 +120,7 @@ export function RecordDistancePageModal({
                   key={option}
                   label={option}
                   assistiveTabIndex={assistiveTabIndex}
-                  addStyles={css.raw({ marginBottom: '16px' })}
+                  className={css({ marginBottom: '16px' })}
                 />
               ))}
               <AddField text="영법 추가" />

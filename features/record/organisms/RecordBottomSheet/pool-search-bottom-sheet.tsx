@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { Suspense, useState } from 'react';
 
 import { SearchBar } from '@/components/molecules/Search';
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 import useSearchPool from '../../queries/useSearchPool';
 import { PoolSearchBottomSheetProps } from './type';
@@ -15,7 +15,7 @@ export function PoolSearchBottomSheet({
   placeholder,
   modifyValue,
   closeBottomSheet,
-  addStyles,
+  className,
 }: PoolSearchBottomSheetProps) {
   //추후 api 통신으로 대체
   const [searchPoolName, setSearchPoolName] = useState<string>('');
@@ -32,14 +32,14 @@ export function PoolSearchBottomSheet({
   };
   return isOpen ? (
     //지영's Bottom Sheet로 대체
-    <div className={css(PoolSearchBottomSheetStyles, addStyles)}>
-      <h2 className={css(titleStyles)}>{title}</h2>
+    <div className={cx(PoolSearchBottomSheetStyles, className)}>
+      <h2 className={titleStyles}>{title}</h2>
       <SearchBar
         placeholder={placeholder}
         onChange={handlePoolNameChange}
-        addStyles={css.raw({ marginBottom: '12px' })}
+        className={css({ marginBottom: '12px' })}
       />
-      <ul className={css(listStyles)}>
+      <ul className={listStyles}>
         <Suspense fallback={'스켈레톤 컴포넌트'}>
           {data?.data.poolInfos.map((info, i: number) => (
             <li
@@ -60,7 +60,7 @@ export function PoolSearchBottomSheet({
   ) : null;
 }
 
-const PoolSearchBottomSheetStyles = css.raw({
+const PoolSearchBottomSheetStyles = css({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -74,11 +74,11 @@ const PoolSearchBottomSheetStyles = css.raw({
   padding: '32px 20px',
 });
 
-const titleStyles = css.raw({
+const titleStyles = css({
   marginBottom: '16px',
 });
 
-const listStyles = css.raw({
+const listStyles = css({
   padding: '8px 0',
   marginBottom: '8px',
   overflow: 'auto',

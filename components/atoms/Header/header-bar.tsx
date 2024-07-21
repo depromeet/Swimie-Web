@@ -1,30 +1,30 @@
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { NavigateBackArrow } from './navigate-back-arrow';
 import { HeaderBarProps } from './type';
 
 export function HeaderBar({
-  addStyles,
+  className,
   children,
   backArrowClick,
 }: HeaderBarProps) {
   return (
-    <header className={css(headerBarStyles, addStyles)}>
+    <header className={cx(headerBarStyles, className)}>
       <NavigateBackArrow
         backArrowClick={backArrowClick}
-        addStyles={arrowIconStyles}
+        className={arrowIconStyles}
       />
       {children}
     </header>
   );
 }
 
-const headerBarStyles = css.raw({
+const headerBarStyles = css({
   position: 'relative',
   padding: '8px 0px',
 });
 
-const arrowIconStyles = css.raw({
+const arrowIconStyles = css({
   position: 'absolute',
   top: '4px',
   left: '4px',

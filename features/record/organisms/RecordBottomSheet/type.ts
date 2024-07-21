@@ -2,7 +2,7 @@ export interface BottomSheetProps<T, K = unknown> {
   isOpen: boolean;
   modifyValue?: (value: T, value2?: K) => void;
   closeBottomSheet?: () => void;
-  addStyles?: object;
+  className?: string;
 }
 
 export interface PoolSearchBottomSheetProps

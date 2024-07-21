@@ -5,8 +5,8 @@ import { css } from '@/styled-system/css';
 export default function RecordPage() {
   return (
     <div>
-      <HeaderBar addStyles={css.raw({ marginBottom: '24px' })}>
-        <div className={css(titleWrapperStyles)}>
+      <HeaderBar className={css({ marginBottom: '24px' })}>
+        <div className={titleWrapperStyles}>
           <h1>수영 기록하기</h1>
         </div>
       </HeaderBar>
@@ -18,7 +18,7 @@ export default function RecordPage() {
   );
 }
 
-const titleWrapperStyles = css.raw({
+const titleWrapperStyles = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

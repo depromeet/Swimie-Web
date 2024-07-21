@@ -1,25 +1,24 @@
 import { SelectElement } from '@/components/atoms';
-import { css } from '@/styled-system/css';
 
 import { SelectListProps } from './type';
 
 export function SelectList({
   options,
   value,
-  addStyles,
-  addListElementStyles,
+  className,
+  listElementClassName,
   onSelect,
   closeWrapper,
 }: SelectListProps) {
   return (
-    <ul className={css(addStyles)}>
+    <ul className={className}>
       {options.map((option) => (
         <SelectElement
           key={option.value}
           isSelected={value === option.value}
           value={option.value}
           label={option.label}
-          addStyles={addListElementStyles}
+          className={listElementClassName}
           onSelect={onSelect}
           closeWrapper={closeWrapper}
         />

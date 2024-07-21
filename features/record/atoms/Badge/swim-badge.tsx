@@ -3,13 +3,13 @@ import { css } from '@/styled-system/css';
 
 export function SwimBadge() {
   return (
-    <div className={css(swimBadgeStyles)}>
+    <div className={swimBadgeStyles}>
       <SwimIcon />
     </div>
   );
 }
 
-const swimBadgeStyles = css.raw({
+const swimBadgeStyles = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

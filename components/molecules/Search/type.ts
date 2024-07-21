@@ -1,6 +1,6 @@
 export interface SearchBarProps {
   placeholder?: string;
-  addStyles?: object;
-  addInputStyles?: object;
+  className?: string;
+  inputClassName?: string;
   onChange?: (text: string) => void;
 }

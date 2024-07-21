@@ -1,4 +1,4 @@
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { SelectList } from '../List';
 import { DropDownProps } from './type';
@@ -6,25 +6,25 @@ import { DropDownProps } from './type';
 export function DropDown({
   options,
   value,
-  addStyles,
-  addListStyles,
-  addListElementStyles,
+  className,
+  listClassName,
+  listElementClassName,
   onSelect,
 }: DropDownProps) {
   return (
-    <div className={css(dropDownStyles, addStyles)}>
+    <div className={cx(dropDownStyles, className)}>
       <SelectList
         options={options}
         value={value}
-        addStyles={addListStyles}
-        addListElementStyles={addListElementStyles}
+        className={listClassName}
+        listElementClassName={listElementClassName}
         onSelect={onSelect}
       />
     </div>
   );
 }
 
-const dropDownStyles = css.raw({
+const dropDownStyles = css({
   width: '100%',
   backgroundColor: 'white',
   border: '1px solid',

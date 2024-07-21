@@ -1,8 +1,8 @@
 export interface DropDownProps {
   options: { value: number; label: string }[];
   value: number;
-  addStyles?: object;
-  addListStyles?: object;
-  addListElementStyles?: object;
+  className?: string;
+  listClassName?: string;
+  listElementClassName?: string;
   onSelect?: (value: number) => void;
 }

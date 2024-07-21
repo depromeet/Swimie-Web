@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface HeaderBarProps {
-  addStyles?: object;
+  className?: string;
   children?: ReactNode;
   backArrowClick?: () => void;
 }

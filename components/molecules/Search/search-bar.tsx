@@ -3,14 +3,14 @@
 import { ChangeEvent, useState } from 'react';
 
 import { SearchIcon } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { SearchBarProps } from './type';
 
 export function SearchBar({
   placeholder,
-  addStyles,
-  addInputStyles,
+  className,
+  inputClassName,
   onChange,
 }: SearchBarProps) {
   const [searchText, setSearchText] = useState<string>('');
@@ -21,11 +21,11 @@ export function SearchBar({
   };
 
   return (
-    <div className={css(searchBarStyles, addStyles)}>
+    <div className={cx(searchBarStyles, className)}>
       <SearchIcon />
       <input
         value={searchText}
-        className={css(inputStyles, addInputStyles)}
+        className={cx(inputStyles, inputClassName)}
         placeholder={placeholder}
         onChange={handleInputChange}
       />
@@ -33,7 +33,7 @@ export function SearchBar({
   );
 }
 
-const searchBarStyles = css.raw({
+const searchBarStyles = css({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
@@ -44,7 +44,7 @@ const searchBarStyles = css.raw({
   borderRadius: '12px',
 });
 
-const inputStyles = css.raw({
+const inputStyles = css({
   width: '100%',
   marginLeft: '3px',
   paddingLeft: '2px',

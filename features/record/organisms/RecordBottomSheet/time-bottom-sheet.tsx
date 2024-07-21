@@ -4,7 +4,7 @@ import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { BottomSheetProps } from './type';
 
@@ -12,7 +12,7 @@ export function TimeBottomSheet({
   isOpen,
   modifyValue,
   closeBottomSheet,
-  addStyles,
+  className,
 }: BottomSheetProps<string>) {
   const [time, setTime] = useState('');
   const handleTimeChange = (date: dayjs.Dayjs) => {
@@ -25,7 +25,7 @@ export function TimeBottomSheet({
 
   return isOpen ? (
     //지영's Bottom Sheet로 대체
-    <div className={css(timeBottomSheetStyles, addStyles)}>
+    <div className={cx(timeBottomSheetStyles, className)}>
       <TimePicker
         placeholder="시간 설정"
         format="HH:mm"
@@ -39,14 +39,14 @@ export function TimeBottomSheet({
         onChange={handleTimeChange}
         className={css({ width: '100%' })}
       />
-      <button className={css(buttonStyles)} onClick={handleClickButton}>
+      <button className={buttonStyles} onClick={handleClickButton}>
         확인
       </button>
     </div>
   ) : null;
 }
 
-const timeBottomSheetStyles = css.raw({
+const timeBottomSheetStyles = css({
   position: 'fixed',
   display: 'flex',
   flexDirection: 'column',
@@ -61,7 +61,7 @@ const timeBottomSheetStyles = css.raw({
   padding: '10px 15px',
 });
 
-const buttonStyles = css.raw({
+const buttonStyles = css({
   width: '100px',
   height: '40px',
   backgroundColor: 'skyblue',

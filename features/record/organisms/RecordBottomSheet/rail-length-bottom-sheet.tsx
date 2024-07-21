@@ -1,5 +1,5 @@
 import { SelectList } from '@/components/molecules/List';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { railLengthOptions } from '../RecordForm';
 import { RailLengthBottomSheetProps } from './type';
@@ -10,25 +10,25 @@ export function RailLengthBottomSheet({
   value,
   modifyValue,
   closeBottomSheet,
-  addStyles,
+  className,
 }: RailLengthBottomSheetProps) {
   //지영's 바텀 시트로 변경
   return isOpen ? (
-    <div className={css(railLengthBottomSheetStyles, addStyles)}>
-      <h1 className={css(titleStyles)}>{title}</h1>
+    <div className={cx(railLengthBottomSheetStyles, className)}>
+      <h1 className={titleStyles}>{title}</h1>
       <SelectList
         value={value}
         options={railLengthOptions}
         onSelect={modifyValue}
         closeWrapper={closeBottomSheet}
-        addStyles={addSelectListStyles}
-        addListElementStyles={addSelectListElementStyles}
+        className={addSelectListStyles}
+        listElementClassName={addSelectListElementStyles}
       />
     </div>
   ) : null;
 }
 
-const railLengthBottomSheetStyles = css.raw({
+const railLengthBottomSheetStyles = css({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -42,15 +42,15 @@ const railLengthBottomSheetStyles = css.raw({
   padding: '40px 20px',
 });
 
-const titleStyles = css.raw({
+const titleStyles = css({
   marginBottom: '24px',
 });
 
-const addSelectListStyles = css.raw({
+const addSelectListStyles = css({
   width: '100%',
 });
 
-const addSelectListElementStyles = css.raw({
+const addSelectListElementStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   padding: '8px 0',
