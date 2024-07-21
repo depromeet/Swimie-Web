@@ -42,7 +42,7 @@ export function TextField({
 
   //variant==='text' 이고 값이 있으면 border가 blue.60으로 되어있도록
   useEffect(() => {
-    if (value && value !== '') setText(value);
+    if (value) setText(value);
   }, [value]);
 
   return (
