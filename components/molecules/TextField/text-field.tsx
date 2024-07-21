@@ -1,12 +1,13 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import { DownArrowIcon } from '@/components/atoms';
 import { css, cva } from '@/styled-system/css';
 
 import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
+import { UseTextField } from './useTextField';
 
 export function TextField({
   variant = 'text',
@@ -24,26 +25,13 @@ export function TextField({
   onClick,
   onChange,
 }: TextFieldProps) {
-  const [text, setText] = useState('');
-  const [focused, setFocused] = useState(false);
-  const isWritten = text.trim().length > 0;
+  const { text, focused, isWritten, handlers } = UseTextField(value);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
-    setText(newText);
+    handlers.changeText(newText);
     onChange && onChange(newText);
   };
-  const handleFocus = () => {
-    setFocused(true);
-  };
-  const handleBlur = () => {
-    setFocused(false);
-  };
-
-  //variant==='text' 이고 값이 있으면 border가 blue.60으로 되어있도록
-  useEffect(() => {
-    if (value) setText(value);
-  }, [value]);
 
   return (
     <TextFieldWrapper
@@ -56,12 +44,16 @@ export function TextField({
         <input
           readOnly={variant === 'select'}
           type={inputType}
-          value={value}
+          value={text}
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={handleInputChange}
-          onFocus={variant === 'text' ? handleFocus : undefined}
-          onBlur={variant === 'text' ? handleBlur : undefined}
+          onFocus={
+            variant === 'text' ? () => handlers.changeFocus(true) : undefined
+          }
+          onBlur={
+            variant === 'text' ? () => handlers.changeFocus(false) : undefined
+          }
           className={css(
             (variant === 'text' && isWritten) || focused
               ? inputStyles.raw({ isWritten: true })
