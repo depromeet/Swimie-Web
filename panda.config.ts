@@ -30,6 +30,11 @@ export default defineConfig({
     extend: {
       textStyles,
       tokens: {
+        sizes: {
+          maxWidth: {
+            value: '600px',
+          },
+        },
         fontWeights: {
           regular: { value: '400' },
         },
