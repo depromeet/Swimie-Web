@@ -7,7 +7,7 @@ import { TextFieldWrapperProps } from './type';
  * @param isRequired 필수 여부
  * @param label 라벨 이름
  * @param changeLabelColor true시 라벨 색깔 변경
- * @param addStyles 레이아웃 추가 스타일
+ * @param className 레이아웃 추가 스타일
  * @param children 자식 요소
  */
 export function TextFieldWrapper({
