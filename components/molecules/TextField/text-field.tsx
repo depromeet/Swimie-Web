@@ -25,7 +25,8 @@ export function TextField({
 }: TextFieldProps) {
   const [text, setText] = useState('');
   const [focused, setFocused] = useState(false);
-  const isWritten = text.trim().length > 0 ? true : false;
+  const isWritten = text.trim().length > 0;
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     setText(newText);
@@ -40,7 +41,7 @@ export function TextField({
 
   //variant==='text' 이고 값이 있으면 border가 blue.60으로 되어있도록
   useEffect(() => {
-    if (value) setText(value);
+    if (value && value !== '') setText(value);
   }, [value]);
 
   return (
@@ -50,41 +51,37 @@ export function TextField({
       changeLabelColor={(variant === 'text' && isWritten) || focused}
       addStyles={addWrapperStyles}
     >
-      <input
-        readOnly={variant === 'select'}
-        type={inputType}
-        value={value}
-        placeholder={placeholder}
-        maxLength={maxLength}
-        onChange={handleInputChange}
-        onFocus={variant === 'text' ? handleFocus : undefined}
-        onBlur={variant === 'text' ? handleBlur : undefined}
-        className={css(
-          (variant === 'text' && isWritten) || focused
-            ? inputStyles.raw({ isWritten: true })
-            : inputStyles.raw({}),
-          addStyles,
-        )}
-        onClick={onClick}
-      />
-      <span
-        className={css(
-          subText
-            ? absoluteStyles.raw({ hasSubText: true })
-            : absoluteStyles.raw({ hasSubText: false }),
-        )}
+      <div
+        className={css({
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        })}
       >
-        {variant === 'select' && hasDownArrow && <DownArrowIcon />}
-      </span>
-      <span
-        className={css(
-          subText
-            ? absoluteStyles.raw({ hasSubText: true })
-            : absoluteStyles.raw({ hasSubText: false }),
-        )}
-      >
-        {unit}
-      </span>
+        <input
+          readOnly={variant === 'select'}
+          type={inputType}
+          value={value}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          onChange={handleInputChange}
+          onFocus={variant === 'text' ? handleFocus : undefined}
+          onBlur={variant === 'text' ? handleBlur : undefined}
+          className={css(
+            (variant === 'text' && isWritten) || focused
+              ? inputStyles.raw({ isWritten: true })
+              : inputStyles.raw({ isWritten: false }),
+            addStyles,
+          )}
+          onClick={onClick}
+        />
+        {/* span태그 컴포넌트로 공통 생성 시 수정 */}
+        <span className={css(absoluteStyles)}>
+          {variant === 'select' && hasDownArrow && <DownArrowIcon />}
+          {unit}
+        </span>
+      </div>
       <span className={css(subTextStyles)}>{subText}</span>
     </TextFieldWrapper>
   );
@@ -97,29 +94,24 @@ const inputStyles = cva({
     justifyContent: 'space-between',
     width: '100%',
     alignItems: 'center',
-    padding: '5px 0px',
-    marginBottom: '3px',
+    padding: '4px 0px',
     borderBottom: '2px solid',
-    borderBottomColor: 'line.alternative',
+    marginBottom: '3px',
     outline: 'none',
   },
   variants: {
     isWritten: {
-      true: { borderBottom: '2px solid', borderBottomColor: 'blue.60' },
+      true: { borderBottomColor: 'blue.60' },
+      false: { borderBottomColor: 'line.alternative' },
     },
   },
+});
+
+const absoluteStyles = css.raw({
+  position: 'absolute',
+  right: 0,
 });
 
 const subTextStyles = css.raw({
   color: 'text.alternative',
-});
-
-const absoluteStyles = cva({
-  base: { position: 'absolute', right: 0 },
-  variants: {
-    hasSubText: {
-      true: { bottom: '32px' },
-      false: { bottom: '10px' },
-    },
-  },
 });
