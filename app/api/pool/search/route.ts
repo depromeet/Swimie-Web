@@ -17,6 +17,5 @@ export async function GET(request: NextRequest) {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const data = await res.json();
-  console.log(data);
   return NextResponse.json(data);
 }
