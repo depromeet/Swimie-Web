@@ -2,9 +2,10 @@
 
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { DownArrowIcon, TextFieldWrapper } from '@/components/atoms';
+import { DownArrowIcon } from '@/components/atoms';
 import { css, cva } from '@/styled-system/css';
 
+import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
 
 export function TextField({

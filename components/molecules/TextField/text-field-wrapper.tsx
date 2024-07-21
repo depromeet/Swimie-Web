@@ -10,8 +10,8 @@ export function TextFieldWrapper({
   children,
 }: TextFieldWrapperProps) {
   return (
-    //span 컴포넌트 생성시 교체 필요
     <section className={css(textFieldWrapperStyles, addStyles)}>
+      {/* span 컴포넌트 생성시 교체 필요 */}
       <span
         className={css(
           changeLabelColor && labelStyles.raw({ changeLabelColor: true }),
@@ -26,7 +26,6 @@ export function TextFieldWrapper({
     </section>
   );
 }
-
 const textFieldWrapperStyles = css.raw({
   position: 'relative',
 });
