@@ -40,8 +40,12 @@ export function RecordDistancePageModal({
     setTotalLaps(Number(text));
   };
   const handleBackArrowClick = () => {
-    modifyTotalMeters(totalMeters);
-    modifyTotalLaps(totalLaps);
+    if (assistiveTabIndex === 0) {
+      modifyTotalMeters(totalMeters);
+    } else if (assistiveTabIndex === 1) {
+      modifyTotalLaps(totalLaps);
+      modifyTotalMeters(totalLaps * currentLane);
+    }
     closePageModal && closePageModal();
   };
   return (
