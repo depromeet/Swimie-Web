@@ -3,7 +3,7 @@
 import { ChangeEvent } from 'react';
 
 import { DownArrowIcon } from '@/components/atoms';
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
@@ -21,10 +21,10 @@ import { UseTextField } from './useTextField';
  * @param placeholder placeholder 값
  * @param unit variant==='type' 일 때 입력값 단위
  * @param maxLength input의 최대길이
- * @param addStyles input태그 추가 스타일
- * @param addWrapperStyles text-field-wrapper 컴포넌트 추가 스타일 부여
- * @param addAbsoluteStyles 화살표 icon / unit 문자 추가 스타일 부여
- * @param addSubTextStyles 추가 설명 텍스트 추가 스타일
+ * @param className input태그 추가 스타일
+ * @param wrapperClassName text-field-wrapper 컴포넌트 추가 스타일 부여
+ * @param absoluteClassName 화살표 icon / unit 문자 추가 스타일 부여
+ * @param subTextClassName 추가 설명 텍스트 추가 스타일
  * @param onClick variant==='select' 일 때 click 이벤트
  * @param onChange variant==='text' 일 때 change 이벤트
  */
@@ -39,10 +39,10 @@ export function TextField({
   placeholder,
   unit,
   maxLength,
-  addStyles,
-  addWrapperStyles,
-  addAbsoluteStyles,
-  addSubTextStyles,
+  className,
+  wrapperClassName,
+  absoluteClassName,
+  subTextClassName,
   onClick,
   onChange,
 }: TextFieldProps) {
@@ -59,9 +59,9 @@ export function TextField({
       isRequired={isRequired}
       label={label}
       changeLabelColor={(variant === 'text' && isWritten) || focused}
-      addStyles={addWrapperStyles}
+      className={wrapperClassName}
     >
-      <div className={css(inputWrapperStyles)}>
+      <div className={cx(inputWrapperStyles)}>
         <input
           readOnly={variant === 'select'}
           type={inputType}
@@ -75,26 +75,28 @@ export function TextField({
           onBlur={
             variant === 'text' ? () => handlers.changeFocus(false) : undefined
           }
-          className={css(
-            (variant === 'text' && isWritten) || focused
-              ? inputStyles.raw({ isWritten: true })
-              : inputStyles.raw({ isWritten: false }),
-            addStyles,
+          className={cx(
+            css(
+              (variant === 'text' && isWritten) || focused
+                ? inputStyles.raw({ isWritten: true })
+                : inputStyles.raw({ isWritten: false }),
+            ),
+            className,
           )}
           onClick={onClick}
         />
         {/* span태그 컴포넌트로 공통 생성 시 수정 */}
-        <span className={css(absoluteStyles, addAbsoluteStyles)}>
+        <span className={cx(absoluteStyles, absoluteClassName)}>
           {variant === 'select' && hasDownArrow && <DownArrowIcon />}
           {unit}
         </span>
       </div>
-      <span className={css(subTextStyles, addSubTextStyles)}>{subText}</span>
+      <span className={cx(subTextStyles, subTextClassName)}>{subText}</span>
     </TextFieldWrapper>
   );
 }
 
-const inputWrapperStyles = css.raw({
+const inputWrapperStyles = css({
   position: 'relative',
   width: '100%',
   display: 'flex',
@@ -124,14 +126,14 @@ const inputStyles = cva({
   },
 });
 
-const absoluteStyles = css.raw({
+const absoluteStyles = css({
   position: 'absolute',
   right: 0,
   textStyle: 'heading4',
   fontWeight: '500',
 });
 
-const subTextStyles = css.raw({
+const subTextStyles = css({
   color: 'text.alternative',
   textStyle: 'label1.normal',
   fontWeight: '500',

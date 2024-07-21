@@ -11,10 +11,10 @@ export interface TextFieldProps {
   hasDownArrow?: boolean;
   placeholder?: string;
   maxLength?: number;
-  addStyles?: object;
-  addWrapperStyles?: object;
-  addAbsoluteStyles?: object;
-  addSubTextStyles?: object;
+  className?: string;
+  wrapperClassName?: string;
+  absoluteClassName?: string;
+  subTextClassName?: string;
   onClick?: () => void;
   onChange?: (text: string) => void;
 }
@@ -22,6 +22,6 @@ export interface TextFieldProps {
 export interface TextFieldWrapperProps
   extends Pick<TextFieldProps, 'label' | 'isRequired'> {
   changeLabelColor?: boolean;
-  addStyles?: object;
+  className?: string;
   children: ReactNode;
 }

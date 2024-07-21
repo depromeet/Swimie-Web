@@ -1,4 +1,4 @@
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 import { TextFieldWrapperProps } from './type';
 
@@ -14,11 +14,11 @@ export function TextFieldWrapper({
   isRequired,
   label,
   changeLabelColor = false,
-  addStyles,
+  className,
   children,
 }: TextFieldWrapperProps) {
   return (
-    <section className={css(textFieldWrapperStyles, addStyles)}>
+    <section className={cx(textFieldWrapperStyles, className)}>
       {/* span 컴포넌트 생성시 교체 필요 */}
       <span
         className={css(
@@ -34,7 +34,7 @@ export function TextFieldWrapper({
     </section>
   );
 }
-const textFieldWrapperStyles = css.raw({
+const textFieldWrapperStyles = css({
   position: 'relative',
 });
 
