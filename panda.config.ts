@@ -1,5 +1,7 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 
+import { textStyles } from './styles';
+
 const globalCss = defineGlobalStyles({
   'html, body': {
     w: 'full',
@@ -26,7 +28,11 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      textStyles,
       tokens: {
+        fontWeights: {
+          regular: { value: '400' },
+        },
         colors: {
           common: { 0: { value: '#000000' }, 100: { value: '#FFFFFF' } },
           neutral: {
