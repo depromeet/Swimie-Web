@@ -214,6 +214,12 @@ export default defineConfig({
           },
         },
       },
+      keyframes: {
+        dimFadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: '100%' },
+        },
+      },
     },
   },
 
