@@ -1,10 +1,10 @@
-import './styles/global.css';
+import '../styles/global.css';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
+import { pretendard } from '../styles/font';
 import ReactQueryProvider from './providers/ReactQueryProvider';
-import { pretendard } from './styles/font';
 
 export const metadata: Metadata = {
   title: '2팀 최고~',
