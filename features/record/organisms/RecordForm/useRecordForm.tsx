@@ -79,6 +79,16 @@ export function UseRecordForm(date: string) {
     setSubInfo((prev) => ({ ...prev, totalLaps }));
   };
 
+  const changeStrokes = (
+    strokes: {
+      name: string;
+      laps: number;
+      meter: number;
+    }[],
+  ) => {
+    setSubInfo((prev) => ({ ...prev, strokes: [...strokes] }));
+  };
+
   return {
     recordInfo,
     subInfo,
@@ -89,6 +99,7 @@ export function UseRecordForm(date: string) {
       changeRailLength,
       changeTotalMeters,
       changeTotalLaps,
+      changeStrokes,
     },
   };
 }

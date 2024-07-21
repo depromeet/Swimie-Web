@@ -10,6 +10,7 @@ export function TextFieldWrapper({
   children,
 }: TextFieldWrapperProps) {
   return (
+    //span 컴포넌트 생성시 교체 필요
     <section className={css(textFieldWrapperStyles, addStyles)}>
       <span
         className={css(
@@ -31,10 +32,10 @@ const textFieldWrapperStyles = css.raw({
 });
 
 const labelStyles = cva({
-  base: {},
   variants: {
     changeLabelColor: {
       true: { color: 'blue.60' },
+      false: { color: 'text.normal' },
     },
   },
 });

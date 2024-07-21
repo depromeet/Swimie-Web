@@ -15,12 +15,22 @@ export function RecordSwimField({
         <SwimBadge />
         <span className={css(labelStyles)}>{label}</span>
       </div>
-      <TextField
-        inputType="number"
-        placeholder="0"
-        unit={assistiveTabIndex === 0 ? 'm' : '바퀴'}
-        addStyles={css.raw({ width: '100px' })}
-      />
+      {assistiveTabIndex === 0 && (
+        <TextField
+          inputType="number"
+          placeholder="0"
+          unit="m"
+          addStyles={css.raw({ width: '100px' })}
+        />
+      )}
+      {assistiveTabIndex === 1 && (
+        <TextField
+          inputType="number"
+          placeholder="0"
+          unit="바퀴"
+          addStyles={css.raw({ width: '100px' })}
+        />
+      )}
     </div>
   );
 }

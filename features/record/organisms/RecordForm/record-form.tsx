@@ -139,6 +139,7 @@ export function RecordForm() {
         currentLane={recordInfo.lane}
         modifyTotalMeters={handlers.changeTotalMeters}
         modifyTotalLaps={handlers.changeTotalLaps}
+        modifyStrokes={handlers.changeStrokes}
         isOpen={isRecordDistancePageModalOpen}
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}

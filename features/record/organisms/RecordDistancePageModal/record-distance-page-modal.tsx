@@ -20,6 +20,7 @@ export function RecordDistancePageModal({
   currentLane,
   modifyTotalMeters,
   modifyTotalLaps,
+  modifyStrokes,
   isOpen,
   jumpDirection,
   closePageModal,
@@ -27,6 +28,7 @@ export function RecordDistancePageModal({
   const [totalMeters, setTotalMeters] = useState<number>(0);
   const [totalLaps, setTotalLaps] = useState<number>(0);
   const ref = useRef<HTMLDivElement>(null);
+  console.log(modifyStrokes);
 
   const { tabIndex: secondaryTabIndex, handlers: secondaryHandlers } = UseTab();
   const { tabIndex: assistiveTabIndex, handlers: assistiveHandlers } = UseTab();
