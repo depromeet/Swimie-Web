@@ -1,6 +1,11 @@
 'use client';
 
 import { BottomSheet } from '@/components/molecules';
+import {
+  DetailDescriptionSection,
+  DetailDiarySection,
+  DetailPreviewSection,
+} from '@/features/record-detail';
 import { useBottomSheet } from '@/hooks';
 
 const RecordDetail = () => {
@@ -9,11 +14,11 @@ const RecordDetail = () => {
   return (
     <article>
       {/* preview section */}
-      <section>Preview</section>
+      <DetailPreviewSection />
       {/* description section */}
-      <section>Description</section>
-      {/* detail section */}
-      <section>record - detail</section>
+      <DetailDescriptionSection />
+      {/* diary section */}
+      <DetailDiarySection />
 
       <button onClick={open}>bottom sheet toggle button</button>
       <BottomSheet
