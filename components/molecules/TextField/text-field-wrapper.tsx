@@ -1,4 +1,4 @@
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 import { TextFieldWrapperProps } from './type';
 
@@ -7,18 +7,18 @@ import { TextFieldWrapperProps } from './type';
  * @param isRequired 필수 여부
  * @param label 라벨 이름
  * @param changeLabelColor true시 라벨 색깔 변경
- * @param addStyles 레이아웃 추가 스타일
+ * @param className 레이아웃 추가 스타일
  * @param children 자식 요소
  */
 export function TextFieldWrapper({
   isRequired,
   label,
   changeLabelColor = false,
-  addStyles,
+  className,
   children,
 }: TextFieldWrapperProps) {
   return (
-    <section className={css(textFieldWrapperStyles, addStyles)}>
+    <section className={cx(textFieldWrapperStyles, className)}>
       {/* span 컴포넌트 생성시 교체 필요 */}
       <span
         className={css(
@@ -34,7 +34,7 @@ export function TextFieldWrapper({
     </section>
   );
 }
-const textFieldWrapperStyles = css.raw({
+const textFieldWrapperStyles = css({
   position: 'relative',
 });
 
