@@ -38,8 +38,7 @@ const searchBarStyles = css({
   alignItems: 'center',
   width: '100%',
   height: '2rem',
-  padding: '12px 16px',
-  paddingRight: 0,
+  padding: '12px 0 12px 16px',
   backgroundColor: '#F6F6F6',
   borderRadius: '12px',
 });
@@ -48,4 +47,5 @@ const inputStyles = css({
   width: '100%',
   marginLeft: '3px',
   paddingLeft: '2px',
+  outline: 'none',
 });
