@@ -5,8 +5,7 @@ import './page-modal.css';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { HeaderBar } from '@/components/atoms';
-import { TextField, UseTab } from '@/components/molecules';
+import { HeaderBar, TextField, UseTab } from '@/components/molecules';
 import Tab from '@/components/molecules/Tab/Tab';
 import { TabItem } from '@/components/molecules/Tab/TabItem';
 import { css } from '@/styled-system/css';
@@ -60,7 +59,7 @@ export function RecordDistancePageModal({
       unmountOnExit
     >
       <div className={css(RecordDistancePageModalStyles)} ref={ref}>
-        <HeaderBar backArrowClick={handleBackArrowClick} />{' '}
+        <HeaderBar backArrowClick={handleBackArrowClick} />
         <h1 className={css(titleStyles)}>수영 거리 입력</h1>
         <section className={css(tabSectionStyles)}>
           <Tab type="secondary" className={css({ marginBottom: '12px' })}>
