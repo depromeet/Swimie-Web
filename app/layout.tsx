@@ -1,12 +1,10 @@
-import './styles/global.css';
+import '../styles/global.css';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
 import { css } from '@/styled-system/css';
-
 import ReactQueryProvider from './providers/ReactQueryProvider';
-import { pretendard } from './styles/font';
 
 export const metadata: Metadata = {
   title: '어푸',
