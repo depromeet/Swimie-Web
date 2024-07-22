@@ -4,9 +4,16 @@ import { useRouter } from 'next/navigation';
 
 import { css, cx } from '@/styled-system/css';
 
-import { LeftArrowIcon } from '../Icons/left-arrow-icon';
+import { LeftArrowIcon } from '../../atoms/Icons/left-arrow-icon';
 import { HeaderBarProps } from './type';
 
+/**
+ *
+ * @param className header-bar에 외부 스타일 주입
+ * @param arrowClassName left-arrow-icon에 외부 스타일 주입
+ * @param children children 요소
+ * @param backArrowClick 외부에서 뒤로가기 클릭 시 수행할 동작을 직접 선언(default: router.back())
+ */
 export function HeaderBar({
   className,
   arrowClassName,
