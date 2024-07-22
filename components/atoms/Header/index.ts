@@ -1,3 +1,3 @@
+export { BackArrow } from './back-arrow';
 export { HeaderBar } from './header-bar';
-export { NavigateBackArrow } from './navigate-back-arrow';
 export * from './type';

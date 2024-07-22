@@ -1,18 +1,19 @@
 import { css, cx } from '@/styled-system/css';
 
-import { NavigateBackArrow } from './navigate-back-arrow';
+import { BackArrow } from './back-arrow';
 import { HeaderBarProps } from './type';
 
 export function HeaderBar({
   className,
+  arrowClassName,
   children,
   backArrowClick,
 }: HeaderBarProps) {
   return (
     <header className={cx(headerBarStyles, className)}>
-      <NavigateBackArrow
+      <BackArrow
         backArrowClick={backArrowClick}
-        className={arrowIconStyles}
+        className={cx(backArrowStyles, arrowClassName)}
       />
       {children}
     </header>
@@ -21,11 +22,11 @@ export function HeaderBar({
 
 const headerBarStyles = css({
   position: 'relative',
-  padding: '8px 0px',
+  padding: '9px 10px',
 });
 
-const arrowIconStyles = css({
+const backArrowStyles = css({
   position: 'absolute',
-  top: '4px',
-  left: '4px',
+  top: '3px',
+  left: '8px',
 });
