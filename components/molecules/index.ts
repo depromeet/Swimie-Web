@@ -1,3 +1,4 @@
+export * from './bottom-sheet';
 export * from './drop-down';
 export * from './header-bar';
 export * from './list';

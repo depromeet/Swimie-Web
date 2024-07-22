@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { LeftArrowIcon } from '@/components/atoms/icons/left-arrow-icon';
+import { LeftArrowIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 
 import { HeaderBarProps } from './type';
@@ -18,12 +18,12 @@ export function HeaderBar({
   className,
   arrowClassName,
   children,
-  backArrowClick,
+  onClickBackArrow,
 }: HeaderBarProps) {
   const router = useRouter();
 
   const handleBackClick = () => {
-    backArrowClick ? backArrowClick() : router.back();
+    onClickBackArrow ? onClickBackArrow() : router.back();
   };
   return (
     <header className={cx(headerBarStyles, className)}>

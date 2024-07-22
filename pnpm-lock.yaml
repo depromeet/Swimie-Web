@@ -22,6 +22,12 @@ importers:
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
+      framer-motion:
+        specifier: ^11.3.2
+        version: 11.3.2(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      jotai:
+        specifier: ^2.9.0
+        version: 2.9.0(@types/react@18.0.0)(react@18.0.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5422,6 +5428,23 @@ packages:
       }
     engines: { node: '>= 0.6' }
 
+  framer-motion@11.3.2:
+    resolution:
+      {
+        integrity: sha512-RgjSzrNFZmedWcvmW4MMc84A7UcoY37jocadE3Mbg3o+UMofodfyeNnYD/HR15UhP22/bb5KOebNhYOj4mYkpQ==,
+      }
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fresh@0.5.2:
     resolution:
       {
@@ -6312,6 +6335,21 @@ packages:
         integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==,
       }
     hasBin: true
+
+  jotai@2.9.0:
+    resolution:
+      {
+        integrity: sha512-MioTpMvR78IGfJ+W8EwQj3kwTkb+u0reGnTyg3oJZMWK9rK9v8NBSC9Rhrg9jrrFYA6bGZtzJa96zsuAYF6W3w==,
+      }
+    engines: { node: '>=12.20.0' }
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   js-tokens@4.0.0:
     resolution:
@@ -14023,6 +14061,13 @@ snapshots:
 
   forwarded@0.2.0: {}
 
+  framer-motion@11.3.2(react-dom@18.0.0(react@18.0.0))(react@18.0.0):
+    dependencies:
+      tslib: 2.6.3
+    optionalDependencies:
+      react: 18.0.0
+      react-dom: 18.0.0(react@18.0.0)
+
   fresh@0.5.2: {}
 
   fs-extra@10.1.0:
@@ -14501,6 +14546,11 @@ snapshots:
       supports-color: 8.1.1
 
   jiti@1.21.6: {}
+
+  jotai@2.9.0(@types/react@18.0.0)(react@18.0.0):
+    optionalDependencies:
+      '@types/react': 18.0.0
+      react: 18.0.0
 
   js-tokens@4.0.0: {}
 
