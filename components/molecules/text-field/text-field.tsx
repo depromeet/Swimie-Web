@@ -7,7 +7,7 @@ import { css, cva, cx } from '@/styled-system/css';
 
 import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
-import { UseTextField } from './useTextField';
+import { UseTextField } from './use-text-field';
 
 /**
  * text-field 컴포넌트.

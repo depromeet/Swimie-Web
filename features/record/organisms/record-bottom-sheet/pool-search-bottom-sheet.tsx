@@ -3,7 +3,7 @@
 import { debounce } from 'lodash';
 import { Suspense, useState } from 'react';
 
-import { SearchBar } from '@/components/molecules/Search';
+import { SearchBar } from '@/components/molecules/search-bar';
 import { css, cva, cx } from '@/styled-system/css';
 
 import useSearchPool from '../../queries/useSearchPool';

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UseRailLengthBottomSheet() {
+export function UseLaneLengthBottomSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {

@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
+import { LeftArrowIcon } from '@/components/atoms/icons/left-arrow-icon';
 import { css, cx } from '@/styled-system/css';
 
-import { LeftArrowIcon } from '../../atoms/Icons/left-arrow-icon';
 import { HeaderBarProps } from './type';
 
 /**

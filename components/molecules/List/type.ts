@@ -1,4 +1,4 @@
-import { DropDownProps } from '../DropDown';
+import { DropDownProps } from '../drop-down';
 
 export interface SelectListProps
   extends Omit<DropDownProps, 'addStyles' | 'addListStyles'> {

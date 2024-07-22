@@ -59,7 +59,7 @@ export function UseRecordForm(date: string) {
     setRecordInfo((prev) => ({ ...prev, endTime }));
   };
 
-  const changePoolId = (name: string, poolId: number) => {
+  const changePool = (name: string, poolId: number) => {
     setRecordInfo((prev) => ({ ...prev, poolId }));
     setSubInfo((prev) => ({ ...prev, poolName: name }));
   };
@@ -95,7 +95,7 @@ export function UseRecordForm(date: string) {
     handlers: {
       changeStartTime,
       changeEndTime,
-      changePoolId,
+      changePool,
       changeRailLength,
       changeTotalMeters,
       changeTotalLaps,

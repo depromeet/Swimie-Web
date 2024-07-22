@@ -4,20 +4,20 @@ import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import {
+  LaneLengthBottomSheet,
   PoolSearchBottomSheet,
-  RailLengthBottomSheet,
   TimeBottomSheet,
   UseEndTimeBottomSheet,
+  UseLaneLengthBottomSheet,
   UsePoolSearchBottomSheet,
-  UseRailLengthBottomSheet,
   UseStartTimeBottomSheet,
-} from '../RecordBottomSheet';
+} from '../record-bottom-sheet';
 import {
   RecordDistancePageModal,
   UseRecordDistancePageModal,
-} from '../RecordDistancePageModal';
+} from '../record-distance-page-modal';
 import { railLengthOptions } from './options';
-import { UseRecordForm } from './useRecordForm';
+import { UseRecordForm } from './use-record-form';
 
 export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
@@ -35,9 +35,9 @@ export function RecordForm() {
     handlers: poolSearchBottomSheetHandlers,
   } = UsePoolSearchBottomSheet();
   const {
-    isOpen: isRailLengthBottomSheetOpen,
-    handlers: railLengthBottomSheetHandlers,
-  } = UseRailLengthBottomSheet();
+    isOpen: isLaneLengthBottomSheetOpen,
+    handlers: laneLengthBottomSheetHandlers,
+  } = UseLaneLengthBottomSheet();
   const {
     isOpen: isRecordDistancePageModalOpen,
     jumpDirection,
@@ -91,7 +91,7 @@ export function RecordForm() {
           label="레일 길이"
           hasDownArrow
           wrapperClassName={css({ marginBottom: '24px' })}
-          onClick={railLengthBottomSheetHandlers.openBottomSheet}
+          onClick={laneLengthBottomSheetHandlers.openBottomSheet}
         />
         <TextField
           variant="select"
@@ -107,22 +107,22 @@ export function RecordForm() {
         />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
-      <RailLengthBottomSheet
+      <LaneLengthBottomSheet
         title="레인 길이를 선택해주세요"
         value={
           recordInfo.lane === Number(railLengthOptions[0].label.slice(0, -1))
             ? 0
             : 1
         }
-        isOpen={isRailLengthBottomSheetOpen}
+        isOpen={isLaneLengthBottomSheetOpen}
         modifyValue={handlers.changeRailLength}
-        closeBottomSheet={railLengthBottomSheetHandlers.closeBottomSheet}
+        closeBottomSheet={laneLengthBottomSheetHandlers.closeBottomSheet}
       />
       <PoolSearchBottomSheet
         isOpen={isPoolSearchBottomSheetOpen}
         title="어디서 수영을 했나요?"
         placeholder="수영장 검색"
-        modifyValue={handlers.changePoolId}
+        modifyValue={handlers.changePool}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet

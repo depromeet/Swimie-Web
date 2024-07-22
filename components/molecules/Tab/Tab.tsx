@@ -2,7 +2,7 @@ import { css, cx } from '@/styled-system/css';
 
 import { TabProps, TabTypeProps } from './type';
 
-const Tab = ({
+export const Tab = ({
   children,
   variant,
   type,
@@ -31,5 +31,3 @@ const Tab = ({
 
   return <div className={cx(tabStyles, className)}>{children}</div>;
 };
-
-export default Tab;

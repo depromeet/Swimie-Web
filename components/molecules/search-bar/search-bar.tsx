@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { SearchIcon } from '@/components/atoms';
+import { SearchIcon } from '@/components/atoms/icons/search-icon';
 import { css, cx } from '@/styled-system/css';
 
 import { SearchBarProps } from './type';

@@ -5,9 +5,13 @@ import './page-modal.css';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { HeaderBar, TextField, UseTab } from '@/components/molecules';
-import Tab from '@/components/molecules/Tab/Tab';
-import { TabItem } from '@/components/molecules/Tab/TabItem';
+import {
+  HeaderBar,
+  Tab,
+  TabItem,
+  TextField,
+  UseTab,
+} from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import { AddField } from './add-field';

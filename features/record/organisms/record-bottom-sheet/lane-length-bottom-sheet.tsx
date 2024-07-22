@@ -1,17 +1,17 @@
-import { SelectList } from '@/components/molecules/List';
+import { SelectList } from '@/components/molecules/list';
 import { css, cx } from '@/styled-system/css';
 
 import { railLengthOptions } from '../RecordForm';
-import { RailLengthBottomSheetProps } from './type';
+import { LaneLengthBottomSheetProps } from './type';
 
-export function RailLengthBottomSheet({
+export function LaneLengthBottomSheet({
   title,
   isOpen,
   value,
   modifyValue,
   closeBottomSheet,
   className,
-}: RailLengthBottomSheetProps) {
+}: LaneLengthBottomSheetProps) {
   //지영's 바텀 시트로 변경
   return isOpen ? (
     <div className={cx(railLengthBottomSheetStyles, className)}>

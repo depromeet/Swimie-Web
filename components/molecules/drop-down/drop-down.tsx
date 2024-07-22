@@ -1,6 +1,6 @@
 import { css, cx } from '@/styled-system/css';
 
-import { SelectList } from '../List';
+import { SelectList } from '../list';
 import { DropDownProps } from './type';
 
 export function DropDown({

@@ -1,4 +1,4 @@
-export * from './Tab';
-export * from './TabItem';
+export { Tab } from './tab';
+export { TabItem } from './tab-item';
 export * from './type';
-export { UseTab } from './useTab';
+export { UseTab } from './use-tab';

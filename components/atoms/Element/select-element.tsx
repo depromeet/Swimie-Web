@@ -1,4 +1,4 @@
-import { CheckIcon } from '../Icons';
+import { CheckIcon } from '../icons/check-icon';
 import { SelectElementProps } from './type';
 
 export function SelectElement({

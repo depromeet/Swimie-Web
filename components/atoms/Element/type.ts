@@ -1,4 +1,4 @@
-import { SelectListProps } from '@/components/molecules/List';
+import { SelectListProps } from '@/components/molecules/list';
 
 export interface SelectElementProps
   extends Pick<SelectListProps, 'value' | 'onSelect' | 'closeWrapper'> {
