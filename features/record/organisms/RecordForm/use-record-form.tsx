@@ -59,9 +59,9 @@ export function UseRecordForm(date: string) {
     setRecordInfo((prev) => ({ ...prev, endTime }));
   };
 
-  const changePool = (name: string, poolId: number) => {
-    setRecordInfo((prev) => ({ ...prev, poolId }));
-    setSubInfo((prev) => ({ ...prev, poolName: name }));
+  const changePool = (value: { name: string; poolId: number }) => {
+    setRecordInfo((prev) => ({ ...prev, poolId: value.poolId }));
+    setSubInfo((prev) => ({ ...prev, poolName: value.name }));
   };
 
   const changeRailLength = (value: number) => {

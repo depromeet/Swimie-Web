@@ -27,7 +27,7 @@ export function PoolSearchBottomSheet({
   }, 300);
 
   const handleClickPoolListElement = (name: string, poolId: number) => {
-    modifyValue && modifyValue(name, poolId);
+    modifyValue && modifyValue({ name, poolId });
     closeBottomSheet && closeBottomSheet();
   };
   return isOpen ? (

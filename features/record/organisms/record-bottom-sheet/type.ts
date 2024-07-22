@@ -1,16 +1,18 @@
-export interface BottomSheetProps<T, K = undefined> {
+export interface BottomSheetProps<T = unknown> {
   isOpen: boolean;
-  modifyValue?: (value: T, value2: K) => void;
   closeBottomSheet?: () => void;
   className?: string;
+  modifyValue?: (value: T) => void;
 }
 
+// PoolSearchBottomSheetProps는 (value: { name: string; poolId: number }) 타입의 매개변수를 받는 modifyValue를 정의
 export interface PoolSearchBottomSheetProps
-  extends BottomSheetProps<string, number> {
+  extends BottomSheetProps<{ name: string; poolId: number }> {
   title: string;
   placeholder: string;
 }
 
+// LaneLengthBottomSheetProps는 (value: number) 타입의 매개변수를 받는 modifyValue를 정의
 export interface LaneLengthBottomSheetProps extends BottomSheetProps<number> {
   title: string;
   value: number;
