@@ -32,6 +32,11 @@ export default defineConfig({
     extend: {
       textStyles,
       tokens: {
+        sizes: {
+          maxWidth: {
+            value: '600px',
+          },
+        },
         fontWeights: {
           regular: { value: '400' },
         },
@@ -40,6 +45,12 @@ export default defineConfig({
       },
       semanticTokens: {
         colors: semanticColors,
+      },
+      keyframes: {
+        dimFadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: '100%' },
+        },
       },
     },
   },
