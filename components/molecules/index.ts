@@ -1,1 +1,1 @@
-export * from './HeaderBar';
+export * from './header-bar';

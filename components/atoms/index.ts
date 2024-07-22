@@ -1,2 +1,2 @@
-export { Button } from './Button';
-export * from './Icons';
+export * from './button';
+export * from './icons';
