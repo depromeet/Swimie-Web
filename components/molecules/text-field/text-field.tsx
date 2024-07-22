@@ -7,7 +7,7 @@ import { css, cva, cx } from '@/styled-system/css';
 
 import { TextFieldWrapper } from './text-field-wrapper';
 import { TextFieldProps } from './type';
-import { UseTextField } from './use-text-field';
+import { useTextField } from './use-text-field';
 
 /**
  * text-field 컴포넌트.
@@ -46,12 +46,11 @@ export function TextField({
   onClick,
   onChange,
 }: TextFieldProps) {
-  const { text, focused, isWritten, handlers } = UseTextField(value);
+  const { focused, isWritten, handlers } = useTextField(value);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
-    handlers.changeText(newText);
-    onChange && onChange(newText);
+    onChange?.(newText);
   };
 
   return (
@@ -65,15 +64,15 @@ export function TextField({
         <input
           readOnly={variant === 'select'}
           type={inputType}
-          value={text}
+          value={value}
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={handleInputChange}
           onFocus={
-            variant === 'text' ? () => handlers.changeFocus(true) : undefined
+            variant === 'text' ? () => handlers.onChangeFocus(true) : undefined
           }
           onBlur={
-            variant === 'text' ? () => handlers.changeFocus(false) : undefined
+            variant === 'text' ? () => handlers.onChangeFocus(false) : undefined
           }
           className={cx(
             css(
@@ -86,10 +85,14 @@ export function TextField({
           onClick={onClick}
         />
         {/* span태그 컴포넌트로 공통 생성 시 수정 */}
-        <span className={cx(absoluteStyles, absoluteClassName)}>
-          {variant === 'select' && hasDownArrow && <DownArrowIcon />}
-          {unit}
-        </span>
+        {variant === 'select' && hasDownArrow && (
+          <span className={cx(absoluteStyles, absoluteClassName)}>
+            {<DownArrowIcon />}
+          </span>
+        )}
+        {unit && (
+          <span className={cx(absoluteStyles, absoluteClassName)}>{unit}</span>
+        )}
       </div>
       <span className={cx(subTextStyles, subTextClassName)}>{subText}</span>
     </TextFieldWrapper>
