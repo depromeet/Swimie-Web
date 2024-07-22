@@ -32,13 +32,14 @@ export function HeaderBar({
 }
 
 const headerBarStyles = css({
+  position: 'sticky',
   display: 'flex',
   alignItems: 'center',
-  position: 'sticky',
   width: '100%',
   minHeight: '38px',
 });
 
 const backArrowStyles = css({
+  position: 'absolute',
   marginLeft: '8px',
 });
