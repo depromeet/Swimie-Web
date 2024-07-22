@@ -1,6 +1,10 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import { css, cx } from '@/styled-system/css';
 
-import { BackArrow } from './back-arrow';
+import { LeftArrowIcon } from '../Icons';
 import { HeaderBarProps } from './type';
 
 export function HeaderBar({
@@ -9,12 +13,19 @@ export function HeaderBar({
   children,
   backArrowClick,
 }: HeaderBarProps) {
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    backArrowClick ? backArrowClick() : router.back();
+  };
   return (
     <header className={cx(headerBarStyles, className)}>
-      <BackArrow
-        backArrowClick={backArrowClick}
+      <div
         className={cx(backArrowStyles, arrowClassName)}
-      />
+        onClick={handleBackClick}
+      >
+        <LeftArrowIcon />
+      </div>
       {children}
     </header>
   );

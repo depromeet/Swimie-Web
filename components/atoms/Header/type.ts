@@ -6,8 +6,3 @@ export interface HeaderBarProps {
   backArrowClick?: () => void;
   children?: ReactNode;
 }
-
-export interface BackArrowProps {
-  className?: string;
-  backArrowClick?: () => void;
-}
