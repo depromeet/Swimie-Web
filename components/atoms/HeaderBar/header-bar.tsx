@@ -20,13 +20,15 @@ export function HeaderBar({
   };
   return (
     <header className={cx(headerBarStyles, className)}>
-      <div
-        className={cx(backArrowStyles, arrowClassName)}
-        onClick={handleBackClick}
-      >
-        <LeftArrowIcon />
+      <div className={parentStyles}>
+        <div
+          className={cx(arrowIconStyles, arrowClassName)}
+          onClick={handleBackClick}
+        >
+          <LeftArrowIcon />
+        </div>
+        {children}
       </div>
-      {children}
     </header>
   );
 }
@@ -35,11 +37,18 @@ const headerBarStyles = css({
   position: 'sticky',
   display: 'flex',
   alignItems: 'center',
-  width: '100%',
   minHeight: '38px',
 });
 
-const backArrowStyles = css({
+const parentStyles = css({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+  padding: '0 10px',
+});
+
+const arrowIconStyles = css({
   position: 'absolute',
-  marginLeft: '8px',
+  left: 0,
 });
