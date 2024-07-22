@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 
+import { Dim } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
-
-import { Dim } from './sheet-dim';
 
 type Direction = 'top' | 'bottom';
 
