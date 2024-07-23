@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UseRecordDistancePageModal() {
+export function useRecordDistancePageModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [jumpDirection, setJumpDirection] = useState<'forward' | 'backward'>(
     'forward',
@@ -18,7 +18,7 @@ export function UseRecordDistancePageModal() {
     setIsOpen(false);
   };
 
-  const changeJumpDirection = (direction: 'forward' | 'backward') => {
+  const onChangeJumpDirection = (direction: 'forward' | 'backward') => {
     setJumpDirection(direction);
   };
 
@@ -28,7 +28,7 @@ export function UseRecordDistancePageModal() {
     handlers: {
       openPageModal,
       closePageModal,
-      changeJumpDirection,
+      onChangeJumpDirection,
     },
   };
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UseEndTimeBottomSheet() {
+export function useEndTimeBottomSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {

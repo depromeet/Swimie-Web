@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UsePoolSearchBottomSheet() {
+export function usePoolSearchBottomSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {

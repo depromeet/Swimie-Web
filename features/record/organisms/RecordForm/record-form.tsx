@@ -7,42 +7,40 @@ import {
   LaneLengthBottomSheet,
   PoolSearchBottomSheet,
   TimeBottomSheet,
-  UseEndTimeBottomSheet,
-  UseLaneLengthBottomSheet,
-  UsePoolSearchBottomSheet,
-  UseStartTimeBottomSheet,
 } from '../record-bottom-sheet';
-import {
-  RecordDistancePageModal,
-  UseRecordDistancePageModal,
-} from '../record-distance-page-modal';
+import { useEndTimeBottomSheet } from '../record-bottom-sheet/use-end-time-bottom-sheet';
+import { useLaneLengthBottomSheet } from '../record-bottom-sheet/use-lane-length-bottom-sheet';
+import { usePoolSearchBottomSheet } from '../record-bottom-sheet/use-pool-search-bottom-sheet';
+import { useStartTimeBottomSheet } from '../record-bottom-sheet/use-start-time-bottom-sheet';
+import { RecordDistancePageModal } from '../record-distance-page-modal';
+import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
 import { railLengthOptions } from './options';
-import { UseRecordForm } from './use-record-form';
+import { useRecordForm } from './use-record-form';
 
 export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
-  const { recordInfo, subInfo, handlers } = UseRecordForm('2024년 7월 -일');
+  const { recordInfo, subInfo, handlers } = useRecordForm('2024년 7월 -일');
   const {
     isOpen: isStartTimeBottomSheetOpen,
     handlers: startTimeBottomSheetHandlers,
-  } = UseStartTimeBottomSheet();
+  } = useStartTimeBottomSheet();
   const {
     isOpen: isEndTimeBottomSheetOpen,
     handlers: endTimeBottomSheetHandlers,
-  } = UseEndTimeBottomSheet();
+  } = useEndTimeBottomSheet();
   const {
     isOpen: isPoolSearchBottomSheetOpen,
     handlers: poolSearchBottomSheetHandlers,
-  } = UsePoolSearchBottomSheet();
+  } = usePoolSearchBottomSheet();
   const {
     isOpen: isLaneLengthBottomSheetOpen,
     handlers: laneLengthBottomSheetHandlers,
-  } = UseLaneLengthBottomSheet();
+  } = useLaneLengthBottomSheet();
   const {
     isOpen: isRecordDistancePageModalOpen,
     jumpDirection,
     handlers: recordDistancePageModalHandlers,
-  } = UseRecordDistancePageModal();
+  } = useRecordDistancePageModal();
   return (
     <>
       <form className={formStyles}>
@@ -115,31 +113,31 @@ export function RecordForm() {
             : 1
         }
         isOpen={isLaneLengthBottomSheetOpen}
-        modifyValue={handlers.changeRailLength}
+        modifyValue={handlers.onChangeRailLength}
         closeBottomSheet={laneLengthBottomSheetHandlers.closeBottomSheet}
       />
       <PoolSearchBottomSheet
         isOpen={isPoolSearchBottomSheetOpen}
         title="어디서 수영을 했나요?"
         placeholder="수영장 검색"
-        modifyValue={handlers.changePool}
+        modifyValue={handlers.onChangePool}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet
         isOpen={isStartTimeBottomSheetOpen}
-        modifyValue={handlers.changeStartTime}
+        modifyValue={handlers.onChangeStartTime}
         closeBottomSheet={startTimeBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet
         isOpen={isEndTimeBottomSheetOpen}
-        modifyValue={handlers.changeEndTime}
+        modifyValue={handlers.onChangeEndTime}
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
       <RecordDistancePageModal
         currentLane={recordInfo.lane}
-        modifyTotalMeters={handlers.changeTotalMeters}
-        modifyTotalLaps={handlers.changeTotalLaps}
-        modifyStrokes={handlers.changeStrokes}
+        modifyTotalMeters={handlers.onChangeTotalMeters}
+        modifyTotalLaps={handlers.onChangeTotalLaps}
+        modifyStrokes={handlers.onChangeStrokes}
         isOpen={isRecordDistancePageModalOpen}
         jumpDirection={jumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}

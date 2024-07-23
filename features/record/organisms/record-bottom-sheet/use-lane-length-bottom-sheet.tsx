@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UseLaneLengthBottomSheet() {
+export function useLaneLengthBottomSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {

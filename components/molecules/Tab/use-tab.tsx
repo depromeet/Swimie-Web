@@ -2,17 +2,17 @@
 
 import { useState } from 'react';
 
-export function UseTab() {
+export function useTab() {
   const [tabIndex, setTabIndex] = useState<number>(0);
 
-  const changeTabIndex = (index: number) => {
+  const onChangeTabIndex = (index: number) => {
     setTabIndex(index);
   };
 
   return {
     tabIndex,
     handlers: {
-      changeTabIndex,
+      onChangeTabIndex,
     },
   };
 }

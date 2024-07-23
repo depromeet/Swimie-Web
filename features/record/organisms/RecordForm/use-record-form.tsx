@@ -29,7 +29,7 @@ interface SubInfoProps {
   totalLaps: number;
 }
 
-export function UseRecordForm(date: string) {
+export function useRecordForm(date: string) {
   //처음 기록 or 두번째 이상 기록일 때 default 값 달라져야함
   const [recordInfo, setRecordInfo] = useState<RecordInfoProps>({
     poolId: null,
@@ -51,35 +51,35 @@ export function UseRecordForm(date: string) {
     totalLaps: 0,
   });
 
-  const changeStartTime = (startTime: string) => {
+  const onChangeStartTime = (startTime: string) => {
     setRecordInfo((prev) => ({ ...prev, startTime }));
   };
 
-  const changeEndTime = (endTime: string) => {
+  const onChangeEndTime = (endTime: string) => {
     setRecordInfo((prev) => ({ ...prev, endTime }));
   };
 
-  const changePool = (value: { name: string; poolId: number }) => {
+  const onChangePool = (value: { name: string; poolId: number }) => {
     setRecordInfo((prev) => ({ ...prev, poolId: value.poolId }));
     setSubInfo((prev) => ({ ...prev, poolName: value.name }));
   };
 
-  const changeRailLength = (value: number) => {
+  const onChangeRailLength = (value: number) => {
     setRecordInfo((prev) => ({
       ...prev,
       lane: Number(railLengthOptions[value].label.slice(0, -1)),
     }));
   };
 
-  const changeTotalMeters = (totalMeters: number) => {
+  const onChangeTotalMeters = (totalMeters: number) => {
     setSubInfo((prev) => ({ ...prev, totalMeters }));
   };
 
-  const changeTotalLaps = (totalLaps: number) => {
+  const onChangeTotalLaps = (totalLaps: number) => {
     setSubInfo((prev) => ({ ...prev, totalLaps }));
   };
 
-  const changeStrokes = (
+  const onChangeStrokes = (
     strokes: {
       name: string;
       laps: number;
@@ -93,13 +93,13 @@ export function UseRecordForm(date: string) {
     recordInfo,
     subInfo,
     handlers: {
-      changeStartTime,
-      changeEndTime,
-      changePool,
-      changeRailLength,
-      changeTotalMeters,
-      changeTotalLaps,
-      changeStrokes,
+      onChangeStartTime,
+      onChangeEndTime,
+      onChangePool,
+      onChangeRailLength,
+      onChangeTotalMeters,
+      onChangeTotalLaps,
+      onChangeStrokes,
     },
   };
 }

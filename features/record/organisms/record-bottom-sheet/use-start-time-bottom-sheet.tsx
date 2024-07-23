@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function UseStartTimeBottomSheet() {
+export function useStartTimeBottomSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {

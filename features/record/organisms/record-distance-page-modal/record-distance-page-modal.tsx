@@ -10,7 +10,7 @@ import {
   Tab,
   TabItem,
   TextField,
-  UseTab,
+  useTab,
 } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
@@ -33,8 +33,8 @@ export function RecordDistancePageModal({
   const ref = useRef<HTMLDivElement>(null);
   console.log(modifyStrokes);
 
-  const { tabIndex: secondaryTabIndex, handlers: secondaryHandlers } = UseTab();
-  const { tabIndex: assistiveTabIndex, handlers: assistiveHandlers } = UseTab();
+  const { tabIndex: secondaryTabIndex, handlers: secondaryHandlers } = useTab();
+  const { tabIndex: assistiveTabIndex, handlers: assistiveHandlers } = useTab();
 
   const handleTotalMetersChange = (text: string) => {
     setTotalLaps(0);
@@ -63,7 +63,7 @@ export function RecordDistancePageModal({
       unmountOnExit
     >
       <div className={css(RecordDistancePageModalStyles)} ref={ref}>
-        <HeaderBar backArrowClick={handleBackArrowClick} />
+        <HeaderBar onClickBackArrow={handleBackArrowClick} />
         <h1 className={css(titleStyles)}>수영 거리 입력</h1>
         <section className={css(tabSectionStyles)}>
           <Tab type="secondary" className={css({ marginBottom: '12px' })}>
@@ -71,13 +71,13 @@ export function RecordDistancePageModal({
               type="secondary"
               text="총거리"
               selected={secondaryTabIndex === 0}
-              onClick={() => secondaryHandlers.changeTabIndex(0)}
+              onClick={() => secondaryHandlers.onChangeTabIndex(0)}
             />
             <TabItem
               type="secondary"
               text="영법별 거리"
               selected={secondaryTabIndex === 1}
-              onClick={() => secondaryHandlers.changeTabIndex(1)}
+              onClick={() => secondaryHandlers.onChangeTabIndex(1)}
             />
           </Tab>
           <Tab type="assistive">
@@ -85,13 +85,13 @@ export function RecordDistancePageModal({
               type="assistive"
               text="미터(m)"
               selected={assistiveTabIndex === 0}
-              onClick={() => assistiveHandlers.changeTabIndex(0)}
+              onClick={() => assistiveHandlers.onChangeTabIndex(0)}
             />
             <TabItem
               type="assistive"
               text="바퀴수"
               selected={assistiveTabIndex === 1}
-              onClick={() => assistiveHandlers.changeTabIndex(1)}
+              onClick={() => assistiveHandlers.onChangeTabIndex(1)}
             />
           </Tab>
         </section>
