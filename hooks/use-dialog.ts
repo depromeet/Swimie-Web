@@ -15,7 +15,7 @@ import { dialogAtom } from '@/store';
  * return <Dialog {...dialogState}>
  *
  * 2. hooks
- * const { dialog } = useDialog();
+ * const { dialog, close } = useDialog();
  *
  * const clickOpenDialog = () => {
  *  dialog({
