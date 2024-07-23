@@ -15,6 +15,7 @@ import { usePoolSearchBottomSheet } from '../record-bottom-sheet/use-pool-search
 import { useStartTimeBottomSheet } from '../record-bottom-sheet/use-start-time-bottom-sheet';
 import { RecordDistancePageModal } from '../record-distance-page-modal';
 import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
+import { RecordPhoto } from '../record-photo/record-photo';
 import { railLengthOptions } from './options';
 import { useRecordForm } from './use-record-form';
 
@@ -45,7 +46,7 @@ export function RecordForm() {
   return (
     <>
       <form>
-        <div className={textFieldStyles}>
+        <div className={textFieldSectionStyles}>
           <TextField
             variant="select"
             isRequired
@@ -107,6 +108,7 @@ export function RecordForm() {
           />
         </div>
         <Divider variant="thick" />
+        <RecordPhoto title="오늘의 사진" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet
@@ -151,9 +153,8 @@ export function RecordForm() {
   );
 }
 
-const textFieldStyles = css({
-  width: '100%',
-  padding: '0px 20px',
+const textFieldSectionStyles = css({
+  padding: '24px 20px',
 });
 
 const timeTextFieldLayoutStyles = css({

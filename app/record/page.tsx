@@ -8,7 +8,13 @@ export default function RecordPage() {
       <HeaderBar className={css({ marginBottom: '24px' })}>
         <h1 className={titleWrapperStyles}>수영 기록하기</h1>
       </HeaderBar>
-      <h1 className={css({ padding: '0px 20px', marginBottom: '23px' })}>
+      <h1
+        className={css({
+          padding: '0px 20px',
+          textStyle: 'heading4',
+          fontWeight: '600',
+        })}
+      >
         기본정보
       </h1>
       <RecordForm />
@@ -21,4 +27,6 @@ const titleWrapperStyles = css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
+  textStyle: 'heading6',
+  fontWeight: 500,
 });

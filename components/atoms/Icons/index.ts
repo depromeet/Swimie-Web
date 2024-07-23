@@ -1,3 +1,4 @@
+export { CameraIcon } from './camera-icon';
 export { CheckIcon } from './check-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';

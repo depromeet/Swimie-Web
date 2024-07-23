@@ -1,7 +1,7 @@
 import { SelectList } from '@/components/molecules/list';
 import { css, cx } from '@/styled-system/css';
 
-import { railLengthOptions } from '../RecordForm';
+import { railLengthOptions } from '../record-form';
 import { LaneLengthBottomSheetProps } from './type';
 
 export function LaneLengthBottomSheet({
