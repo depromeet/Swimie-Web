@@ -1,6 +1,6 @@
 export interface BottomSheetProps<T = unknown> {
   isOpen: boolean;
-  closeBottomSheet?: () => void;
+  closeBottomSheet: () => void;
   className?: string;
   modifyValue?: (value: T) => void;
 }

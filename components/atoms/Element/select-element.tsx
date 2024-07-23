@@ -1,4 +1,5 @@
 import { SelectListProps } from '@/components/molecules/list/select-list';
+import { css } from '@/styled-system/css';
 
 import { CheckIcon } from '../icons/check-icon';
 
@@ -23,8 +24,13 @@ export function SelectElement({
   };
   return (
     <li className={className} onClick={() => handleListClick(value)}>
-      {label}
-      {isSelected && <CheckIcon />}
+      <span>{label}</span>
+      <div className={selectedIconStyles}>{isSelected && <CheckIcon />}</div>
     </li>
   );
 }
+
+const selectedIconStyles = css({
+  position: 'absolute',
+  right: 0,
+});
