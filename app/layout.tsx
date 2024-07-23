@@ -4,6 +4,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
 import { css } from '@/styled-system/css';
+import { pretendard } from '@/styles/font';
+
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
