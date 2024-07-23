@@ -12,4 +12,5 @@ export type ButtonProps = {
 export interface ButtonPropsWithIcons extends ButtonProps {
   leftIconSrc?: string;
   rightIconSrc?: string;
+  onClick?: () => void;
 }
