@@ -1,5 +1,6 @@
 'use client';
 
+import { Divider } from '@/components/atoms';
 import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
@@ -43,66 +44,69 @@ export function RecordForm() {
   } = useRecordDistancePageModal();
   return (
     <>
-      <form className={formStyles}>
-        <TextField
-          variant="select"
-          isRequired
-          placeholder={recordInfo.recordAt}
-          label="수영 날짜"
-          wrapperClassName={css({ marginBottom: '24px' })}
-        />
-        <div className={timeTextFieldLayoutStyles}>
+      <form>
+        <div className={textFieldStyles}>
           <TextField
             variant="select"
             isRequired
-            hasDownArrow
-            value={recordInfo.startTime}
-            placeholder="00:00"
-            label="수영 시간"
-            wrapperClassName={timeTextFieldStyles}
-            onClick={startTimeBottomSheetHandlers.openBottomSheet}
+            placeholder={recordInfo.recordAt}
+            label="수영 날짜"
+            wrapperClassName={css({ marginBottom: '24px' })}
           />
-          <span className={css({ fontSize: '30px' })}>-</span>
+          <div className={timeTextFieldLayoutStyles}>
+            <TextField
+              variant="select"
+              isRequired
+              hasDownArrow
+              value={recordInfo.startTime}
+              placeholder="00:00"
+              label="수영 시간"
+              wrapperClassName={timeTextFieldStyles}
+              onClick={startTimeBottomSheetHandlers.openBottomSheet}
+            />
+            <span className={css({ fontSize: '30px' })}>-</span>
+            <TextField
+              variant="select"
+              isRequired
+              hasDownArrow
+              value={recordInfo.endTime}
+              label="수영 시간"
+              placeholder="00:00"
+              wrapperClassName={timeTextFieldStyles}
+              onClick={endTimeBottomSheetHandlers.openBottomSheet}
+            />
+          </div>
           <TextField
             variant="select"
-            isRequired
+            value={subInfo.poolName}
             hasDownArrow
-            value={recordInfo.endTime}
-            label="수영 시간"
-            placeholder="00:00"
-            wrapperClassName={timeTextFieldStyles}
-            onClick={endTimeBottomSheetHandlers.openBottomSheet}
+            placeholder="(선택)"
+            label="수영장"
+            wrapperClassName={css({ marginBottom: '24px' })}
+            onClick={poolSearchBottomSheetHandlers.openBottomSheet}
+          />
+          <TextField
+            variant="select"
+            value={String(recordInfo.lane) + 'm'}
+            label="레일 길이"
+            hasDownArrow
+            wrapperClassName={css({ marginBottom: '24px' })}
+            onClick={laneLengthBottomSheetHandlers.openBottomSheet}
+          />
+          <TextField
+            variant="select"
+            value={
+              subInfo.totalMeters > 0
+                ? String(subInfo.totalMeters) + 'm'
+                : undefined
+            }
+            placeholder="거리입력(선택)"
+            label="수영 거리"
+            wrapperClassName={css({ marginBottom: '24px' })}
+            onClick={recordDistancePageModalHandlers.openPageModal}
           />
         </div>
-        <TextField
-          variant="select"
-          value={subInfo.poolName}
-          hasDownArrow
-          placeholder="(선택)"
-          label="수영장"
-          wrapperClassName={css({ marginBottom: '24px' })}
-          onClick={poolSearchBottomSheetHandlers.openBottomSheet}
-        />
-        <TextField
-          variant="select"
-          value={String(recordInfo.lane) + 'm'}
-          label="레일 길이"
-          hasDownArrow
-          wrapperClassName={css({ marginBottom: '24px' })}
-          onClick={laneLengthBottomSheetHandlers.openBottomSheet}
-        />
-        <TextField
-          variant="select"
-          value={
-            subInfo.totalMeters > 0
-              ? String(subInfo.totalMeters) + 'm'
-              : undefined
-          }
-          placeholder="거리입력(선택)"
-          label="수영 거리"
-          wrapperClassName={css({ marginBottom: '24px' })}
-          onClick={recordDistancePageModalHandlers.openPageModal}
-        />
+        <Divider variant="thick" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet
@@ -147,7 +151,7 @@ export function RecordForm() {
   );
 }
 
-const formStyles = css({
+const textFieldStyles = css({
   width: '100%',
   padding: '0px 20px',
 });
