@@ -18,6 +18,7 @@ import { RecordDistancePageModal } from '../record-distance-page-modal';
 import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
 import { RecordEquipment } from '../record-equipment';
 import { RecordPhoto } from '../record-photo/record-photo';
+import { RecordSubInfo } from '../record-sub-info';
 import { railLengthOptions } from './options';
 import { useRecordForm } from './use-record-form';
 
@@ -115,6 +116,9 @@ export function RecordForm() {
         <RecordDiary title="일기" />
         <Divider variant="thick" />
         <RecordEquipment title="장비" />
+        <Divider variant="thick" />
+        <RecordSubInfo title="심박수 · 페이스 · 칼로리" />
+        <Divider variant="thick" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet
