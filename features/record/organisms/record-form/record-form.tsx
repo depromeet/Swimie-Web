@@ -13,6 +13,7 @@ import { useEndTimeBottomSheet } from '../record-bottom-sheet/use-end-time-botto
 import { useLaneLengthBottomSheet } from '../record-bottom-sheet/use-lane-length-bottom-sheet';
 import { usePoolSearchBottomSheet } from '../record-bottom-sheet/use-pool-search-bottom-sheet';
 import { useStartTimeBottomSheet } from '../record-bottom-sheet/use-start-time-bottom-sheet';
+import { RecordDiary } from '../record-diary/record-diary';
 import { RecordDistancePageModal } from '../record-distance-page-modal';
 import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
 import { RecordPhoto } from '../record-photo/record-photo';
@@ -109,6 +110,9 @@ export function RecordForm() {
         </div>
         <Divider variant="thick" />
         <RecordPhoto title="오늘의 사진" />
+        <Divider variant="thick" />
+        <RecordDiary title="일기" />
+        <Divider variant="thick" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet
