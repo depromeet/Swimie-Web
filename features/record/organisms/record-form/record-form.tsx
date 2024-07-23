@@ -118,7 +118,6 @@ export function RecordForm() {
         <RecordEquipment title="장비" />
         <Divider variant="thick" />
         <RecordSubInfo title="심박수 · 페이스 · 칼로리" />
-        <Divider variant="thick" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet
