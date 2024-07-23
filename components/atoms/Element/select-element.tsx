@@ -1,5 +1,13 @@
+import { SelectListProps } from '@/components/molecules/list/select-list';
+
 import { CheckIcon } from '../icons/check-icon';
-import { SelectElementProps } from './type';
+
+export interface SelectElementProps
+  extends Pick<SelectListProps, 'value' | 'onSelect' | 'closeWrapper'> {
+  isSelected: boolean;
+  label: string;
+  className?: string;
+}
 
 export function SelectElement({
   isSelected,

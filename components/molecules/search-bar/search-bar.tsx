@@ -5,7 +5,12 @@ import { ChangeEvent, useState } from 'react';
 import { SearchIcon } from '@/components/atoms/icons/search-icon';
 import { css, cx } from '@/styled-system/css';
 
-import { SearchBarProps } from './type';
+export interface SearchBarProps {
+  placeholder?: string;
+  className?: string;
+  inputClassName?: string;
+  onChange?: (text: string) => void;
+}
 
 export function SearchBar({
   placeholder,

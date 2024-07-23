@@ -1,6 +1,13 @@
 import { SelectElement } from '@/components/atoms';
 
-import { SelectListProps } from './type';
+import { DropDownProps } from '../drop-down/drop-down';
+
+export interface SelectListProps
+  extends Omit<DropDownProps, 'addStyles' | 'addListStyles'> {
+  className?: string;
+  listElementClassName?: string;
+  closeWrapper?: () => void;
+}
 
 export function SelectList({
   options,

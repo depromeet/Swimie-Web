@@ -1,7 +1,15 @@
 import { css, cx } from '@/styled-system/css';
 
 import { SelectList } from '../list';
-import { DropDownProps } from './type';
+
+export interface DropDownProps {
+  options: { value: number; label: string }[];
+  value: number;
+  className?: string;
+  listClassName?: string;
+  listElementClassName?: string;
+  onSelect?: (value: number) => void;
+}
 
 export function DropDown({
   options,

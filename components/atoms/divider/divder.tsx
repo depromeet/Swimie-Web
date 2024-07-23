@@ -1,6 +1,10 @@
 import { cva } from '@/styled-system/css';
 
-import { DividerProps } from './type';
+export interface DividerProps {
+  variant?: 'thick' | 'normal';
+  vertical?: boolean;
+  className?: string;
+}
 
 export function Divider({
   variant = 'normal',
