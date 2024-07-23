@@ -42,9 +42,9 @@ const searchBarStyles = css({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  height: '2rem',
-  padding: '12px 0 12px 16px',
-  backgroundColor: '#F6F6F6',
+  height: '44px',
+  padding: '10px 16px',
+  backgroundColor: 'fill.normal',
   borderRadius: '12px',
 });
 

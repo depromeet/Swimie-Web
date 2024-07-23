@@ -133,7 +133,7 @@ export function RecordForm() {
       />
       <PoolSearchBottomSheet
         isOpen={isPoolSearchBottomSheetOpen}
-        title="어디서 수영을 했나요?"
+        title="어디서 수영했나요?"
         placeholder="수영장 검색"
         modifyValue={handlers.onChangePool}
         closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
