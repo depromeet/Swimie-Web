@@ -16,6 +16,7 @@ import { useStartTimeBottomSheet } from '../record-bottom-sheet/use-start-time-b
 import { RecordDiary } from '../record-diary/record-diary';
 import { RecordDistancePageModal } from '../record-distance-page-modal';
 import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
+import { RecordEquipment } from '../record-equipment';
 import { RecordPhoto } from '../record-photo/record-photo';
 import { railLengthOptions } from './options';
 import { useRecordForm } from './use-record-form';
@@ -113,6 +114,7 @@ export function RecordForm() {
         <Divider variant="thick" />
         <RecordDiary title="일기" />
         <Divider variant="thick" />
+        <RecordEquipment title="장비" />
       </form>
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
       <LaneLengthBottomSheet

@@ -5,10 +5,10 @@ import { RecordDiaryProps } from './type';
 
 export function RecordDiary({ title }: RecordDiaryProps) {
   return (
-    <div className={recordDiaryStyles}>
+    <section className={recordDiaryStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <TextArea placeholder="오늘 무엇을 배웠나요? 오늘 무엇을 느꼈나요?" />
-    </div>
+    </section>
   );
 }
 

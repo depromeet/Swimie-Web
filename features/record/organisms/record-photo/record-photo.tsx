@@ -5,10 +5,10 @@ import { RecordPhotoProps } from './type';
 
 export function RecordPhoto({ title }: RecordPhotoProps) {
   return (
-    <div className={recordPhotoStyles}>
+    <section className={recordPhotoStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <CameraBox />
-    </div>
+    </section>
   );
 }
 
