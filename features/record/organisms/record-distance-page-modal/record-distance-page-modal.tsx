@@ -14,7 +14,6 @@ import {
 } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { AddField } from './add-field';
 import { strokeOptions } from './options';
 import { RecordSwimField } from './record-swim-field';
 import { RecordDistancePageModalProps } from './type';
@@ -126,7 +125,6 @@ export function RecordDistancePageModal({
                   className={css({ marginBottom: '16px' })}
                 />
               ))}
-              <AddField text="영법 추가" />
             </>
           )}
         </section>
