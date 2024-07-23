@@ -2,29 +2,50 @@ import { css } from '@/styled-system/css';
 
 import { TabProps, TabTypeProps } from './type';
 
-const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
-  const tabStyles = css({
-    width:
-      type === 'primary' ? '375px' : type === 'assistive' ? '150px' : '335px',
-    height:
-      type === 'primary' ? '56px' : type === 'assistive' ? '34px' : '44px',
-    display: 'flex',
-    justifyContent: variant === 'fill' ? 'center' : 'left',
-    alignItems: 'center',
-    gap: '8px',
-    backgroundColor:
-      type === 'primary'
-        ? 'white'
-        : type === 'assistive'
-          ? ''
-          : 'background.gray',
-    borderBottom: type === 'primary' ? '1px solid' : '',
-    borderColor: type === 'primary' ? 'line.neutral' : '',
-    borderRadius: type === 'primary' ? '' : type === 'assistive' ? '' : '12px',
-    padding: type === 'primary' ? '' : '3px',
-  });
+/**
+ * @param variant fill 고정값 (fit-content는 primary에만 적용)
+ * @param type primary 고정값
+ */
 
-  return <div className={tabStyles}>{children}</div>;
+const tabStyles = {
+  primary: {
+    width: '375px',
+    height: '56px',
+    borderBottom: '1px solid',
+    borderColor: 'coolNeutral.97',
+    padding: '0px 20px',
+  },
+  secondary: {
+    width: '335px',
+    height: '44px',
+    border: '1px solid coolNeutral.97',
+    backgroundColor: 'fill.normal',
+    padding: '3px',
+    borderRadius: '12px',
+  },
+  assistive: {
+    width: '150px',
+    height: '34px',
+  },
+};
+
+const Tab = ({
+  children,
+  variant = 'fill',
+  type = 'primary',
+}: TabProps & TabTypeProps) => {
+  const typeStyle = tabStyles[type] || tabStyles.primary;
+
+  const style = {
+    ...typeStyle,
+    display: 'flex',
+    justifyContent: variant === 'fill' ? 'center' : 'flex-start',
+    alignItems: 'center',
+  };
+
+  const tabStyleClass = css(style);
+
+  return <div className={tabStyleClass}>{children}</div>;
 };
 
 export default Tab;

@@ -2,67 +2,91 @@ import { css } from '@/styled-system/css';
 
 import { ClickTabItemProps } from './type';
 
+/**
+ * @param selected 선택 여부
+ * @param text 텍스트
+ * @param type primary 고정값
+ * @param variant fill 고정값 (fit-content는 primary에만 적용)
+ * @param onClick
+ */
+
+const tabItemStyles = {
+  primary: {
+    height: '56px',
+    padding: '16px 10px',
+  },
+  secondary: {
+    height: '38px',
+    padding: '8px 10px',
+  },
+  assistive: {
+    height: '34px',
+    padding: '8px 16px',
+    border: '1px solid',
+    borderRadius: '999px',
+    backgroundColor: 'background.white',
+    color: 'normal.white',
+  },
+};
+
 export const TabItem = ({
   selected,
   text,
   onClick,
-  type,
+  type = 'primary',
+  variant = 'fill',
 }: ClickTabItemProps) => {
-  const tabItemStyles = css({
-    width: '100%',
-    height: type === 'primary' ? '56px' : '38px',
+  const baseStyle = tabItemStyles[type] || tabItemStyles.primary;
+
+  const selectedStyles = {
+    primary: {
+      borderBottom: '2px solid',
+      borderColor: 'blue.60',
+      color: 'text.normal',
+    },
+    secondary: {
+      boxShadow: 'normal',
+      backgroundColor: 'background.white',
+      borderRadius: '10px',
+      color: 'text.normal',
+    },
+    assistive: {
+      backgroundColor: 'coolNeutral.25',
+      color: 'background.white',
+    },
+  };
+
+  const unselectedStyles = {
+    primary: {
+      borderColor: 'line.normal',
+      color: 'text.alternative',
+    },
+    secondary: {
+      color: 'text.alternative',
+    },
+    assistive: {
+      borderColor: 'line.normal',
+      color: 'text.alternative',
+    },
+  };
+
+  const width =
+    variant === 'fit-content' ? 'auto' : type === 'assistive' ? '67px' : '100%';
+
+  const style = {
+    ...baseStyle,
+    width,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
-    padding: type === 'primary' ? '16px 10px' : '8px 10px',
-    backgroundColor:
-      type === 'primary' && selected
-        ? 'white'
-        : type === 'secondary' && selected
-          ? 'white'
-          : type === 'assistive' && selected
-            ? 'coolNeutral.25'
-            : '',
-    borderBottom:
-      type === 'primary' && selected
-        ? '1px solid'
-        : type === 'secondary' && selected
-          ? ''
-          : '',
-    border: type === 'assistive' ? '1px solid' : '',
-    borderColor:
-      type === 'primary' && selected
-        ? 'blue.60'
-        : type === 'secondary' && selected
-          ? ''
-          : 'line.normal',
-    borderRadius:
-      type === 'primary' && selected
-        ? ''
-        : type === 'secondary' && selected
-          ? '10px'
-          : type === 'assistive'
-            ? '999px'
-            : '',
-    shadow:
-      type === 'primary' && selected
-        ? ''
-        : type === 'secondary' && selected
-          ? 'normal'
-          : '',
-    color:
-      type === 'primary' && selected
-        ? 'text.normal'
-        : type === 'secondary' && selected
-          ? 'text.normal'
-          : type === 'assistive' && selected
-            ? 'background.white'
-            : 'text.normal',
-  });
+    ...(selected ? selectedStyles[type] : unselectedStyles[type]),
+  };
+
+  const tabItemStyleClass = css(style);
 
   return (
-    <div className={tabItemStyles} onClick={onClick}>
+    <div className={tabItemStyleClass} onClick={onClick}>
       {text}
     </div>
   );
