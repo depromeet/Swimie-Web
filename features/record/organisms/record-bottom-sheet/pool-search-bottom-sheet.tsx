@@ -6,7 +6,7 @@ import { Suspense, useState } from 'react';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css, cva, cx } from '@/styled-system/css';
 
-import useSearchPool from '../../queries/useSearchPool';
+import useSearchPool from '../../queries/use-search-pool';
 import { PoolSearchBottomSheetProps } from './type';
 
 export function PoolSearchBottomSheet({

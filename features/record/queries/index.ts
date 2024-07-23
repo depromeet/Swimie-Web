@@ -1,2 +1,2 @@
 export * from './dto';
-export * from './useSearchPool';
+export * from './use-search-pool';
