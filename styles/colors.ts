@@ -130,7 +130,7 @@ export const semanticColors = {
   },
   status: {
     positive: { value: '{colors.green.50}' },
-    destructive: { value: '{colors.red.50}' },
+    negative: { value: '{colors.red.50}' },
   },
   static: {
     white: { value: '{colors.common.100}' },
