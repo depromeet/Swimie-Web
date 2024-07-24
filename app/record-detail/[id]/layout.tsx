@@ -1,34 +1,15 @@
 import { ReactNode } from 'react';
 
 import { HeaderBar } from '@/components/molecules';
+import { EditButton } from '@/features/record-detail/components';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-const rootStyle = css({
-  maxWidth: 'maxWidth',
-  width: '100%',
-  margin: '0 auto',
-});
-
 const DetailLayout = ({ children }: { children: ReactNode }) => {
-  // TODO: edit button click event
-  const handleClickEditButton = () => {
-    console.log('edit');
-  };
-
   return (
-    <div className={rootStyle}>
-      <HeaderBar
-        rightContent={
-          <button
-            className={header.editButtonStyle}
-            onClick={handleClickEditButton}
-          >
-            수정
-          </button>
-        }
-      >
-        <div className={header.textStyle}>승승의 수영 기록</div>
+    <div>
+      <HeaderBar rightContent={<EditButton />}>
+        <div className={header.textStyle}>지영의 수영 기록</div>
       </HeaderBar>
       <div className={childrenWrapperStyle}>{children}</div>
     </div>
@@ -38,7 +19,7 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
 export default DetailLayout;
 
 const childrenWrapperStyle = css({
-  padding: '0 20px',
+  backgroundColor: 'background.gray',
 });
 
 const header = {

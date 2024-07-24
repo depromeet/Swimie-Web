@@ -7,12 +7,13 @@ import {
   DetailPreviewSection,
 } from '@/features/record-detail';
 import { useBottomSheet } from '@/hooks';
+import { flex } from '@/styled-system/patterns';
 
 const RecordDetail = () => {
   const [isOpen, open, close] = useBottomSheet();
 
   return (
-    <article>
+    <article className={containerStyle}>
       {/* preview section */}
       <DetailPreviewSection />
       {/* description section */}
@@ -37,3 +38,8 @@ const RecordDetail = () => {
 };
 
 export default RecordDetail;
+
+const containerStyle = flex({
+  flexDirection: 'column',
+  gap: '12px',
+});
