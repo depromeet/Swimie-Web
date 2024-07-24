@@ -7,24 +7,28 @@ import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
 
 export const Calendar = () => {
-  const [squares, startPoint, endPoint] = useCalendarRendaringData();
+  const [squares, startPoint, endPoint, isDateToday] =
+    useCalendarRendaringData();
 
   return (
     <div className={calendarContainer}>
       <CalendarHeader />
       <DayLabels />
       <ul className={CalendarGrid}>
-        {squares.map((date, index) =>
-          index >= startPoint && index <= endPoint ? (
+        {squares.map((squareNumber, index) => {
+          const isInRenderingRange = index >= startPoint && index <= endPoint;
+          const date = squareNumber - startPoint;
+
+          return isInRenderingRange === true ? (
             <CalendarItem
-              key={date}
-              date={date - startPoint}
-              distance={date % 2 === 0 ? 1000 : undefined}
+              key={squareNumber}
+              date={date}
+              isToday={isDateToday(date)}
             />
           ) : (
             <div key={`out-of-range-${index}`} />
-          ),
-        )}
+          );
+        })}
       </ul>
     </div>
   );
