@@ -1,12 +1,14 @@
 import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 
 import { CalendarDate, calendarDateAtom } from '@/store';
 import { css } from '@/styled-system/css';
 
-import { MoveMonthButton } from '../atoms';
+import { MoveMonthButton, ViewImageButton } from '../atoms';
 
 export const CalendarHeader = () => {
+  const [isViewImage, setIsViewImage] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useAtom(calendarDateAtom);
   const { year, month } = currentDate;
 
@@ -15,6 +17,9 @@ export const CalendarHeader = () => {
   };
   const handleClickNextMonth = () => {
     setCurrentDate((prev) => getNextMonthDate(prev));
+  };
+  const handleClickViewImage = () => {
+    setIsViewImage((prev) => !prev);
   };
 
   return (
@@ -37,7 +42,7 @@ export const CalendarHeader = () => {
         />
       </div>
 
-      <button>사진 보기</button>
+      <ViewImageButton onClick={handleClickViewImage} isActive={isViewImage} />
     </div>
   );
 };
