@@ -27,6 +27,7 @@ interface SubInfoProps {
   poolName: string;
   totalMeters: number;
   totalLaps: number;
+  imageFiles: File[];
 }
 
 export function useRecordForm(date: string) {
@@ -49,6 +50,7 @@ export function useRecordForm(date: string) {
     poolName: '',
     totalMeters: 0,
     totalLaps: 0,
+    imageFiles: [],
   });
 
   const onChangeStartTime = (startTime: string) => {
@@ -109,6 +111,13 @@ export function useRecordForm(date: string) {
     setSubInfo((prev) => ({ ...prev, strokes: [...strokes] }));
   };
 
+  const onSelectImage = (file: File) => {
+    setSubInfo((prev) => ({
+      ...prev,
+      imageFiles: [...prev.imageFiles, file],
+    }));
+  };
+
   return {
     recordInfo,
     subInfo,
@@ -120,6 +129,7 @@ export function useRecordForm(date: string) {
       onChangeTotalMeters,
       onChangeTotalLaps,
       onChangeStrokes,
+      onSelectImage,
     },
   };
 }

@@ -4,11 +4,16 @@ import { css, cx } from '@/styled-system/css';
 export interface CameraBoxProps {
   text?: string;
   className?: string;
+  onClick: () => void;
 }
 
-export function CameraBox({ text = '사진 업로드', className }: CameraBoxProps) {
+export function CameraBox({
+  text = '사진 업로드',
+  className,
+  onClick,
+}: CameraBoxProps) {
   return (
-    <div className={cx(cameraBoxStyles, className)}>
+    <div className={cx(cameraBoxStyles, className)} onClick={onClick}>
       <CameraIcon />
       <span className={textStyles}>{text}</span>
     </div>

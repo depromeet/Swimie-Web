@@ -1,15 +1,74 @@
+'use client';
+
+import { ChangeEvent, useRef, useState } from 'react';
+import Resizer from 'react-image-file-resizer';
+
 import { CameraBox } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 interface RecordPhotoProps {
   title: string;
+  onSelectImage: (url: File) => void;
 }
 
-export function RecordPhoto({ title }: RecordPhotoProps) {
+export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
+  const [image, setImage] = useState<string[]>([]);
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  const resizeFile = (file: File): Promise<File> =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        280,
+        280,
+        'WEBP',
+        92,
+        0,
+        (uri: string | File | Blob | ProgressEvent<FileReader>) => {
+          resolve(uri as File);
+        },
+        'file',
+      );
+    });
+
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const resizedImage = await resizeFile(e.target.files[0]);
+      onSelectImage(resizedImage);
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          if (image.length === 2) {
+            return;
+          } else {
+            setImage((prev: string[]) => {
+              return [...prev, reader.result as string];
+            });
+          }
+        }
+      };
+      reader.readAsDataURL(resizedImage);
+    }
+  };
+
+  const handleAddImageClick = () => {
+    if (fileInput.current) {
+      fileInput.current.click();
+    }
+  };
+
   return (
     <section className={recordPhotoStyles}>
       <h1 className={titleStyles}>{title}</h1>
-      <CameraBox />
+      <CameraBox onClick={handleAddImageClick} />
+      <input
+        ref={fileInput}
+        type="file"
+        accept="image/*"
+        className={css({ display: 'none' })}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onChange={handleImageUpload}
+      />
     </section>
   );
 }

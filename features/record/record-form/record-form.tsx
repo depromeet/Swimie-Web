@@ -6,13 +6,13 @@ import { css } from '@/styled-system/css';
 
 import {
   LaneLengthBottomSheet,
-  PoolSearchBottomSheet,
+  PoolSearchPageModal,
   TimeBottomSheet,
-} from '../record-bottom-sheet';
-import { useEndTimeBottomSheet } from '../record-bottom-sheet/use-end-time-bottom-sheet';
-import { useLaneLengthBottomSheet } from '../record-bottom-sheet/use-lane-length-bottom-sheet';
-import { usePoolSearchBottomSheet } from '../record-bottom-sheet/use-pool-search-bottom-sheet';
-import { useStartTimeBottomSheet } from '../record-bottom-sheet/use-start-time-bottom-sheet';
+} from '../record-animation-ui';
+import { useEndTimeBottomSheet } from '../record-animation-ui/use-end-time-bottom-sheet';
+import { useLaneLengthBottomSheet } from '../record-animation-ui/use-lane-length-bottom-sheet';
+import { usePoolSearchPageModal } from '../record-animation-ui/use-pool-search-page-modal';
+import { useStartTimeBottomSheet } from '../record-animation-ui/use-start-time-bottom-sheet';
 import { RecordDiary } from '../record-diary/record-diary';
 import { RecordDistancePageModal } from '../record-distance-page-modal';
 import { useRecordDistancePageModal } from '../record-distance-page-modal/use-record-distance-page-modal';
@@ -34,16 +34,17 @@ export function RecordForm() {
     handlers: endTimeBottomSheetHandlers,
   } = useEndTimeBottomSheet();
   const {
-    isOpen: isPoolSearchBottomSheetOpen,
-    handlers: poolSearchBottomSheetHandlers,
-  } = usePoolSearchBottomSheet();
+    isOpen: isPoolSearchPageModalOpen,
+    jumpDirection: poolSearchPageModalJumpDirection,
+    handlers: poolSearchPageModalHandlers,
+  } = usePoolSearchPageModal();
   const {
     isOpen: isLaneLengthBottomSheetOpen,
     handlers: laneLengthBottomSheetHandlers,
   } = useLaneLengthBottomSheet();
   const {
     isOpen: isRecordDistancePageModalOpen,
-    jumpDirection,
+    jumpDirection: recordDistancePageModalJumpDirection,
     handlers: recordDistancePageModalHandlers,
   } = useRecordDistancePageModal();
   return (
@@ -83,11 +84,10 @@ export function RecordForm() {
           <TextField
             variant="select"
             value={subInfo.poolName}
-            hasDownArrow
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={poolSearchBottomSheetHandlers.openBottomSheet}
+            onClick={poolSearchPageModalHandlers.openPageModal}
           />
           <TextField
             variant="select"
@@ -109,7 +109,10 @@ export function RecordForm() {
           />
         </div>
         <Divider variant="thick" />
-        <RecordPhoto title="오늘의 사진" />
+        <RecordPhoto
+          title="오늘의 사진"
+          onSelectImage={handlers.onSelectImage}
+        />
         <Divider variant="thick" />
         <RecordDiary title="일기" />
         <Divider variant="thick" />
@@ -129,12 +132,13 @@ export function RecordForm() {
         modifyValue={handlers.onChangeRailLength}
         closeBottomSheet={laneLengthBottomSheetHandlers.closeBottomSheet}
       />
-      <PoolSearchBottomSheet
-        isOpen={isPoolSearchBottomSheetOpen}
+      <PoolSearchPageModal
+        isOpen={isPoolSearchPageModalOpen}
         title="어디서 수영했나요?"
         placeholder="수영장 검색"
         modifyValue={handlers.onChangePool}
-        closeBottomSheet={poolSearchBottomSheetHandlers.closeBottomSheet}
+        jumpDirection={poolSearchPageModalJumpDirection}
+        closeModal={poolSearchPageModalHandlers.closePageModal}
       />
       <TimeBottomSheet
         isOpen={isStartTimeBottomSheetOpen}
@@ -152,7 +156,7 @@ export function RecordForm() {
         modifyTotalLaps={handlers.onChangeTotalLaps}
         modifyStrokes={handlers.onChangeStrokes}
         isOpen={isRecordDistancePageModalOpen}
-        jumpDirection={jumpDirection}
+        jumpDirection={recordDistancePageModalJumpDirection}
         closePageModal={recordDistancePageModalHandlers.closePageModal}
       />
       {/* BottomSheet 관리 어떻게 할지 리팩토링 필요 */}
