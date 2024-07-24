@@ -20,8 +20,8 @@ export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        400,
-        400,
+        600,
+        600,
         'WEBP',
         92,
         0,
@@ -93,7 +93,7 @@ const recordPhotoStyles = css({
 
 const imageStyles = css({
   position: 'relative',
-  height: '126px',
+  height: 'calc(100vw - 40px)',
 });
 
 const titleStyles = css({
