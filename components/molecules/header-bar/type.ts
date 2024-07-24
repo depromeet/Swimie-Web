@@ -5,4 +5,5 @@ export interface HeaderBarProps {
   arrowClassName?: string;
   onClickBackArrow?: () => void;
   children?: ReactNode;
+  rightContent?: ReactNode;
 }
