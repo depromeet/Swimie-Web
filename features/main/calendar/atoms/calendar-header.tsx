@@ -1,6 +1,11 @@
 import { css } from '@/styled-system/css';
 
-export const CalendarHeader = () => {
+interface CalendarHeaderProps {
+  year: number;
+  month: number;
+}
+
+export const CalendarHeader = ({ year, month }: CalendarHeaderProps) => {
   return (
     <div
       className={css({
@@ -8,8 +13,14 @@ export const CalendarHeader = () => {
         justifyContent: 'space-between',
       })}
     >
-      <p>24년 7월</p>
+      <p>
+        {formatYearYY(year)}년 {month}월
+      </p>
       <button>사진 보기</button>
     </div>
   );
+};
+
+const formatYearYY = (year: number) => {
+  return year.toString().substring(2);
 };
