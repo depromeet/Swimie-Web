@@ -40,5 +40,5 @@ const linkContainer = css({
   width: 'full',
   height: 'calc(60px + (30vw - 80px) / 2)',
   backgroundColor: 'background.gray',
-  rounded: '8px',
+  rounded: '2px',
 });
