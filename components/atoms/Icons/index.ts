@@ -5,4 +5,6 @@ export { LeftArrowIcon } from './left-arrow-icon';
 export { PlusIcon } from './plus-icon';
 export { SearchIcon } from './search-icon';
 export { StarIcon } from './star-icon';
+export { StarIconFill } from './start-icon-fill';
 export { SwimIcon } from './swim-icon';
+export * from './type';

@@ -16,5 +16,6 @@ export default function useSearchPool(nameQuery: string) {
   return useQuery<SearchPoolResultResponse>({
     queryKey: ['useSearchPool', nameQuery],
     queryFn: () => getSearchPool(nameQuery),
+    enabled: !!nameQuery,
   });
 }

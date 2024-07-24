@@ -9,6 +9,8 @@ import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import useSearchPool from '../queries/use-search-pool';
+import useSearchPoolInitial from '../queries/use-search-pool-initial';
+import { PoolSearchListElement } from './pool-search-list-element';
 import { PoolSearchBottomSheetProps } from './type';
 
 export function PoolSearchBottomSheet({
@@ -22,7 +24,8 @@ export function PoolSearchBottomSheet({
   //추후 api 통신으로 대체
   const [searchPoolName, setSearchPoolName] = useState<string>('');
 
-  const { data } = useSearchPool(searchPoolName);
+  const { data: poolInitialData } = useSearchPoolInitial(searchPoolName);
+  const { data: poolSearchData } = useSearchPool(searchPoolName);
 
   const handlePoolNameChange = debounce((text: string) => {
     setSearchPoolName(text);
@@ -49,20 +52,52 @@ export function PoolSearchBottomSheet({
             </p>
           )}
           <Suspense fallback={'스켈레톤 컴포넌트'}>
-            {data?.data.poolInfos.map((info, i: number) => (
-              <li
+            {poolInitialData?.data.favoritePools.map((info) => (
+              <PoolSearchListElement
                 key={info.poolId}
+                poolId={info.poolId}
+                name={info.name}
+                address={info.address}
+                isFavorite={info.isFavorite}
+                className={css({ marginBottom: '8px' })}
+                onClick={() =>
+                  handleClickPoolListElement(info.name, info.poolId)
+                }
+              />
+            ))}
+            {poolInitialData?.data.searchedPools.map((info, i: number) => (
+              <PoolSearchListElement
+                key={info.poolId}
+                poolId={info.poolId}
+                name={info.name}
+                address={info.address}
+                isFavorite={info.isFavorite}
                 className={css(
-                  data?.data.poolInfos.length - 1 !== i
+                  poolInitialData?.data.favoritePools.length - 1 !== i
                     ? listStyles.element.raw({ notLast: true })
                     : listStyles.element.raw(),
                 )}
                 onClick={() =>
                   handleClickPoolListElement(info.name, info.poolId)
                 }
-              >
-                {info.name}
-              </li>
+              />
+            ))}
+            {poolSearchData?.data.poolInfos.map((info, i: number) => (
+              <PoolSearchListElement
+                key={info.poolId}
+                poolId={info.poolId}
+                name={info.name}
+                address={info.address}
+                isFavorite={info.isFavorite}
+                className={css(
+                  poolSearchData?.data.poolInfos.length - 1 !== i
+                    ? listStyles.element.raw({ notLast: true })
+                    : listStyles.element.raw(),
+                )}
+                onClick={() =>
+                  handleClickPoolListElement(info.name, info.poolId)
+                }
+              />
             ))}
           </Suspense>
         </ul>
@@ -97,6 +132,8 @@ const listStyles = {
     padding: '8px 0',
     marginBottom: '8px',
     overflow: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    scrollbarWidth: 'none',
   }),
   element: cva({
     base: {
