@@ -73,10 +73,30 @@ export function useRecordForm(date: string) {
 
   const onChangeTotalMeters = (totalMeters: number) => {
     setSubInfo((prev) => ({ ...prev, totalMeters }));
+    setRecordInfo((prev) => ({
+      ...prev,
+      strokes: [
+        {
+          name: '총거리',
+          laps: 0,
+          meter: totalMeters,
+        },
+      ],
+    }));
   };
 
   const onChangeTotalLaps = (totalLaps: number) => {
     setSubInfo((prev) => ({ ...prev, totalLaps }));
+    setRecordInfo((prev) => ({
+      ...prev,
+      strokes: [
+        {
+          name: '총거리',
+          laps: totalLaps,
+          meter: 0,
+        },
+      ],
+    }));
   };
 
   const onChangeStrokes = (

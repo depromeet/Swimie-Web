@@ -37,7 +37,6 @@ export function RecordDistancePageModal({
       meter: 0,
     })),
   );
-  console.log(modifyTotalMeters, modifyTotalLaps, modifyStrokes);
   const [isStrokesMeterModified, setIsStrokesMeterModified] = useState(false);
   const [isStrokesLapsModified, setIsStrokesLapsModified] = useState(false);
 
@@ -62,6 +61,8 @@ export function RecordDistancePageModal({
         })),
       );
     }
+    if (isStrokesMeterModified) setIsStrokesMeterModified(false);
+    if (isStrokesLapsModified) setIsStrokesLapsModified(false);
   };
   const resetStrokesMeter = () => {
     if (isStrokesMeterModified) {
@@ -124,7 +125,27 @@ export function RecordDistancePageModal({
       });
     }
   };
-  const handleDoneButtonClick = () => {};
+  const calcStrokesMeter = () => {
+    let strokeMeter = 0;
+    for (const info of strokes) {
+      strokeMeter += isStrokesMeterModified
+        ? info.meter
+        : info.laps * currentLane;
+    }
+    return strokeMeter;
+  };
+  const handleDoneButtonClick = () => {
+    if (totalMeters) {
+      modifyTotalMeters(totalMeters);
+    } else if (totalLaps) {
+      modifyTotalMeters(totalLaps * currentLane);
+      modifyTotalLaps(totalLaps);
+    } else if (isStrokesMeterModified || isStrokesLapsModified) {
+      modifyTotalMeters(calcStrokesMeter());
+      modifyStrokes(strokes);
+    }
+    closePageModal?.();
+  };
   return (
     <CSSTransition
       nodeRef={ref}

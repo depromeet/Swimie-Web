@@ -100,9 +100,7 @@ export function RecordForm() {
           <TextField
             variant="select"
             value={
-              subInfo.totalMeters > 0
-                ? String(subInfo.totalMeters) + 'm'
-                : undefined
+              subInfo.totalMeters > 0 ? String(subInfo.totalMeters) + 'm' : ''
             }
             placeholder="거리입력(선택)"
             label="수영 거리"
