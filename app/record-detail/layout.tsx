@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
+import { HeaderBar } from '@/components/molecules';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 const rootStyle = css({
   maxWidth: 'maxWidth',
@@ -9,9 +11,25 @@ const rootStyle = css({
 });
 
 const DetailLayout = ({ children }: { children: ReactNode }) => {
+  // TODO: edit button click event
+  const handleClickEditButton = () => {
+    console.log('edit');
+  };
+
   return (
     <div className={rootStyle}>
-      <Appbar />
+      <HeaderBar
+        rightContent={
+          <button
+            className={header.editButtonStyle}
+            onClick={handleClickEditButton}
+          >
+            수정
+          </button>
+        }
+      >
+        <div className={header.textStyle}>승승의 수영 기록</div>
+      </HeaderBar>
       <div className={childrenWrapperStyle}>{children}</div>
     </div>
   );
@@ -19,18 +37,24 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
 
 export default DetailLayout;
 
-/**
- * @description 임시로 사용하는 record-detail page appbar
- */
-const Appbar = () => {
-  return <div className={appbarStyle}>Appbar content</div>;
-};
-
-const appbarStyle = css({
-  position: 'sticky',
-  top: 0,
-});
-
 const childrenWrapperStyle = css({
-  padding: '0 24px',
+  padding: '0 20px',
 });
+
+const header = {
+  textStyle: flex({
+    w: 'full',
+    justify: 'center',
+    align: 'center',
+    color: 'text.normal',
+    textStyle: 'heading6',
+    fontWeight: 'medium',
+  }),
+
+  editButtonStyle: css({
+    color: 'primary.swim.총거리.default',
+    textStyle: 'body2.normal',
+    fontWeight: 'medium',
+    mr: '8px',
+  }),
+};
