@@ -11,10 +11,10 @@ export const Calendar = () => {
     useCalendarRendaringData();
 
   return (
-    <div className={calendarContainer}>
+    <div className={calendarContainerStyles}>
       <CalendarHeader />
       <DayLabels />
-      <ul className={CalendarGrid}>
+      <ul className={CalendarGridStyles}>
         {squares.map((squareNumber, index) => {
           const isInRenderingRange = index >= startPoint && index <= endPoint;
           const date = squareNumber - startPoint;
@@ -34,7 +34,7 @@ export const Calendar = () => {
   );
 };
 
-const calendarContainer = css({
+const calendarContainerStyles = css({
   width: 'full',
   height: 'full',
   display: 'flex',
@@ -42,7 +42,7 @@ const calendarContainer = css({
   gap: '16px',
 });
 
-const CalendarGrid = css({
+const CalendarGridStyles = css({
   display: 'grid',
   gridTemplateColumns: 'repeat(7, 1fr)',
   gridRowGap: '10px',
