@@ -44,9 +44,11 @@ export function HeaderBar({
 
 const headerBarStyles = css({
   position: 'sticky',
+  top: 0,
   display: 'flex',
   alignItems: 'center',
   minHeight: '44px',
+  backgroundColor: 'white',
 });
 
 const parentStyles = css({
