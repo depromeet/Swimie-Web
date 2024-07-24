@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import { CheckInCircleIcon } from '@/components/atoms/icons/check-in-circle-icon';
+import { CheckInCircleIcon } from '@/components/atoms/icons';
 import { css } from '@/styled-system/css';
 
 interface ViewImagehButtonProps
