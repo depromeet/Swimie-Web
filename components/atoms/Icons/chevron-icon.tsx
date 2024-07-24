@@ -1,6 +1,6 @@
 import { css } from '@/styled-system/css';
 
-type Directions = 'left' | 'up' | 'right' | 'down';
+export type Directions = 'left' | 'up' | 'right' | 'down';
 
 interface ChevronIconProps {
   color?: string;
