@@ -26,9 +26,9 @@ export const useCalendarRendaringData = () => {
   const currentDate = useAtomValue(calendarDateAtom);
 
   const { year, month } = currentDate;
-  const dateObj = dayjs(`${year}-${month}-01`);
-  const startPoint = dateObj.get('day');
-  const totalDays = dateObj.add(1, 'month').subtract(1, 'day').get('date');
+  const targetDate = dayjs(`${year}-${month}-01`);
+  const startPoint = targetDate.get('day');
+  const totalDays = targetDate.add(1, 'month').subtract(1, 'day').get('date');
   const endPoint = startPoint + totalDays - 1;
   const squares = Array.from(
     {
@@ -40,5 +40,17 @@ export const useCalendarRendaringData = () => {
     (_, i) => i + 1,
   );
 
-  return [squares, startPoint, endPoint] as const;
+  const today = dayjs();
+  const todayYear = today.get('year');
+  const todayMonth = today.get('month') + 1;
+  const todayDate = today.get('date');
+
+  const isDateToday = (targetDate: number) => {
+    if (todayYear !== year) return false;
+    else if (todayMonth !== month) return false;
+    else if (todayDate !== targetDate) return false;
+    return true;
+  };
+
+  return [squares, startPoint, endPoint, isDateToday] as const;
 };
