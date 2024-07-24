@@ -38,7 +38,7 @@ const itemContainerStyles = css({
   alignItems: 'center',
 
   '& > p': {
-    height: '15px',
+    height: '17px',
     textStyle: 'caption2',
     fontWeight: 'medium',
     textAlign: 'center',
@@ -46,7 +46,7 @@ const itemContainerStyles = css({
 });
 
 const DateStyles = css({
-  padding: '1px',
+  padding: '2px',
   marginBottom: '5px',
   borderRadius: 'full',
 });
