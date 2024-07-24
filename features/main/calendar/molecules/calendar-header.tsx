@@ -23,15 +23,15 @@ export const CalendarHeader = () => {
   };
 
   return (
-    <div className={HeaderContainer}>
-      <div className={DateButtonContainer}>
+    <div className={HeaderContainerStyles}>
+      <div className={DateButtonContainerStyles}>
         <MoveMonthButton
           width={24}
           height={24}
           direction="left"
           onClick={handleClickPrevMonth}
         />
-        <p className={css({ textStyle: 'heading2', fontWeight: 'bold' })}>
+        <p className={CurrentDateStyles}>
           {formatYearYY(year)}년 {month}월
         </p>
         <MoveMonthButton
@@ -61,13 +61,15 @@ const formatYearYY = (year: number) => {
   return year.toString().substring(2);
 };
 
-const HeaderContainer = css({
+const HeaderContainerStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
 });
 
-const DateButtonContainer = css({
+const DateButtonContainerStyles = css({
   display: 'flex',
   gap: '6px',
   alignItems: 'center',
 });
+
+const CurrentDateStyles = css({ textStyle: 'heading2', fontWeight: 'bold' });
