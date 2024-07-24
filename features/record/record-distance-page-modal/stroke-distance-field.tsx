@@ -1,21 +1,37 @@
+'use client';
+
 import { SwimBadge } from '@/components/atoms';
 import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 
-import { RecordSwimFieldProps } from './type';
+import { StrokeDistanceFieldProps } from './type';
 
-export function RecordSwimField({
+export function StrokeDistanceField({
   label,
   assistiveTabIndex,
+  index,
+  value,
   className,
-}: RecordSwimFieldProps) {
+  onChange,
+}: StrokeDistanceFieldProps) {
+  const handleStrokeInfoChange = (text: string) => {
+    onChange(index, text);
+  };
   return (
     <div className={cx(recordSwimFieldStyles, className)}>
       <div className={badgeStyles}>
         <SwimBadge />
         <span className={labelStyles}>{label}</span>
       </div>
-      {assistiveTabIndex === 0 && (
+      <TextField
+        inputType="number"
+        placeholder="0"
+        value={value}
+        unit={assistiveTabIndex === 0 ? 'm' : '바퀴'}
+        className={css({ width: '100px' })}
+        onChange={handleStrokeInfoChange}
+      />
+      {/* {assistiveTabIndex === 0 && (
         <TextField
           inputType="number"
           placeholder="0"
@@ -30,7 +46,7 @@ export function RecordSwimField({
           unit="바퀴"
           className={css({ width: '100px' })}
         />
-      )}
+      )} */}
     </div>
   );
 }

@@ -14,8 +14,11 @@ export interface RecordDistancePageModalProps {
   closePageModal?: () => void;
 }
 
-export interface RecordSwimFieldProps {
+export interface StrokeDistanceFieldProps {
   label: string;
   assistiveTabIndex: number;
+  index: number;
+  value: string;
   className?: string;
+  onChange: (index: number, text: string) => void;
 }

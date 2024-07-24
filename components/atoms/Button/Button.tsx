@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import { ButtonPropsWithIcons } from './type';
 
@@ -14,6 +14,7 @@ export const Button = ({
   label,
   variant = 'solid',
   type = 'primary',
+  className,
 }: ButtonPropsWithIcons) => {
   const buttonStyles = css({
     backgroundColor:
@@ -82,7 +83,7 @@ export const Button = ({
   });
 
   return (
-    <button className={buttonStyles}>
+    <button className={cx(buttonStyles, className)}>
       {leftIcon && leftIconSrc && (
         <div className={iconWrapperStyles}>
           <Image
