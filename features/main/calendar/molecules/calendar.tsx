@@ -1,25 +1,19 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useAtomValue } from 'jotai';
 
+import { calendarDateAtom } from '@/store';
 import { css } from '@/styled-system/css';
 
-import { CalendarHeader, CalendarItem, DayLabels } from '../atoms';
+import { CalendarItem, DayLabels } from '../atoms';
+import { CalendarHeader } from './calendar-header';
 
 const CALENDAR_FORMAT_5_COLUMNS = 35;
 const CALENDAR_FORMAT_6_COLUMNS = 42;
 
-interface CalendarDate {
-  year: number;
-  month: number;
-}
-
 export const Calendar = () => {
-  const today = dayjs();
-  const [currentDate] = useState<CalendarDate>(() => {
-    return { year: today.get('year'), month: today.get('month') + 1 };
-  });
+  const currentDate = useAtomValue(calendarDateAtom);
 
   const { year, month } = currentDate;
   const dateObj = dayjs(`${year}-${month}-01`);
@@ -38,7 +32,7 @@ export const Calendar = () => {
 
   return (
     <div className={calendarContainer}>
-      <CalendarHeader {...currentDate} />
+      <CalendarHeader />
       <DayLabels />
       <ul className={CalendarGrid}>
         {squares.map((date, index) =>
