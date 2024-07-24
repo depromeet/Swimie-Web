@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ChangeEvent, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 
@@ -19,8 +20,8 @@ export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        280,
-        280,
+        400,
+        400,
         'WEBP',
         92,
         0,
@@ -38,7 +39,7 @@ export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          if (image.length === 2) {
+          if (image.length === 1) {
             return;
           } else {
             setImage((prev: string[]) => {
@@ -60,7 +61,20 @@ export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
   return (
     <section className={recordPhotoStyles}>
       <h1 className={titleStyles}>{title}</h1>
-      <CameraBox onClick={handleAddImageClick} />
+      {image.length > 0 ? (
+        <div className={imageStyles}>
+          <Image
+            src={image[0]}
+            alt="오늘의 사진"
+            fill
+            sizes="100vw"
+            className="rounded-[10px]"
+          />
+        </div>
+      ) : (
+        <CameraBox onClick={handleAddImageClick} />
+      )}
+
       <input
         ref={fileInput}
         type="file"
@@ -75,6 +89,11 @@ export function RecordPhoto({ title, onSelectImage }: RecordPhotoProps) {
 
 const recordPhotoStyles = css({
   padding: '24px 20px 40px 20px',
+});
+
+const imageStyles = css({
+  position: 'relative',
+  height: '126px',
 });
 
 const titleStyles = css({
