@@ -1,20 +1,20 @@
-export type TabItemProps = {
+export interface TabItemProps {
   selected: boolean;
   text: string;
   onClick: () => void;
   variant?: 'fill' | 'fit-content';
   type?: 'primary' | 'secondary' | 'assistive';
-};
+}
 
 export interface ClickTabItemProps extends TabItemProps {
   onClick: () => void;
 }
 
-export type TabProps = {
+export interface TabProps {
   variant?: 'fill' | 'fit-content';
   children?: React.ReactNode;
-};
+}
 
-export type TabTypeProps = {
+export interface TabTypeProps {
   type?: 'primary' | 'secondary' | 'assistive';
-};
+}
