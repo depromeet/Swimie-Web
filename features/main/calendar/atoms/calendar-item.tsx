@@ -23,6 +23,7 @@ export const CalendarItem = ({
 
 const itemContainer = css({
   width: 'full',
+  height: 'full',
   display: 'flex',
   flexDir: 'column',
   alignItems: 'center',
@@ -34,9 +35,10 @@ const itemContainer = css({
   },
 });
 
+/* TODO: 스마트폰 기종, 반응형 화면에 따라 비율에 맞춰 height가 변할 수 있도록 재설정 필요 */
 const linkContainer = css({
   width: 'full',
-  height: '63px',
+  height: 'calc(60px + (30vw - 80px) / 2)',
   backgroundColor: 'background.gray',
   rounded: '8px',
 });

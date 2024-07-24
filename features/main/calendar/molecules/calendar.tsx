@@ -52,6 +52,8 @@ export const Calendar = () => {
 };
 
 const calendarContainer = css({
+  width: 'full',
+  height: 'full',
   display: 'flex',
   flexDir: 'column',
   gap: '16px',
