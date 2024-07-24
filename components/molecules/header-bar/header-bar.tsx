@@ -19,6 +19,7 @@ export function HeaderBar({
   arrowClassName,
   children,
   onClickBackArrow,
+  rightContent,
 }: HeaderBarProps) {
   const router = useRouter();
 
@@ -35,6 +36,7 @@ export function HeaderBar({
           <LeftArrowIcon />
         </div>
         {children}
+        {rightContent && <div className={rightAreaStyles}>{rightContent}</div>}
       </div>
     </header>
   );
@@ -44,7 +46,7 @@ const headerBarStyles = css({
   position: 'sticky',
   display: 'flex',
   alignItems: 'center',
-  minHeight: '38px',
+  minHeight: '44px',
 });
 
 const parentStyles = css({
@@ -52,10 +54,14 @@ const parentStyles = css({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  padding: '0 10px',
 });
 
 const arrowIconStyles = css({
   position: 'absolute',
-  left: 0,
+  left: '12px',
+});
+
+const rightAreaStyles = css({
+  position: 'absolute',
+  right: '12px',
 });
