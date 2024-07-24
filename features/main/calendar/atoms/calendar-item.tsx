@@ -12,12 +12,12 @@ export const CalendarItem = ({
   distance,
 }: CalendarItemProps) => {
   return (
-    <div className={itemContainer}>
+    <li className={itemContainer}>
       <p className={css({ marginBottom: '5px' })}>{date}</p>
       {/* TODO: 이후 상세 기록 페이지로 이동하는 Link 변경 필요 */}
       <div className={linkContainer}>{content && <p>{content}</p>}</div>
       {distance && <p>{distance}</p>}
-    </div>
+    </li>
   );
 };
 
