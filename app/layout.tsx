@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { css } from '@/styled-system/css';
 import { pretendard } from '@/styles/font';
 
+import { PortalRoot } from './portal-root';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
           {children}
+          <PortalRoot />
         </ReactQueryProvider>
       </body>
     </html>
