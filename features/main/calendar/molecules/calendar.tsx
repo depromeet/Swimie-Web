@@ -2,6 +2,7 @@
 
 import { useCalendarRendaringData } from '@/hooks/use-calendar-rendering-data';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
@@ -34,10 +35,9 @@ export const Calendar = () => {
   );
 };
 
-const calendarContainerStyles = css({
+const calendarContainerStyles = flex({
   width: 'full',
   height: 'full',
-  display: 'flex',
   flexDir: 'column',
   gap: '16px',
 });

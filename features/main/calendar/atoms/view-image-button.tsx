@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 
 import { CheckInCircleIcon } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 interface ViewImagehButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,8 +15,7 @@ export const ViewImageButton = ({
   return (
     <button
       {...props}
-      className={css({
-        display: 'flex',
+      className={flex({
         gap: '4px',
         alignItems: 'center',
         justifyContent: 'center',

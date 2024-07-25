@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { CalendarDate, calendarDateAtom } from '@/store';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 import { MoveMonthButton, ViewImageButton } from '../atoms';
 
@@ -61,13 +62,11 @@ const formatYearYY = (year: number) => {
   return year.toString().substring(2);
 };
 
-const HeaderContainerStyles = css({
-  display: 'flex',
+const HeaderContainerStyles = flex({
   justifyContent: 'space-between',
 });
 
-const DateButtonContainerStyles = css({
-  display: 'flex',
+const DateButtonContainerStyles = flex({
   gap: '6px',
   alignItems: 'center',
 });
