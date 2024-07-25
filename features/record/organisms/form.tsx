@@ -5,6 +5,7 @@ import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { DiarySection } from './diary-section';
 import { PhotoSection } from './photo-section';
 import { sectionStyles } from './style';
 
@@ -63,6 +64,8 @@ export function Form() {
       </div>
       <Divider variant="thick" />
       <PhotoSection title="오늘의 사진" />
+      <Divider variant="thick" />
+      <DiarySection title="일기" value="현민 일기" />
     </form>
   );
 }
