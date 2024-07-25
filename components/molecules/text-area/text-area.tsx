@@ -1,13 +1,32 @@
-import { css } from '@/styled-system/css';
+import { ChangeEvent } from 'react';
+
+import { css, cx } from '@/styled-system/css';
 
 export interface TextAreaProps {
+  value: string;
   placeholder: string;
   className?: string;
+  onChange?: (text: string) => void;
 }
 
-export function TextArea({ placeholder }: TextAreaProps) {
+export function TextArea({
+  value,
+  placeholder,
+  className,
+  onChange,
+}: TextAreaProps) {
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+    onChange?.(newText);
+  };
+
   return (
-    <textarea placeholder={placeholder} className={textAreaStyles}></textarea>
+    <textarea
+      value={value}
+      placeholder={placeholder}
+      className={cx(textAreaStyles, className)}
+      onChange={handleTextAreaChange}
+    />
   );
 }
 

@@ -25,6 +25,7 @@ import { useRecordForm } from './use-record-form';
 export function RecordForm() {
   //달력 클릭하면 날짜 넘어오는 형식에 맞게 함수에 전달 값 수정
   const { recordInfo, subInfo, handlers } = useRecordForm('2024년 7월 -일');
+  console.log(recordInfo);
   const {
     isOpen: isStartTimeBottomSheetOpen,
     handlers: startTimeBottomSheetHandlers,
@@ -114,7 +115,11 @@ export function RecordForm() {
           onSelectImage={handlers.onSelectImage}
         />
         <Divider variant="thick" />
-        <RecordDiary title="일기" />
+        <RecordDiary
+          title="일기"
+          value={recordInfo.diary ? recordInfo.diary : ''}
+          onChange={handlers.onChangeDiary}
+        />
         <Divider variant="thick" />
         <RecordEquipment title="장비" />
         <Divider variant="thick" />
@@ -129,25 +134,25 @@ export function RecordForm() {
             : 1
         }
         isOpen={isLaneLengthBottomSheetOpen}
-        modifyValue={handlers.onChangeRailLength}
+        modifyValue={handlers.onSelectRailLength}
         closeBottomSheet={laneLengthBottomSheetHandlers.closeBottomSheet}
       />
       <PoolSearchPageModal
         isOpen={isPoolSearchPageModalOpen}
         title="어디서 수영했나요?"
         placeholder="수영장 검색"
-        modifyValue={handlers.onChangePool}
+        modifyValue={handlers.onSelectPool}
         jumpDirection={poolSearchPageModalJumpDirection}
         closeModal={poolSearchPageModalHandlers.closePageModal}
       />
       <TimeBottomSheet
         isOpen={isStartTimeBottomSheetOpen}
-        modifyValue={handlers.onChangeStartTime}
+        modifyValue={handlers.onSelectStartTime}
         closeBottomSheet={startTimeBottomSheetHandlers.closeBottomSheet}
       />
       <TimeBottomSheet
         isOpen={isEndTimeBottomSheetOpen}
-        modifyValue={handlers.onChangeEndTime}
+        modifyValue={handlers.onSelectEndTime}
         closeBottomSheet={endTimeBottomSheetHandlers.closeBottomSheet}
       />
       <RecordDistancePageModal

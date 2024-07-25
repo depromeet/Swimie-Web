@@ -53,20 +53,20 @@ export function useRecordForm(date: string) {
     imageFiles: [],
   });
 
-  const onChangeStartTime = (startTime: string) => {
+  const onSelectStartTime = (startTime: string) => {
     setRecordInfo((prev) => ({ ...prev, startTime }));
   };
 
-  const onChangeEndTime = (endTime: string) => {
+  const onSelectEndTime = (endTime: string) => {
     setRecordInfo((prev) => ({ ...prev, endTime }));
   };
 
-  const onChangePool = (value: { name: string; poolId: number }) => {
+  const onSelectPool = (value: { name: string; poolId: number }) => {
     setRecordInfo((prev) => ({ ...prev, poolId: value.poolId }));
     setSubInfo((prev) => ({ ...prev, poolName: value.name }));
   };
 
-  const onChangeRailLength = (value: number) => {
+  const onSelectRailLength = (value: number) => {
     setRecordInfo((prev) => ({
       ...prev,
       lane: Number(railLengthOptions[value].label.slice(0, -1)),
@@ -118,18 +118,23 @@ export function useRecordForm(date: string) {
     }));
   };
 
+  const onChangeDiary = (diary: string) => {
+    setRecordInfo((prev) => ({ ...prev, diary: diary ? diary : null }));
+  };
+
   return {
     recordInfo,
     subInfo,
     handlers: {
-      onChangeStartTime,
-      onChangeEndTime,
-      onChangePool,
-      onChangeRailLength,
+      onSelectStartTime,
+      onSelectEndTime,
+      onSelectPool,
+      onSelectRailLength,
       onChangeTotalMeters,
       onChangeTotalLaps,
       onChangeStrokes,
       onSelectImage,
+      onChangeDiary,
     },
   };
 }
