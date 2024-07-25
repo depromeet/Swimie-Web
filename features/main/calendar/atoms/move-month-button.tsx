@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 
+import type { Directions } from '@/components/atoms';
 import { ChevronIcon } from '@/components/atoms';
-import { Directions } from '@/components/atoms/icons/chevron-icon';
 
 interface MoveMonthButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   width: number;
