@@ -1,6 +1,6 @@
 'use client';
 
-import { Divider } from '@/components/atoms';
+import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
