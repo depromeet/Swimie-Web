@@ -1,9 +1,11 @@
 'use client';
 
+import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { PhotoSection } from './photo-section';
 import { sectionStyles } from './style';
 
 export function Form() {
@@ -59,6 +61,8 @@ export function Form() {
           label="수영 거리"
         />
       </div>
+      <Divider variant="thick" />
+      <PhotoSection title="오늘의 사진" />
     </form>
   );
 }
