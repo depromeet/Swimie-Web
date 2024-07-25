@@ -1,12 +1,15 @@
 export function LeftArrowIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
-        stroke="#1E1E1E"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="m20 24-8-8 8-8"
+        d="M16.1365 3.36272C16.488 3.7142 16.488 4.28405 16.1365 4.63552L8.77289 11.9991L16.1365 19.3627C16.488 19.7142 16.488 20.284 16.1365 20.6355C15.785 20.987 15.2152 20.987 14.8637 20.6355L6.8637 12.6355C6.51223 12.284 6.51223 11.7142 6.8637 11.3627L14.8637 3.36272C15.2152 3.01125 15.785 3.01125 16.1365 3.36272Z"
+        fill="#171719"
       />
     </svg>
   );
