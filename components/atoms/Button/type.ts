@@ -7,7 +7,6 @@ export type ButtonProps = {
   interaction: 'normal' | 'hovered' | 'focused' | 'pressed';
   variant?: 'solid' | 'outlined' | 'text';
   type?: 'primary' | 'secondary' | 'assistive';
-  className?: string;
 };
 
 export interface ButtonPropsWithIcons extends ButtonProps {

@@ -62,6 +62,7 @@ export const BottomSheet = ({
 
         <div className={bodyStyle}>{children}</div>
       </div>
+
       {isOpen && <Dim onClick={onClose} />}
     </>
   );
