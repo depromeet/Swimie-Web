@@ -1,4 +1,4 @@
-import { css, cx } from '@/styled-system/css';
+import { css } from '@/styled-system/css';
 
 import { TabProps, TabTypeProps } from './type';
 
@@ -8,7 +8,7 @@ import { TabProps, TabTypeProps } from './type';
  * @param variant fill 디폴트값 (fit-content는 primary에만 적용)
  */
 
-export const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
+const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
   const tabStyles = css({
     width:
       type === 'primary' ? '375px' : type === 'assistive' ? '150px' : '335px',
@@ -30,5 +30,7 @@ export const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
     padding: type === 'primary' ? '' : '3px',
   });
 
-  return <div className={cx(tabStyles)}>{children}</div>;
+  return <div className={tabStyles}>{children}</div>;
 };
+
+export default Tab;
