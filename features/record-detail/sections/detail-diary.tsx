@@ -24,7 +24,7 @@ export const DetailDiarySection = () => {
 
 const containerStyle = flex({
   gap: '12px',
-  flexDirection: 'column',
+  direction: 'column',
 });
 
 const imageWrapperStyle = css({

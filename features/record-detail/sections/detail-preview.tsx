@@ -48,11 +48,11 @@ const containerStyle = css({
 const graphArea = {
   container: flex({
     p: '20px',
-    flexDirection: 'column',
+    direction: 'column',
     gap: '16px',
   }),
   textWrapper: flex({
-    flexDirection: 'column',
+    direction: 'column',
     gap: '4px',
     px: '4px',
   }),
