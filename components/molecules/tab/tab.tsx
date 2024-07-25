@@ -1,29 +1,36 @@
 import { css, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
-import { TabProps, TabTypeProps } from './type';
+import { TabProps } from './type';
 
 /**
- *
- * @param type primary 디폴트값
+ * @param children TabItem
  * @param variant fill 디폴트값 (fit-content는 primary에만 적용)
+ * @param type primary 디폴트값
+ * @param className 외부에서 import 시 스타일링
  */
 
-export const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
+export const Tab = ({
+  children,
+  variant = 'fill',
+  type = 'primary',
+  className = '',
+}: TabProps) => {
+  const baseStyles = flex({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  });
+
   const primaryStyles = css({
     width: '375px',
     height: '56px',
     backgroundColor: 'white',
     borderBottom: '1px solid',
     borderColor: 'line.neutral',
-    justifyContent: variant === 'fill' ? 'center' : 'left',
   });
 
-  const assistiveStyles = css({
-    width: '150px',
-    height: '34px',
-  });
-
-  const otherStyles = css({
+  const secondaryStyles = css({
     width: '335px',
     height: '44px',
     backgroundColor: 'background.gray',
@@ -31,17 +38,35 @@ export const Tab = ({ children, variant, type }: TabProps & TabTypeProps) => {
     padding: '3px',
   });
 
-  const commonStyles = css({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
+  const assistiveStyles = css({
+    width: '150px',
+    height: '34px',
   });
 
+  const fullWidthStyles = css({
+    justifyContent: 'center',
+  });
+
+  const fitContentStyles = css({
+    justifyContent: 'flex-start',
+  });
+
+  const typeStylesMap = new Map([
+    ['primary', primaryStyles],
+    ['secondary', secondaryStyles],
+    ['assistive', assistiveStyles],
+  ]);
+
+  const variantStylesMap = new Map([
+    ['fit-content', fitContentStyles],
+    ['fill', fullWidthStyles],
+  ]);
+
   const tabStyles = cx(
-    commonStyles,
-    type === 'primary' && primaryStyles,
-    type === 'assistive' && assistiveStyles,
-    type !== 'primary' && type !== 'assistive' && otherStyles,
+    className,
+    baseStyles,
+    typeStylesMap.get(type),
+    variantStylesMap.get(variant),
   );
 
   return <div className={tabStyles}>{children}</div>;

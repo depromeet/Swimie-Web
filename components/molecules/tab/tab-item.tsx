@@ -1,9 +1,9 @@
 import { css, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
-import { ClickTabItemProps } from './type';
+import { TabItemProps } from './type';
 
 /**
- *
  * @param selected 선택 여부
  * @param text 텍스트
  * @param onClick tab 클릭 시 함수
@@ -15,11 +15,10 @@ export const TabItem = ({
   selected,
   text,
   onClick,
-  type,
-  variant,
-}: ClickTabItemProps) => {
-  const baseStyles = css({
-    display: 'flex',
+  type = 'primary',
+  variant = 'fill',
+}: TabItemProps) => {
+  const baseStyles = flex({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
@@ -65,12 +64,21 @@ export const TabItem = ({
     width: '100%',
   });
 
+  const typeStylesMap = new Map([
+    ['primary', primaryStyles],
+    ['secondary', secondaryStyles],
+    ['assistive', assistiveStyles],
+  ]);
+
+  const variantStylesMap = new Map([
+    ['fit-content', fitContentStyles],
+    ['fill', fullWidthStyles],
+  ]);
+
   const tabItemStyles = cx(
     baseStyles,
-    type === 'primary' && primaryStyles,
-    type === 'secondary' && secondaryStyles,
-    type === 'assistive' && assistiveStyles,
-    variant === 'fit-content' ? fitContentStyles : fullWidthStyles,
+    typeStylesMap.get(type),
+    variantStylesMap.get(variant),
   );
 
   return (
