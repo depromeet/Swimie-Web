@@ -1,17 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
 
 import { LeftArrowIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 
-export interface HeaderBarProps {
-  className?: string;
-  arrowClassName?: string;
-  onClickBackArrow?: () => void;
-  children?: ReactNode;
-}
+import { HeaderBarProps } from './type';
 
 /**
  *
