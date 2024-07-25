@@ -1,5 +1,6 @@
 import { END_OF_DAY, nameOfDays, START_OF_DAY } from '@/constants/date';
 import { css, cva, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 type Weekend = 'sunday' | 'saturday' | undefined;
 
@@ -10,27 +11,14 @@ const dayTypeMap = new Map<number, string>([
 
 export const DayLabels = () => {
   return (
-    <div
-      className={css({
-        width: 'full',
-        display: 'flex',
-        gap: '3px',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      })}
-    >
+    <div className={containerStyles}>
       {nameOfDays.map((day, index) => {
         const type = (dayTypeMap.get(index) || undefined) as Weekend;
         return (
           <p
             key={index}
             className={cx(
-              css({
-                width: 'full',
-                textAlign: 'center',
-                textStyle: 'label2',
-                fontWeight: 'medium',
-              }),
+              dayTextStyles,
               colorOfDays({
                 type,
               }),
@@ -43,6 +31,20 @@ export const DayLabels = () => {
     </div>
   );
 };
+
+const containerStyles = flex({
+  width: 'full',
+  gap: '3px',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+const dayTextStyles = css({
+  width: 'full',
+  textAlign: 'center',
+  textStyle: 'label2',
+  fontWeight: 'medium',
+});
 
 const colorOfDays = cva({
   base: { color: 'text.placeHolder' },
