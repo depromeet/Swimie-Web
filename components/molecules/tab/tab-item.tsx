@@ -3,7 +3,6 @@ import { css } from '@/styled-system/css';
 import { ClickTabItemProps } from './type';
 
 /**
- *
  * @param selected 선택 여부
  * @param text 텍스트
  * @param onClick tab 클릭 시 함수
