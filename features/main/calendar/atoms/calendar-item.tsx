@@ -1,4 +1,5 @@
 import { css, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 interface CalendarItemProps {
   date: number;
@@ -30,10 +31,9 @@ export const CalendarItem = ({
   );
 };
 
-const itemContainerStyles = css({
+const itemContainerStyles = flex({
   width: 'full',
   height: 'full',
-  display: 'flex',
   flexDir: 'column',
   alignItems: 'center',
 
