@@ -1,20 +1,19 @@
+import { ReactNode } from 'react';
+
+type TabVariant = 'fill' | 'fit-content';
+type TabType = 'primary' | 'secondary' | 'assistive';
+
 export interface TabItemProps {
   selected: boolean;
   text: string;
   onClick: () => void;
-  variant?: 'fill' | 'fit-content';
-  type?: 'primary' | 'secondary' | 'assistive';
-}
-
-export interface ClickTabItemProps extends TabItemProps {
-  onClick: () => void;
+  variant?: TabVariant;
+  type?: TabType;
 }
 
 export interface TabProps {
-  variant?: 'fill' | 'fit-content';
-  children?: React.ReactNode;
-}
-
-export interface TabTypeProps {
-  type?: 'primary' | 'secondary' | 'assistive';
+  variant?: TabVariant;
+  type?: TabType;
+  children?: ReactNode;
+  className?: string;
 }
