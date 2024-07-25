@@ -1,32 +1,33 @@
 import { HeaderBar } from '@/components/molecules';
-import { RecordForm } from '@/features';
+import { Form } from '@/features';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 export default function RecordPage() {
   return (
     <div>
       <HeaderBar className={css({ marginBottom: '24px' })}>
-        <h1 className={titleWrapperStyles}>수영 기록하기</h1>
+        <h3 className={titleStyles.header}>수영 기록하기</h3>
       </HeaderBar>
-      <h1
-        className={css({
-          padding: '0px 20px',
-          textStyle: 'heading4',
-          fontWeight: '600',
-        })}
-      >
-        기본정보
-      </h1>
-      <RecordForm />
+      {/* Title 컴포넌트 생성 시 대체 */}
+      <h1 className={titleStyles.form}>기본정보</h1>
+      <Form />
     </div>
   );
 }
 
-const titleWrapperStyles = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  textStyle: 'heading6',
-  fontWeight: 500,
-});
+const titleStyles = {
+  header: flex({
+    justifyContent: 'center',
+    alignItems: 'center',
+    w: 'full',
+    textStyle: 'heading6',
+    fontWeight: 500,
+  }),
+
+  form: css({
+    padding: '0px 20px',
+    textStyle: 'heading4',
+    fontWeight: '600',
+  }),
+};

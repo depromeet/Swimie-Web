@@ -1,5 +1,5 @@
-export * from './badge';
 export * from './button';
+export * from './dim';
 export * from './divider';
-export * from './element';
 export * from './icons';
+export * from './portal';

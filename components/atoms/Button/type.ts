@@ -5,7 +5,7 @@ export type ButtonProps = {
   leftIcon?: boolean;
   rightIcon?: boolean;
   interaction: 'normal' | 'hovered' | 'focused' | 'pressed';
-  variant?: 'solid' | 'outlined';
+  variant?: 'solid' | 'outlined' | 'text';
   type?: 'primary' | 'secondary' | 'assistive';
   className?: string;
 };
@@ -13,4 +13,5 @@ export type ButtonProps = {
 export interface ButtonPropsWithIcons extends ButtonProps {
   leftIconSrc?: string;
   rightIconSrc?: string;
+  onClick?: () => void;
 }

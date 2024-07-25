@@ -28,7 +28,7 @@ export function TextFieldWrapper({
         {label}
       </span>
       {isRequired && (
-        <span className={css({ color: 'status.destructive' })}> *</span>
+        <span className={css({ color: 'status.negative' })}> *</span>
       )}
       {children}
     </section>

@@ -24,15 +24,15 @@ export function TextArea({
     <textarea
       value={value}
       placeholder={placeholder}
-      className={cx(textAreaStyles, className)}
+      className={cx(layoutStyles, className)}
       onChange={handleTextAreaChange}
     />
   );
 }
 
-const textAreaStyles = css({
-  width: '100%',
-  height: '135px',
+const layoutStyles = css({
+  w: '100%',
+  h: '135px',
   padding: '16px 12px',
   borderRadius: '10px',
   border: '1px solid',
