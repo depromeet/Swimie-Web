@@ -6,6 +6,7 @@ export interface DividerProps {
   className?: string;
 }
 
+//임시로 사용한 Divider 컴포넌트
 export function Divider({
   variant = 'normal',
   vertical = false,
