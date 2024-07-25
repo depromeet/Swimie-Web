@@ -19,7 +19,7 @@ export const Calendar = () => {
           const isInRenderingRange = index >= startPoint && index <= endPoint;
           const date = squareNumber - startPoint;
 
-          return isInRenderingRange === true ? (
+          return isInRenderingRange ? (
             <CalendarItem
               key={squareNumber}
               date={date}
