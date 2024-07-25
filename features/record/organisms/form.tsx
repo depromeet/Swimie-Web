@@ -6,6 +6,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { DiarySection } from './diary-section';
+import { EquipmentSection } from './equipment-section';
 import { PhotoSection } from './photo-section';
 import { sectionStyles } from './style';
 
@@ -66,6 +67,8 @@ export function Form() {
       <PhotoSection title="오늘의 사진" />
       <Divider variant="thick" />
       <DiarySection title="일기" value="현민 일기" />
+      <Divider variant="thick" />
+      <EquipmentSection title="장비" />
     </form>
   );
 }
