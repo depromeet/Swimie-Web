@@ -12,7 +12,7 @@ export const SwimDescriptionItem = () => {
 
 const containerStyle = flex({
   gap: '4px',
-  flexDirection: 'column',
+  direction: 'column',
 });
 
 const text = {
