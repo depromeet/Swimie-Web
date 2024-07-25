@@ -9,6 +9,7 @@ import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
 import { PhotoSection } from './photo-section';
 import { sectionStyles } from './style';
+import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
   return (
@@ -69,6 +70,8 @@ export function Form() {
       <DiarySection title="일기" value="현민 일기" />
       <Divider variant="thick" />
       <EquipmentSection title="장비" />
+      <Divider variant="thick" />
+      <SubInfoSection title="심박수 · 페이스 · 칼로리" />
     </form>
   );
 }
