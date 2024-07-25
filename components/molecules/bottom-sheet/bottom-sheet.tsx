@@ -97,7 +97,7 @@ const containerStyle = css({
 
 const bodyStyle = css({
   display: 'flex',
-  flexDirection: 'column',
+  direction: 'column',
   marginTop: '-1px',
   width: '100%',
   backgroundColor: 'white',

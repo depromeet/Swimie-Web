@@ -23,6 +23,6 @@ const RecordDetail = () => {
 export default RecordDetail;
 
 const containerStyle = flex({
-  flexDirection: 'column',
+  direction: 'column',
   gap: '12px',
 });

@@ -81,7 +81,7 @@ const contentStyle = flex({
 
 const content = {
   textStyle: flex({
-    flexDirection: 'column',
+    direction: 'column',
     gap: '4px',
   }),
 
