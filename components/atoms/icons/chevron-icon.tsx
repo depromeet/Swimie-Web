@@ -2,11 +2,9 @@ import { css } from '@/styled-system/css';
 
 export type Directions = 'left' | 'up' | 'right' | 'down';
 
-interface ChevronIconProps {
+interface ChevronIconProps extends React.SVGProps<SVGSVGElement> {
   color?: string;
   direction: Directions;
-  width: number;
-  height: number;
 }
 
 export const ChevronIcon = ({
@@ -14,10 +12,12 @@ export const ChevronIcon = ({
   direction,
   width,
   height,
+  ...props
 }: ChevronIconProps) => {
   const degree = getRotateDegree(direction);
   return (
     <svg
+      {...props}
       transform={`rotate(${degree})`}
       width={width}
       height={height}

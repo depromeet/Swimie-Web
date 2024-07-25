@@ -1,6 +1,4 @@
-interface CheckInCircleIconProps {
-  width?: number;
-  height?: number;
+interface CheckInCircleIconProps extends React.SVGProps<SVGSVGElement> {
   isActive?: boolean;
 }
 
@@ -8,11 +6,13 @@ export const CheckInCircleIcon = ({
   width = 20,
   height = 20,
   isActive = false,
+  ...props
 }: CheckInCircleIconProps) => {
   const innerColor = isActive ? '#C9DEFE' : 'none';
   const borderColor = isActive ? '#3B87F4' : '#37383C';
   return (
     <svg
+      {...props}
       width={width}
       height={height}
       viewBox="0 0 20 20"
