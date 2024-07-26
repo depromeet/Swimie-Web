@@ -7,8 +7,8 @@ import { BottomSheet } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { isLaneLengthBottomSheetOpen } from '../../store';
 import { SelectList } from '../molecules';
-import { isLaneLengthBottomSheetOpen } from '../store';
 
 interface LaneLengthBottomSheetProps {
   title: string;
@@ -17,7 +17,9 @@ interface LaneLengthBottomSheetProps {
 /**
  * @param title 레인 길이 선택 bottom-sheet 제목
  */
-export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
+export default function LaneLengthBottomSheet({
+  title,
+}: LaneLengthBottomSheetProps) {
   const laneOptions = [
     {
       index: 0,
@@ -40,7 +42,7 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
         <SelectList
           value={getValues('lane') + 'm'}
           options={laneOptions}
-          closeWrapper={() => setIsOpen(false)}
+          onCloseWrapper={() => setIsOpen(false)}
           listElementClassName={layout.listElement}
           onChangeValue={handleSelectLaneLength}
         />

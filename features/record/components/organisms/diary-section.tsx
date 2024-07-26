@@ -1,8 +1,8 @@
 import { TextArea } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { formSectionStyles } from '../style/form-section';
-import { FormSectionProps } from '../type/form-section';
+import { formSectionStyles } from '../../styles/form-section';
+import { FormSectionProps } from '../../types/form-section';
 
 interface DiarySectionProps extends FormSectionProps {
   value: string;
