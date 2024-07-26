@@ -3,7 +3,7 @@
 import { css } from '@/styled-system/css';
 
 import { CameraBox } from '../molecules';
-import { formSectionStyles } from '../style';
+import { formSectionStyles } from '../style/form-section';
 import { FormSectionProps } from '../type/form-section';
 
 /**

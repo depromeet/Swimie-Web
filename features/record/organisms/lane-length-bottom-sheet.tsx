@@ -1,3 +1,5 @@
+'use client';
+
 import { useAtom } from 'jotai';
 import { useFormContext } from 'react-hook-form';
 
@@ -12,13 +14,22 @@ interface LaneLengthBottomSheetProps {
   title: string;
 }
 
+/**
+ * @param title 레인 길이 선택 bottom-sheet 제목
+ */
 export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
-  const laneOptions = ['25m', '50m'];
+  const laneOptions = [
+    {
+      index: 0,
+      label: '25m',
+    },
+    { index: 1, label: '50m' },
+  ];
   const { getValues, setValue } = useFormContext();
   const [isOpen, setIsOpen] = useAtom(isLaneLengthBottomSheetOpen);
 
   const handleSelectLaneLength = (value: string) => {
-    setValue('lane', value);
+    setValue('lane', Number(value.slice(0, -1)));
   };
 
   return (
@@ -27,7 +38,7 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
         {/* Title 컴포넌트로 대체 */}
         <h1 className={titleStyles}>{title}</h1>
         <SelectList
-          value={getValues('lane') as string}
+          value={getValues('lane') + 'm'}
           options={laneOptions}
           closeWrapper={() => setIsOpen(false)}
           listElementClassName={layout.listElement}

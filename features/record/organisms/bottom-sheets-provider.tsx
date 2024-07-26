@@ -2,7 +2,7 @@ import { Portal } from '@/components/atoms';
 
 import { LaneLengthBottomSheet } from './lane-length-bottom-sheet';
 
-//수영 기록 form에 사용되는 Bottom-Sheet들
+//수영 기록 form에 사용되는 Bottom-Sheet들 추가
 export default function BottomSheetsProvider() {
   return (
     <Portal>

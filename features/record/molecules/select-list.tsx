@@ -1,8 +1,13 @@
 import { SelectElement } from '../atoms';
 
+type optionType = {
+  index: number;
+  label: string;
+};
+
 export interface SelectListProps {
   value: string;
-  options: string[];
+  options: optionType[];
   listClassName?: string;
   className?: string;
   listElementClassName?: string;
@@ -22,9 +27,9 @@ export function SelectList({
     <ul className={className}>
       {options.map((option) => (
         <SelectElement
-          key={option}
-          isSelected={value === option}
-          label={option}
+          key={option.index}
+          isSelected={value === option.label}
+          label={option.label}
           className={listElementClassName}
           closeWrapper={closeWrapper}
           onChangeValue={onChangeValue}

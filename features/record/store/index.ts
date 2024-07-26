@@ -1,1 +1,1 @@
-export * from './bottom-sheet-open';
+export * from './bottom-sheet';
