@@ -1,15 +1,27 @@
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
-import { SwimStatsItem, SwimToolItem } from '../components';
+import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
 
 export const DetailPreviewSection = () => {
+  const handleClickPreviousDate = () => {
+    console.log('prev');
+  };
+
+  const handleClickNextDate = () => {
+    console.log('next');
+  };
+
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
       <div className={graphArea.container}>
         {/* 날짜 선택 */}
-        <div>24.07.14. 수</div>
+        <DatePicker
+          date={new Date()}
+          onClickPrevious={handleClickPreviousDate}
+          onClickNext={handleClickNextDate}
+        />
 
         {/* 파도 svg */}
         <div>물결이 ~~</div>
