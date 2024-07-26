@@ -4,9 +4,9 @@ import NextImage, { ImageProps } from 'next/image';
 import React, { useState } from 'react';
 
 import fallbackImage from '@/public/images/fallbackImage.png';
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
-export const Image = ({ src, alt, ...props }: ImageProps) => {
+export const Image = ({ src, alt, className, ...props }: ImageProps) => {
   const [imgSrc, setImgSrc] = useState(src);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -25,7 +25,7 @@ export const Image = ({ src, alt, ...props }: ImageProps) => {
       alt={alt}
       onError={handleError}
       onLoad={handleLoad}
-      className={css(imageStyle.raw({ isLoaded: isLoaded }))}
+      className={cx(css(imageStyle.raw({ isLoaded: isLoaded })), className)}
     />
   );
 };
