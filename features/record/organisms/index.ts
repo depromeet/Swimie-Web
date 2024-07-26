@@ -1,3 +1,5 @@
+export * from '../style/form-section';
+export * from '../type/form-section';
 export { default } from './bottom-sheets-provider';
 export * from './diary-section';
 export * from './equipment-section';

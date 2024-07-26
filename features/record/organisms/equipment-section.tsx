@@ -2,7 +2,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { SelectBox } from '../molecules';
-import { formSectionStyles } from '../style';
+import { formSectionStyles } from '../style/form-section';
 import { FormSectionProps } from '../type/form-section';
 /**
  * @param title 장비 section의 제목

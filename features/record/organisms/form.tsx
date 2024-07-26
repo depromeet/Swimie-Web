@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
 import { useSetAtom } from 'jotai';
@@ -15,14 +14,15 @@ const BottomSheetsProvider = dynamic(() => import('./bottom-sheets-provider'), {
 import dynamic from 'next/dynamic';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { formSectionStyles } from '../style';
+import { RecordRequestProps } from '../queries/dto';
+import { formSectionStyles } from '../style/form-section';
 import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
 import { PhotoSection } from './photo-section';
 import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
-  const methods = useForm({
+  const methods = useForm<RecordRequestProps>({
     defaultValues: {
       poolId: null,
       item: null,
@@ -30,10 +30,10 @@ export function Form() {
       pace: null,
       kcal: null,
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-26', // 필수
-      startTime: '', // 필수
-      endTime: '', // 필수
-      lane: '25m', // 디폴트가 25m
+      recordAt: '2024-07-26',
+      startTime: '',
+      endTime: '',
+      lane: 25,
       diary: null,
       strokes: [],
       imageIdList: [],
@@ -44,6 +44,7 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
   return (
+    //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
       <form>
         <div className={formSectionStyles}>
@@ -84,7 +85,7 @@ export function Form() {
           />
           <TextField
             variant="select"
-            value={methods.watch('lane')}
+            value={methods.watch('lane') + 'm'}
             label="레인 길이"
             hasDownArrow
             wrapperClassName={css({ marginBottom: '24px' })}
