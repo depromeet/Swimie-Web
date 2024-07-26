@@ -66,7 +66,7 @@ export function TextField({
           type={inputType}
           value={value}
           placeholder={placeholder}
-          maxLength={maxLength}
+          maxLength={variant === 'select' ? maxLength : undefined}
           onChange={handleInputChange}
           onFocus={
             variant === 'text' ? () => handlers.onChangeFocus(true) : undefined
