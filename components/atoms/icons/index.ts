@@ -1,3 +1,4 @@
+export * from './camera-icon';
 export { CheckInCircleIcon } from './check-in-circle-icon';
 export type { Directions } from './chevron-icon';
 export { ChevronIcon } from './chevron-icon';
