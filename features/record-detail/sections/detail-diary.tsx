@@ -1,11 +1,18 @@
-import { SwimIcon } from '@/components/atoms';
+import { Image, SwimIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export const DetailDiarySection = () => {
   return (
     <section className={containerStyle}>
-      <div className={imageWrapperStyle}>대충 여긴 이미지..</div>
+      <div className={imageWrapperStyle}>
+        <Image
+          src={'/error'}
+          alt="기록 이미지"
+          fill
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
 
       <div className={diaryWrapperStyle}>
         <div className={header.containerStyle}>
@@ -28,8 +35,12 @@ const containerStyle = flex({
 });
 
 const imageWrapperStyle = css({
-  p: '20px',
+  position: 'relative',
+  boxSizing: 'border-box',
+  aspectRatio: '5/6',
+  m: '20px',
   backgroundColor: 'white',
+  overflow: 'hidden',
 });
 
 const diaryWrapperStyle = css({
