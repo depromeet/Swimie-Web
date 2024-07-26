@@ -4,12 +4,12 @@ import { DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { css } from '@/styled-system/css';
 
-import { UseSubInfoTextFields } from '../hooks';
+import { useSubInfoTextFields } from '../hooks';
 import { SubInfoTextFields } from './sub-info-text-fields';
 import { SectionProps } from './type';
 
 export function SubInfoSection({ title }: SectionProps) {
-  const { isOpen, handlers } = UseSubInfoTextFields();
+  const { isOpen, handlers } = useSubInfoTextFields();
 
   return (
     <section>

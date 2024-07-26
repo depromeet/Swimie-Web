@@ -1,1 +1,1 @@
-export { UseSubInfoTextFields } from './use-sub-info-text-fields';
+export { useSubInfoTextFields } from './use-sub-info-text-fields';
