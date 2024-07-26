@@ -22,7 +22,23 @@ import { sectionStyles } from './style';
 import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
-  const methods = useForm({ defaultValues: { lane: '25m' } });
+  const methods = useForm({
+    defaultValues: {
+      poolId: null,
+      item: null,
+      heartRate: null,
+      pace: null,
+      kcal: null,
+      // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
+      recordAt: '2024-07-26', // 필수
+      startTime: '', // 필수
+      endTime: '', // 필수
+      lane: '25m', // 디폴트가 25m
+      diary: null,
+      strokes: [],
+      imageIdList: [],
+    },
+  });
 
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
