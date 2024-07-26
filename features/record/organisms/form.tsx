@@ -15,10 +15,10 @@ const BottomSheetsProvider = dynamic(() => import('./bottom-sheets-provider'), {
 import dynamic from 'next/dynamic';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { formSectionStyles } from '../style';
 import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
 import { PhotoSection } from './photo-section';
-import { sectionStyles } from './style';
 import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
@@ -46,7 +46,7 @@ export function Form() {
   return (
     <FormProvider {...methods}>
       <form>
-        <div className={sectionStyles}>
+        <div className={formSectionStyles}>
           <TextField
             variant="select"
             isRequired

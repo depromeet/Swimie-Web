@@ -3,15 +3,15 @@
 import { css } from '@/styled-system/css';
 
 import { CameraBox } from '../molecules';
-import { sectionStyles } from './style';
-import { SectionProps } from './type';
+import { formSectionStyles } from '../style';
+import { FormSectionProps } from '../type/form-section';
 
 /**
  * @param title 사진 section의 제목
  */
-export function PhotoSection({ title }: SectionProps) {
+export function PhotoSection({ title }: FormSectionProps) {
   return (
-    <section className={sectionStyles}>
+    <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <CameraBox />
     </section>

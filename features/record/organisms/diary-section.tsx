@@ -1,10 +1,10 @@
 import { TextArea } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { sectionStyles } from './style';
-import { SectionProps } from './type';
+import { formSectionStyles } from '../style';
+import { FormSectionProps } from '../type/form-section';
 
-interface DiarySectionProps extends SectionProps {
+interface DiarySectionProps extends FormSectionProps {
   value: string;
   onChange?: (text: string) => void;
 }
@@ -16,7 +16,7 @@ interface DiarySectionProps extends SectionProps {
  */
 export function DiarySection({ title, value, onChange }: DiarySectionProps) {
   return (
-    <section className={sectionStyles}>
+    <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <TextArea
         placeholder="오늘 무엇을 배웠나요? 오늘 무엇을 느꼈나요?"
