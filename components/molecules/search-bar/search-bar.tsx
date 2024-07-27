@@ -13,6 +13,13 @@ export interface SearchBarProps {
   onChange?: (text: string) => void;
 }
 
+/**
+ * @param value 현재 input value
+ * @param placeholder input placeholder
+ * @param className seach-bar layout 외부스타일 주입
+ * @param inputClassName input 태그 외부스타일 주입
+ * @param onChange value 값 변경하는 function
+ */
 export function SearchBar({
   value,
   placeholder,
