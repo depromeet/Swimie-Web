@@ -46,15 +46,16 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             onChange={handlePoolSearchTextChange}
             className={css({ marginBottom: '12px' })}
           />
-          {!poolSearchText && (
+          {!poolSearchText ? (
             <p className={textStyles.searchInfo}>
               검색한 수영장을
               <br /> 즐겨찾기할 수 있어요
             </p>
+          ) : (
+            <Suspense fallback={'스켈레톤 컴포넌트'}>
+              <PoolSearchResultList poolSearchText={poolSearchText} />
+            </Suspense>
           )}
-          <Suspense fallback={'스켈레톤 컴포넌트'}>
-            <PoolSearchResultList poolSearchText={poolSearchText} />
-          </Suspense>
         </div>
       </div>
     </PageModal>

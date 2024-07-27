@@ -39,18 +39,17 @@ export function PoolSearchResultList({
   return (
     <ul className={resultStyles.list}>
       {/* //api 연결로 추후 수정(enable: !!poolSearchText) */}
-      {poolSearchText &&
-        dummyResult.data.map((result, i) => (
-          <PoolSearchResultElement
-            key={result.poolId}
-            {...result}
-            className={
-              i === dummyResult.data.length - 1
-                ? css(resultStyles.element.raw({ isLast: true }))
-                : css(resultStyles.element.raw({}))
-            }
-          />
-        ))}
+      {dummyResult.data.map((result, i) => (
+        <PoolSearchResultElement
+          key={result.poolId}
+          {...result}
+          className={
+            i === dummyResult.data.length - 1
+              ? css(resultStyles.element.raw({ isLast: true }))
+              : css(resultStyles.element.raw({}))
+          }
+        />
+      ))}
     </ul>
   );
 }
