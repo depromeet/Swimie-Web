@@ -12,13 +12,12 @@ import { PoolSearchResultList } from './pool-search-result-list';
 
 interface PoolSearchPageModalProps {
   title: string;
-  className?: string;
 }
 
-export function PoolSearchPageModal({
-  title,
-  className,
-}: PoolSearchPageModalProps) {
+/**
+ * @param title 수영 검색 page-modal 제목
+ */
+export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const pageModalRef = useRef<HTMLDivElement>(null);
   const [poolSearchText, setPoolSearchText] = useState('');
   const [pageModalState, setPageModalState] = useAtom(
@@ -37,7 +36,7 @@ export function PoolSearchPageModal({
       jumpDirection={pageModalState.jumpDirection}
       ref={pageModalRef}
     >
-      <div className={className} ref={pageModalRef}>
+      <div ref={pageModalRef}>
         <HeaderBar onClickBackArrow={handleBackArrowClick} />
         <div className={layoutStyles}>
           <h2 className={textStyles.title}>{title}</h2>
