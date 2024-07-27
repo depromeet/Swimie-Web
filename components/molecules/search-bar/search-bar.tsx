@@ -4,6 +4,7 @@ import { ChangeEvent } from 'react';
 
 import { SearchIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 export interface SearchBarProps {
   value: string;
@@ -45,8 +46,7 @@ export function SearchBar({
   );
 }
 
-const layoutStyles = css({
-  display: 'flex',
+const layoutStyles = flex({
   alignItems: 'center',
   width: '100%',
   height: '44px',
