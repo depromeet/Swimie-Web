@@ -9,6 +9,12 @@ import { css, cx } from '@/styled-system/css';
 
 import { PageModalProps } from './type';
 
+/**
+ * @param isOpen page-modal open 여부
+ * @param jumpDirection page-modal이 나오는 방향 결정
+ * @param children 자식 요소
+ * @param className 외부 스타일 주입
+ */
 export const PageModal = forwardRef(
   (
     { isOpen, jumpDirection, children, className }: PageModalProps,
@@ -22,7 +28,7 @@ export const PageModal = forwardRef(
         in={isOpen}
         mountOnEnter
         unmountOnExit
-        className={cx(pageModalStyles, className)}
+        className={cx(layoutStyles, className)}
       >
         {children}
       </CSSTransition>
@@ -32,7 +38,7 @@ export const PageModal = forwardRef(
 
 PageModal.displayName = 'PageModal';
 
-const pageModalStyles = css({
+const layoutStyles = css({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -40,4 +46,5 @@ const pageModalStyles = css({
   height: '100vh',
   backgroundColor: 'white',
   zIndex: 1000,
+  overflow: 'auto',
 });

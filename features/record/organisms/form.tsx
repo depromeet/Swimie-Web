@@ -19,8 +19,10 @@ import { isPoolSearchPageModalOpen } from '../store/page-modal';
 import { formSectionStyles } from '../style/form-section';
 import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
+const PageModalsProvider = dynamic(() => import('./page-modals-provider'), {
+  ssr: false,
+});
 import { PhotoSection } from './photo-section';
-import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
@@ -116,7 +118,7 @@ export function Form() {
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
         <BottomSheetsProvider />
-        <PoolSearchPageModal />
+        <PageModalsProvider />
       </form>
     </FormProvider>
   );
