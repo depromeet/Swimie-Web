@@ -52,9 +52,11 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
               <br /> 즐겨찾기할 수 있어요
             </p>
           ) : (
+            // <ErrorBoundary fallback={'에러 표시 컴포넌트'}>
             <Suspense fallback={'스켈레톤 컴포넌트'}>
               <PoolSearchResultList poolSearchText={poolSearchText} />
             </Suspense>
+            // </ErrorBoundary>
           )}
         </div>
       </div>
