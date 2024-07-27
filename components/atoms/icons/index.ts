@@ -6,4 +6,6 @@ export { ChevronIcon } from './chevron-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
 export * from './search-icon';
+export * from './star-icon';
+export * from './star-icon-fill';
 export * from './swim-icon';

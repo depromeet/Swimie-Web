@@ -6,7 +6,7 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 export default function PageModalsProvider() {
   return (
     <Portal>
-      <PoolSearchPageModal />
+      <PoolSearchPageModal title="어디서 수영했나요?" />
     </Portal>
   );
 }
