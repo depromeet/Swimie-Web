@@ -22,6 +22,7 @@ export default defineConfig({
     './app/**/*.{js,jsx,ts,tsx}',
     './components/**/*.{js,jsx,ts,tsx}',
     './features/**/*.{js,jsx,ts,tsx}',
+    './stories/**/*.{js,jsx,ts,tsx}',
   ],
 
   // Files to exclude
