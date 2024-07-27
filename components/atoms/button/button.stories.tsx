@@ -1,15 +1,51 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { css } from '@/styled-system/css';
+
 import { Button } from './button';
 
 const meta: Meta<typeof Button> = {
-  title: 'components/atoms/button',
+  title: 'Example/Button',
   component: Button,
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className={css({ margin: 10 })}>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
+    size: {
+      control: { type: 'select', options: ['small', 'medium', 'large'] },
+    },
     disabled: {
       control: 'boolean',
     },
-    onClick: { action: 'clicked' },
+    variant: {
+      control: { type: 'select', options: ['solid', 'outlined', 'text'] },
+    },
+    type: {
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary', 'assistive'],
+      },
+    },
+    interaction: {
+      control: {
+        type: 'select',
+        options: ['normal', 'hovered', 'focused', 'pressed'],
+      },
+    },
+    label: {
+      control: 'text',
+    },
+    leftIconSrc: {
+      control: 'text',
+    },
+    rightIconSrc: {
+      control: 'text',
+    },
   },
 };
 
@@ -17,8 +53,26 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Basic: Story = {
+export const Default: Story = {
   args: {
-    children: 'Button',
+    label: 'Label',
+    size: 'large',
+    variant: 'solid',
+    type: 'primary',
+    interaction: 'normal',
+  },
+};
+
+export const outlined: Story = {
+  args: {
+    ...Default.args,
+    variant: 'outlined',
+  },
+};
+
+export const text: Story = {
+  args: {
+    ...Default.args,
+    variant: 'text',
   },
 };
