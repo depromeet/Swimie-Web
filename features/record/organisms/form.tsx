@@ -15,10 +15,12 @@ import dynamic from 'next/dynamic';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { RecordRequestProps } from '../queries/dto';
+import { isPoolSearchPageModalOpen } from '../store/page-modal';
 import { formSectionStyles } from '../style/form-section';
 import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
 import { PhotoSection } from './photo-section';
+import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 
 export function Form() {
@@ -43,6 +45,7 @@ export function Form() {
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );
+  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
@@ -82,6 +85,12 @@ export function Form() {
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
+            onClick={() =>
+              setIsPoolSearchPageModalOpen({
+                isOpen: true,
+                jumpDirection: 'forward',
+              })
+            }
           />
           <TextField
             variant="select"
@@ -107,6 +116,7 @@ export function Form() {
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
         <BottomSheetsProvider />
+        <PoolSearchPageModal />
       </form>
     </FormProvider>
   );
