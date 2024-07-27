@@ -25,10 +25,15 @@ const PageModalsProvider = dynamic(() => import('./page-modals-provider'), {
 import { PhotoSection } from './photo-section';
 import { SubInfoSection } from './sub-info-section';
 
+interface SubInfoProps {
+  poolName: string | null;
+}
+
 export function Form() {
-  const methods = useForm<RecordRequestProps>({
+  const methods = useForm<RecordRequestProps & SubInfoProps>({
     defaultValues: {
       poolId: null,
+      poolName: null,
       item: null,
       heartRate: null,
       pace: null,
@@ -83,7 +88,11 @@ export function Form() {
           </div>
           <TextField
             variant="select"
-            value="현민 수영장"
+            value={
+              methods.watch('poolName')
+                ? (methods.watch('poolName') as string)
+                : ''
+            }
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}

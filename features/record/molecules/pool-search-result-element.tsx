@@ -1,6 +1,11 @@
+import { useSetAtom } from 'jotai';
+import { useFormContext } from 'react-hook-form';
+
 import { StarIcon, StarIconFill } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+import { isPoolSearchPageModalOpen } from '../store/page-modal';
 
 interface PoolSearchListElementProps {
   poolId: number;
@@ -8,7 +13,6 @@ interface PoolSearchListElementProps {
   address: string;
   isFavorite: boolean;
   className?: string;
-  onClick?: (name: string, poolId: number) => void;
 }
 
 export function PoolSearchResultElement({
@@ -17,12 +21,19 @@ export function PoolSearchResultElement({
   address,
   isFavorite,
   className,
-  onClick,
 }: PoolSearchListElementProps) {
+  const { setValue } = useFormContext();
+  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+
+  const handleElementClick = (name: string, poolId: number) => {
+    setValue('poolId', poolId);
+    setValue('poolName', name);
+    setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
+  };
   return (
     <li
       className={cx(listStyles, className)}
-      onClick={() => onClick?.(name, poolId)}
+      onClick={() => handleElementClick(name, poolId)}
     >
       <div className={textStyles.layout}>
         <span className={textStyles.name}>{name}</span>
