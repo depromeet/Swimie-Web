@@ -1,19 +1,23 @@
-import { TextField } from '@/components/molecules/text-field';
+import { Calendar } from '@/features/main/calendar';
 import { css } from '@/styled-system/css';
-
-const styles = css({
-  w: 'full',
-  h: 'full',
-  fontSize: '40px',
-  fontWeight: '600',
-  color: 'green.50',
-});
+import { flex } from '@/styled-system/patterns';
 
 export default function Home() {
   return (
     <main className={styles}>
-      <TextField unit="m" />
-      2팀 웹 파이팅~~
+      <section className={calenderContentsStyles}>
+        <Calendar />
+      </section>
     </main>
   );
 }
+
+const styles = css({
+  w: 'full',
+  h: 'full',
+});
+
+const calenderContentsStyles = flex({
+  padding: '16px 20px',
+  gap: '16px',
+});
