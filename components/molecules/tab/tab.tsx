@@ -23,7 +23,6 @@ export const Tab = ({
   });
 
   const primaryStyles = css({
-    width: '375px',
     height: '56px',
     backgroundColor: 'white',
     borderBottom: '1px solid',
