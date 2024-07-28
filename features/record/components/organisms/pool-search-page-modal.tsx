@@ -7,7 +7,7 @@ import { HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
-import { isPoolSearchPageModalOpen } from '../store/page-modal';
+import { isPoolSearchPageModalOpen } from '../../store';
 
 export function PoolSearchPageModal() {
   const pageModalRef = useRef<HTMLDivElement>(null);

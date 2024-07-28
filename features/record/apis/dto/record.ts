@@ -1,4 +1,4 @@
-import { StrokeProps } from '../../type';
+import { StrokeProps } from '../../types';
 
 export interface RecordRequestProps {
   poolId: number | null;
