@@ -45,6 +45,8 @@ export const Dialog = ({
                   onClick={buttons.cancel.onClick}
                   label={buttons.cancel.text}
                   size="large"
+                  type="secondary"
+                  variant="outlined"
                 />
               )}
               {buttons.confirm && (
@@ -52,7 +54,6 @@ export const Dialog = ({
                   onClick={buttons.confirm.onClick}
                   label={buttons.confirm.text}
                   size="large"
-                  type="secondary"
                 />
               )}
             </div>
