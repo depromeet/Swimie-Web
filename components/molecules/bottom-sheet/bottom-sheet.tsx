@@ -22,6 +22,7 @@ export type BottomSheetProps = {
   children?: ReactNode;
   direction?: Direction;
   className?: string;
+  isRenderHandlebar?: boolean;
 };
 
 export const BottomSheet = ({
@@ -31,16 +32,17 @@ export const BottomSheet = ({
   header,
   direction = 'bottom',
   className,
+  isRenderHandlebar,
 }: BottomSheetProps) => {
   const isBottomDirection = direction === 'bottom';
   const bottomSheetStyle = isBottomDirection
     ? {
         bottom: 0,
-        borderRadius: '20px 20px 0 0',
+        borderRadius: '16px 16px 0 0',
       }
     : {
         top: 0,
-        borderRadius: '0 0 20px 20px',
+        borderRadius: '0 0 16px 16px',
       };
 
   return (
@@ -52,11 +54,14 @@ export const BottomSheet = ({
           transform: getTranslateY(direction, isOpen),
         }}
       >
-        {/* TODO: title style */}
+        {isRenderHandlebar && <div className={handleBarStyle} />}
+
         {header && (
-          <div className={titleWrapperStyle}>
-            <h1>{header.title}</h1>
-            {header.description && <p>{header.description}</p>}
+          <div className={headerStyle.wrapper}>
+            <h1 className={headerStyle.title}>{header.title}</h1>
+            {header.description && (
+              <p className={headerStyle.description}>{header.description}</p>
+            )}
           </div>
         )}
 
@@ -93,18 +98,45 @@ const containerStyle = css({
   transition: 'transform 400ms cubic-bezier(0.33, 0.45, 0, 1)',
   willChange: 'transform',
   WebkitOverflowScrolling: 'touch',
+  backgroundColor: 'white',
+  pt: '28px',
+  pb: '36px',
 });
+
+const handleBarStyle = css({
+  position: 'absolute',
+  top: '12px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  mx: 'auto',
+  width: '48px',
+  height: '4px',
+  backgroundColor: '#E5E8EB',
+});
+
+const headerStyle = {
+  wrapper: css({
+    padding: '12px 20px',
+  }),
+
+  title: css({
+    textStyle: 'heading4',
+    fontWeight: 'bold',
+    color: 'text.normal',
+  }),
+
+  description: css({
+    textStyle: 'body2.normal',
+    fontWeight: 'medium',
+    color: 'text.alternative',
+    mt: '4px',
+  }),
+};
 
 const bodyStyle = css({
   display: 'flex',
   direction: 'column',
   marginTop: '-1px',
   width: '100%',
-  backgroundColor: 'white',
-});
-
-const titleWrapperStyle = css({
-  padding: '16px',
-  textAlign: 'center',
   backgroundColor: 'white',
 });
