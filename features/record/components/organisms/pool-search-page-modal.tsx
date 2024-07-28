@@ -7,7 +7,7 @@ import { HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
-import { isPoolSearchPageModalOpen } from '../store/page-modal';
+import { isPoolSearchPageModalOpen } from '../../store';
 import { PoolSearchResultList } from './pool-search-result-list';
 
 interface PoolSearchPageModalProps {
@@ -17,7 +17,9 @@ interface PoolSearchPageModalProps {
 /**
  * @param title 수영 검색 page-modal 제목
  */
-export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
+export default function PoolSearchPageModal({
+  title,
+}: PoolSearchPageModalProps) {
   const pageModalRef = useRef<HTMLDivElement>(null);
   const [poolSearchText, setPoolSearchText] = useState('');
   const [pageModalState, setPageModalState] = useAtom(

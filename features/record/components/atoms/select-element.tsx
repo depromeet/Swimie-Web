@@ -4,7 +4,7 @@ import { css } from '@/styled-system/css';
 import { SelectListProps } from '../molecules';
 
 export interface SelectElementProps
-  extends Pick<SelectListProps, 'closeWrapper' | 'onChangeValue'> {
+  extends Pick<SelectListProps, 'onCloseWrapper' | 'onChangeValue'> {
   isSelected: boolean;
   label: string;
   className?: string;
@@ -21,12 +21,12 @@ export function SelectElement({
   isSelected,
   label,
   className,
-  closeWrapper,
+  onCloseWrapper,
   onChangeValue,
 }: SelectElementProps) {
   const handleListElementClick = () => {
     onChangeValue?.(label);
-    closeWrapper?.();
+    onCloseWrapper?.();
   };
   return (
     <li className={className} onClick={handleListElementClick}>

@@ -11,7 +11,7 @@ export interface SelectListProps {
   listClassName?: string;
   className?: string;
   listElementClassName?: string;
-  closeWrapper?: () => void;
+  onCloseWrapper?: () => void;
   onChangeValue?: (value: string) => void;
 }
 
@@ -20,7 +20,7 @@ export interface SelectListProps {
  * @param options 선택 options
  * @className 외부 스타일 주입
  * @listElementClassName 선택 요소 외부 스타일 주입
- * @closeWrapper Wrapper 컴포넌트를 닫는 function
+ * @onCloseWrapper Wrapper 컴포넌트를 닫는 function
  * @onChangeValue 현재 value를 변경하는 함수
  */
 export function SelectList({
@@ -28,7 +28,7 @@ export function SelectList({
   options,
   className,
   listElementClassName,
-  closeWrapper,
+  onCloseWrapper,
   onChangeValue,
 }: SelectListProps) {
   return (
@@ -39,7 +39,7 @@ export function SelectList({
           isSelected={value === option.label}
           label={option.label}
           className={listElementClassName}
-          closeWrapper={closeWrapper}
+          onCloseWrapper={onCloseWrapper}
           onChangeValue={onChangeValue}
         />
       ))}

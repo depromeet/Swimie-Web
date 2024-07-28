@@ -1,28 +1,31 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { isLaneLengthBottomSheetOpen } from '../store';
-const BottomSheetsProvider = dynamic(() => import('./bottom-sheets-provider'), {
-  ssr: false,
-});
-import dynamic from 'next/dynamic';
-import { FormProvider, useForm } from 'react-hook-form';
-
-import { RecordRequestProps } from '../queries/dto';
-import { isPoolSearchPageModalOpen } from '../store/page-modal';
-import { formSectionStyles } from '../style/form-section';
+import { RecordRequestProps } from '../../apis/dto';
+import {
+  isLaneLengthBottomSheetOpen,
+  isPoolSearchPageModalOpen,
+} from '../../store';
+import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
 import { EquipmentSection } from './equipment-section';
-const PageModalsProvider = dynamic(() => import('./page-modals-provider'), {
+const LaneLengthBottomSheet = dynamic(
+  () => import('./lane-length-bottom-sheet'),
+  { ssr: false },
+);
+import dynamic from 'next/dynamic';
+
+import { PhotoSection } from './photo-section';
+const PoolSearchPageModal = dynamic(() => import('./pool-search-page-modal'), {
   ssr: false,
 });
-import { PhotoSection } from './photo-section';
 import { SubInfoSection } from './sub-info-section';
 
 interface SubInfoProps {
@@ -126,9 +129,9 @@ export function Form() {
         <EquipmentSection title="장비" />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
-        <BottomSheetsProvider />
-        <PageModalsProvider />
       </form>
+      <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
+      <PoolSearchPageModal title="어디서 수영했나요?" />
     </FormProvider>
   );
 }

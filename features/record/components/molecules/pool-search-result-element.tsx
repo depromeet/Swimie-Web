@@ -5,7 +5,7 @@ import { StarIcon, StarIconFill } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { isPoolSearchPageModalOpen } from '../store/page-modal';
+import { isPoolSearchPageModalOpen } from '../../store';
 
 interface PoolSearchListElementProps {
   poolId: number;
