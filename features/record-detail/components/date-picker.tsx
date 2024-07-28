@@ -1,8 +1,7 @@
 import { DateLeftArrowIcon, DateRightArrowIcon } from '@/components/atoms';
+import { nameOfDays } from '@/constants/date';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
 
 type DatePicker = {
   date: Date;
@@ -19,7 +18,7 @@ export const DatePicker = ({
     const year = String(date.getFullYear()).slice(2);
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-    const weekday = weekdays[date.getDay()];
+    const weekday = nameOfDays[date.getDay()];
 
     return `${year}.${month}.${day}.${weekday}`;
   };
