@@ -1,0 +1,17 @@
+.page-jump-forward-enter {
+  transform: translateX(100%);
+}
+
+.page-jump-forward-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.page-jump-backward-exit {
+  transform: translateX(0);
+}
+
+.page-jump-backward-exit-active {
+  transform: translateX(100%);
+  transition: transform 300ms ease-in-out;
+}
