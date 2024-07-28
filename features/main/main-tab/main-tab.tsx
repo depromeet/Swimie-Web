@@ -6,11 +6,11 @@ export interface TabItemInfo {
   onClick: VoidFunction;
 }
 
-interface HeaderProps {
+interface MainTabProps {
   tabInfos: Array<TabItemInfo>;
 }
 
-export const MainTab = ({ tabInfos }: HeaderProps) => {
+export const MainTab = ({ tabInfos }: MainTabProps) => {
   return (
     <Tab>
       {tabInfos.map((info, index) => (
