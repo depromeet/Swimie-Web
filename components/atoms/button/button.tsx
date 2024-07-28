@@ -149,10 +149,9 @@ export const Button = ({
 
   const iconSize = size === 'large' ? 20 : size === 'medium' ? 18 : 16;
 
-  const iconWrapperStyles = css({
+  const iconWrapperStyles = flex({
     width: `${iconSize}px`,
     height: `${iconSize}px`,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   });
