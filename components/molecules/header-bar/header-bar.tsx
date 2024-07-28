@@ -49,7 +49,7 @@ const headerBarStyles = css({
   alignItems: 'center',
   minHeight: '44px',
   backgroundColor: 'white',
-  zIndex: 1,
+  zIndex: 200,
 });
 
 const parentStyles = css({
