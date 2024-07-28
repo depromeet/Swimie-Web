@@ -1,3 +1,5 @@
+'use client';
+
 import { useSetAtom } from 'jotai';
 import { useFormContext } from 'react-hook-form';
 
