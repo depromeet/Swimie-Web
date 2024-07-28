@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { Dim } from '@/components/atoms';
-import { css, cx } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 type Direction = 'top' | 'bottom';
 
@@ -54,7 +54,9 @@ export const BottomSheet = ({
           transform: getTranslateY(direction, isOpen),
         }}
       >
-        {isRenderHandlebar && <div className={handleBarStyle} />}
+        {isRenderHandlebar && (
+          <div className={handleBarStyle({ direction: direction })} />
+        )}
 
         {header && (
           <div className={headerStyle.wrapper}>
@@ -103,15 +105,22 @@ const containerStyle = css({
   pb: '36px',
 });
 
-const handleBarStyle = css({
-  position: 'absolute',
-  top: '12px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  mx: 'auto',
-  width: '48px',
-  height: '4px',
-  backgroundColor: '#E5E8EB',
+const handleBarStyle = cva({
+  base: {
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    mx: 'auto',
+    width: '48px',
+    height: '4px',
+    backgroundColor: '#E5E8EB',
+  },
+  variants: {
+    direction: {
+      top: { bottom: '12px' },
+      bottom: { top: '12px' },
+    },
+  },
 });
 
 const headerStyle = {
