@@ -23,12 +23,20 @@ const LaneLengthBottomSheet = dynamic(
 import dynamic from 'next/dynamic';
 
 import { PhotoSection } from './photo-section';
+const PoolSearchPageModal = dynamic(() => import('./pool-search-page-modal'), {
+  ssr: false,
+});
 import { SubInfoSection } from './sub-info-section';
 
+interface SubInfoProps {
+  poolName: string | null;
+}
+
 export function Form() {
-  const methods = useForm<RecordRequestProps>({
+  const methods = useForm<RecordRequestProps & SubInfoProps>({
     defaultValues: {
       poolId: null,
+      poolName: null,
       item: null,
       heartRate: null,
       pace: null,
@@ -83,7 +91,11 @@ export function Form() {
           </div>
           <TextField
             variant="select"
-            value="현민 수영장"
+            value={
+              methods.watch('poolName')
+                ? (methods.watch('poolName') as string)
+                : ''
+            }
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
@@ -119,6 +131,7 @@ export function Form() {
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
+      <PoolSearchPageModal title="어디서 수영했나요?" />
     </FormProvider>
   );
 }
