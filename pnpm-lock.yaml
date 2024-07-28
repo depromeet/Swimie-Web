@@ -34,6 +34,9 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.0.0(react@18.0.0)
+      react-error-boundary:
+        specifier: ^4.0.13
+        version: 4.0.13(react@18.0.0)
       react-hook-form:
         specifier: ^7.52.1
         version: 7.52.1(react@18.0.0)
@@ -2687,10 +2690,10 @@ packages:
         integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==,
       }
 
-  '@types/lodash@4.17.6':
+  '@types/lodash@4.17.7':
     resolution:
       {
-        integrity: sha512-OpXEVoCKSS3lQqjx9GGGOapBeuW5eUboYHRlHP9urXPX25IKZ6AnP5ZRxtVf63iieUbsHxLn8NQ5Nlftc6yzAA==,
+        integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==,
       }
 
   '@types/mdx@2.0.13':
@@ -7847,6 +7850,14 @@ packages:
       react: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
       react-dom: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
 
+  react-error-boundary@4.0.13:
+    resolution:
+      {
+        integrity: sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==,
+      }
+    peerDependencies:
+      react: '>=16.13.1'
+
   react-hook-form@7.52.1:
     resolution:
       {
@@ -10997,7 +11008,7 @@ snapshots:
       '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.2.9(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
-      '@types/lodash': 4.17.6
+      '@types/lodash': 4.17.7
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
@@ -11428,7 +11439,7 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
-  '@types/lodash@4.17.6': {}
+  '@types/lodash@4.17.7': {}
 
   '@types/mdx@2.0.13': {}
 
@@ -14781,6 +14792,11 @@ snapshots:
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
       react-is: 18.1.0
+
+  react-error-boundary@4.0.13(react@18.0.0):
+    dependencies:
+      '@babel/runtime': 7.24.7
+      react: 18.0.0
 
   react-hook-form@7.52.1(react@18.0.0):
     dependencies:
