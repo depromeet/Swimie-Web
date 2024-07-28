@@ -13,6 +13,7 @@ const SELECT_TIMELINE_VIEW = 1;
 
 export default function Home() {
   const [selected, setSelected] = useState<number>(SELECT_CALENDER_VIEW);
+
   const tabInfos: Array<TabItemInfo> = [
     {
       text: '캘린더',
@@ -25,6 +26,7 @@ export default function Home() {
       onClick: () => setSelected(SELECT_TIMELINE_VIEW),
     },
   ];
+  const isSelectedCalenderView = selected === SELECT_CALENDER_VIEW;
 
   return (
     <main className={styles}>
@@ -32,7 +34,7 @@ export default function Home() {
         <MainTab tabInfos={tabInfos} />
       </header>
       <section className={contentStyles}>
-        {selected === SELECT_CALENDER_VIEW ? (
+        {isSelectedCalenderView ? (
           <>
             <div className={profileContainerStyles}>
               <div className={characterStyles} />
