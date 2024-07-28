@@ -38,7 +38,7 @@ export const Dialog = ({
             )}
           </div>
 
-          {Object.keys(buttons).length && (
+          {Boolean(Object.keys(buttons).length) && (
             <div className={content.buttonStyle}>
               {buttons.cancel && (
                 <Button
