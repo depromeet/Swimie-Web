@@ -1,4 +1,5 @@
 export * from './diary-section';
+export { default as DistancePageModal } from './distance-page-modal';
 export * from './equipment-section';
 export * from './form';
 export { default as LaneLengthBottomSheet } from './lane-length-bottom-sheet';

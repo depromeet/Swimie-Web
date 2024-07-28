@@ -10,6 +10,7 @@ import { flex } from '@/styled-system/patterns';
 
 import { RecordRequestProps } from '../../apis/dto';
 import {
+  isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
   isPoolSearchPageModalOpen,
 } from '../../store';
@@ -24,6 +25,9 @@ import dynamic from 'next/dynamic';
 
 import { PhotoSection } from './photo-section';
 const PoolSearchPageModal = dynamic(() => import('./pool-search-page-modal'), {
+  ssr: false,
+});
+const DistancePageModal = dynamic(() => import('./distance-page-modal'), {
   ssr: false,
 });
 import { SubInfoSection } from './sub-info-section';
@@ -56,6 +60,7 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+  const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
@@ -119,6 +124,12 @@ export function Form() {
             value="100m"
             placeholder="거리입력(선택)"
             label="수영 거리"
+            onClick={() =>
+              setIsDistancePageModalOpen({
+                isOpen: true,
+                jumpDirection: 'forward',
+              })
+            }
           />
         </div>
         <Divider variant="thick" />
@@ -132,6 +143,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
+      <DistancePageModal currentLane={methods.watch('lane')} />
     </FormProvider>
   );
 }
