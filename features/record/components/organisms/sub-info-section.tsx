@@ -4,8 +4,8 @@ import { DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { css } from '@/styled-system/css';
 
-import { useSubInfoTextFields } from '../hooks';
-import { FormSectionProps } from '../type/form-section';
+import { useSubInfoTextFields } from '../../hooks';
+import { FormSectionProps } from '../../types/form-section';
 import { SubInfoTextFields } from './sub-info-text-fields';
 
 export function SubInfoSection({ title }: FormSectionProps) {

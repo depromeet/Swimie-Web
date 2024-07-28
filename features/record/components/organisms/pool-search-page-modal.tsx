@@ -5,7 +5,7 @@ import { useRef } from 'react';
 
 import { HeaderBar, PageModal } from '@/components/molecules';
 
-import { isPoolSearchPageModalOpen } from '../store/page-modal';
+import { isPoolSearchPageModalOpen } from '../../store';
 
 export function PoolSearchPageModal() {
   const pageModalRef = useRef<HTMLDivElement>(null);
