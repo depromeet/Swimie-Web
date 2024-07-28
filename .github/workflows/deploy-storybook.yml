@@ -36,6 +36,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
 
+      - name: Generate CSS
+        run: pnpm panda cssgen
+
       - name: Publish to chromatic
         id: chromatic
         uses: chromaui/action@v1
