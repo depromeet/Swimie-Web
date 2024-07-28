@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { css } from '@/styled-system/css';
-
 import { Dialog, DialogProps } from './dialog';
 
 const meta: Meta<typeof Dialog> = {
@@ -10,7 +8,7 @@ const meta: Meta<typeof Dialog> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div className={css({ minHeight: 500 })}>
+      <div style={{ minHeight: 500 }}>
         <Story />
       </div>
     ),
