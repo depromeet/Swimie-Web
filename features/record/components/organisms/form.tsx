@@ -10,28 +10,25 @@ import { flex } from '@/styled-system/patterns';
 
 import { RecordRequestProps } from '../../apis/dto';
 import {
+  isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
   isPoolSearchPageModalOpen,
 } from '../../store';
 import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
+import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
-const LaneLengthBottomSheet = dynamic(
-  () => import('./lane-length-bottom-sheet'),
-  { ssr: false },
-);
-import dynamic from 'next/dynamic';
-
+import { LaneLengthBottomSheet } from './lane-length-bottom-sheet';
 import { PhotoSection } from './photo-section';
-const PoolSearchPageModal = dynamic(() => import('./pool-search-page-modal'), {
-  ssr: false,
-});
+import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 
 interface SubInfoProps {
   poolName: string | null;
+  totalDistance: number | null;
 }
 
+//Todo: null 타입 제거
 export function Form() {
   const methods = useForm<RecordRequestProps & SubInfoProps>({
     defaultValues: {
@@ -48,6 +45,7 @@ export function Form() {
       lane: 25,
       diary: null,
       strokes: [],
+      totalDistance: null,
       imageIdList: [],
     },
   });
@@ -56,6 +54,7 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+  const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
@@ -116,9 +115,19 @@ export function Form() {
           />
           <TextField
             variant="select"
-            value="100m"
+            value={
+              methods.watch('totalDistance')
+                ? methods.watch('totalDistance') + 'm'
+                : ''
+            }
             placeholder="거리입력(선택)"
             label="수영 거리"
+            onClick={() =>
+              setIsDistancePageModalOpen({
+                isOpen: true,
+                jumpDirection: 'forward',
+              })
+            }
           />
         </div>
         <Divider variant="thick" />
@@ -132,6 +141,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
+      <DistancePageModal />
     </FormProvider>
   );
 }

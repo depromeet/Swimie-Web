@@ -17,9 +17,7 @@ interface LaneLengthBottomSheetProps {
 /**
  * @param title 레인 길이 선택 bottom-sheet 제목
  */
-export default function LaneLengthBottomSheet({
-  title,
-}: LaneLengthBottomSheetProps) {
+export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
   const laneOptions = [
     {
       index: 0,

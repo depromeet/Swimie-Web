@@ -15,3 +15,5 @@ const initialState: PageModalStateProps = {
  */
 export const isPoolSearchPageModalOpen =
   atom<PageModalStateProps>(initialState);
+
+export const isDistancePageModalOpen = atom<PageModalStateProps>(initialState);

@@ -17,9 +17,7 @@ interface PoolSearchPageModalProps {
 /**
  * @param title 수영 검색 page-modal 제목
  */
-export default function PoolSearchPageModal({
-  title,
-}: PoolSearchPageModalProps) {
+export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const pageModalRef = useRef<HTMLDivElement>(null);
   const [poolSearchText, setPoolSearchText] = useState('');
   const [pageModalState, setPageModalState] = useAtom(

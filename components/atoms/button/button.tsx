@@ -15,7 +15,7 @@ export const Button = ({
   type = 'primary',
   interaction = 'normal',
   className,
-  onClick
+  onClick,
 }: ButtonProps) => {
   const baseStyles = flex({
     alignItems: 'center',
