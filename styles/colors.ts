@@ -127,6 +127,11 @@ export const semanticColors = {
     normal: { value: '#70737C38' },
     neutral: { value: '#70737C29' },
     alternative: { value: '#70737C14' },
+    solid: {
+      normal: { value: '#E1E2E4' },
+      neutral: { value: '#EAEBEC' },
+      alternative: { value: '#F4F4F5' },
+    },
   },
   status: {
     positive: { value: '{colors.green.50}' },
