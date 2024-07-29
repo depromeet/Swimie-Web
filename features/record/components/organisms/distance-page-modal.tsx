@@ -19,16 +19,21 @@ import { StrokeDistanceFields } from './stroke-distance-fields';
 
 // Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
-  const { setValue } = useFormContext();
+  const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
   const {
     pageModalRef,
     secondaryTabIndex,
     assistiveTabIndex,
+    totalMeter,
+    totalLaps,
     totalDistance,
-    unit,
     handlers,
-  } = useDistancePageModal<HTMLDivElement>();
+  } = useDistancePageModal<HTMLDivElement>(getValues('lane') as number);
+
+  const isAssistiveIndexZero = assistiveTabIndex === 0;
+  const isAssistiveIndexOne = assistiveTabIndex === 1;
+
   const secondaryTabItems = [
     {
       text: '총거리',
@@ -44,12 +49,12 @@ export function DistancePageModal() {
   const assistiveTabItems = [
     {
       text: '미터(m)',
-      selected: assistiveTabIndex === 0,
+      selected: isAssistiveIndexZero,
       onClick: () => handlers.onChangeAssistiveTabIndex(0),
     },
     {
       text: '바퀴수',
-      selected: assistiveTabIndex === 1,
+      selected: isAssistiveIndexOne,
       onClick: () => handlers.onChangeAssistiveTabIndex(1),
     },
   ];
@@ -58,7 +63,9 @@ export function DistancePageModal() {
     handlers.onClosePageModal();
   };
   const handleDoneButtonClick = () => {
-    totalDistance && setValue('totalDistance', totalDistance);
+    if (isAssistiveIndexZero) setValue('totalDistance', Number(totalMeter));
+    else if (isAssistiveIndexOne)
+      setValue('totalDistance', Number(totalDistance));
     handlers.onClosePageModal();
   };
   return (
@@ -95,14 +102,18 @@ export function DistancePageModal() {
             <TextField
               inputType="number"
               subText={
-                assistiveTabIndex === 1
+                isAssistiveIndexOne
                   ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
                   : undefined
               }
-              value={totalDistance}
-              unit={unit}
+              value={isAssistiveIndexZero ? totalMeter : totalLaps}
+              unit={isAssistiveIndexZero ? '미터(m)' : '바퀴'}
               wrapperClassName={css({ marginTop: '16px' })}
-              onChange={handlers.onChangeTotalDistance}
+              onChange={
+                isAssistiveIndexZero
+                  ? handlers.onChangeTotalMeter
+                  : handlers.onChangeTotalLaps
+              }
             />
           )}
           {secondaryTabIndex === 1 && (
@@ -112,7 +123,11 @@ export function DistancePageModal() {
         <div className={layout.button}>
           <Button
             size="large"
-            label="완료"
+            label={
+              isAssistiveIndexZero
+                ? '완료'
+                : `${totalLaps && Number(totalLaps) * getValues('lane') + 'm'} 완료`
+            }
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}

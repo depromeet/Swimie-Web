@@ -1,10 +1,10 @@
-import { SmallSwimIcon } from '@/components/atoms';
+import { SwimIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
 export function SwimBadge() {
   return (
     <div className={swimBadgeStyles}>
-      <SmallSwimIcon />
+      <SwimIcon width={24} height={24} />
     </div>
   );
 }
