@@ -1,19 +1,51 @@
+import Link from 'next/link';
+import type { PropsWithChildren } from 'react';
+
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-interface CalendarItemProps {
+import { Memory } from '../molecules/calendar';
+import { ItemContent } from './calendar-item-content';
+
+interface ItemLayoutProps {
   date: number;
-  content?: string;
-  distance?: number;
   isToday: boolean;
 }
 
-export const CalendarItem = ({
+interface CalendarItemProps extends ItemLayoutProps {
+  memory: Memory | undefined;
+  totalDistance?: number | undefined;
+}
+
+// TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
+// const goal = 1000;
+
+export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
+  if (!memory)
+    return (
+      <ItemLayout date={date} isToday={isToday}>
+        <Link href={`/record`} className={linkContainerStyles} />
+      </ItemLayout>
+    );
+
+  // TODO: 사진 보기 기능 추가 필요
+  const { memoryId, type, totalDistance, strokes, isAchieved } = memory;
+
+  return (
+    <ItemLayout date={date} isToday={isToday}>
+      <Link href={`/record-detail/${memoryId}`} className={linkContainerStyles}>
+        {<ItemContent type={type} storkes={strokes} isAchieved={isAchieved} />}
+      </Link>
+      {totalDistance && <p>{totalDistance}</p>}{' '}
+    </ItemLayout>
+  );
+};
+
+const ItemLayout = ({
   date,
-  content,
-  distance,
   isToday,
-}: CalendarItemProps) => {
+  children,
+}: PropsWithChildren<ItemLayoutProps>) => {
   return (
     <li className={itemContainerStyles}>
       <p
@@ -24,9 +56,7 @@ export const CalendarItem = ({
       >
         {date}
       </p>
-      {/* TODO: 이후 상세 기록 페이지로 이동하는 Link 변경 필요 */}
-      <div className={linkContainerStyles}>{content && <p>{content}</p>}</div>
-      <p>{distance}</p>
+      {children}
     </li>
   );
 };
@@ -58,10 +88,9 @@ const TodayDateStyles = css({
   color: 'white',
 });
 
-/* TODO: 스마트폰 기종, 반응형 화면에 따라 비율에 맞춰 height가 변할 수 있도록 재설정 필요 */
 const linkContainerStyles = css({
   width: 'full',
-  height: 'calc(60px + (30vw - 80px) / 2)',
+  aspectRatio: 'auto 3 / 4',
   maxHeight: '120px',
   backgroundColor: 'background.gray',
   rounded: '2px',
