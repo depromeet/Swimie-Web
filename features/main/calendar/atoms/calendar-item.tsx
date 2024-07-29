@@ -34,7 +34,14 @@ export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
   return (
     <ItemLayout date={date} isToday={isToday}>
       <Link href={`/record-detail/${memoryId}`} className={linkContainerStyles}>
-        {<ItemContent type={type} storkes={strokes} isAchieved={isAchieved} />}
+        {
+          <ItemContent
+            type={type}
+            totalDistance={totalDistance}
+            storkes={strokes}
+            isAchieved={isAchieved}
+          />
+        }
       </Link>
       {totalDistance && <p>{totalDistance}</p>}{' '}
     </ItemLayout>
