@@ -15,13 +15,12 @@ import { css } from '@/styled-system/css';
 
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
-import { DistanceFieldWithBadge } from '../molecules';
+import { StrokeDistanceFields } from './stroke-distance-fields';
 
 // Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
   const { setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
-  const strokeOptions = ['자유형', '배영', '평영', '접영', '킥판'];
   const {
     pageModalRef,
     secondaryTabIndex,
@@ -106,15 +105,9 @@ export function DistancePageModal() {
               onChange={handlers.onChangeTotalDistance}
             />
           )}
-          {secondaryTabIndex === 1 &&
-            strokeOptions.map((option) => (
-              <DistanceFieldWithBadge
-                key={option}
-                label={option}
-                assistiveTabIndex={assistiveTabIndex}
-                className={css({ marginTop: '16px' })}
-              />
-            ))}
+          {secondaryTabIndex === 1 && (
+            <StrokeDistanceFields assistiveTabIndex={assistiveTabIndex} />
+          )}
         </section>
         <div className={layout.button}>
           <Button
