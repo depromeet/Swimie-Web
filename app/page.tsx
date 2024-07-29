@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect } from 'react';
+
 import { TextField } from '@/components/molecules/text-field';
 import { css } from '@/styled-system/css';
 
@@ -10,6 +14,28 @@ const styles = css({
 });
 
 export default function Home() {
+  useEffect(() => {
+    const getPool = async () => {
+      try {
+        const response = await fetch(`/api/pool/search`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.status === 200) {
+          console.log(response.json());
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    getPool().catch((error) => {
+      console.error('Error:', error);
+    });
+  }, []);
+
   return (
     <main className={styles}>
       <TextField unit="m" />
