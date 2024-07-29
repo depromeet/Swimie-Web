@@ -15,11 +15,13 @@ import { css } from '@/styled-system/css';
 
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
+import { DistanceFieldWithBadge } from '../molecules';
 
 // Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
   const { setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
+  const strokeOptions = ['자유형', '배영', '평영', '접영', '킥판'];
   const {
     pageModalRef,
     secondaryTabIndex,
@@ -89,20 +91,30 @@ export function DistancePageModal() {
             ))}
           </Tab>
         </section>
-        {/* Todo: secondaryIndex 에 따른 페이지 구분 */}
         <section className={layout.record}>
-          <TextField
-            inputType="number"
-            subText={
-              assistiveTabIndex === 1
-                ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
-                : undefined
-            }
-            value={totalDistance}
-            unit={unit}
-            wrapperClassName={css({ marginTop: '30px' })}
-            onChange={handlers.onChangeTotalDistance}
-          />
+          {secondaryTabIndex === 0 && (
+            <TextField
+              inputType="number"
+              subText={
+                assistiveTabIndex === 1
+                  ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
+                  : undefined
+              }
+              value={totalDistance}
+              unit={unit}
+              wrapperClassName={css({ marginTop: '16px' })}
+              onChange={handlers.onChangeTotalDistance}
+            />
+          )}
+          {secondaryTabIndex === 1 &&
+            strokeOptions.map((option) => (
+              <DistanceFieldWithBadge
+                key={option}
+                label={option}
+                assistiveTabIndex={assistiveTabIndex}
+                className={css({ marginTop: '16px' })}
+              />
+            ))}
         </section>
         <div className={layout.button}>
           <Button
@@ -126,8 +138,7 @@ const layout = {
   }),
 
   record: css({
-    padding: '20px',
-    marginBottom: '16px',
+    padding: '0 20px',
   }),
 
   button: css({
