@@ -17,6 +17,7 @@ export const Tab = ({
   className = '',
 }: TabProps) => {
   const baseStyles = flex({
+    w: 'full',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
@@ -30,7 +31,6 @@ export const Tab = ({
   });
 
   const secondaryStyles = css({
-    width: '335px',
     height: '44px',
     backgroundColor: 'background.gray',
     borderRadius: '12px',
