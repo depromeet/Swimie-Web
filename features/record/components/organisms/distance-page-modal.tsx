@@ -24,6 +24,7 @@ export default function DistancePageModal() {
     secondaryTabIndex,
     assistiveTabIndex,
     totalDistance,
+    unit,
     handlers,
   } = useDistancePageModal<HTMLDivElement>();
 
@@ -82,13 +83,7 @@ export default function DistancePageModal() {
                 : undefined
             }
             value={totalDistance}
-            unit={
-              assistiveTabIndex === 0
-                ? '미터(m)'
-                : assistiveTabIndex === 1
-                  ? '바퀴'
-                  : undefined
-            }
+            unit={unit}
             wrapperClassName={css({ marginTop: '30px' })}
             onChange={handlers.onChangeTotalDistance}
           />

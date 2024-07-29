@@ -11,6 +11,12 @@ export function useDistancePageModal<T>() {
   const [secondaryTabIndex, setSecondaryTabIndex] = useState(0);
   const [assistiveTabIndex, setAssistiveTabIndex] = useState(0);
   const [totalDistance, setTotalDistance] = useState('');
+  const unit =
+    assistiveTabIndex === 0
+      ? '미터(m)'
+      : assistiveTabIndex === 1
+        ? '바퀴'
+        : undefined;
 
   const onClosePageModal = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
@@ -33,6 +39,7 @@ export function useDistancePageModal<T>() {
     secondaryTabIndex,
     assistiveTabIndex,
     totalDistance,
+    unit,
     handlers: {
       onClosePageModal,
       onChangeSecondaryTabIndex,
