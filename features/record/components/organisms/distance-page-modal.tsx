@@ -19,16 +19,17 @@ import { StrokeDistanceFields } from './stroke-distance-fields';
 
 // Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
-  const { setValue } = useFormContext();
+  const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
   const {
     pageModalRef,
     secondaryTabIndex,
     assistiveTabIndex,
+    totalMeter,
+    totalLaps,
     totalDistance,
-    unit,
     handlers,
-  } = useDistancePageModal<HTMLDivElement>();
+  } = useDistancePageModal<HTMLDivElement>(getValues('lane') as number);
   const secondaryTabItems = [
     {
       text: '총거리',
@@ -58,7 +59,9 @@ export function DistancePageModal() {
     handlers.onClosePageModal();
   };
   const handleDoneButtonClick = () => {
-    totalDistance && setValue('totalDistance', totalDistance);
+    if (assistiveTabIndex === 0) setValue('totalDistance', Number(totalMeter));
+    else if (assistiveTabIndex === 1)
+      setValue('totalDistance', Number(totalDistance));
     handlers.onClosePageModal();
   };
   return (
@@ -99,10 +102,14 @@ export function DistancePageModal() {
                   ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
                   : undefined
               }
-              value={totalDistance}
-              unit={unit}
+              value={assistiveTabIndex === 0 ? totalMeter : totalLaps}
+              unit={assistiveTabIndex === 0 ? '미터(m)' : '바퀴'}
               wrapperClassName={css({ marginTop: '16px' })}
-              onChange={handlers.onChangeTotalDistance}
+              onChange={
+                assistiveTabIndex === 0
+                  ? handlers.onChangeTotalMeter
+                  : handlers.onChangeTotalLaps
+              }
             />
           )}
           {secondaryTabIndex === 1 && (
@@ -112,7 +119,13 @@ export function DistancePageModal() {
         <div className={layout.button}>
           <Button
             size="large"
-            label="완료"
+            label={
+              assistiveTabIndex === 0
+                ? '완료'
+                : assistiveTabIndex === 1
+                  ? `${totalLaps && Number(totalLaps) * getValues('lane') + 'm'} 완료`
+                  : ''
+            }
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}

@@ -5,45 +5,53 @@ import { useRef, useState } from 'react';
 
 import { isDistancePageModalOpen } from '../store';
 
-export function useDistancePageModal<T>() {
+type tabIndex = 0 | 1;
+
+export function useDistancePageModal<T>(lane: number) {
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
-  const [secondaryTabIndex, setSecondaryTabIndex] = useState(0);
-  const [assistiveTabIndex, setAssistiveTabIndex] = useState(0);
+  const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(0);
+  const [assistiveTabIndex, setAssistiveTabIndex] = useState<tabIndex>(0);
+  const [totalMeter, setTotalMeter] = useState('');
+  const [totalLaps, setTotalLaps] = useState('');
   const [totalDistance, setTotalDistance] = useState('');
-  const unitMap = new Map([
-    [0, '미터(m)'],
-    [1, '바퀴'],
-  ]);
-  const unit = unitMap.get(assistiveTabIndex);
 
   const onClosePageModal = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
   };
 
-  const onChangeSecondaryTabIndex = (index: number) => {
+  const onChangeSecondaryTabIndex = (index: tabIndex) => {
     setSecondaryTabIndex(index);
   };
 
-  const onChangeAssistiveTabIndex = (index: number) => {
+  const onChangeAssistiveTabIndex = (index: tabIndex) => {
     setAssistiveTabIndex(index);
   };
 
-  const onChangeTotalDistance = (text: string) => {
-    setTotalDistance(text);
+  const onChangeTotalMeter = (text: string) => {
+    totalLaps && setTotalLaps('');
+    setTotalMeter(text);
+  };
+
+  const onChangeTotalLaps = (text: string) => {
+    totalMeter && setTotalMeter('');
+    setTotalLaps(text);
+    setTotalDistance(String(Number(text) * lane));
   };
 
   return {
     pageModalRef,
     secondaryTabIndex,
     assistiveTabIndex,
+    totalMeter,
+    totalLaps,
     totalDistance,
-    unit,
     handlers: {
       onClosePageModal,
       onChangeSecondaryTabIndex,
       onChangeAssistiveTabIndex,
-      onChangeTotalDistance,
+      onChangeTotalMeter,
+      onChangeTotalLaps,
     },
   };
 }
