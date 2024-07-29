@@ -1,7 +1,7 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { useRef } from 'react';
+import { useAtomValue } from 'jotai';
+import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import {
@@ -13,6 +13,7 @@ import {
 } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
+import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 
 interface RecordDistancePageModalProps {
@@ -22,11 +23,22 @@ interface RecordDistancePageModalProps {
 export default function DistancePageModal({
   currentLane,
 }: RecordDistancePageModalProps) {
-  const pageModalRef = useRef<HTMLDivElement>(null);
-  const [pageModalState, setPageModalState] = useAtom(isDistancePageModalOpen);
+  const { setValue } = useFormContext();
+  const pageModalState = useAtomValue(isDistancePageModalOpen);
+  const {
+    pageModalRef,
+    secondaryTabIndex,
+    assistiveTabIndex,
+    totalDistance,
+    handlers,
+  } = useDistancePageModal<HTMLDivElement>();
 
   const handleBackArrowClick = () => {
-    setPageModalState({ isOpen: false, jumpDirection: 'backward' });
+    handlers.onClosePageModal();
+  };
+  const handleDoneButtonClick = () => {
+    setValue('totalDistance', totalDistance);
+    handlers.onClosePageModal();
   };
   return (
     <PageModal
@@ -42,28 +54,28 @@ export default function DistancePageModal({
             <TabItem
               type="secondary"
               text="총거리"
-              selected
-              onClick={() => console.log('TabItem')}
+              selected={secondaryTabIndex === 0}
+              onClick={() => handlers.onChangeSecondaryTabIndex(0)}
             />
             <TabItem
               type="secondary"
               text="영법별 거리"
-              selected={false}
-              onClick={() => console.log('TabItem')}
+              selected={secondaryTabIndex === 1}
+              onClick={() => handlers.onChangeSecondaryTabIndex(1)}
             />
           </Tab>
           <Tab type="assistive">
             <TabItem
               type="assistive"
               text="미터(m)"
-              selected
-              onClick={() => console.log('TabItem')}
+              selected={assistiveTabIndex === 0}
+              onClick={() => handlers.onChangeAssistiveTabIndex(0)}
             />
             <TabItem
               type="assistive"
               text="바퀴수"
-              selected={false}
-              onClick={() => console.log('TabItem')}
+              selected={assistiveTabIndex === 1}
+              onClick={() => handlers.onChangeAssistiveTabIndex(1)}
             />
           </Tab>
         </section>
@@ -71,13 +83,21 @@ export default function DistancePageModal({
           <TextField
             inputType="number"
             subText={`${currentLane}m 레인 기준`}
-            value=""
+            value={totalDistance}
             unit="미터(m)"
             wrapperClassName={css({ marginTop: '30px' })}
+            onChange={handlers.onChangeTotalDistance}
           />
         </section>
         <div className={layout.button}>
-          <Button size="large" label="완료" interaction="normal" />
+          <Button
+            size="large"
+            label="완료"
+            interaction="normal"
+            disabled={!totalDistance}
+            onClick={handleDoneButtonClick}
+            className={css({ w: 'full' })}
+          />
         </div>
       </div>
     </PageModal>
@@ -106,7 +126,7 @@ const layout = {
   }),
 
   button: css({
-    width: '',
+    w: 'full',
     position: 'absolute',
     bottom: '15px',
     padding: '0 20px',

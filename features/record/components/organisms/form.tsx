@@ -34,8 +34,10 @@ import { SubInfoSection } from './sub-info-section';
 
 interface SubInfoProps {
   poolName: string | null;
+  totalDistance: number | null;
 }
 
+//Todo: null 타입 제거
 export function Form() {
   const methods = useForm<RecordRequestProps & SubInfoProps>({
     defaultValues: {
@@ -52,6 +54,7 @@ export function Form() {
       lane: 25,
       diary: null,
       strokes: [],
+      totalDistance: null,
       imageIdList: [],
     },
   });
@@ -121,7 +124,11 @@ export function Form() {
           />
           <TextField
             variant="select"
-            value="100m"
+            value={
+              methods.watch('totalDistance')
+                ? methods.watch('totalDistance') + 'm'
+                : ''
+            }
             placeholder="거리입력(선택)"
             label="수영 거리"
             onClick={() =>
