@@ -15,6 +15,7 @@ export const Button = ({
   type = 'primary',
   interaction = 'normal',
   className,
+  onClick
 }: ButtonProps) => {
   const baseStyles = flex({
     alignItems: 'center',
@@ -159,7 +160,7 @@ export const Button = ({
   });
 
   return (
-    <button className={buttonStyles}>
+    <button className={buttonStyles} onClick={onClick}>
       {leftIconSrc && (
         <div className={iconWrapperStyles}>
           <Image
