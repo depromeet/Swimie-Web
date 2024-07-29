@@ -28,6 +28,10 @@ export function DistancePageModal() {
     totalMeter,
     totalLaps,
     totalDistance,
+    strokeMeterTotalDistance,
+    strokeLapsTotalDistance,
+    strokes,
+    buttonLabel,
     handlers,
   } = useDistancePageModal<HTMLDivElement>(getValues('lane') as number);
   const secondaryTabItems = [
@@ -59,9 +63,16 @@ export function DistancePageModal() {
     handlers.onClosePageModal();
   };
   const handleDoneButtonClick = () => {
-    if (assistiveTabIndex === 0) setValue('totalDistance', Number(totalMeter));
-    else if (assistiveTabIndex === 1)
-      setValue('totalDistance', Number(totalDistance));
+    if (secondaryTabIndex === 0) {
+      if (assistiveTabIndex === 0) setValue('totalDistance', totalMeter);
+      else if (assistiveTabIndex === 1)
+        setValue('totalDistance', totalDistance);
+    } else {
+      if (assistiveTabIndex === 0)
+        setValue('totalDistance', strokeMeterTotalDistance);
+      else if (assistiveTabIndex === 1)
+        setValue('totalDistance', strokeLapsTotalDistance);
+    }
     handlers.onClosePageModal();
   };
   return (
@@ -113,19 +124,17 @@ export function DistancePageModal() {
             />
           )}
           {secondaryTabIndex === 1 && (
-            <StrokeDistanceFields assistiveTabIndex={assistiveTabIndex} />
+            <StrokeDistanceFields
+              assistiveTabIndex={assistiveTabIndex}
+              strokes={strokes}
+              onChangeStroke={handlers.onChangeStroke}
+            />
           )}
         </section>
         <div className={layout.button}>
           <Button
             size="large"
-            label={
-              assistiveTabIndex === 0
-                ? '완료'
-                : assistiveTabIndex === 1
-                  ? `${totalLaps && Number(totalLaps) * getValues('lane') + 'm'} 완료`
-                  : ''
-            }
+            label={buttonLabel()}
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}
