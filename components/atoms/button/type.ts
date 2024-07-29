@@ -8,4 +8,5 @@ export interface ButtonProps {
   leftIconSrc?: string;
   rightIconSrc?: string;
   onClick?: () => void;
+  className?: string;
 }
