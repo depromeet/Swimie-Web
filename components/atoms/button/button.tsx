@@ -14,6 +14,7 @@ export const Button = ({
   variant = 'solid',
   type = 'primary',
   interaction = 'normal',
+  className,
 }: ButtonProps) => {
   const baseStyles = flex({
     alignItems: 'center',
@@ -123,6 +124,7 @@ export const Button = ({
   ]);
 
   const buttonStyles = cx(
+    className,
     baseStyles,
     sizeStylesMap.get(size),
     variantStylesMap.get(variant),
