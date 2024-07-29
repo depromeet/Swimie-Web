@@ -27,6 +27,30 @@ export default function DistancePageModal() {
     unit,
     handlers,
   } = useDistancePageModal<HTMLDivElement>();
+  const secondaryTabItems = [
+    {
+      text: '총거리',
+      selected: secondaryTabIndex === 0,
+      onClick: () => handlers.onChangeSecondaryTabIndex(0),
+    },
+    {
+      text: '영법별 거리',
+      selected: secondaryTabIndex === 1,
+      onClick: () => handlers.onChangeSecondaryTabIndex(1),
+    },
+  ];
+  const assistiveTabItems = [
+    {
+      text: '미터(m)',
+      selected: assistiveTabIndex === 0,
+      onClick: () => handlers.onChangeAssistiveTabIndex(0),
+    },
+    {
+      text: '바퀴수',
+      selected: assistiveTabIndex === 1,
+      onClick: () => handlers.onChangeAssistiveTabIndex(1),
+    },
+  ];
 
   const handleBackArrowClick = () => {
     handlers.onClosePageModal();
@@ -41,37 +65,27 @@ export default function DistancePageModal() {
       jumpDirection={pageModalState.jumpDirection}
       ref={pageModalRef}
     >
-      <div className={layout.content} ref={pageModalRef}>
+      <div ref={pageModalRef}>
         <HeaderBar onClickBackArrow={handleBackArrowClick} />
         <h1 className={titleStyles}>수영 거리를 입력해주세요</h1>
         <section className={layout.tab}>
           <Tab type="secondary" className={css({ marginBottom: '12px' })}>
-            <TabItem
-              type="secondary"
-              text="총거리"
-              selected={secondaryTabIndex === 0}
-              onClick={() => handlers.onChangeSecondaryTabIndex(0)}
-            />
-            <TabItem
-              type="secondary"
-              text="영법별 거리"
-              selected={secondaryTabIndex === 1}
-              onClick={() => handlers.onChangeSecondaryTabIndex(1)}
-            />
+            {secondaryTabItems.map((tabItem) => (
+              <TabItem
+                key={tabItem.text + secondaryTabIndex}
+                type="secondary"
+                {...tabItem}
+              />
+            ))}
           </Tab>
           <Tab type="assistive">
-            <TabItem
-              type="assistive"
-              text="미터(m)"
-              selected={assistiveTabIndex === 0}
-              onClick={() => handlers.onChangeAssistiveTabIndex(0)}
-            />
-            <TabItem
-              type="assistive"
-              text="바퀴수"
-              selected={assistiveTabIndex === 1}
-              onClick={() => handlers.onChangeAssistiveTabIndex(1)}
-            />
+            {assistiveTabItems.map((tabItem) => (
+              <TabItem
+                key={tabItem.text + assistiveTabIndex}
+                type="assistive"
+                {...tabItem}
+              />
+            ))}
           </Tab>
         </section>
         <section className={layout.record}>
@@ -103,15 +117,6 @@ export default function DistancePageModal() {
 }
 
 const layout = {
-  content: css({
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    backgroundColor: 'white',
-  }),
-
   tab: css({
     width: '100%',
     marginTop: '16px',
