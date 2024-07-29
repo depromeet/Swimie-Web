@@ -150,7 +150,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal currentLane={methods.watch('lane')} />
+      <DistancePageModal />
     </FormProvider>
   );
 }
