@@ -16,7 +16,8 @@ import { css } from '@/styled-system/css';
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 
-export default function DistancePageModal() {
+// Todo: 영법별 거리 입력 로직 구현
+export function DistancePageModal() {
   const { setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
   const {
@@ -88,6 +89,7 @@ export default function DistancePageModal() {
             ))}
           </Tab>
         </section>
+        {/* Todo: secondaryIndex 에 따른 페이지 구분 */}
         <section className={layout.record}>
           <TextField
             inputType="number"

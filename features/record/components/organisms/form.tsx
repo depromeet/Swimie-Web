@@ -16,20 +16,11 @@ import {
 } from '../../store';
 import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
+import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
-const LaneLengthBottomSheet = dynamic(
-  () => import('./lane-length-bottom-sheet'),
-  { ssr: false },
-);
-import dynamic from 'next/dynamic';
-
+import { LaneLengthBottomSheet } from './lane-length-bottom-sheet';
 import { PhotoSection } from './photo-section';
-const PoolSearchPageModal = dynamic(() => import('./pool-search-page-modal'), {
-  ssr: false,
-});
-const DistancePageModal = dynamic(() => import('./distance-page-modal'), {
-  ssr: false,
-});
+import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 
 interface SubInfoProps {
