@@ -12,11 +12,17 @@ export interface DistanceFieldWithBadgeProps {
   className?: string;
 }
 
+/**
+ * @param label 필드의 label 값
+ * @param assistiveTabIndex 현재 assistiveTabIndex 값
+ * @param className 외부 스타일 주입
+ */
 export function DistanceFieldWithBadge({
   label,
   assistiveTabIndex,
   className,
 }: DistanceFieldWithBadgeProps) {
+  const unit = assistiveTabIndex === 0 ? 'm' : '바퀴';
   return (
     <div className={cx(layoutStyles.field, className)}>
       <div className={layoutStyles.badge}>
@@ -26,7 +32,7 @@ export function DistanceFieldWithBadge({
       <TextField
         inputType="number"
         placeholder="0"
-        unit={assistiveTabIndex === 0 ? 'm' : '바퀴'}
+        unit={unit}
         className={css({ width: '140px' })}
       />
     </div>

@@ -6,6 +6,9 @@ interface StrokeDistanceFieldsProps {
   assistiveTabIndex: number;
 }
 
+/**
+ * @param assistiveTabIndex 현재 assistiveTabIndex 값
+ */
 export function StrokeDistanceFields({
   assistiveTabIndex,
 }: StrokeDistanceFieldsProps) {
