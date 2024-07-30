@@ -134,7 +134,12 @@ export function Form() {
         <Divider variant="thick" />
         <PhotoSection title="오늘의 사진" />
         <Divider variant="thick" />
-        <DiarySection title="일기" value="현민 일기" />
+        <DiarySection
+          title="일기"
+          value={
+            methods.watch('diary') ? (methods.watch('diary') as string) : ''
+          }
+        />
         <Divider variant="thick" />
         <EquipmentSection title="장비" />
         <Divider variant="thick" />
