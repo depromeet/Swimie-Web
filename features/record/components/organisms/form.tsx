@@ -26,6 +26,7 @@ import { SubInfoSection } from './sub-info-section';
 interface SubInfoProps {
   poolName: string | null;
   totalDistance: number | null;
+  imageFiles: File[];
 }
 
 //Todo: null 타입 제거
@@ -55,6 +56,7 @@ export function Form() {
   );
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
+  console.log(methods.watch('imageFiles'));
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
