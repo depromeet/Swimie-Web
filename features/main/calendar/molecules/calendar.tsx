@@ -35,6 +35,8 @@ const memories: Array<Memory> = [
     type: 'SINGLE',
     totalDistance: 1000,
     isAchieved: true,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
   },
   {
     memoryId: 3,
@@ -51,6 +53,8 @@ const memories: Array<Memory> = [
     totalDistance: 900,
     strokes: { free: 300, breast: 200, back: 200, butterfly: 200 },
     isAchieved: false,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
   },
   {
     memoryId: 5,
@@ -66,6 +70,8 @@ const memories: Array<Memory> = [
     totalDistance: 500,
     strokes: { free: 300, butterfly: 200 },
     isAchieved: false,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
   },
 ];
 

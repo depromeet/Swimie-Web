@@ -25,8 +25,8 @@ export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
       </ItemLayout>
     );
 
-  // TODO: 사진 보기 기능 추가 필요
-  const { memoryId, type, totalDistance, strokes, isAchieved } = memory;
+  const { memoryId, type, totalDistance, strokes, isAchieved, imageUrl } =
+    memory;
 
   return (
     <ItemLayout date={date} isToday={isToday}>
@@ -37,6 +37,7 @@ export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
             totalDistance={totalDistance}
             strokes={strokes}
             isAchieved={isAchieved}
+            imageUrl={imageUrl}
           />
         }
       </Link>
