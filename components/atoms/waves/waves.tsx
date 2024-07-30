@@ -1,4 +1,5 @@
 const AMPLITUDE_COEFFICIENT = 11;
+const AMPLITUDE_COEFFICIENT_OFFSET = 22;
 const WAVE_MARGIN = 0.02;
 
 export const Waves = ({
@@ -10,7 +11,9 @@ export const Waves = ({
   width: number;
   height: number;
 }) => {
-  const waveAmplitude = (AMPLITUDE_COEFFICIENT * width) / height;
+  const coefficient =
+    AMPLITUDE_COEFFICIENT + (width > 150 ? AMPLITUDE_COEFFICIENT_OFFSET : 0);
+  const waveAmplitude = (coefficient * width) / height;
   const generateFirstPath = (waveHeight: number, offsetY: number) => {
     waveHeight = height * (waveHeight - WAVE_MARGIN);
     offsetY -= waveHeight;
