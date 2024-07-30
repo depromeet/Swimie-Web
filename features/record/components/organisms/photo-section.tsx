@@ -1,12 +1,12 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import Resizer from 'react-image-file-resizer';
+import { useFormContext } from 'react-hook-form';
 
 import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
+import { resizeFile } from '@/utils';
 
-import usePhotoSection from '../../hooks/use-photo-section';
 import { formSectionStyles } from '../../styles/form-section';
 import { FormSectionProps } from '../../types/form-section';
 import { CameraBox } from '../molecules';
@@ -17,31 +17,12 @@ import { CameraBox } from '../molecules';
 export function PhotoSection({ title }: FormSectionProps) {
   const [image, setImage] = useState<string[]>([]);
   const fileInput = useRef<HTMLInputElement>(null);
-
-  const { imageFiles, handlers } = usePhotoSection();
-
-  console.log(imageFiles);
-
-  const resizeFile = (file: File): Promise<File> =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        600,
-        600,
-        'WEBP',
-        100,
-        0,
-        (uri: string | File | Blob | ProgressEvent<FileReader>) => {
-          resolve(uri as File);
-        },
-        'file',
-      );
-    });
+  const { setValue } = useFormContext();
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const resizedImage = await resizeFile(e.target.files[0]);
-      handlers.onSelectImage(resizedImage);
+      const resizedImage = await resizeFile(e.target.files[0], 600, 600, 100);
+      setValue('imageFiles', [resizedImage]);
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
