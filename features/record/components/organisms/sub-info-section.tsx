@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useFormContext } from 'react-hook-form';
 
 import { DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
@@ -13,6 +14,7 @@ import { FormSectionProps } from '../../types/form-section';
 
 export function SubInfoSection({ title }: FormSectionProps) {
   const { isOpen, handlers } = useSubInfoTextFields();
+  const { getValues } = useFormContext();
 
   const handleTextFieldsOpenStateClick = () => {
     handlers.onChangeFieldsOpen();
@@ -51,14 +53,25 @@ export function SubInfoSection({ title }: FormSectionProps) {
             <TextField
               label="심박수"
               unit="BPM"
+              value={
+                getValues('heartRate') ? String(getValues('heartRate')) : ''
+              }
               wrapperClassName={css({ marginBottom: '23px' })}
+              onChange={handlers.onChangeHeartRate}
             />
             <TextField
               label="페이스"
               unit="/100m"
+              value={getValues('pace') ? (getValues('pace') as string) : ''}
               wrapperClassName={css({ marginBottom: '23px' })}
+              onChange={handlers.onChangePace}
             />
-            <TextField label="칼로리" unit="Kcal" />
+            <TextField
+              label="칼로리"
+              unit="Kcal"
+              value={getValues('kcal') ? String(getValues('kcal')) : ''}
+              onChange={handlers.onChangeKcal}
+            />
           </motion.div>
         )}
       </AnimatePresence>
