@@ -55,7 +55,6 @@ export function Form() {
   );
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
-  console.log(methods.watch('strokes'));
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
