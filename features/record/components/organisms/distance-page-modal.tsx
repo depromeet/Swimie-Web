@@ -34,6 +34,10 @@ export function DistancePageModal() {
     buttonLabel,
     handlers,
   } = useDistancePageModal<HTMLDivElement>(getValues('lane') as number);
+
+  const isAssistiveIndexZero = assistiveTabIndex === 0;
+  const isAssistiveIndexOne = assistiveTabIndex === 1;
+
   const secondaryTabItems = [
     {
       text: '총거리',
@@ -49,12 +53,12 @@ export function DistancePageModal() {
   const assistiveTabItems = [
     {
       text: '미터(m)',
-      selected: assistiveTabIndex === 0,
+      selected: isAssistiveIndexZero,
       onClick: () => handlers.onChangeAssistiveTabIndex(0),
     },
     {
       text: '바퀴수',
-      selected: assistiveTabIndex === 1,
+      selected: isAssistiveIndexOne,
       onClick: () => handlers.onChangeAssistiveTabIndex(1),
     },
   ];
@@ -64,7 +68,7 @@ export function DistancePageModal() {
   };
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0) {
-      if (assistiveTabIndex === 0) {
+      if (isAssistiveIndexZero) {
         setValue('totalDistance', totalMeter);
         if (totalMeter) {
           setValue('strokes', [
@@ -73,7 +77,7 @@ export function DistancePageModal() {
         } else {
           setValue('strokes', []);
         }
-      } else if (assistiveTabIndex === 1) {
+      } else if (isAssistiveIndexOne) {
         setValue('totalDistance', totalDistance);
         if (totalLaps) {
           setValue('strokes', [
@@ -84,7 +88,7 @@ export function DistancePageModal() {
         }
       }
     } else {
-      if (assistiveTabIndex === 0) {
+      if (isAssistiveIndexZero) {
         setValue('totalDistance', strokeMeterTotalDistance);
         setValue(
           'strokes',
@@ -92,7 +96,7 @@ export function DistancePageModal() {
             return stroke.meter;
           }),
         );
-      } else if (assistiveTabIndex === 1) {
+      } else if (isAssistiveIndexOne) {
         setValue('totalDistance', strokeLapsTotalDistance);
         setValue(
           'strokes',
@@ -138,15 +142,15 @@ export function DistancePageModal() {
             <TextField
               inputType="number"
               subText={
-                assistiveTabIndex === 1
+                isAssistiveIndexOne
                   ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
                   : undefined
               }
-              value={assistiveTabIndex === 0 ? totalMeter : totalLaps}
-              unit={assistiveTabIndex === 0 ? '미터(m)' : '바퀴'}
+              value={isAssistiveIndexZero ? totalMeter : totalLaps}
+              unit={isAssistiveIndexZero ? '미터(m)' : '바퀴'}
               wrapperClassName={css({ marginTop: '16px' })}
               onChange={
-                assistiveTabIndex === 0
+                isAssistiveIndexZero
                   ? handlers.onChangeTotalMeter
                   : handlers.onChangeTotalLaps
               }
