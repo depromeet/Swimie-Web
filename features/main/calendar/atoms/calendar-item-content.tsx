@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Image } from '@/components/atoms';
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { Waves } from '@/components/atoms/waves';
+import { swims } from '@/constants/visualization';
 import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -20,13 +21,6 @@ interface ItemContentProps {
 
 // TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
 const goal = 1000;
-
-const swims: Array<{ name: keyof Strokes; color: string }> = [
-  { name: 'free', color: '#3B87F4' },
-  { name: 'breast', color: '#F3DD6E' },
-  { name: 'back', color: '#EB5A3F' },
-  { name: 'butterfly', color: '#88D4B0' },
-];
 
 export const ItemContent = ({
   type,
