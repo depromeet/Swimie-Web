@@ -1,16 +1,16 @@
 import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
-import { useState } from 'react';
 
-import { CalendarDate, calendarDateAtom } from '@/store';
+import { CalendarDate, calendarDateAtom, calendarViewImageAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { MoveMonthButton, ViewImageButton } from '../atoms';
 
 export const CalendarHeader = () => {
-  const [isViewImage, setIsViewImage] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useAtom(calendarDateAtom);
+  const [isViewImage, setIsViewImage] = useAtom(calendarViewImageAtom);
+
   const { year, month } = currentDate;
 
   const handleClickPrevMonth = () => {

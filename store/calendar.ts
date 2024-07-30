@@ -10,3 +10,5 @@ export const calendarDateAtom = atom<CalendarDate>({
   year: dayjs().get('year'),
   month: dayjs().get('month') + 1,
 });
+
+export const calendarViewImageAtom = atom<boolean>(false);

@@ -1,7 +1,10 @@
+import { useAtomValue } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
+import { Image } from '@/components/atoms';
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { Waves } from '@/components/atoms/waves';
+import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -12,6 +15,7 @@ interface ItemContentProps {
   totalDistance?: number;
   strokes?: Strokes;
   isAchieved?: boolean;
+  imageUrl?: string;
 }
 
 // TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
@@ -29,8 +33,10 @@ export const ItemContent = ({
   totalDistance,
   strokes,
   isAchieved,
+  imageUrl,
 }: ItemContentProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const isViewImage = useAtomValue(calendarViewImageAtom);
   const [contentSize, setContentSize] = useState<{
     width: number;
     height: number;
@@ -38,11 +44,11 @@ export const ItemContent = ({
     width: 0,
     height: 0,
   });
+
   const waves: Array<{ color: string; waveHeight: number }> = [];
   if (strokes) {
     swims.forEach(({ name, color }) => {
       const distance = strokes[name];
-      console.log(distance);
       if (distance) waves.push({ color, waveHeight: distance / goal });
     });
   }
@@ -53,7 +59,23 @@ export const ItemContent = ({
         width: ref.current.offsetWidth,
         height: ref.current.offsetHeight,
       });
-  }, []);
+  }, [isViewImage]);
+
+  if (isViewImage && imageUrl)
+    return (
+      <div className={wrapperStyles}>
+        <div className={cx(layoutStyles, css({ position: 'relative' }))}>
+          <Image
+            src={imageUrl}
+            alt="user-image"
+            fill
+            className={css({
+              objectFit: 'cover',
+            })}
+          />
+        </div>
+      </div>
+    );
 
   if (type === 'NORMAL')
     return (
