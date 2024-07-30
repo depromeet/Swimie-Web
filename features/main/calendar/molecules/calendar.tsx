@@ -59,6 +59,14 @@ const memories: Array<Memory> = [
     totalDistance: 700,
     isAchieved: false,
   },
+  {
+    memoryId: 6,
+    memoryDate: 15,
+    type: 'MULTI',
+    totalDistance: 500,
+    strokes: { free: 300, butterfly: 200 },
+    isAchieved: false,
+  },
 ];
 
 export const Calendar = () => {

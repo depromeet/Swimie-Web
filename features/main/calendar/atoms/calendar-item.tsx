@@ -17,9 +17,6 @@ interface CalendarItemProps extends ItemLayoutProps {
   totalDistance?: number | undefined;
 }
 
-// TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
-// const goal = 1000;
-
 export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
   if (!memory)
     return (
@@ -38,7 +35,7 @@ export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
           <ItemContent
             type={type}
             totalDistance={totalDistance}
-            storkes={strokes}
+            strokes={strokes}
             isAchieved={isAchieved}
           />
         }
