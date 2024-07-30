@@ -13,6 +13,8 @@ export const strokeOptions = ['자유형', '배영', '평영', '접영', '킥판
 
 /**
  * @param assistiveTabIndex 현재 assistiveTabIndex 값
+ * @param strokes 현재 strokes 배열 상태
+ * @param onChangeStroke strokes 배열 값 handling function
  */
 export function StrokeDistanceFields({
   assistiveTabIndex,

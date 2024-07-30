@@ -17,8 +17,11 @@ export interface DistanceFieldWithBadgeProps
 
 /**
  * @param label 필드의 label 값
+ * @param label 필드의 index 값
+ * @param value 필드의 value
  * @param assistiveTabIndex 현재 assistiveTabIndex 값
  * @param className 외부 스타일 주입
+ * @param onChangeStroke strokes 배열 값 handling function
  */
 export function DistanceFieldWithBadge({
   index,
