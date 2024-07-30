@@ -132,8 +132,6 @@ export function useDistancePageModal<T>(lane: number) {
     }
   };
 
-  console.log(strokes);
-
   return {
     pageModalRef,
     secondaryTabIndex,

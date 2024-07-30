@@ -27,7 +27,6 @@ export function StrokeDistanceFields({
           index={i}
           value={assistiveTabIndex === 0 ? strokes[i].meter : strokes[i].laps}
           label={option}
-          strokes={strokes}
           assistiveTabIndex={assistiveTabIndex}
           onChangeStroke={onChangeStroke}
           className={css({ marginTop: '16px' })}

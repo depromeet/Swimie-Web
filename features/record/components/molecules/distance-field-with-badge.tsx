@@ -7,7 +7,8 @@ import { flex } from '@/styled-system/patterns';
 import { SwimBadge } from '../atoms';
 import { StrokeDistanceFieldsProps } from '../organisms/stroke-distance-fields';
 
-export interface DistanceFieldWithBadgeProps extends StrokeDistanceFieldsProps {
+export interface DistanceFieldWithBadgeProps
+  extends Omit<StrokeDistanceFieldsProps, 'strokes'> {
   index: number;
   label: string;
   value: number;

@@ -64,14 +64,43 @@ export function DistancePageModal() {
   };
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0) {
-      if (assistiveTabIndex === 0) setValue('totalDistance', totalMeter);
-      else if (assistiveTabIndex === 1)
+      if (assistiveTabIndex === 0) {
+        setValue('totalDistance', totalMeter);
+        if (totalMeter) {
+          setValue('strokes', [
+            { name: '총거리', meter: Number(totalMeter), laps: 0 },
+          ]);
+        } else {
+          setValue('strokes', []);
+        }
+      } else if (assistiveTabIndex === 1) {
         setValue('totalDistance', totalDistance);
+        if (totalLaps) {
+          setValue('strokes', [
+            { name: '총바퀴', meter: 0, laps: Number(totalLaps) },
+          ]);
+        } else {
+          setValue('strokes', []);
+        }
+      }
     } else {
-      if (assistiveTabIndex === 0)
+      if (assistiveTabIndex === 0) {
         setValue('totalDistance', strokeMeterTotalDistance);
-      else if (assistiveTabIndex === 1)
+        setValue(
+          'strokes',
+          strokes.filter((stroke) => {
+            return stroke.meter;
+          }),
+        );
+      } else if (assistiveTabIndex === 1) {
         setValue('totalDistance', strokeLapsTotalDistance);
+        setValue(
+          'strokes',
+          strokes.filter((stroke) => {
+            return stroke.laps;
+          }),
+        );
+      }
     }
     handlers.onClosePageModal();
   };
