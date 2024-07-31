@@ -5,7 +5,7 @@ export async function fetchData<T>(
 ): Promise<T> {
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `${accessToken}`,
     ...(options.headers || {}),
   };
 
@@ -18,7 +18,6 @@ export async function fetchData<T>(
     if (!res.ok) {
       const errorData = await res.text();
       console.error('Error fetching data:', errorData);
-      throw new Error(`Failed to fetch data: ${errorData}`);
     }
 
     return (await res.json()) as T;
