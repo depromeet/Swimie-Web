@@ -6,7 +6,7 @@ import { css } from '@/styled-system/css';
 import { useSubInfoTextFields } from '../../hooks';
 
 export function SubInfoTextFields() {
-  const { getValues } = useFormContext();
+  const { watch } = useFormContext();
   const { handlers } = useSubInfoTextFields();
 
   return (
@@ -14,21 +14,21 @@ export function SubInfoTextFields() {
       <TextField
         label="심박수"
         unit="BPM"
-        value={getValues('heartRate') ? String(getValues('heartRate')) : ''}
+        value={watch('heartRate') ? String(watch('heartRate')) : ''}
         wrapperClassName={css({ marginBottom: '23px' })}
         onChange={handlers.onChangeHeartRate}
       />
       <TextField
         label="페이스"
         unit="/100m"
-        value={getValues('pace') ? (getValues('pace') as string) : ''}
+        value={watch('pace') ? (watch('pace') as string) : ''}
         wrapperClassName={css({ marginBottom: '23px' })}
         onChange={handlers.onChangePace}
       />
       <TextField
         label="칼로리"
         unit="Kcal"
-        value={getValues('kcal') ? String(getValues('kcal')) : ''}
+        value={watch('kcal') ? String(watch('kcal')) : ''}
         onChange={handlers.onChangeKcal}
       />
     </>
