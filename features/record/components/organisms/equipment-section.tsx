@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { css } from '@/styled-system/css';
@@ -25,21 +25,22 @@ export function EquipmentSection({ title }: FormSectionProps) {
       copyPrev[index] = !copyPrev[index];
       return copyPrev;
     });
-    setValue('item', handleSelectedItem().join(','));
   };
 
-  const handleSelectedItem = () => {
+  const getSelectedEquipmentsByString = () => {
     const copyEquipmentList = [...equipmentList];
-    copyEquipmentList.filter((_, i) => equipmentSelectState[i]);
-
-    return copyEquipmentList;
+    return copyEquipmentList.filter((_, i) => equipmentSelectState[i]);
   };
+
+  useEffect(() => {
+    setValue('item', getSelectedEquipmentsByString().join(','));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [equipmentSelectState]);
 
   return (
     <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <div className={itemBoxStyles}>
-        {/* //임시 디자인 */}
         {Array.from({ length: 4 }, (_, i) => (
           <EquipmentSelectBox
             key={i}
