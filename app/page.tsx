@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { Image } from '@/components/atoms';
 import { Calendar } from '@/features/main/calendar';
 import { MainTab } from '@/features/main/main-tab';
 import { TabItemInfo } from '@/features/main/main-tab/main-tab';
@@ -37,7 +38,13 @@ export default function Home() {
         {isSelectedCalenderView ? (
           <>
             <div className={profileContainerStyles}>
-              <div className={characterStyles} />
+              <Image
+                className={characterImageStyles}
+                width={70}
+                height={75}
+                src="/images/swimie-character.svg"
+                alt="swimie character"
+              />
               <div className={userInfoStyles}>
                 <p className={nicknameStyles}>수린이님,</p>
                 <p className={descriptionStyles}>
@@ -70,13 +77,12 @@ const contentStyles = flex({
 const profileContainerStyles = flex({
   padding: '14px 11px',
   gap: '4px',
+  alignItems: 'center',
   borderRadius: '6px',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
   backgroundColor: 'primary.swim.총거리.default',
 });
 
-const characterStyles = css({ height: '75px', width: '70px' });
+const characterImageStyles = css({ margin: '0 10px' });
 
 const userInfoStyles = flex({
   height: 'full',
