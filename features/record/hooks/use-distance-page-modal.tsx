@@ -3,7 +3,7 @@
 import { useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
-import { strokeOptions } from '../components/organisms/stroke-distance-fields';
+import { strokeOptions } from '../constants';
 import { isDistancePageModalOpen } from '../store';
 import { StrokeProps } from '../types';
 
@@ -17,10 +17,6 @@ export function useDistancePageModal<T>(lane: number) {
   const [totalMeter, setTotalMeter] = useState<string>('');
   const [totalLaps, setTotalLaps] = useState<string>('');
   const [totalDistance, setTotalDistance] = useState<number>(0);
-  const [strokeMeterTotalDistance, setStrokeMeterTotalDistance] =
-    useState<number>(0);
-  const [strokeLapsTotalDistance, setStrokeLapsTotalDistance] =
-    useState<number>(0);
   const [strokes, setStrokes] = useState<StrokeProps[]>(
     Array.from({ length: strokeOptions.length }, (_, i) => ({
       name: strokeOptions[i],
@@ -35,18 +31,22 @@ export function useDistancePageModal<T>(lane: number) {
 
   useEffect(() => {
     let sum = 0;
+    if (secondaryTabIndex === 0) {
+      return;
+    }
     if (assistiveTabIndex === 0) {
       strokes.forEach((stroke) => {
         sum += stroke.meter;
       });
-      setStrokeMeterTotalDistance(sum);
+      setTotalDistance(sum);
     } else {
       strokes.forEach((stroke) => {
         sum += stroke.laps * lane;
       });
-      setStrokeLapsTotalDistance(sum);
+      setTotalDistance(sum);
     }
-  }, [assistiveTabIndex, strokes, lane]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strokes, lane]);
 
   const onClosePageModal = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
@@ -60,34 +60,33 @@ export function useDistancePageModal<T>(lane: number) {
     setAssistiveTabIndex(index);
   };
 
+  //총거리를 m 입력했을 때, 다른 필드들에 값이 있다면 초기화
   const onChangeTotalMeter = (text: string) => {
     totalLaps && setTotalLaps('');
     setTotalMeter(text);
+    resetStrokesMeter();
+    resetStrokesLaps();
   };
 
+  //총거리를 바퀴단위로 입력했을 때, 다른 필드들에 값이 있다면 초기화
   const onChangeTotalLaps = (text: string) => {
     totalMeter && setTotalMeter('');
     setTotalLaps(text);
     setTotalDistance(text ? Number(text) * lane : 0);
+    resetStrokesMeter();
+    resetStrokesLaps();
   };
 
+  //영법별 거리 입력 시 로직 구현 function
   const onChangeStroke = (index: number, text: string) => {
     totalLaps && setTotalLaps('');
     totalMeter && setTotalMeter('');
     if (assistiveTabIndex === 0) {
       !strokesMeterModified && setStrokesMeterModified(true);
-      strokeLapsTotalDistance && setStrokeLapsTotalDistance(0);
-      if (strokesLapsModified) {
-        resetStrokesLaps();
-        setStrokesLapsModified(false);
-      }
+      resetStrokesLaps();
     } else if (assistiveTabIndex === 1) {
       !strokesLapsModified && setStrokesLapsModified(true);
-      strokeMeterTotalDistance && setStrokeMeterTotalDistance(0);
-      if (strokesMeterModified) {
-        resetStrokesMeter();
-        setStrokesMeterModified(false);
-      }
+      resetStrokesMeter();
     }
     setStrokes((prev) => {
       const copyStrokes = [...prev];
@@ -98,39 +97,43 @@ export function useDistancePageModal<T>(lane: number) {
     });
   };
 
+  //영법별 거리 기록의 meter를 모두 초기화하는 function
   const resetStrokesMeter = () => {
-    strokes.forEach((stroke, i) => {
-      if (stroke.meter)
-        setStrokes((prev) => {
-          const copyStrokes = [...prev];
-          copyStrokes[i] = { ...copyStrokes[i], meter: 0 };
-          return copyStrokes;
-        });
-    });
-  };
-
-  const resetStrokesLaps = () => {
-    strokes.forEach((stroke, i) => {
-      if (stroke.laps)
-        setStrokes((prev) => {
-          const copyStrokes = [...prev];
-          copyStrokes[i] = { ...copyStrokes[i], laps: 0 };
-          return copyStrokes;
-        });
-    });
-  };
-
-  const buttonLabel = () => {
-    if (secondaryTabIndex === 0) {
-      if (assistiveTabIndex === 0) return '완료';
-      else return `${totalDistance ? totalDistance + 'm' : ''} 완료`;
-    } else {
-      if (assistiveTabIndex === 0)
-        return `${strokeMeterTotalDistance ? strokeMeterTotalDistance + 'm' : ''} 완료`;
-      else
-        return `${strokeLapsTotalDistance ? strokeLapsTotalDistance + 'm' : ''} 완료`;
+    if (!strokesMeterModified) return;
+    else {
+      strokes.forEach((stroke, i) => {
+        if (stroke.meter)
+          setStrokes((prev) => {
+            const copyStrokes = [...prev];
+            copyStrokes[i] = { ...copyStrokes[i], meter: 0 };
+            return copyStrokes;
+          });
+      });
+      setStrokesMeterModified(false);
     }
   };
+
+  //영법별 거리 기록의 laps를 모두 초기화하는 function
+  const resetStrokesLaps = () => {
+    if (!strokesLapsModified) return;
+    else {
+      strokes.forEach((stroke, i) => {
+        if (stroke.laps)
+          setStrokes((prev) => {
+            const copyStrokes = [...prev];
+            copyStrokes[i] = { ...copyStrokes[i], laps: 0 };
+            return copyStrokes;
+          });
+      });
+      setStrokesLapsModified(false);
+    }
+  };
+
+  //버튼 label 반환 function
+  const buttonLabel =
+    secondaryTabIndex === 0 && assistiveTabIndex === 0
+      ? '완료'
+      : `${totalDistance ? totalDistance + 'm' : ''} 완료`;
 
   return {
     pageModalRef,
@@ -139,8 +142,6 @@ export function useDistancePageModal<T>(lane: number) {
     totalMeter,
     totalLaps,
     totalDistance,
-    strokeMeterTotalDistance,
-    strokeLapsTotalDistance,
     strokes,
     buttonLabel,
     handlers: {

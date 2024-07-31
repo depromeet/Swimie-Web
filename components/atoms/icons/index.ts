@@ -4,6 +4,7 @@ export { CheckInCircleIcon } from './check-in-circle-icon';
 export type { Directions } from './chevron-icon';
 export { ChevronIcon } from './chevron-icon';
 export * from './date-arrow-icon';
+export * from './delete-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
 export * from './search-icon';

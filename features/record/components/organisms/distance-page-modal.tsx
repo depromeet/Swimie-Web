@@ -17,7 +17,6 @@ import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 import { StrokeDistanceFields } from './stroke-distance-fields';
 
-// Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
@@ -28,8 +27,6 @@ export function DistancePageModal() {
     totalMeter,
     totalLaps,
     totalDistance,
-    strokeMeterTotalDistance,
-    strokeLapsTotalDistance,
     strokes,
     buttonLabel,
     handlers,
@@ -67,9 +64,12 @@ export function DistancePageModal() {
     handlers.onClosePageModal();
   };
   const handleDoneButtonClick = () => {
+    if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
+      setValue('totalDistance', totalMeter);
+    else setValue('totalDistance', totalDistance);
+
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
-        setValue('totalDistance', totalMeter);
         if (totalMeter) {
           setValue('strokes', [
             { name: '총거리', meter: Number(totalMeter), laps: 0 },
@@ -78,7 +78,6 @@ export function DistancePageModal() {
           setValue('strokes', []);
         }
       } else if (isAssistiveIndexOne) {
-        setValue('totalDistance', totalDistance);
         if (totalLaps) {
           setValue('strokes', [
             { name: '총바퀴', meter: 0, laps: Number(totalLaps) },
@@ -89,7 +88,6 @@ export function DistancePageModal() {
       }
     } else {
       if (isAssistiveIndexZero) {
-        setValue('totalDistance', strokeMeterTotalDistance);
         setValue(
           'strokes',
           strokes.filter((stroke) => {
@@ -97,7 +95,6 @@ export function DistancePageModal() {
           }),
         );
       } else if (isAssistiveIndexOne) {
-        setValue('totalDistance', strokeLapsTotalDistance);
         setValue(
           'strokes',
           strokes.filter((stroke) => {
@@ -167,7 +164,7 @@ export function DistancePageModal() {
         <div className={layout.button}>
           <Button
             size="large"
-            label={buttonLabel()}
+            label={buttonLabel}
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}
