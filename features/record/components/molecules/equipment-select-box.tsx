@@ -2,7 +2,7 @@ import { SwimIcon } from '@/components/atoms';
 import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-interface SelectBoxProps {
+interface EquipmentSelectBoxProps {
   label: string;
   index: number;
   isSelected: boolean;
@@ -10,13 +10,20 @@ interface SelectBoxProps {
   onSelectEquipment: (index: number) => void;
 }
 
+/**
+ * @param label 장비 box의 label값
+ * @param index 장비의 index
+ * @param isSelected 장비가 선택되었는지 여부
+ * @param className 외부 스타일 주입
+ * @param onSelectEquipment 클릭 된 장비의 index를 넘겨받는 function
+ */
 export function EquipmentSelectBox({
   label,
   index,
   isSelected,
   className,
   onSelectEquipment,
-}: SelectBoxProps) {
+}: EquipmentSelectBoxProps) {
   const handleEquipmentClick = () => {
     onSelectEquipment?.(index);
   };
@@ -24,9 +31,7 @@ export function EquipmentSelectBox({
   return (
     <div
       className={cx(
-        isSelected
-          ? css(layoutStyles.raw({}))
-          : css(layoutStyles.raw({ isSelected: false })),
+        css(layoutStyles.raw({ isSelected: isSelected })),
         className,
       )}
       onClick={handleEquipmentClick}
