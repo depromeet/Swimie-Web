@@ -1,16 +1,15 @@
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { formSectionStyles } from '../../styles/form-section';
+import { FormSectionProps } from '../../types/form-section';
 import { SelectBox } from '../molecules';
-import { sectionStyles } from './style';
-import { SectionProps } from './type';
-
 /**
  * @param title 장비 section의 제목
  */
-export function EquipmentSection({ title }: SectionProps) {
+export function EquipmentSection({ title }: FormSectionProps) {
   return (
-    <section className={sectionStyles}>
+    <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <div className={itemBoxStyles}>
         {/* //임시 디자인 */}

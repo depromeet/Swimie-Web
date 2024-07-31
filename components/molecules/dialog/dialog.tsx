@@ -38,17 +38,23 @@ export const Dialog = ({
             )}
           </div>
 
-          {Object.keys(buttons).length && (
+          {Boolean(Object.keys(buttons).length) && (
             <div className={content.buttonStyle}>
-              {buttons.confirm && (
-                <Button onClick={buttons.confirm.onClick}>
-                  {buttons.confirm.text}
-                </Button>
-              )}
               {buttons.cancel && (
-                <Button onClick={buttons.cancel.onClick}>
-                  {buttons.cancel.text}
-                </Button>
+                <Button
+                  onClick={buttons.cancel.onClick}
+                  label={buttons.cancel.text}
+                  size="large"
+                  type="secondary"
+                  variant="outlined"
+                />
+              )}
+              {buttons.confirm && (
+                <Button
+                  onClick={buttons.confirm.onClick}
+                  label={buttons.confirm.text}
+                  size="large"
+                />
               )}
             </div>
           )}
@@ -70,6 +76,7 @@ const containerStyle = css({
   zIndex: 1000,
   backgroundColor: 'white',
   borderRadius: '12px',
+  w: '304px',
   // TEMP: 임시 효과
   animation: 'dimFadeIn 0.3s',
 });
@@ -95,10 +102,12 @@ const text = {
   titleStyle: css({
     textStyle: 'heading4',
     fontWeight: 'bold',
+    color: 'text.normal',
   }),
 
   descriptionStyle: css({
     textStyle: 'body2.normal',
     fontWeight: 'medium',
+    color: 'text.alternative',
   }),
 };

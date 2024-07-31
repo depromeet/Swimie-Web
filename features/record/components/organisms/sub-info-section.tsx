@@ -4,11 +4,11 @@ import { DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { css } from '@/styled-system/css';
 
-import { useSubInfoTextFields } from '../hooks';
+import { useSubInfoTextFields } from '../../hooks';
+import { FormSectionProps } from '../../types/form-section';
 import { SubInfoTextFields } from './sub-info-text-fields';
-import { SectionProps } from './type';
 
-export function SubInfoSection({ title }: SectionProps) {
+export function SubInfoSection({ title }: FormSectionProps) {
   const { isOpen, handlers } = useSubInfoTextFields();
 
   return (
