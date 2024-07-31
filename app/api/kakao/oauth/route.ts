@@ -12,16 +12,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: 'Code is required' }, { status: 400 });
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login/kakao`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code }),
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/login/kakao`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify({ code }),
+  });
 
   if (!res.ok) {
     console.error('Error fetching data:', error);
