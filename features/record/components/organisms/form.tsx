@@ -50,7 +50,6 @@ export function Form() {
       imageIdList: [],
     },
   });
-
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );

@@ -33,7 +33,6 @@ export function SubInfoSection({ title }: FormSectionProps) {
         {!isOpen && (
           <motion.div
             layout
-            initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }}
@@ -44,7 +43,6 @@ export function SubInfoSection({ title }: FormSectionProps) {
         {isOpen && (
           <motion.div
             layout
-            layoutScroll
             animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }}
