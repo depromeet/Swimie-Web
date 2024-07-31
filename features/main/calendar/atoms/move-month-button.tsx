@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import type { Directions } from '@/components/atoms';
-import { ChevronIcon } from '@/components/atoms';
+import type { Directions } from '@/components/atoms/icons';
+import { TriangleArrowIcon } from '@/components/atoms/icons/triangle-arrow-icon';
 
 interface MoveMonthButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   width: number;
@@ -18,7 +18,7 @@ export const MoveMonthButton = ({
 }: MoveMonthButtonProps) => {
   return (
     <button className={className} {...props}>
-      <ChevronIcon width={width} height={height} direction={direction} />
+      <TriangleArrowIcon width={width} height={height} direction={direction} />
     </button>
   );
 };
