@@ -17,7 +17,6 @@ import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 import { StrokeDistanceFields } from './stroke-distance-fields';
 
-// Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
@@ -28,8 +27,6 @@ export function DistancePageModal() {
     totalMeter,
     totalLaps,
     totalDistance,
-    strokeMeterTotalDistance,
-    strokeLapsTotalDistance,
     strokes,
     buttonLabel,
     handlers,
@@ -89,7 +86,7 @@ export function DistancePageModal() {
       }
     } else {
       if (isAssistiveIndexZero) {
-        setValue('totalDistance', strokeMeterTotalDistance);
+        setValue('totalDistance', totalDistance);
         setValue(
           'strokes',
           strokes.filter((stroke) => {
@@ -97,7 +94,7 @@ export function DistancePageModal() {
           }),
         );
       } else if (isAssistiveIndexOne) {
-        setValue('totalDistance', strokeLapsTotalDistance);
+        setValue('totalDistance', totalDistance);
         setValue(
           'strokes',
           strokes.filter((stroke) => {
@@ -167,7 +164,7 @@ export function DistancePageModal() {
         <div className={layout.button}>
           <Button
             size="large"
-            label={buttonLabel()}
+            label={buttonLabel}
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}
