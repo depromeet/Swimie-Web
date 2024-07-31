@@ -73,7 +73,7 @@ const itemContainerStyles = flex({
   alignItems: 'center',
 
   '& > p': {
-    height: '17px',
+    height: '18px',
     textStyle: 'caption2',
     fontWeight: 'medium',
     textAlign: 'center',
@@ -82,6 +82,7 @@ const itemContainerStyles = flex({
 
 const DateStyles = css({
   padding: '2px',
+  width: '18px',
   marginBottom: '5px',
   borderRadius: 'full',
 });
