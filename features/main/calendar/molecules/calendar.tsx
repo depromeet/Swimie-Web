@@ -73,6 +73,36 @@ const memories: Array<Memory> = [
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
   },
+  {
+    memoryId: 7,
+    memoryDate: 17,
+    type: 'MULTI',
+    totalDistance: 1000,
+    strokes: { free: 600, breast: 200, back: 200 },
+    isAchieved: true,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
+  },
+  {
+    memoryId: 8,
+    memoryDate: 21,
+    type: 'MULTI',
+    totalDistance: 1000,
+    strokes: { free: 600, back: 400 },
+    isAchieved: true,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
+  },
+  {
+    memoryId: 9,
+    memoryDate: 22,
+    type: 'MULTI',
+    totalDistance: 1000,
+    strokes: { free: 600, butterfly: 400 },
+    isAchieved: true,
+    imageUrl:
+      'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
+  },
 ];
 
 export const Calendar = () => {
