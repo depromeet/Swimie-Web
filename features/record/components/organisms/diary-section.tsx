@@ -8,7 +8,6 @@ import { FormSectionProps } from '../../types/form-section';
 
 interface DiarySectionProps extends FormSectionProps {
   value: string;
-  onChange?: (text: string) => void;
 }
 
 /**

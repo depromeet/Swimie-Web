@@ -9,6 +9,7 @@ import { resizeFile } from '@/utils';
 
 import { formSectionStyles } from '../../styles/form-section';
 import { FormSectionProps } from '../../types/form-section';
+import { DeletePhotoIcon } from '../atoms/delete-photo-icon';
 import { CameraBox } from '../molecules';
 
 /**
@@ -19,30 +20,50 @@ export function PhotoSection({ title }: FormSectionProps) {
   const fileInput = useRef<HTMLInputElement>(null);
   const { setValue } = useFormContext();
 
-  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const resizedImage = await resizeFile(e.target.files[0], 600, 600, 100);
-      setValue('imageFiles', [resizedImage]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          if (image.length === 1) {
-            return;
-          } else {
-            setImage((prev: string[]) => {
-              return [...prev, reader.result as string];
-            });
-          }
+  //1차 MVP 에서는 이미지 업로드를 1장으로 제한
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadImage = async () => {
+      try {
+        if (e.target.files) {
+          const resizedImage = await resizeFile(
+            e.target.files[0],
+            600,
+            600,
+            100,
+          );
+          setValue('imageFiles', [resizedImage]);
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              if (image.length === 1) {
+                return;
+              } else {
+                setImage((prev: string[]) => {
+                  return [...prev, reader.result as string];
+                });
+              }
+            }
+          };
+          reader.readAsDataURL(resizedImage);
         }
-      };
-      reader.readAsDataURL(resizedImage);
-    }
+      } catch (error) {
+        console.error('이미지 업로드 중 오류가 발생하였습니다', error);
+      }
+    };
+    uploadImage().catch((error) =>
+      console.error('이미지 업로드 중 오류가 발생하였습니다', error),
+    );
   };
 
   const handleAddImageClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
     }
+  };
+
+  const handleImageDeleteClick = () => {
+    setValue('imageFiles', []);
+    setImage([]);
   };
 
   return (
@@ -57,17 +78,23 @@ export function PhotoSection({ title }: FormSectionProps) {
             sizes="100vw"
             className="rounded-[10px]"
           />
+          <DeletePhotoIcon
+            className={css({
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+            })}
+            onClick={handleImageDeleteClick}
+          />
         </div>
       ) : (
         <CameraBox onClick={handleAddImageClick} />
       )}
-
       <input
         ref={fileInput}
         type="file"
         accept="image/*"
         className={css({ display: 'none' })}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onChange={handleImageUpload}
       />
     </section>
@@ -78,8 +105,8 @@ const imageStyles = css({
   position: 'relative',
   width: 'calc(100vw - 40px)',
   height: 'calc(100vw - 40px)',
-  maxWidth: '400px',
-  maxHeight: '400px',
+  maxWidth: '600px',
+  maxHeight: '600px',
 });
 
 const titleStyles = css({

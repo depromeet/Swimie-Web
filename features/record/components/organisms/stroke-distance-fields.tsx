@@ -1,5 +1,6 @@
 import { css } from '@/styled-system/css';
 
+import { strokeOptions } from '../../constants';
 import { StrokeProps } from '../../types';
 import { DistanceFieldWithBadge } from '../molecules';
 
@@ -8,8 +9,6 @@ export interface StrokeDistanceFieldsProps {
   strokes: StrokeProps[];
   onChangeStroke?: (index: number, text: string) => void;
 }
-
-export const strokeOptions = ['자유형', '배영', '평영', '접영', '킥판'];
 
 /**
  * @param assistiveTabIndex 현재 assistiveTabIndex 값
