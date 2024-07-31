@@ -1,23 +1,21 @@
 'use client';
 
 import { AnimatePresence } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
 
 import { Accordion, DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
-import { TextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useSubInfoTextFields } from '../../hooks';
 import { FormSectionProps } from '../../types/form-section';
+import { SubInfoTextFields } from './sub-info-text-fields';
 
 export function SubInfoSection({ title }: FormSectionProps) {
-  const { isOpen, handlers } = useSubInfoTextFields();
-  const { getValues } = useFormContext();
+  const [isTextFieldsOpen, setIsTextFieldsOpen] = useState(false);
 
   const handleTextFieldsOpenStateClick = () => {
-    handlers.onChangeFieldsOpen();
+    setIsTextFieldsOpen((prev) => !prev);
   };
 
   return (
@@ -30,35 +28,13 @@ export function SubInfoSection({ title }: FormSectionProps) {
         <DownArrowIcon />
       </div>
       <AnimatePresence>
-        {!isOpen && (
+        {!isTextFieldsOpen ? (
           <Accordion>
             <Divider variant="thick" />
           </Accordion>
-        )}
-        {isOpen && (
+        ) : (
           <Accordion className={textFieldsStyles}>
-            <TextField
-              label="심박수"
-              unit="BPM"
-              value={
-                getValues('heartRate') ? String(getValues('heartRate')) : ''
-              }
-              wrapperClassName={css({ marginBottom: '23px' })}
-              onChange={handlers.onChangeHeartRate}
-            />
-            <TextField
-              label="페이스"
-              unit="/100m"
-              value={getValues('pace') ? (getValues('pace') as string) : ''}
-              wrapperClassName={css({ marginBottom: '23px' })}
-              onChange={handlers.onChangePace}
-            />
-            <TextField
-              label="칼로리"
-              unit="Kcal"
-              value={getValues('kcal') ? String(getValues('kcal')) : ''}
-              onChange={handlers.onChangeKcal}
-            />
+            <SubInfoTextFields />
           </Accordion>
         )}
       </AnimatePresence>
