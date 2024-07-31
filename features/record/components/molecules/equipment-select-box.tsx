@@ -17,11 +17,10 @@ export function EquipmentSelectBox({
   className,
   onSelectEquipment,
 }: SelectBoxProps) {
-  //디자인 확정되면 교체
-
   const handleEquipmentClick = () => {
     onSelectEquipment?.(index);
   };
+
   return (
     <div
       className={cx(
