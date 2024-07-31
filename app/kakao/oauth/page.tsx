@@ -1,11 +1,7 @@
-// app/kakao/oauth/page.tsx
-
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-
-import { getCookie } from '@/apis/cookie';
 
 const Page = () => {
   const router = useRouter();
@@ -30,7 +26,6 @@ const Page = () => {
 
         if (response.status === 200) {
           console.log('Login successful:', await response.json());
-          console.log(getCookie('accessToken'));
           router.push('/');
         } else {
           console.error('Failed to set cookies:', response.statusText);

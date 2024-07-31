@@ -1,39 +1,36 @@
 'use client';
 
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-
-import { setCookie } from '@/apis/cookie';
-import { LoginResponse } from '@/apis/type';
 
 const Page = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const GOOGLE_CODE = new URL(window.location.href).searchParams.get('code');
+    const GOOGLE_CODE = searchParams.get('code');
 
     const postCode = async () => {
       if (!GOOGLE_CODE) {
-        console.error('google code is not available');
+        console.error('Google code is not available');
         return;
       }
-
       try {
-        const response = await axios.post<LoginResponse>(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login/google`,
-          { code: GOOGLE_CODE },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
+        const response = await fetch(`/api/google/oauth?code=${GOOGLE_CODE}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify({ code: GOOGLE_CODE }),
+        });
 
-        const data = response.data;
-        setCookie('accessToken', data.data.accessToken, { path: '/' });
-        localStorage.setItem('refresh Token', data.data.refreshToken);
-        router.push('/');
+        if (response.status === 200) {
+          console.log('Login successful:', await response.json());
+
+          router.push('/');
+        } else {
+          console.error('Failed to set cookies:', response.statusText);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -42,7 +39,7 @@ const Page = () => {
     postCode().catch((error) => {
       console.error('Error:', error);
     });
-  }, []);
+  }, [router, searchParams]);
 
   return <div>구글로 로그인중입니다.</div>;
 };
