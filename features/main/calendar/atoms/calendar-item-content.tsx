@@ -1,3 +1,5 @@
+'use client';
+
 import { useAtomValue } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
@@ -8,6 +10,7 @@ import { swims } from '@/constants/visualization';
 import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { createGradient } from '@/utils/visualization';
 
 import { MemoryType, Strokes } from '../molecules/calendar';
 
@@ -102,10 +105,16 @@ export const ItemContent = ({
         )}
       </div>
     );
+
+  const gradientProps = createGradient(waves.map(({ color }) => color));
+
   return (
     <div className={wrapperStyles}>
       {isAchieved ? (
-        <div className={cx(layoutStyles, multiAchievedStyles)} />
+        <div
+          style={{ backgroundImage: `linear-gradient(0deg, ${gradientProps})` }}
+          className={layoutStyles}
+        />
       ) : (
         <div ref={ref} className={layoutStyles}>
           {ref.current && totalDistance && (
@@ -140,8 +149,4 @@ const layoutStyles = flex({
 const normalStyles = css({ backgroundColor: 'blue.90' });
 const singleAchievedStyles = css({
   backgroundColor: 'primary.swim.총거리.default',
-});
-const multiAchievedStyles = css({
-  bgGradient:
-    'linear-gradient(0deg, rgba(59,135,244,1) 0%, rgba(136,212,176,1) 80%)',
 });
