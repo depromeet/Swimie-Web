@@ -20,11 +20,9 @@ export function EquipmentSection({ title }: FormSectionProps) {
   );
 
   const handleSelectEquipment = (index: number) => {
-    setEquipmentSelectState((prev) => {
-      const copyPrev = [...prev];
-      copyPrev[index] = !copyPrev[index];
-      return copyPrev;
-    });
+    setEquipmentSelectState((prev) =>
+      prev.map((item, i) => (i === index ? !item : item)),
+    );
   };
 
   const getSelectedEquipmentsByString = () => {
