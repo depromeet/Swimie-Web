@@ -67,8 +67,13 @@ const HeaderContainerStyles = flex({
 });
 
 const DateButtonContainerStyles = flex({
-  gap: '6px',
+  gap: '10px',
   alignItems: 'center',
 });
 
-const CurrentDateStyles = css({ textStyle: 'heading2', fontWeight: 'bold' });
+const CurrentDateStyles = css({
+  width: '108px',
+  textAlign: 'center',
+  textStyle: 'heading2',
+  fontWeight: 'bold',
+});
