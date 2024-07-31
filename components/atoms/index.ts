@@ -1,3 +1,4 @@
+export * from './accordion';
 export * from './button';
 export * from './dim';
 export * from './icons';
