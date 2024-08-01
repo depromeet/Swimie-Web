@@ -8,11 +8,11 @@
 
 import { cookies } from 'next/headers';
 
-export async function fetchData(
+export async function fetchData<T>(
   endpoint: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   body?: '',
-) {
+): Promise<T> {
   const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
   const url = `${BASE_URL}${endpoint}`;
   const accessToken = cookies().get('accessToken')?.value;
@@ -22,7 +22,7 @@ export async function fetchData(
   };
 
   if (accessToken) {
-    headers['Authorization'] = `${accessToken}`;
+    headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
   const response = await fetch(url, {
@@ -33,7 +33,8 @@ export async function fetchData(
 
   if (!response.ok) {
     console.error('요청을 다시 확인해주세요.', response.statusText);
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 }
