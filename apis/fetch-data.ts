@@ -22,7 +22,7 @@ export async function fetchData(
   };
 
   if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
+    headers['Authorization'] = `${accessToken}`;
   }
 
   const response = await fetch(url, {
