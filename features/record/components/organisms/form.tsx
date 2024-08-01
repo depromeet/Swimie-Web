@@ -64,7 +64,7 @@ export function Form() {
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
       <form>
-        <div className={cx(formSectionStyles, css({ overflow: 'auto' }))}>
+        <div className={cx(formSectionStyles)}>
           <TextField
             variant="select"
             isRequired

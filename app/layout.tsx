@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 const rootStyle = css({
   maxWidth: 'maxWidth',
   width: '100%',
+  overflowY: 'auto',
   margin: '0 auto',
 });
 
