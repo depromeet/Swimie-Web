@@ -40,7 +40,11 @@ export async function fetchNewAccessToken(
 
   const data = (await response.json()) as NewTokenData;
   const newAccessToken = `Bearer ${data.data.accessToken}`;
-  cookies().set('accessToken', newAccessToken, { maxAge: 3600 });
+  cookies().set('accessToken', newAccessToken, {
+    maxAge: 3600,
+    httpOnly: true,
+    secure: true,
+  });
 
   return newAccessToken;
 }

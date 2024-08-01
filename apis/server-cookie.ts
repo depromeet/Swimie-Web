@@ -12,11 +12,15 @@ export function setAuthCookies(tokenData: TokenData): void {
   // 엑세스 토큰
   cookieStore.set('accessToken', tokenData.accessToken, {
     maxAge: 3600, // 1시간
+    httpOnly: true,
+    secure: true,
   });
 
   // 리프레시 토큰
   cookieStore.set('refreshToken', tokenData.refreshToken, {
     maxAge: 7 * 24 * 3600, // 7일
+    httpOnly: true,
+    secure: true,
   });
 }
 
