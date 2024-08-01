@@ -33,8 +33,6 @@ export async function GET(): Promise<NextResponse> {
           { status: 401 },
         );
       }
-
-      cookies().set('accessToken', `${accessToken}`);
     }
 
     if (accessToken) {
@@ -52,10 +50,11 @@ export async function GET(): Promise<NextResponse> {
     }
 
     return NextResponse.json(
-      { error: 'aceessToken이 유효하지 않습니다.' },
+      { error: 'accessToken이 유효하지 않습니다.' },
       { status: 401 },
     );
   } catch (error) {
+    console.error('데이터를 받아오지 못했습니다.', error);
     clearAuthCookies();
     return NextResponse.json(
       { error: '데이터를 받아오지 못했습니다.' },
