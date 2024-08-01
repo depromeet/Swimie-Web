@@ -12,5 +12,12 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/pool/search/initial'],
+  matcher: [
+    '/',
+    '/pool/:path*',
+    '/memory/:path*',
+    '/image/:path*',
+    '/member/:path*',
+    '/goal/:path*',
+  ],
 };
