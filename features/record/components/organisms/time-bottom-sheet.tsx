@@ -40,7 +40,7 @@ export function TimeBottomSheet() {
         title:
           timeBottmSheetState.variant === 'start' ? '시작 시간' : '종료 시간',
       }}
-      className={css({ overflow: 'auto' })}
+      isRenderHandlebar
     >
       <ConfigProvider
         theme={{
@@ -63,7 +63,6 @@ export function TimeBottomSheet() {
             needConfirm={false}
             inputReadOnly
             onChange={handleTimeChange}
-            className={css({ width: '100%' })}
           />
           <div className={layout.button}>
             <Button
