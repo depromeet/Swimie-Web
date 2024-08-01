@@ -1,16 +1,28 @@
 import { error } from 'console';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { setAuthCookies, TokenData } from '@/apis/server-cookie';
-import { LoginResponse } from '@/apis/type';
+import { setAuthCookies } from '@/apis/server-cookie';
 
-export const dynamic = 'force-dynamic';
+interface LoginResponse {
+  status: number;
+  code: string;
+  message: string;
+  data: {
+    userId: number;
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
 
   if (!code) {
-    return NextResponse.json({ error: 'Code is required' }, { status: 400 });
+    return NextResponse.json(
+      { error: '코드가 누락되었습니다.' },
+      { status: 400 },
+    );
   }
 
   const res = await fetch(
@@ -27,21 +39,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (!res.ok) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch tokens' },
+      { error: '토큰을 확인해주세요.' },
       { status: res.status },
     );
   }
 
-  // 타입을 명시적으로 지정
   const data = (await res.json()) as LoginResponse;
 
-  const tokenData: TokenData = {
-    accessToken: data.data.accessToken.replace('Bearer ', ''),
-    refreshToken: data.data.refreshToken.replace('Bearer ', ''),
-  };
-
   // 쿠키 설정
-  setAuthCookies(tokenData);
+  setAuthCookies(data.data);
 
   return NextResponse.json({ data }, { status: res.status });
 }

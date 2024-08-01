@@ -1,15 +1,28 @@
 import { error } from 'console';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { LoginResponse } from '@/apis/type';
+import { setAuthCookies } from '@/apis/server-cookie';
+
+interface LoginResponse {
+  status: number;
+  code: string;
+  message: string;
+  data: {
+    userId: number;
+    accessToken: string;
+    refreshToken: string;
+  };
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
 
   if (!code) {
-    return NextResponse.json({ error: 'Code is required' }, { status: 400 });
+    return NextResponse.json(
+      { error: '코드가 누락되었습니다.' },
+      { status: 400 },
+    );
   }
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/login/kakao`, {
@@ -23,20 +36,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (!res.ok) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch tokens' },
+      { error: '토큰을 확인해주세요.' },
       { status: res.status },
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const data: LoginResponse = await res.json();
-  console.log('accessToken:', data.data.accessToken);
-  console.log('refreshToken:', data.data.refreshToken);
+  const data = (await res.json()) as LoginResponse;
 
   // 쿠키 설정
-  const cookieStore = cookies();
-  cookieStore.set('accessToken', data.data.accessToken);
-  cookieStore.set('refreshToken', data.data.refreshToken);
+  setAuthCookies(data.data);
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ data }, { status: res.status });
 }
