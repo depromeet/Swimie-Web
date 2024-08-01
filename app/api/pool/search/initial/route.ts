@@ -40,12 +40,7 @@ export async function GET(): Promise<NextResponse> {
       const method = 'GET';
       const body = '';
 
-      const data = (await fetchData(
-        endpoint,
-        method,
-        accessToken,
-        body,
-      )) as SearchPool;
+      const data = (await fetchData(endpoint, method, body)) as SearchPool;
       return NextResponse.json({ data });
     }
 
