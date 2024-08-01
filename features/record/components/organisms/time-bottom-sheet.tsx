@@ -1,5 +1,7 @@
 'use client';
 
+import '../../styles/time-picker.css';
+
 import { ConfigProvider, TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
@@ -7,7 +9,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import useGetBrowserWidth from '../../hooks/use-get-browser-width';
@@ -46,8 +48,9 @@ export function TimeBottomSheet() {
         theme={{
           components: {
             DatePicker: {
-              timeCellHeight: 50,
-              timeColumnWidth: (width - 40) / 3,
+              timeCellHeight: 36,
+              timeColumnWidth: Math.floor(width / 3),
+              timeColumnHeight: 116,
             },
           },
         }}
@@ -57,35 +60,53 @@ export function TimeBottomSheet() {
             placeholder="시간 설정"
             format="HH:mm"
             use12Hours
+            suffixIcon={<span></span>}
+            panelRender={(originPanel) => (
+              <div
+                className={css({
+                  position: 'absolute',
+                  top: '-10px',
+                  textStyle: 'heading3',
+                  fontWeight: 400,
+                })}
+              >
+                {originPanel}
+              </div>
+            )}
+            open={timeBottmSheetState.isOpen}
             showNow={false}
+            inputMode="none"
             size="large"
             placement="bottomRight"
             needConfirm={false}
             inputReadOnly
-            onChange={handleTimeChange}
+            onPickerValueChange={handleTimeChange}
+            variant="borderless"
+            className={cx(css({ width: '100%' }), 'custom-picker')}
           />
-          <div className={layout.button}>
-            <Button
-              size="large"
-              label="완료"
-              interaction="normal"
-              onClick={handleDoneButtonClick}
-              className={css({ w: 'full' })}
-            />
-          </div>
         </div>
       </ConfigProvider>
+      <div className={layout.button}>
+        <Button
+          size="large"
+          label="완료"
+          interaction="normal"
+          onClick={handleDoneButtonClick}
+          className={css({ w: 'full' })}
+        />
+      </div>
     </BottomSheet>
   );
 }
 
 const layout = {
   bottomSheet: flex({
+    position: 'relative',
     direction: 'column',
-    backgroundColor: 'white',
-    width: 'full',
-    height: '327px',
-    padding: '10px 15px',
+    alignItems: 'center',
+    width: '100%',
+    height: '128px',
+    marginBottom: '44px',
   }),
   button: css({
     w: 'full',

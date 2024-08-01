@@ -5,7 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { RecordRequestProps } from '../../apis/dto';
@@ -64,7 +64,7 @@ export function Form() {
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
       <form>
-        <div className={formSectionStyles}>
+        <div className={cx(formSectionStyles, css({ overflow: 'auto' }))}>
           <TextField
             variant="select"
             isRequired
