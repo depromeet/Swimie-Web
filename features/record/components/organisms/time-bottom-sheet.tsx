@@ -65,7 +65,6 @@ export function TimeBottomSheet() {
               <div
                 className={css({
                   position: 'absolute',
-                  top: '-10px',
                   textStyle: 'heading3',
                   fontWeight: 400,
                 })}
