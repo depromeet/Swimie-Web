@@ -10,7 +10,7 @@ import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { createGradient } from '@/utils/visualization';
 
-import { MemoryType, Strokes } from '../molecules/calendar';
+import type { MemoryType, Strokes } from '../molecules';
 
 interface ItemContentProps {
   type: MemoryType;
