@@ -64,7 +64,8 @@ export function TimeBottomSheet() {
             panelRender={(originPanel) => (
               <div
                 className={css({
-                  position: 'absolute',
+                  position: 'fixed',
+                  bottom: '82px',
                   textStyle: 'heading3',
                   fontWeight: 400,
                 })}
@@ -105,7 +106,7 @@ const layout = {
     alignItems: 'center',
     width: '100%',
     height: '128px',
-    marginBottom: '44px',
+    marginBottom: '32px',
   }),
   button: css({
     w: 'full',
