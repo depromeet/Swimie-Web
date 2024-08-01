@@ -12,7 +12,7 @@ const Page = () => {
 
     const postCode = async () => {
       if (!KAKAO_CODE) {
-        console.error('Kakao code is not available');
+        console.error('코드가 유효하지 않습니다.');
         return;
       }
       try {
@@ -25,10 +25,7 @@ const Page = () => {
         });
 
         if (response.status === 200) {
-          console.log('Login successful:', await response.json());
           router.push('/');
-        } else {
-          console.error('Failed to set cookies:', response.statusText);
         }
       } catch (error) {
         console.error('Error:', error);
