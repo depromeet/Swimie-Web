@@ -6,6 +6,7 @@ import { Image } from '@/components/atoms';
 import { Calendar } from '@/features/main/calendar';
 import { MainTab } from '@/features/main/main-tab';
 import { TabItemInfo } from '@/features/main/main-tab/main-tab';
+import { TimeLine } from '@/features/main/time-line';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -55,20 +56,23 @@ export default function Home() {
             <Calendar />
           </>
         ) : (
-          ''
+          <TimeLine />
         )}
       </section>
     </main>
   );
 }
 
-const styles = css({
+const styles = flex({
   w: 'full',
   h: 'full',
   padding: '16px 20px',
+  direction: 'column',
 });
 
 const contentStyles = flex({
+  w: 'full',
+  h: 'full',
   padding: '16px 0',
   gap: '16px',
   direction: 'column',
