@@ -1,4 +1,5 @@
-export { CalendarItem } from './calendar-item';
-export { DayLabels } from './day-labels';
-export { MoveMonthButton } from './move-month-button';
-export { ViewImageButton } from './view-image-button';
+export * from './calendar-item';
+export * from './calendar-item-content';
+export * from './day-labels';
+export * from './move-month-button';
+export * from './view-image-button';

@@ -1,4 +1,4 @@
-import { Strokes } from '@/features/main/calendar/molecules/calendar';
+import { Strokes } from '@/features/main/calendar';
 
 export const swims: Array<{ name: keyof Strokes; color: string }> = [
   { name: 'free', color: '#3B87F4' },

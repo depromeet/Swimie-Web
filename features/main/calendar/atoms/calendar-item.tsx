@@ -14,7 +14,7 @@ interface ItemLayoutProps {
 
 interface CalendarItemProps extends ItemLayoutProps {
   memory: Memory | undefined;
-  totalDistance?: number | undefined;
+  totalDistance?: number;
 }
 
 export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
