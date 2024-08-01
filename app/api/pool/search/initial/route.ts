@@ -40,7 +40,7 @@ export async function GET(): Promise<NextResponse> {
       const method = 'GET';
       const body = '';
 
-      const data = (await fetchData(endpoint, method, body)) as SearchPool;
+      const data = await fetchData(endpoint, method, body);
       return NextResponse.json({ data });
     }
 
@@ -50,7 +50,7 @@ export async function GET(): Promise<NextResponse> {
     );
   } catch (error) {
     console.error('데이터를 받아오지 못했습니다.', error);
-    clearAuthCookies();
+    // clearAuthCookies();
     return NextResponse.json(
       { error: '데이터를 받아오지 못했습니다.' },
       { status: 500 },
