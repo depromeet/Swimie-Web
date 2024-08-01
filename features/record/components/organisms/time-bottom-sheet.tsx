@@ -53,6 +53,9 @@ export function TimeBottomSheet() {
               timeColumnHeight: 116,
             },
           },
+          token: {
+            motion: false,
+          },
         }}
       >
         <div className={layout.bottomSheet}>
