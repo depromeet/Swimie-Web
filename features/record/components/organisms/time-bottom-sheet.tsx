@@ -10,14 +10,14 @@ import { BottomSheet } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import UseGetBrowserWidth from '../../hooks/use-get-browser-width';
+import useGetBrowserWidth from '../../hooks/use-get-browser-width';
 import { timeBottomSheetState } from '../../store';
 
 export function TimeBottomSheet() {
   const { setValue } = useFormContext();
   const [timeBottmSheetState, setTimeBottmSheetState] =
     useAtom(timeBottomSheetState);
-  const width = UseGetBrowserWidth();
+  const width = useGetBrowserWidth();
 
   const handleTimeChange = (date: dayjs.Dayjs) => {
     setTimeBottmSheetState((prev) => ({ ...prev, time: date.format('HH:mm') }));

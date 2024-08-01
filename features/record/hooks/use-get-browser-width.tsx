@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export default function UseGetBrowserWidth() {
+export default function useGetBrowserWidth() {
   const [width, setWidth] = useState(0);
 
   const handleResize = () => {
