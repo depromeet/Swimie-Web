@@ -1,4 +1,4 @@
-interface PoolProps {
+export interface PoolProps {
   poolId: number;
   name: string;
   address: string;
@@ -21,5 +21,8 @@ export interface SearchPoolResultResponse {
   message: string;
   data: {
     poolInfos: PoolProps[];
+    pageSize: number;
+    cursorId: number;
+    hasNext: boolean;
   };
 }

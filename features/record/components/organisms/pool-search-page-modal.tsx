@@ -7,7 +7,9 @@ import { HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
+import { useSearchPoolInitial } from '../../apis';
 import { isPoolSearchPageModalOpen } from '../../store';
+import { PoolSearchResultElement } from '../molecules';
 import { PoolSearchResultList } from './pool-search-result-list';
 
 interface PoolSearchPageModalProps {
@@ -23,6 +25,11 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const [pageModalState, setPageModalState] = useAtom(
     isPoolSearchPageModalOpen,
   );
+
+  const { data } = useSearchPoolInitial(poolSearchText);
+  const isDataEmpty =
+    data?.data.favoritePools.length === 0 &&
+    data.data.searchedPools.length === 0;
 
   const handleBackArrowClick = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
@@ -47,17 +54,21 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             onChange={handlePoolSearchTextChange}
             className={css({ marginBottom: '12px' })}
           />
-          {!poolSearchText ? (
+          {!poolSearchText && isDataEmpty && (
             <p className={textStyles.searchInfo}>
               검색한 수영장을
               <br /> 즐겨찾기할 수 있어요
             </p>
-          ) : (
-            // <ErrorBoundary fallback={'에러 표시 컴포넌트'}>
+          )}
+          {!poolSearchText &&
+            !isDataEmpty &&
+            data?.data.favoritePools.map((pool) => (
+              <PoolSearchResultElement key={pool.poolId} {...pool} isFavorite />
+            ))}
+          {poolSearchText && (
             <Suspense fallback={'스켈레톤 컴포넌트'}>
               <PoolSearchResultList poolSearchText={poolSearchText} />
             </Suspense>
-            // </ErrorBoundary>
           )}
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
+import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { StarIcon, StarIconFill } from '@/components/atoms';
@@ -15,15 +16,13 @@ interface PoolSearchListElementProps {
   address: string;
   isFavorite: boolean;
   className?: string;
+  assignRef?: boolean;
 }
 
-export function PoolSearchResultElement({
-  poolId,
-  name,
-  address,
-  isFavorite,
-  className,
-}: PoolSearchListElementProps) {
+export const PoolSearchResultElement = forwardRef<
+  HTMLLIElement,
+  PoolSearchListElementProps
+>(({ poolId, name, address, isFavorite, className, assignRef }, ref) => {
   const { setValue } = useFormContext();
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
 
@@ -32,8 +31,12 @@ export function PoolSearchResultElement({
     setValue('poolName', name);
     setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
   };
+
+  PoolSearchResultElement.displayName = 'PoolSearchResultElement';
+
   return (
     <li
+      ref={assignRef ? ref : undefined}
       className={cx(listStyles, className)}
       onClick={() => handleElementClick(name, poolId)}
     >
@@ -44,7 +47,7 @@ export function PoolSearchResultElement({
       {isFavorite ? <StarIconFill /> : <StarIcon />}
     </li>
   );
-}
+});
 
 const listStyles = flex({
   justifyContent: 'space-between',
