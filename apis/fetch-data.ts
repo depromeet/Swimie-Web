@@ -11,7 +11,7 @@ import { cookies } from 'next/headers';
 export async function fetchData<T>(
   endpoint: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-  body?: '',
+  body?: object,
 ): Promise<T> {
   const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
   const url = `${BASE_URL}${endpoint}`;

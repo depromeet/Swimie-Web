@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { SearchIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
@@ -28,8 +28,10 @@ export function SearchBar({
   inputClassName,
   onChange,
 }: SearchBarProps) {
+  const [searchText, setSearchText] = useState(value);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
+    setSearchText(newText);
     onChange?.(newText);
   };
 
@@ -37,7 +39,7 @@ export function SearchBar({
     <div className={cx(layoutStyles, className)}>
       <SearchIcon />
       <input
-        value={value}
+        value={searchText}
         className={cx(inputStyles, inputClassName)}
         placeholder={placeholder}
         onChange={handleInputChange}

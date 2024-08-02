@@ -1,13 +1,15 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { Suspense, useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import { Suspense, useState } from 'react';
 
 import { HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
-import { isPoolSearchPageModalOpen } from '../../store';
+import { useSearchPoolInitial } from '../../apis';
+import { usePoolSearchPageModal } from '../../hooks';
+import { PoolSearchResultElement } from '../molecules';
 import { PoolSearchResultList } from './pool-search-result-list';
 
 interface PoolSearchPageModalProps {
@@ -18,19 +20,18 @@ interface PoolSearchPageModalProps {
  * @param title 수영 검색 page-modal 제목
  */
 export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
-  const pageModalRef = useRef<HTMLDivElement>(null);
+  const { pageModalRef, pageModalState, handlers } = usePoolSearchPageModal();
   const [poolSearchText, setPoolSearchText] = useState('');
-  const [pageModalState, setPageModalState] = useAtom(
-    isPoolSearchPageModalOpen,
-  );
 
-  const handleBackArrowClick = () => {
-    setPageModalState({ isOpen: false, jumpDirection: 'backward' });
-  };
-  // api 연결 후 debounce 처리
-  const handlePoolSearchTextChange = (text: string) => {
+  const { data } = useSearchPoolInitial(poolSearchText);
+  const isDataEmpty =
+    data?.data.favoritePools.length === 0 &&
+    data?.data.searchedPools.length === 0;
+
+  const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(text);
-  };
+  }, 300);
+
   return (
     <PageModal
       isOpen={pageModalState.isOpen}
@@ -38,7 +39,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
       ref={pageModalRef}
     >
       <div ref={pageModalRef}>
-        <HeaderBar onClickBackArrow={handleBackArrowClick} />
+        <HeaderBar onClickBackArrow={() => handlers.onClosePageModal()} />
         <div className={layoutStyles}>
           <h2 className={textStyles.title}>{title}</h2>
           <SearchBar
@@ -47,17 +48,31 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             onChange={handlePoolSearchTextChange}
             className={css({ marginBottom: '12px' })}
           />
-          {!poolSearchText ? (
+          {!poolSearchText && isDataEmpty && (
             <p className={textStyles.searchInfo}>
               검색한 수영장을
               <br /> 즐겨찾기할 수 있어요
             </p>
-          ) : (
-            // <ErrorBoundary fallback={'에러 표시 컴포넌트'}>
+          )}
+          {/* Todo: 스켈레톤 컴포넌트 */}
+          {!poolSearchText && !isDataEmpty && (
+            <Suspense fallback={'스켈레톤 컴포넌트'}>
+              {data?.data.favoritePools.map((pool) => (
+                <PoolSearchResultElement
+                  key={pool.poolId}
+                  {...pool}
+                  isFavorite
+                />
+              ))}
+              {data?.data.searchedPools.map((pool) => (
+                <PoolSearchResultElement key={pool.poolId} {...pool} />
+              ))}
+            </Suspense>
+          )}
+          {poolSearchText && (
             <Suspense fallback={'스켈레톤 컴포넌트'}>
               <PoolSearchResultList poolSearchText={poolSearchText} />
             </Suspense>
-            // </ErrorBoundary>
           )}
         </div>
       </div>
