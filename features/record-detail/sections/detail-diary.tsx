@@ -7,9 +7,7 @@ import { type RecordDetailType } from '../types';
 
 export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
   const { images, diary, recordAt } = data;
-
-  const formatDate = getFormatDate({ dateStr: recordAt });
-  const { year, month, day, weekday } = formatDate;
+  const { year, month, day, weekday } = getFormatDate({ dateStr: recordAt });
 
   return (
     <section className={containerStyle}>
@@ -32,7 +30,6 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
             <h1 className={header.title}>오늘의 수영 일기</h1>
           </div>
 
-          {/* TODO: date format 수정 */}
           <p
             className={header.date}
           >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
