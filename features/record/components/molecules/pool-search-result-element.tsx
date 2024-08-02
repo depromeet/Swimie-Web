@@ -10,6 +10,7 @@ import { flex } from '@/styled-system/patterns';
 
 import { useToggleFavorite } from '../../apis/use-toggle-favorite';
 import { isPoolSearchPageModalOpen } from '../../store';
+import { formSubInfoState } from '../../store/form-sub-info';
 
 interface PoolSearchListElementProps {
   poolId: number;
@@ -28,11 +29,13 @@ export const PoolSearchResultElement = forwardRef<
 
   const { setValue } = useFormContext();
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+  const setFormSubInfo = useSetAtom(formSubInfoState);
+
   const { mutate: toggleFavorite, isPending } = useToggleFavorite();
 
   const handleElementClick = (name: string, poolId: number) => {
     setValue('poolId', poolId);
-    setValue('poolName', name);
+    setFormSubInfo((prev) => ({ ...prev, poolName: name }));
     setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
   };
 

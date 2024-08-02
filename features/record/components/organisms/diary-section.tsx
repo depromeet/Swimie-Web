@@ -20,7 +20,10 @@ export function DiarySection({ title, value }: DiarySectionProps) {
   const { setValue } = useFormContext();
 
   const handleTextAreaChange = (text: string) => {
-    setValue('diary', text);
+    if (text) setValue('diary', text);
+    else {
+      setValue('diary', undefined);
+    }
   };
   return (
     <section className={formSectionStyles}>

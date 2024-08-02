@@ -1,6 +1,6 @@
 'use client';
 
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -15,11 +15,14 @@ import { css } from '@/styled-system/css';
 
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
+import { formSubInfoState } from '../../store/form-sub-info';
 import { StrokeDistanceFields } from './stroke-distance-fields';
 
 export function DistancePageModal() {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
+  const setFormSubInfo = useSetAtom(formSubInfoState);
+
   const {
     pageModalRef,
     secondaryTabIndex,
@@ -65,8 +68,15 @@ export function DistancePageModal() {
   };
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
-      setValue('totalDistance', totalMeter);
-    else setValue('totalDistance', totalDistance);
+      setFormSubInfo((prev) => ({
+        ...prev,
+        totalDistance: Number(totalMeter),
+      }));
+    else
+      setFormSubInfo((prev) => ({
+        ...prev,
+        totalDistance: Number(totalDistance),
+      }));
 
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
