@@ -1,34 +1,30 @@
 import { DateLeftArrowIcon, DateRightArrowIcon } from '@/components/atoms';
-import { nameOfDays } from '@/constants/date';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { getFormatDate } from '@/utils';
 
 type DatePicker = {
-  date: Date;
+  recordDateStr: string;
   onClickPrevious: () => void;
   onClickNext: () => void;
 };
 
 export const DatePicker = ({
-  date,
+  recordDateStr,
   onClickPrevious,
   onClickNext,
 }: DatePicker) => {
-  const getFormatDate = (date: Date) => {
-    const year = String(date.getFullYear()).slice(2);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const weekday = nameOfDays[date.getDay()];
-
-    return `${year}.${month}.${day}.${weekday}`;
-  };
+  const { year, month, day, weekday } = getFormatDate({
+    dateStr: recordDateStr,
+    padNum: 2,
+  });
 
   return (
     <div className={containerStyle}>
       <button onClick={onClickPrevious}>
         <DateLeftArrowIcon />
       </button>
-      <p className={textStyle}>{getFormatDate(date)}</p>
+      <p className={textStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
       <button onClick={onClickNext}>
         <DateRightArrowIcon />
       </button>

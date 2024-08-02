@@ -1,21 +1,42 @@
 import { css } from '@/styled-system/css';
 import { grid } from '@/styled-system/patterns';
+import { getFormatTime } from '@/utils';
 
 import { SwimDescriptionItem } from '../components';
+import { type RecordDetailType } from '../types';
 
-export const DetailDescriptionSection = () => {
+export const DetailDescriptionSection = ({
+  data,
+}: {
+  data: RecordDetailType;
+}) => {
+  const { pool, duration, memoryDetail } = data;
+
+  const { minute: durationMinute } = getFormatTime({ timeStr: duration });
+  const { hour: paceHour, minute: paceMinute } = getFormatTime({
+    timeStr: memoryDetail.pace,
+  });
+
   return (
     <section className={containerStyle}>
       <div className={infoWrapperStyle}>
-        {new Array(2).fill(0).map((_, index) => (
-          <SwimDescriptionItem key={index} />
-        ))}
+        <SwimDescriptionItem title="수영 장소" value={pool.name} />
+        <SwimDescriptionItem title="수영 시간" value={`${durationMinute}분`} />
       </div>
 
       <div className={detailWrapperStyle}>
-        {new Array(3).fill(0).map((_, index) => (
-          <SwimDescriptionItem key={index} />
-        ))}
+        <SwimDescriptionItem
+          title="♥️심박수"
+          value={`${memoryDetail.heartRate} bpm`}
+        />
+        <SwimDescriptionItem
+          title="⏱️평균 페이스"
+          value={`${paceHour}’${paceMinute}’’/100 m`}
+        />
+        <SwimDescriptionItem
+          title="🔥칼로리"
+          value={`${memoryDetail.kcal}kcal`}
+        />
       </div>
     </section>
   );

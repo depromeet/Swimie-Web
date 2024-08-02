@@ -1,12 +1,22 @@
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export const SwimStatsItem = () => {
+import { type DetailStrokes } from '../types';
+
+type SwimStatsItem = {
+  item: DetailStrokes;
+};
+export const SwimStatsItem = ({ item }: SwimStatsItem) => {
+  if (!item) return null;
+
+  const { name, laps, meter } = item;
   return (
     <div className={containerStyle}>
-      <h1 className={css(text.stroke.raw({ type: '자유형' }))}>자유형</h1>
-      <h2 className={css(text.distance.raw({ unit: 'meter' }))}>1500m</h2>
-      <p className={css(text.distance.raw({ unit: 'laps' }))}>124lap</p>
+      <h1 className={css(text.stroke.raw({ type: name }))}>{name}</h1>
+      <h2 className={css(text.distance.raw({ unit: 'meter' }))}>
+        {meter.toLocaleString()}m
+      </h2>
+      <p className={css(text.distance.raw({ unit: 'laps' }))}>{laps}laps</p>
     </div>
   );
 };
