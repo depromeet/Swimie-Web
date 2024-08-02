@@ -4,17 +4,28 @@ import { Button, SuccessCheckIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export default function RecordSuccessPage() {
+interface RecordSuccessPageProps {
+  searchParams: { [key: string]: string };
+}
+
+export default function RecordSuccessPage({
+  searchParams,
+}: RecordSuccessPageProps) {
   return (
     <div className={layoutStyles.full}>
       <div className={layoutStyles.content}>
         <SuccessCheckIcon />
         <h3 className={textStyles.title}>기록 완료!</h3>
         <p>
-          이번 달 <span className={textStyles.sub}>1번째</span> 기록이에요.
+          이번 달{' '}
+          <span className={textStyles.sub}>{searchParams.rank}번째</span>{' '}
+          기록이에요.
         </p>
       </div>
-      <Link href="/record-detail" className={buttonStyles}>
+      <Link
+        href={`/record-detail/${searchParams.memoryId}`}
+        className={buttonStyles}
+      >
         <Button label="확인" size="large" className={css({ width: 'full' })} />
       </Link>
     </div>

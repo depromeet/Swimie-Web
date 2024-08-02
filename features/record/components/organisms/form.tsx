@@ -3,7 +3,6 @@
 
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -50,9 +49,8 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
 
-  const { mutateAsync: imagePresign, isSuccess: isImagePresignedSuccess } =
-    useImagePresignedUrl();
-  const { mutate: memory, isSuccess: isMemorySuccess } = useMemory();
+  const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  const { mutateAsync: memory } = useMemory();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -67,18 +65,23 @@ export function Form() {
 
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (formSubInfo.imageFiles.length > 0) {
-      await imagePresign(formSubInfo.imageFiles).then((res) => {
-        memory({ ...data, imageIdList: [res.data[0].imageId] });
+      await imagePresign(formSubInfo.imageFiles).then(async (res) => {
+        await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
+          (res) => {
+            router.push(
+              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+            );
+          },
+        );
       });
     } else {
-      memory(data);
+      await memory(data).then((res) =>
+        router.push(
+          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+        ),
+      );
     }
   };
-
-  useEffect(() => {
-    if (isMemorySuccess) router.push('/record/success');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isImagePresignedSuccess, isMemorySuccess]);
 
   return (
     //react-hook-form 전역적으로 사용
