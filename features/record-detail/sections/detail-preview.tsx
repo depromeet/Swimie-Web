@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
+import { getFormatTime } from '@/utils';
 
 import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
 import { type RecordDetailType } from '../types';
@@ -12,15 +13,6 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
   const toolArr = useMemo(() => {
     return data.memoryDetail.item.split(',');
   }, [data.memoryDetail.item]);
-
-  const getFormatTime = (timeStr: string) => {
-    const timeArr = timeStr.split(':');
-    return `${timeArr.slice(0, 2).join(':')}`;
-  };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleClickPreviousDate = () => {
     console.log('prev');
@@ -32,6 +24,14 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
   const { startTime, endTime, lane, strokes, totalLap, totalMeter, recordAt } =
     data;
+  const { hour: startHour, minute: startMinute } = getFormatTime({
+    timeStr: startTime,
+    type: 'string',
+  });
+  const { hour: endHour, minute: endMinute } = getFormatTime({
+    timeStr: endTime,
+    type: 'string',
+  });
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
@@ -53,7 +53,8 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
             <span className={graphText.unit}>m</span>
           </div>
           <p className={graphText.detail}>
-            {getFormatTime(startTime)} ~ {getFormatTime(endTime)} / {totalLap}
+            {`${startHour}:${startMinute}`} ~ {`${endHour}:${endMinute}`} /{' '}
+            {totalLap}
             lap / {lane}m 레인
           </p>
         </div>
