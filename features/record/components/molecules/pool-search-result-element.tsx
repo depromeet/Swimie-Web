@@ -1,13 +1,14 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { StarIcon, StarIconFill } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { useToggleFavorite } from '../../apis/use-toggle-favorite';
 import { isPoolSearchPageModalOpen } from '../../store';
 
 interface PoolSearchListElementProps {
@@ -23,8 +24,11 @@ export const PoolSearchResultElement = forwardRef<
   HTMLLIElement,
   PoolSearchListElementProps
 >(({ poolId, name, address, isFavorite, className, assignRef }, ref) => {
+  const [favorite, setFavorite] = useState(isFavorite);
+
   const { setValue } = useFormContext();
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+  const { mutate: toggleFavorite, isPending } = useToggleFavorite();
 
   const handleElementClick = (name: string, poolId: number) => {
     setValue('poolId', poolId);
@@ -32,19 +36,25 @@ export const PoolSearchResultElement = forwardRef<
     setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
   };
 
-  PoolSearchResultElement.displayName = 'PoolSearchResultElement';
+  const handleStarIconClick = () => {
+    toggleFavorite(poolId);
+    if (!isPending) setFavorite((prev) => !prev);
+  };
 
   return (
-    <li
-      ref={assignRef ? ref : undefined}
-      className={cx(listStyles, className)}
-      onClick={() => handleElementClick(name, poolId)}
-    >
-      <div className={textStyles.layout}>
+    <li ref={assignRef ? ref : undefined} className={cx(listStyles, className)}>
+      <div
+        className={textStyles.layout}
+        onClick={() => handleElementClick(name, poolId)}
+      >
         <span className={textStyles.name}>{name}</span>
         <span className={textStyles.address}>{address}</span>
       </div>
-      {isFavorite ? <StarIconFill /> : <StarIcon />}
+      {favorite ? (
+        <StarIconFill onClick={handleStarIconClick} />
+      ) : (
+        <StarIcon onClick={handleStarIconClick} />
+      )}
     </li>
   );
 });
@@ -72,5 +82,10 @@ const textStyles = {
     textStyle: 'body2.normal',
     fontWeight: 400,
     color: 'text.alternative',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   }),
 };
+
+PoolSearchResultElement.displayName = 'PoolSearchResultElement';

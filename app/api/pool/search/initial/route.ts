@@ -5,7 +5,7 @@ import { SearchPoolInitialResultResponse } from '@/features/record';
 
 export async function GET() {
   const data = await fetchData<SearchPoolInitialResultResponse>(
-    '/pool/search/initial',
+    `/pool/search/initial`,
     'GET',
   );
 
