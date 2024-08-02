@@ -1,26 +1,34 @@
-'use client';
-
+import { fetchData } from '@/apis/fetch-data';
 import {
   DetailDescriptionSection,
   DetailDiarySection,
   DetailPreviewSection,
+  type RecordDetailType,
 } from '@/features/record-detail';
 import { flex } from '@/styled-system/patterns';
 
-const RecordDetail = () => {
+type RecordDetail = {
+  params: { id: string };
+};
+export default async function RecordDetail({ params }: RecordDetail) {
+  const { data } = await fetchData<{ data: RecordDetailType }>(
+    `/memory/${params.id}`,
+    'GET',
+  );
+
+  // TODO: add loading state
+  if (!data) return null;
   return (
     <article className={containerStyle}>
       {/* preview section */}
-      <DetailPreviewSection />
+      <DetailPreviewSection data={data} />
       {/* description section */}
-      <DetailDescriptionSection />
+      <DetailDescriptionSection data={data} />
       {/* diary section */}
-      <DetailDiarySection />
+      <DetailDiarySection data={data} />
     </article>
   );
-};
-
-export default RecordDetail;
+}
 
 const containerStyle = flex({
   direction: 'column',

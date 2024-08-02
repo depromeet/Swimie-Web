@@ -1,11 +1,15 @@
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export const SwimDescriptionItem = () => {
+type SwimDescriptionItem = {
+  title: string;
+  value?: string;
+};
+export const SwimDescriptionItem = ({ title, value }: SwimDescriptionItem) => {
   return (
     <div className={containerStyle}>
-      <p className={text.sub}>수영 장소</p>
-      <h1 className={text.main}>충무스포츠센터</h1>
+      <p className={text.sub}>{title}</p>
+      <h1 className={text.main}>{value ?? '-'}</h1>
     </div>
   );
 };

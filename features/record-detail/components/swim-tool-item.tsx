@@ -2,13 +2,16 @@ import { SwimIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export const SwimToolItem = () => {
+type SwimToolItem = {
+  name: string;
+};
+export const SwimToolItem = ({ name }: SwimToolItem) => {
   return (
     <div className={containerStyle}>
       <div className={iconStyle}>
         <SwimIcon />
       </div>
-      <p className={textStyle}>킥판</p>
+      <p className={textStyle}>{name}</p>
     </div>
   );
 };

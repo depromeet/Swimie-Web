@@ -1,9 +1,27 @@
+'use client';
+
+import { useEffect, useMemo } from 'react';
+
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
+import { type RecordDetailType } from '../types';
 
-export const DetailPreviewSection = () => {
+export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
+  const toolArr = useMemo(() => {
+    return data.memoryDetail.item.split(',');
+  }, [data.memoryDetail.item]);
+
+  const getFormatTime = (timeStr: string) => {
+    const timeArr = timeStr.split(':');
+    return `${timeArr.slice(0, 2).join(':')}`;
+  };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const handleClickPreviousDate = () => {
     console.log('prev');
   };
@@ -12,13 +30,15 @@ export const DetailPreviewSection = () => {
     console.log('next');
   };
 
+  const { startTime, endTime, lane, strokes, totalLap, totalMeter, recordAt } =
+    data;
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
       <div className={graphArea.container}>
         {/* 날짜 선택 */}
         <DatePicker
-          date={new Date()}
+          recordDateStr={recordAt}
           onClickPrevious={handleClickPreviousDate}
           onClickNext={handleClickNextDate}
         />
@@ -29,26 +49,33 @@ export const DetailPreviewSection = () => {
         {/* preview description */}
         <div className={graphArea.textWrapper}>
           <div className={graphText.titleContainer}>
-            <h1 className={graphText.title}>2,600</h1>
+            <h1 className={graphText.title}>{totalMeter.toLocaleString()}</h1>
             <span className={graphText.unit}>m</span>
           </div>
-          <p className={graphText.detail}>22:00 ~ 22:50 / 56lap / 25m 레인</p>
+          <p className={graphText.detail}>
+            {getFormatTime(startTime)} ~ {getFormatTime(endTime)} / {totalLap}
+            lap / {lane}m 레인
+          </p>
         </div>
       </div>
 
       {/* NOTE: 통계 영역 */}
-      <div className={statsContainer}>
-        {new Array(5).fill(0).map((_, index) => (
-          <SwimStatsItem key={index} />
-        ))}
-      </div>
+      {Boolean(strokes?.length) && (
+        <div className={statsContainer}>
+          {strokes.map((item) => (
+            <SwimStatsItem key={item.strokeId} item={item} />
+          ))}
+        </div>
+      )}
 
       {/* NOTE: 수영 장비 영역 */}
-      <div className={toolsContainer}>
-        {new Array(5).fill(0).map((_, index) => (
-          <SwimToolItem key={index} />
-        ))}
-      </div>
+      {Boolean(toolArr?.length) && (
+        <div className={toolsContainer}>
+          {toolArr.map((tool, index) => (
+            <SwimToolItem key={index} name={tool} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
