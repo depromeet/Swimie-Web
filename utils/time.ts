@@ -12,14 +12,11 @@ type GetTime = {
  */
 export const getFormatTime = ({ timeStr, type = 'number' }: GetTime) => {
   const [hour, minute, second] = timeStr.split(':');
-  const hourNum = parseInt(hour, 10);
-  const minuteNum = parseInt(minute, 10);
-  const secondNum = parseInt(second, 10);
-
   const isTypeNumber = type === 'number';
+
   return {
-    hour: isTypeNumber ? hourNum : hour,
-    minute: isTypeNumber ? minuteNum : minute,
-    second: isTypeNumber ? secondNum : second,
+    hour: isTypeNumber ? parseInt(hour, 10) : hour,
+    minute: isTypeNumber ? parseInt(minute, 10) : minute,
+    second: isTypeNumber ? parseInt(second, 10) : second,
   };
 };
