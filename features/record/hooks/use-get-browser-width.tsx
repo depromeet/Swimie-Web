@@ -6,16 +6,16 @@ export default function useGetBrowserWidth() {
   const [width, setWidth] = useState(0);
 
   const handleResize = () => {
-    setWidth(window.innerWidth);
+    if (window.innerWidth > 600) setWidth(600);
+    else setWidth(window.innerWidth);
   };
 
   useEffect(() => {
-    // Check if window object exists (for browser environments)
     if (typeof window !== 'undefined') {
-      setWidth(window.innerWidth);
+      if (window.innerWidth > 600) setWidth(600);
+      else setWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
       return () => {
-        // cleanup
         window.removeEventListener('resize', handleResize);
       };
     }

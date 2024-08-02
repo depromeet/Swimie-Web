@@ -60,6 +60,9 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+
+  const startTime = methods.watch('startTime');
+  const endTime = methods.watch('endTime');
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
@@ -77,9 +80,7 @@ export function Form() {
               variant="select"
               isRequired
               hasDownArrow
-              value={
-                methods.watch('startTime') ? methods.watch('startTime') : ''
-              }
+              value={startTime || ''}
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
@@ -96,7 +97,7 @@ export function Form() {
               variant="select"
               isRequired
               hasDownArrow
-              value={methods.watch('endTime') ? methods.watch('endTime') : ''}
+              value={endTime || ''}
               label="수영 시간"
               placeholder="00:00"
               wrapperClassName={timeStyles.field}
