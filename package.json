@@ -26,6 +26,7 @@
     "react-dom": "^18",
     "react-error-boundary": "^4.0.13",
     "react-hook-form": "^7.52.1",
+    "react-image-file-resizer": "^0.4.8",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {

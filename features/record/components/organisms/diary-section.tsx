@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import { TextArea } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
@@ -6,22 +8,25 @@ import { FormSectionProps } from '../../types/form-section';
 
 interface DiarySectionProps extends FormSectionProps {
   value: string;
-  onChange?: (text: string) => void;
 }
 
 /**
  * @param title 일기 section의 제목
  * @param value textArea의 value 주입
- * @param onChange 주입된 value 값을 변경하는 function
  */
-export function DiarySection({ title, value, onChange }: DiarySectionProps) {
+export function DiarySection({ title, value }: DiarySectionProps) {
+  const { setValue } = useFormContext();
+
+  const handleTextAreaChange = (text: string) => {
+    setValue('diary', text);
+  };
   return (
     <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
       <TextArea
         placeholder="오늘 무엇을 배웠나요? 오늘 무엇을 느꼈나요?"
         value={value}
-        onChange={onChange}
+        onChange={handleTextAreaChange}
       />
     </section>
   );

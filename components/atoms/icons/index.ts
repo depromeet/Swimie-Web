@@ -3,6 +3,7 @@ export * from './check-icon';
 export * from './check-in-circle-icon';
 export * from './chevron-icon';
 export * from './date-arrow-icon';
+export * from './delete-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
 export * from './search-icon';

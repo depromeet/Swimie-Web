@@ -17,7 +17,6 @@ import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 import { StrokeDistanceFields } from './stroke-distance-fields';
 
-// Todo: 영법별 거리 입력 로직 구현
 export function DistancePageModal() {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
@@ -28,6 +27,8 @@ export function DistancePageModal() {
     totalMeter,
     totalLaps,
     totalDistance,
+    strokes,
+    buttonLabel,
     handlers,
   } = useDistancePageModal<HTMLDivElement>(getValues('lane') as number);
 
@@ -63,9 +64,45 @@ export function DistancePageModal() {
     handlers.onClosePageModal();
   };
   const handleDoneButtonClick = () => {
-    if (isAssistiveIndexZero) setValue('totalDistance', Number(totalMeter));
-    else if (isAssistiveIndexOne)
-      setValue('totalDistance', Number(totalDistance));
+    if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
+      setValue('totalDistance', totalMeter);
+    else setValue('totalDistance', totalDistance);
+
+    if (secondaryTabIndex === 0) {
+      if (isAssistiveIndexZero) {
+        if (totalMeter) {
+          setValue('strokes', [
+            { name: '총거리', meter: Number(totalMeter), laps: 0 },
+          ]);
+        } else {
+          setValue('strokes', []);
+        }
+      } else if (isAssistiveIndexOne) {
+        if (totalLaps) {
+          setValue('strokes', [
+            { name: '총바퀴', meter: 0, laps: Number(totalLaps) },
+          ]);
+        } else {
+          setValue('strokes', []);
+        }
+      }
+    } else {
+      if (isAssistiveIndexZero) {
+        setValue(
+          'strokes',
+          strokes.filter((stroke) => {
+            return stroke.meter;
+          }),
+        );
+      } else if (isAssistiveIndexOne) {
+        setValue(
+          'strokes',
+          strokes.filter((stroke) => {
+            return stroke.laps;
+          }),
+        );
+      }
+    }
     handlers.onClosePageModal();
   };
   return (
@@ -117,17 +154,17 @@ export function DistancePageModal() {
             />
           )}
           {secondaryTabIndex === 1 && (
-            <StrokeDistanceFields assistiveTabIndex={assistiveTabIndex} />
+            <StrokeDistanceFields
+              assistiveTabIndex={assistiveTabIndex}
+              strokes={strokes}
+              onChangeStroke={handlers.onChangeStroke}
+            />
           )}
         </section>
         <div className={layout.button}>
           <Button
             size="large"
-            label={
-              isAssistiveIndexZero
-                ? '완료'
-                : `${totalLaps && Number(totalLaps) * getValues('lane') + 'm'} 완료`
-            }
+            label={buttonLabel}
             interaction="normal"
             onClick={handleDoneButtonClick}
             className={css({ w: 'full' })}
