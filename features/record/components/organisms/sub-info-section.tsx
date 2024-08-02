@@ -1,40 +1,60 @@
 'use client';
 
-import { DownArrowIcon } from '@/components/atoms';
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
+import { Accordion, DownArrowIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
-import { useSubInfoTextFields } from '../../hooks';
 import { FormSectionProps } from '../../types/form-section';
 import { SubInfoTextFields } from './sub-info-text-fields';
 
 export function SubInfoSection({ title }: FormSectionProps) {
-  const { isOpen, handlers } = useSubInfoTextFields();
+  const [isTextFieldsOpen, setIsTextFieldsOpen] = useState(false);
+
+  const handleTextFieldsOpenStateClick = () => {
+    setIsTextFieldsOpen((prev) => !prev);
+  };
 
   return (
-    <section>
+    <>
       <div
-        className={beforeExpandStyles.layout}
-        onClick={() => handlers.onChangeFieldsOpen()}
+        className={titleStyles.layout}
+        onClick={handleTextFieldsOpenStateClick}
       >
-        <h1 className={beforeExpandStyles.title}>{title}</h1>
+        <h1 className={titleStyles.text}>{title}</h1>
         <DownArrowIcon />
       </div>
-      {!isOpen && <Divider variant="thick" />}
-      <SubInfoTextFields isOpen={isOpen} />
-    </section>
+      <AnimatePresence>
+        {!isTextFieldsOpen ? (
+          <Accordion>
+            <Divider variant="thick" />
+          </Accordion>
+        ) : (
+          <Accordion className={textFieldsStyles}>
+            <SubInfoTextFields />
+          </Accordion>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
-const beforeExpandStyles = {
-  layout: css({
-    display: 'flex',
+const titleStyles = {
+  layout: flex({
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '24px 20px',
+    padding: '20px 24px',
   }),
-  title: css({
+
+  text: css({
     textStyle: 'heading4',
     fontWeight: '600',
   }),
 };
+
+const textFieldsStyles = css({
+  padding: '0 20px 24px 20px',
+});
