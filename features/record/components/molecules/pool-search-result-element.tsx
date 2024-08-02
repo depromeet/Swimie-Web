@@ -1,7 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { StarIcon, StarIconFill } from '@/components/atoms';
@@ -33,13 +33,22 @@ export const PoolSearchResultElement = forwardRef<
   const handleElementClick = (name: string, poolId: number) => {
     setValue('poolId', poolId);
     setValue('poolName', name);
-    setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
+    setIsPoolSearchPageModalOpen({
+      isOpen: false,
+      jumpDirection: 'backward',
+    });
   };
 
   const handleStarIconClick = () => {
     toggleFavorite(poolId);
     if (!isPending) setFavorite((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (favorite !== isFavorite) {
+      setFavorite(isFavorite);
+    }
+  }, [isFavorite]);
 
   return (
     <li ref={assignRef ? ref : undefined} className={cx(listStyles, className)}>
