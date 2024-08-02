@@ -9,5 +9,6 @@ export { LeftArrowIcon } from './left-arrow-icon';
 export * from './search-icon';
 export * from './star-icon';
 export * from './star-icon-fill';
+export * from './success-check-icon';
 export * from './swim-icon';
 export * from './types';
