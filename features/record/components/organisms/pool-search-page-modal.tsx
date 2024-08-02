@@ -26,7 +26,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const { data } = useSearchPoolInitial(poolSearchText);
   const isDataEmpty =
     data?.data.favoritePools.length === 0 &&
-    data.data.searchedPools.length === 0;
+    data?.data.searchedPools.length === 0;
 
   const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(text);
