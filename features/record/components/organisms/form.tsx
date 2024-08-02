@@ -83,7 +83,7 @@ export function Form() {
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={layoutStyles}>
         <div className={cx(formSectionStyles)}>
           <TextField
             variant="select"
@@ -187,6 +187,10 @@ export function Form() {
     </FormProvider>
   );
 }
+
+const layoutStyles = css({
+  paddingBottom: '100px',
+});
 
 const timeStyles = {
   layout: flex({

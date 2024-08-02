@@ -22,7 +22,7 @@ async function searchPool(nameQuery: string, cursorId: unknown) {
 
 export default function useSearchPool(nameQuery: string) {
   const { data, ...queryInfo } = useInfiniteQuery<SearchPoolResultResponse>({
-    queryKey: ['getSearchMovie', nameQuery],
+    queryKey: ['useSearchPool', nameQuery],
     queryFn: ({ pageParam = undefined }) => searchPool(nameQuery, pageParam),
     initialPageParam: undefined,
     getNextPageParam: (lastPage) =>
