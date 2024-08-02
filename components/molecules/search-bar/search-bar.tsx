@@ -7,6 +7,7 @@ import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export interface SearchBarProps {
+  value: string;
   placeholder?: string;
   className?: string;
   inputClassName?: string;
@@ -21,12 +22,13 @@ export interface SearchBarProps {
  * @param onChange value 값 변경하는 function
  */
 export function SearchBar({
+  value,
   placeholder,
   className,
   inputClassName,
   onChange,
 }: SearchBarProps) {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(value);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     setSearchText(newText);
