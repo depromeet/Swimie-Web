@@ -5,7 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { RecordRequestProps } from '../../apis/dto';
@@ -13,6 +13,7 @@ import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
   isPoolSearchPageModalOpen,
+  timeBottomSheetState,
 } from '../../store';
 import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
@@ -22,6 +23,7 @@ import { LaneLengthBottomSheet } from './lane-length-bottom-sheet';
 import { PhotoSection } from './photo-section';
 import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
+import { TimeBottomSheet } from './time-bottom-sheet';
 
 interface SubInfoProps {
   poolName: string | null;
@@ -30,6 +32,7 @@ interface SubInfoProps {
 }
 
 //Todo: null 타입 제거
+//Todo: watch의 성능 이슈 고민
 export function Form() {
   const methods = useForm<RecordRequestProps & SubInfoProps>({
     defaultValues: {
@@ -56,11 +59,15 @@ export function Form() {
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
+  const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+
+  const startTime = methods.watch('startTime');
+  const endTime = methods.watch('endTime');
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
       <form>
-        <div className={formSectionStyles}>
+        <div className={cx(formSectionStyles)}>
           <TextField
             variant="select"
             isRequired
@@ -73,20 +80,34 @@ export function Form() {
               variant="select"
               isRequired
               hasDownArrow
-              value="18:30"
+              value={startTime || ''}
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
+              onClick={() =>
+                setTimeBottomSheetState((prev) => ({
+                  ...prev,
+                  variant: 'start',
+                  isOpen: true,
+                }))
+              }
             />
             <span className={css({ fontSize: '30px' })}>-</span>
             <TextField
               variant="select"
               isRequired
               hasDownArrow
-              value={'19:00'}
+              value={endTime || ''}
               label="수영 시간"
               placeholder="00:00"
               wrapperClassName={timeStyles.field}
+              onClick={() =>
+                setTimeBottomSheetState((prev) => ({
+                  ...prev,
+                  variant: 'end',
+                  isOpen: true,
+                }))
+              }
             />
           </div>
           <TextField
@@ -148,6 +169,7 @@ export function Form() {
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
       <DistancePageModal />
+      <TimeBottomSheet />
     </FormProvider>
   );
 }
