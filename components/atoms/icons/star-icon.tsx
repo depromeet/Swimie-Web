@@ -1,6 +1,12 @@
-export function StarIcon() {
+export function StarIcon(props?: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      {...props}
+    >
       <path
         fill="#37383C"
         fillOpacity=".28"

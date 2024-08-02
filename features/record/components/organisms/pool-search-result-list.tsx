@@ -63,9 +63,11 @@ const textStyles = {
     textStyle: 'heading6',
     fontWeight: 500,
     marginBottom: '4px',
+    color: 'text.normal',
   }),
   subNoResult: css({
     textStyle: 'body2.normal',
     fontWeight: 400,
+    color: 'text.alternative',
   }),
 };
