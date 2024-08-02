@@ -33,8 +33,9 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
 
   const handleBackArrowClick = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
+    setPoolSearchText('');
   };
-  // api 연결 후 debounce 처리
+  // Todo: debounce 처리
   const handlePoolSearchTextChange = (text: string) => {
     setPoolSearchText(text);
   };
