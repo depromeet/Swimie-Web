@@ -4,7 +4,6 @@ import { useAtom } from 'jotai';
 import { useFormContext } from 'react-hook-form';
 
 import { BottomSheet } from '@/components/molecules';
-import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { isLaneLengthBottomSheetOpen } from '../../store';
@@ -33,10 +32,14 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
   };
 
   return (
-    <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <BottomSheet
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      header={{ title }}
+      isRenderHandlebar
+    >
       <div className={layout.bottomSheetStyles}>
         {/* Title 컴포넌트로 대체 */}
-        <h1 className={titleStyles}>{title}</h1>
         <SelectList
           value={getValues('lane') + 'm'}
           options={laneOptions}
@@ -53,7 +56,7 @@ const layout = {
   bottomSheetStyles: flex({
     w: 'full',
     direction: 'column',
-    padding: '40px 20px',
+    padding: '24px 20px',
   }),
   listElement: flex({
     position: 'relative',
@@ -63,7 +66,3 @@ const layout = {
     marginBottom: '8px',
   }),
 };
-
-const titleStyles = css({
-  marginBottom: '24px',
-});
