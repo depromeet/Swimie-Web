@@ -1,13 +1,12 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { SearchIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export interface SearchBarProps {
-  value: string;
   placeholder?: string;
   className?: string;
   inputClassName?: string;
@@ -22,14 +21,15 @@ export interface SearchBarProps {
  * @param onChange value 값 변경하는 function
  */
 export function SearchBar({
-  value,
   placeholder,
   className,
   inputClassName,
   onChange,
 }: SearchBarProps) {
+  const [searchText, setSearchText] = useState('');
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
+    setSearchText(newText);
     onChange?.(newText);
   };
 
@@ -37,7 +37,7 @@ export function SearchBar({
     <div className={cx(layoutStyles, className)}>
       <SearchIcon />
       <input
-        value={value}
+        value={searchText}
         className={cx(inputStyles, inputClassName)}
         placeholder={placeholder}
         onChange={handleInputChange}

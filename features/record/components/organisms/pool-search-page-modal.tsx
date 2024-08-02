@@ -1,6 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
+import { debounce } from 'lodash';
 import { Suspense, useRef, useState } from 'react';
 
 import { HeaderBar, PageModal } from '@/components/molecules';
@@ -35,9 +36,9 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
   };
   // api 연결 후 debounce 처리
-  const handlePoolSearchTextChange = (text: string) => {
+  const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(text);
-  };
+  }, 300);
   return (
     <PageModal
       isOpen={pageModalState.isOpen}
@@ -49,7 +50,6 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
         <div className={layoutStyles}>
           <h2 className={textStyles.title}>{title}</h2>
           <SearchBar
-            value={poolSearchText}
             placeholder="수영장 검색"
             onChange={handlePoolSearchTextChange}
             className={css({ marginBottom: '12px' })}
