@@ -1,8 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
 import { AppleLogoIcon } from '@/components/atoms/icons/apple-logo-icon';
 import { GoogleLogoIcon } from '@/components/atoms/icons/google-logo-icon';
 import { KakaoLogoIcon } from '@/components/atoms/icons/kakao-logo-icon';
@@ -10,17 +7,6 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export default function LoginClient() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 토큰 확인
-    const accessToken = document.cookie.includes('accessToken');
-    const refreshToken = document.cookie.includes('refreshToken');
-
-    if (accessToken && refreshToken) {
-      router.replace('/');
-    }
-  }, [router]);
   const kakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
   };
