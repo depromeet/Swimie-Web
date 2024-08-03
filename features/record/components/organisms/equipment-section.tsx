@@ -9,10 +9,18 @@ import { flex } from '@/styled-system/patterns';
 import { formSectionStyles } from '../../styles/form-section';
 import { FormSectionProps } from '../../types/form-section';
 import { EquipmentSelectBox } from '../molecules';
+
+interface EquipmentSectionProps extends FormSectionProps {
+  defaultValue?: string;
+}
+
 /**
  * @param title 장비 section의 제목
  */
-export function EquipmentSection({ title }: FormSectionProps) {
+export function EquipmentSection({
+  title,
+  defaultValue,
+}: EquipmentSectionProps) {
   const equipmentList = ['숏핀', '롱핀', '패들', '스노쿨'];
   const { setValue } = useFormContext();
   const [equipmentSelectState, setEquipmentSelectState] = useState<boolean[]>(
@@ -36,6 +44,21 @@ export function EquipmentSection({ title }: FormSectionProps) {
     else setValue('item', undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equipmentSelectState]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      const arrayState = defaultValue.split(',');
+      setValue('item', defaultValue);
+      arrayState.map((state) => {
+        setEquipmentSelectState((prev) =>
+          prev.map((item, index) =>
+            equipmentList.indexOf(state) === index ? !item : item,
+          ),
+        );
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
 
   return (
     <section className={formSectionStyles}>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -36,6 +36,7 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 export function Form() {
   const searchParams = useSearchParams();
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
@@ -50,15 +51,19 @@ export function Form() {
 
   useEffect(() => {
     if (data) {
+      const prevData = data.data;
       methods.reset({
-        recordAt: data.data.recordAt,
-        startTime: data.data.startTime,
-        endTime: data.data.endTime,
-        lane: data.data.lane,
-        diary: data.data.diary,
-        heartRate: data.data.memoryDetail.heartRate,
-        kcal: data.data.memoryDetail.kcal,
+        recordAt: prevData.recordAt,
+        startTime: prevData.startTime,
+        endTime: prevData.endTime,
+        lane: prevData.lane,
+        diary: prevData.diary,
+        heartRate: prevData.memoryDetail.heartRate,
+        kcal: prevData.memoryDetail.kcal,
+        poolId: prevData.pool.id,
+        item: prevData.memoryDetail.item,
       });
+      setFormSubInfo((prev) => ({ ...prev, poolName: data.data.pool.name }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -74,7 +79,6 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-  const formSubInfo = useAtomValue(formSubInfoState);
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
@@ -198,7 +202,10 @@ export function Form() {
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
-        <EquipmentSection title="장비" />
+        <EquipmentSection
+          defaultValue={methods.getValues('item')}
+          title="장비"
+        />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
       </form>
