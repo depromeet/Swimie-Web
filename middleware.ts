@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
     );
 
     const data = (await responseData.json()) as NewTokenData;
-    accessToken = `Bearer ${data.data.accessToken}`;
+    accessToken = `Bearer ${data?.data?.accessToken}`;
 
     const response = NextResponse.next();
     response.cookies.set('accessToken', accessToken, {
