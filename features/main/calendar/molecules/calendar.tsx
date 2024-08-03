@@ -14,6 +14,7 @@ export interface Strokes {
   평영?: number;
   배영?: number;
   접영?: number;
+  킥판?: number;
 }
 
 export interface Memory {

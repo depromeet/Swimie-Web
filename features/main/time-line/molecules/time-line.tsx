@@ -125,6 +125,52 @@ const memories: Array<TimeLineMemory> = [
     ],
     images: [],
   },
+  {
+    memoryId: 6,
+    type: 'MULTI',
+    recordAt: '2024-08-30',
+    startTime: '11:00',
+    endTime: '11:50',
+    lane: 25,
+    diary: '나는 짱이야!! 내가 정말 멋져!!',
+    memoryDetailId: 6,
+    kcal: 300,
+    totalDistance: 1350,
+    isAchieved: true,
+    strokes: [
+      {
+        strokeId: 1,
+        name: '자유형',
+        laps: 2,
+        meter: 100,
+      },
+      {
+        strokeId: 2,
+        name: '평영',
+        laps: 10,
+        meter: 500,
+      },
+      {
+        strokeId: 3,
+        name: '배영',
+        laps: 6,
+        meter: 300,
+      },
+      {
+        strokeId: 4,
+        name: '접영',
+        laps: 8,
+        meter: 400,
+      },
+      {
+        strokeId: 5,
+        name: '킥판',
+        laps: 1,
+        meter: 50,
+      },
+    ],
+    images: [],
+  },
 ];
 
 export interface StrokeInfo {
