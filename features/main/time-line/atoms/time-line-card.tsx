@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { css } from '@/styled-system/css';
@@ -7,6 +7,7 @@ import { flex } from '@/styled-system/patterns';
 import { getFormatDate, isTodayDate } from '@/utils';
 
 import type { TimeLineMemory } from '../molecules';
+import { SwimRecordChart } from './swim-record-chart';
 
 interface TimeLineCardLayoutProps {
   date: string;
@@ -31,7 +32,7 @@ const TimeLineCardLayout = ({
 }: PropsWithChildren<TimeLineCardLayoutProps>) => {
   const { month, day, weekday } = getFormatDate({ dateStr: date });
   return (
-    <li>
+    <li className={flex({ direction: 'column', gap: '10px' })}>
       <p className={dateStyles}>
         {`${month}월 ${day}일 ${weekday}`}
         {isTodayDate(date) ? <span className={todayStyles}>Today</span> : ''}
@@ -42,23 +43,31 @@ const TimeLineCardLayout = ({
 };
 
 const TimeLineCardBody = ({
+  type,
   startTime,
   endTime,
   diary,
-  totalMeter,
+  totalDistance,
   memoryDetailId,
   kcal,
   strokes,
+  isAchieved,
 }: TimeLineMemory) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [currentWidth, setCurrentWidth] = useState<number>(0);
+
+  useEffect(() => {
+    if (ref.current) setCurrentWidth(ref.current.offsetWidth);
+  }, []);
   return (
     <Link
       href={`/record-detail/${memoryDetailId}`}
       className={cardWrapperStyles}
     >
-      <div className={flex()}>
+      <div className={flex()} ref={ref}>
         <div className={titleStyles}>
-          {totalMeter ? (
-            <p>{formatMeters(totalMeter)}m</p>
+          {type !== 'NORMAL' && totalDistance ? (
+            <p>{formatMeters(totalDistance)}m</p>
           ) : (
             <div className={completeStyles}>
               <p>수영 완료</p>
@@ -71,8 +80,19 @@ const TimeLineCardBody = ({
           </div>
         </div>
       </div>
-      {strokes && <div>영법별 거리</div>}
-      {diary && <p className={diaryStyles}>{diary}</p>}
+      {strokes && (
+        <SwimRecordChart
+          width={currentWidth}
+          isAchieved={isAchieved!}
+          totalDistance={totalDistance!}
+          strokes={strokes}
+        />
+      )}
+      {diary && (
+        <p className={diaryStyles} style={{ WebkitBoxOrient: 'vertical' }}>
+          {diary}
+        </p>
+      )}
     </Link>
   );
 };
@@ -114,7 +134,21 @@ const descriptionStyles = flex({
 });
 
 const diaryStyles = css({
+  maxHeight: '2.5rem',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  wordBreak: 'break-word',
+  display: '-webkit-box',
+  WebkitLineClamp: '2',
   textStyle: 'label1.normal',
   fontWeight: 'medium',
   color: 'neutral.70',
 });
+
+/*
+text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+*/
