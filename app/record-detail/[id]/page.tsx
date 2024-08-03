@@ -1,11 +1,20 @@
+import dynamic from 'next/dynamic';
+
 import { fetchData } from '@/apis/fetch-data';
 import {
   DetailDescriptionSection,
   DetailDiarySection,
-  DetailPreviewSection,
   type RecordDetailType,
 } from '@/features/record-detail';
 import { flex } from '@/styled-system/patterns';
+
+const DynamicPreviewSection = dynamic(
+  () =>
+    import('@/features/record-detail').then(
+      ({ DetailPreviewSection }) => DetailPreviewSection,
+    ),
+  { ssr: false },
+);
 
 type RecordDetail = {
   params: { id: string };
@@ -21,7 +30,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
   return (
     <article className={containerStyle}>
       {/* preview section */}
-      <DetailPreviewSection data={data} />
+      <DynamicPreviewSection data={data} />
       {/* description section */}
       <DetailDescriptionSection data={data} />
       {/* diary section */}
