@@ -10,7 +10,7 @@ import { PortalRoot } from './portal-root';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
-  title: '어푸',
+  title: 'swimie',
   description: '수영 기록 아카이빙 서비스',
 };
 
