@@ -48,6 +48,7 @@ export const PoolSearchResultElement = forwardRef<
     if (favorite !== isFavorite) {
       setFavorite(isFavorite);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFavorite]);
 
   return (
