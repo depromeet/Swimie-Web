@@ -12,7 +12,7 @@ export const BackButton = ({ onClickBack, className }: BackButton) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    onClickBack ?? router.back();
+    onClickBack ? onClickBack() : router.back();
   };
 
   return (
