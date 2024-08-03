@@ -108,6 +108,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
               }}
             />
           )}
+          <p className={goalText}>목표 {member.goal.toLocaleString()}m</p>
         </div>
 
         {/* preview description */}
@@ -150,11 +151,21 @@ const containerStyle = css({
 });
 
 const wavesStyle = flex({
-  height: '270px',
+  position: 'relative',
   width: 'full',
+  aspectRatio: '335 / 270',
   overflow: 'hidden',
   justifyContent: 'center',
   borderRadius: '3px',
+});
+
+const goalText = css({
+  position: 'absolute',
+  right: '8px',
+  bottom: '8px',
+  textStyle: 'label2.normal',
+  fontWeight: 'medium',
+  color: 'line.solid.neutral',
 });
 
 const graphArea = {
