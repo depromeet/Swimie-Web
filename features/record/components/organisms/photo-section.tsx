@@ -1,5 +1,6 @@
 'use client';
 
+import { useSetAtom } from 'jotai';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -7,6 +8,7 @@ import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { resizeFile } from '@/utils';
 
+import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { FormSectionProps } from '../../types/form-section';
 import { DeletePhotoIcon } from '../atoms/delete-photo-icon';
@@ -20,18 +22,19 @@ export function PhotoSection({ title }: FormSectionProps) {
   const fileInput = useRef<HTMLInputElement>(null);
   const { setValue } = useFormContext();
 
+  const setFormSubInfo = useSetAtom(formSubInfoState);
+
   //1차 MVP 에서는 이미지 업로드를 1장으로 제한
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadImage = async () => {
       try {
         if (e.target.files) {
-          const resizedImage = await resizeFile(
-            e.target.files[0],
-            600,
-            600,
-            100,
-          );
-          setValue('imageFiles', [resizedImage]);
+          const targetFile = e.target.files[0];
+          const resizedImage = await resizeFile(targetFile, 600, 600, 100);
+          setFormSubInfo((prev) => ({
+            ...prev,
+            imageFiles: [targetFile.name],
+          }));
           const reader = new FileReader();
           reader.onload = () => {
             if (reader.readyState === 2) {

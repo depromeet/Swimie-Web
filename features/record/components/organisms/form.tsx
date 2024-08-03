@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useSetAtom } from 'jotai';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useRouter } from 'next/navigation';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
+import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { useImagePresignedUrl, useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import {
   isDistancePageModalOpen,
@@ -15,6 +19,7 @@ import {
   isPoolSearchPageModalOpen,
   timeBottomSheetState,
 } from '../../store';
+import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
@@ -25,48 +30,63 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-interface SubInfoProps {
-  poolName: string | null;
-  totalDistance: number | null;
-  imageFiles: File[];
-}
-
 //Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
 export function Form() {
-  const methods = useForm<RecordRequestProps & SubInfoProps>({
+  const methods = useForm<RecordRequestProps>({
     defaultValues: {
-      poolId: null,
-      poolName: null,
-      item: null,
-      heartRate: null,
-      pace: null,
-      kcal: null,
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-26',
+      recordAt: '2024-07-09',
       startTime: '',
       endTime: '',
       lane: 25,
-      diary: null,
       strokes: [],
-      totalDistance: null,
       imageIdList: [],
     },
   });
+  const router = useRouter();
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );
 
+  const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  const { mutateAsync: memory } = useMemory();
+
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+  const formSubInfo = useAtomValue(formSubInfoState);
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
+  const diary = methods.watch('diary');
+
+  const isRecordAbled = startTime && endTime;
+
+  const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
+    if (formSubInfo.imageFiles.length > 0) {
+      await imagePresign(formSubInfo.imageFiles).then(async (res) => {
+        await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
+          (res) => {
+            router.push(
+              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+            );
+          },
+        );
+      });
+    } else {
+      await memory(data).then((res) =>
+        router.push(
+          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+        ),
+      );
+    }
+  };
+
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={layoutStyles}>
         <div className={cx(formSectionStyles)}>
           <TextField
             variant="select"
@@ -112,11 +132,7 @@ export function Form() {
           </div>
           <TextField
             variant="select"
-            value={
-              methods.watch('poolName')
-                ? (methods.watch('poolName') as string)
-                : ''
-            }
+            value={formSubInfo.poolName || ''}
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
@@ -138,9 +154,7 @@ export function Form() {
           <TextField
             variant="select"
             value={
-              methods.watch('totalDistance')
-                ? methods.watch('totalDistance') + 'm'
-                : ''
+              formSubInfo.totalDistance ? formSubInfo.totalDistance + 'm' : ''
             }
             placeholder="거리입력(선택)"
             label="수영 거리"
@@ -151,16 +165,19 @@ export function Form() {
               })
             }
           />
+          <div className={buttonStyles.layout}>
+            <Button
+              label="기록하기"
+              size="large"
+              className={buttonStyles.content}
+              disabled={!isRecordAbled}
+            />
+          </div>
         </div>
         <Divider variant="thick" />
         <PhotoSection title="오늘의 사진" />
         <Divider variant="thick" />
-        <DiarySection
-          title="일기"
-          value={
-            methods.watch('diary') ? (methods.watch('diary') as string) : ''
-          }
-        />
+        <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
         <EquipmentSection title="장비" />
         <Divider variant="thick" />
@@ -174,6 +191,10 @@ export function Form() {
   );
 }
 
+const layoutStyles = css({
+  paddingBottom: '100px',
+});
+
 const timeStyles = {
   layout: flex({
     justifyContent: 'space-between',
@@ -182,5 +203,20 @@ const timeStyles = {
   field: css({
     width: '42%',
     marginBottom: '24px',
+  }),
+};
+
+const buttonStyles = {
+  layout: css({
+    position: 'fixed',
+    width: '100%',
+    bottom: '32px',
+    left: 0,
+    padding: '0 20px',
+    zIndex: 10,
+  }),
+
+  content: css({
+    width: '100%',
   }),
 };

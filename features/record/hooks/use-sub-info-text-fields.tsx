@@ -9,15 +9,18 @@ export function useSubInfoTextFields() {
   const { setValue } = useFormContext();
 
   const onChangeHeartRate = (text: string) => {
-    setValue('heartRate', Number(text));
+    if (text) setValue('heartRate', Number(text));
+    else setValue('heartRate', undefined);
   };
 
   const onChangePace = (text: string) => {
-    setValue('pace', text);
+    if (text) setValue('pace', text);
+    else setValue('pace', undefined);
   };
 
   const onChangeKcal = (text: string) => {
-    setValue('kcal', Number(text));
+    if (text) setValue('kcal', Number(text));
+    else setValue('kcal', undefined);
   };
 
   return {

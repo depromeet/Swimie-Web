@@ -31,7 +31,9 @@ export function EquipmentSection({ title }: FormSectionProps) {
   };
 
   useEffect(() => {
-    setValue('item', getSelectedEquipmentsByString().join(','));
+    if (getSelectedEquipmentsByString().length > 0)
+      setValue('item', getSelectedEquipmentsByString().join(','));
+    else setValue('item', undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equipmentSelectState]);
 
