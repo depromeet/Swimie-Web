@@ -36,7 +36,7 @@ export function Form() {
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-02',
+      recordAt: '2024-07-09',
       startTime: '',
       endTime: '',
       lane: 25,
