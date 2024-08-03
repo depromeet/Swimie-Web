@@ -17,7 +17,11 @@ export const metadata: Metadata = {
 const rootStyle = css({
   maxWidth: 'maxWidth',
   width: '100%',
+  height: 'auto',
+  minHeight: '100vh',
   margin: '0 auto',
+  borderLeft: '1px solid #eeeeee',
+  borderRight: '1px solid #eeeeee',
 });
 
 export default function RootLayout({

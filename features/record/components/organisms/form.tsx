@@ -208,10 +208,11 @@ const buttonStyles = {
     justifyContent: 'center',
     position: 'fixed',
     width: '100%',
-    bottom: '32px',
+    bottom: 0,
     left: 0,
-    padding: '0 20px',
+    padding: '16px 20px 32px 20px',
     zIndex: 10,
+    backgroundColor: 'white',
   }),
 
   content: css({
