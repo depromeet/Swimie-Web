@@ -20,7 +20,8 @@ export type DetailStrokes = {
 export type DetailMemoryDetail = {
   item: string;
   heartRate: number;
-  pace: string;
+  paceMinutes: string;
+  paceSeconds: string;
   kcal: number;
 };
 
