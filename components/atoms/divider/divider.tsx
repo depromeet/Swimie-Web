@@ -26,7 +26,7 @@ export function Divider({
 
 const dividerStyles = cva({
   base: {
-    backgroundColor: 'line.normal',
+    backgroundColor: 'line.alternative',
   },
   variants: {
     isVertical: {
