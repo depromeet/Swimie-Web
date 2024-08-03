@@ -29,6 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Origin: `${process.env.NEXT_PUBLIC_LOGIN_URL}`,
     },
     body: JSON.stringify({ code }),
   });
