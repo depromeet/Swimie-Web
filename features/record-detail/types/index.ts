@@ -10,9 +10,10 @@ export type DetailPool = {
   lane: number;
 };
 
-export type DetailStrokes = {
+export type StrokeName = '자유형' | '배영' | '접영' | '평영' | '킥판';
+export type DetailStroke = {
   strokeId: number;
-  name: '자유형' | '배영' | '접영' | '평영' | '킥판';
+  name: StrokeName;
   laps: number;
   meter: number;
 };
@@ -30,7 +31,7 @@ export type RecordDetailType = {
   member: DetailMember;
   pool: DetailPool;
   memoryDetail: DetailMemoryDetail;
-  strokes: DetailStrokes[];
+  strokes: DetailStroke[];
   images: {
     imageName: string;
     url: string;
