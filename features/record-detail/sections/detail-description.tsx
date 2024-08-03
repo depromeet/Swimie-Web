@@ -11,11 +11,7 @@ export const DetailDescriptionSection = ({
   data: RecordDetailType;
 }) => {
   const { pool, duration, memoryDetail } = data;
-
   const { minute: durationMinute } = getFormatTime({ timeStr: duration });
-  const { hour: paceHour, minute: paceMinute } = getFormatTime({
-    timeStr: memoryDetail.pace,
-  });
 
   return (
     <section className={containerStyle}>
@@ -31,7 +27,7 @@ export const DetailDescriptionSection = ({
         />
         <SwimDescriptionItem
           title="⏱️평균 페이스"
-          value={`${paceHour}’${paceMinute}’’/100 m`}
+          value={`${memoryDetail.paceMinutes}’${memoryDetail.paceSeconds}’’/100 m`}
         />
         <SwimDescriptionItem
           title="🔥칼로리"

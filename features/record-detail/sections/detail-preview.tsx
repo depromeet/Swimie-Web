@@ -44,7 +44,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         />
 
         {/* 파도 svg */}
-        <div>물결이 ~~</div>
+        <div className={wavesStyle}>물결이 ~~</div>
 
         {/* preview description */}
         <div className={graphArea.textWrapper}>
@@ -83,6 +83,11 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
 const containerStyle = css({
   backgroundColor: 'white',
+});
+
+const wavesStyle = css({
+  height: '270px',
+  width: 'full',
 });
 
 const graphArea = {

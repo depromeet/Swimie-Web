@@ -16,6 +16,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
     'GET',
   );
 
+  console.log(data);
   // TODO: add loading state
   if (!data) return null;
   return (
