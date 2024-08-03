@@ -157,6 +157,7 @@ const wavesStyle = flex({
   overflow: 'hidden',
   justifyContent: 'center',
   borderRadius: '3px',
+  backgroundColor: 'coolNeutral.99',
 });
 
 const goalText = css({
