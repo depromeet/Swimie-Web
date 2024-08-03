@@ -12,7 +12,7 @@ import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
 import {
   type DetailStroke,
   type RecordDetailType,
-  type StrokeName,
+  type StrokeMapType,
 } from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
@@ -26,6 +26,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       width: containerRef.current.offsetWidth,
       height: containerRef.current.offsetHeight,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef.current]);
 
   const toolArr = useMemo(() => {
@@ -60,11 +61,10 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     type: 'string',
   });
 
-  type MapType = Record<StrokeName, DetailStroke>;
-  const strokesMap: MapType = strokes.reduce((acc, stroke) => {
+  const strokesMap: StrokeMapType = strokes.reduce((acc, stroke) => {
     acc[stroke.name] = stroke;
     return acc;
-  }, {} as MapType);
+  }, {} as StrokeMapType);
   const wavesData = swims.map(({ name, color }) => {
     const stroke: DetailStroke = strokesMap[name];
     return {
@@ -72,8 +72,6 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       waveHeight: stroke.meter / member.goal,
     };
   });
-
-  console.log(wavesData);
 
   return (
     <section className={containerStyle}>
