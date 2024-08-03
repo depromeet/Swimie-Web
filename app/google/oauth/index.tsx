@@ -4,7 +4,9 @@ import { useSetAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
+import { LoadingArea } from '@/components/atoms';
 import { AuthInfoAtom } from '@/store/auth';
+import { flex } from '@/styled-system/patterns';
 import { AuthResponse } from '@/types/authType';
 
 const Page = () => {
@@ -49,7 +51,21 @@ const Page = () => {
     });
   }, [router, searchParams, setAuth]);
 
-  return <div>구글로 로그인중입니다.</div>;
+  return (
+    <div className={LoadingWrapper}>
+      <LoadingArea width={100} height={100} />
+      <div>구글로 로그인중입니다.</div>
+    </div>
+  );
 };
+
+const LoadingWrapper = flex({
+  direction: 'column',
+  justifyContent: 'center',
+  alignContent: 'center',
+  height: '100vh',
+  textAlign: 'center',
+  fontWeight: 'bold',
+});
 
 export default Page;
