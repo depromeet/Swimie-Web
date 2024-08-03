@@ -10,10 +10,10 @@ import { CalendarHeader } from './calendar-header';
 export type MemoryType = 'NORMAL' | 'SINGLE' | 'MULTI';
 
 export interface Strokes {
-  free?: number;
-  breast?: number;
-  back?: number;
-  butterfly?: number;
+  자유형?: number;
+  평영?: number;
+  배영?: number;
+  접영?: number;
 }
 
 export interface Memory {
@@ -43,7 +43,7 @@ const memories: Array<Memory> = [
     memoryDate: 6,
     type: 'MULTI',
     totalDistance: 1000,
-    strokes: { free: 200, breast: 200, back: 200, butterfly: 400 },
+    strokes: { 자유형: 200, 평영: 200, 배영: 200, 접영: 400 },
     isAchieved: true,
   },
   {
@@ -51,7 +51,7 @@ const memories: Array<Memory> = [
     memoryDate: 8,
     type: 'MULTI',
     totalDistance: 900,
-    strokes: { free: 300, breast: 200, back: 200, butterfly: 200 },
+    strokes: { 자유형: 300, 평영: 200, 배영: 200, 접영: 200 },
     isAchieved: false,
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
@@ -68,7 +68,7 @@ const memories: Array<Memory> = [
     memoryDate: 15,
     type: 'MULTI',
     totalDistance: 500,
-    strokes: { free: 300, butterfly: 200 },
+    strokes: { 자유형: 300, 접영: 200 },
     isAchieved: false,
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
@@ -78,7 +78,7 @@ const memories: Array<Memory> = [
     memoryDate: 17,
     type: 'MULTI',
     totalDistance: 1000,
-    strokes: { free: 600, breast: 200, back: 200 },
+    strokes: { 자유형: 600, 평영: 200, 배영: 200 },
     isAchieved: true,
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
@@ -88,7 +88,7 @@ const memories: Array<Memory> = [
     memoryDate: 21,
     type: 'MULTI',
     totalDistance: 1000,
-    strokes: { free: 600, back: 400 },
+    strokes: { 자유형: 600, 배영: 400 },
     isAchieved: true,
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
@@ -98,7 +98,7 @@ const memories: Array<Memory> = [
     memoryDate: 22,
     type: 'MULTI',
     totalDistance: 1000,
-    strokes: { free: 600, butterfly: 400 },
+    strokes: { 자유형: 600, 접영: 400 },
     isAchieved: true,
     imageUrl:
       'https://github.com/user-attachments/assets/2188e166-b34f-47c7-b978-30bd0f39df3a',
