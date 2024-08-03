@@ -1,18 +1,27 @@
 import { Image, SwimIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { getFormatDate } from '@/utils';
 
-export const DetailDiarySection = () => {
+import { type RecordDetailType } from '../types';
+
+export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
+  const { images, diary, recordAt } = data;
+  const { year, month, day, weekday } = getFormatDate({ dateStr: recordAt });
+
   return (
     <section className={containerStyle}>
-      <div className={imageWrapperStyle}>
-        <Image
-          src={'/error'}
-          alt="기록 이미지"
-          fill
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
+      {/* NOTE: MVP에서는 한장만 표기 */}
+      {Boolean(images?.length) && (
+        <div className={imageWrapperStyle}>
+          <Image
+            src={images[0].url}
+            alt="기록 이미지"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+      )}
 
       <div className={diaryWrapperStyle}>
         <div className={header.containerStyle}>
@@ -20,10 +29,13 @@ export const DetailDiarySection = () => {
             <SwimIcon width={28} height={28} />
             <h1 className={header.title}>오늘의 수영 일기</h1>
           </div>
-          <p className={header.date}>24년 7월 25일 목</p>
+
+          <p
+            className={header.date}
+          >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
         </div>
 
-        <div className={diaryDetailStyle}>대충 여기는 일기 내용..</div>
+        <div className={diaryDetailStyle}>{diary}</div>
       </div>
     </section>
   );
