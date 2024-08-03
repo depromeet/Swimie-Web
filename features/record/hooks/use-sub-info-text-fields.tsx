@@ -13,9 +13,14 @@ export function useSubInfoTextFields() {
     else setValue('heartRate', undefined);
   };
 
-  const onChangePace = (text: string) => {
-    if (text) setValue('pace', text);
-    else setValue('pace', undefined);
+  const onChangePaceMinute = (text: string) => {
+    if (text) setValue('paceMinutes', Number(text));
+    else setValue('paceMinutes', undefined);
+  };
+
+  const onChangePaceSecond = (text: string) => {
+    if (text) setValue('paceSeconds', Number(text));
+    else setValue('paceSeconds', undefined);
   };
 
   const onChangeKcal = (text: string) => {
@@ -26,7 +31,8 @@ export function useSubInfoTextFields() {
   return {
     handlers: {
       onChangeHeartRate,
-      onChangePace,
+      onChangePaceMinute,
+      onChangePaceSecond,
       onChangeKcal,
     },
   };
