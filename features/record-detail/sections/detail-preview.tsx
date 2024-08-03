@@ -1,15 +1,33 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { Waves } from '@/components/atoms';
+import { swims } from '@/constants/visualization';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
 
 import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
-import { type RecordDetailType } from '../types';
+import {
+  type DetailStroke,
+  type RecordDetailType,
+  type StrokeName,
+} from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    setContainerSize({
+      width: containerRef.current.offsetWidth,
+      height: containerRef.current.offsetHeight,
+    });
+  }, [containerRef.current]);
+
   const toolArr = useMemo(() => {
     return data.memoryDetail.item.split(',');
   }, [data.memoryDetail.item]);
@@ -22,8 +40,17 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     console.log('next');
   };
 
-  const { startTime, endTime, lane, strokes, totalLap, totalMeter, recordAt } =
-    data;
+  const {
+    startTime,
+    endTime,
+    lane,
+    strokes,
+    totalLap,
+    totalMeter,
+    recordAt,
+    member,
+  } = data;
+
   const { hour: startHour, minute: startMinute } = getFormatTime({
     timeStr: startTime,
     type: 'string',
@@ -32,6 +59,22 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     timeStr: endTime,
     type: 'string',
   });
+
+  type MapType = Record<StrokeName, DetailStroke>;
+  const strokesMap: MapType = strokes.reduce((acc, stroke) => {
+    acc[stroke.name] = stroke;
+    return acc;
+  }, {} as MapType);
+  const wavesData = swims.map(({ name, color }) => {
+    const stroke: DetailStroke = strokesMap[name];
+    return {
+      color,
+      waveHeight: stroke.meter / member.goal,
+    };
+  });
+
+  console.log(wavesData);
+
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
@@ -44,7 +87,17 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         />
 
         {/* 파도 svg */}
-        <div className={wavesStyle}>물결이 ~~</div>
+        {Boolean(strokes?.length) && (
+          <div className={wavesStyle} ref={containerRef}>
+            {containerRef.current && (
+              <Waves
+                waves={wavesData}
+                width={containerSize.width}
+                height={containerSize.height}
+              />
+            )}
+          </div>
+        )}
 
         {/* preview description */}
         <div className={graphArea.textWrapper}>
