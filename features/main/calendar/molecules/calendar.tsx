@@ -1,3 +1,4 @@
+import { LoadingArea } from '@/components/atoms';
 import { useCalendarData } from '@/hooks';
 import { useCalendarRendaringData } from '@/hooks/use-calendar-rendering-data';
 import { css } from '@/styled-system/css';
@@ -7,7 +8,7 @@ import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
 
 export const Calendar = () => {
-  const { data } = useCalendarData();
+  const { data, isFetching } = useCalendarData();
   const [squares, startPoint, endPoint, isDateToday] =
     useCalendarRendaringData();
   let memoryIndex = 0;
@@ -20,29 +21,33 @@ export const Calendar = () => {
     <div className={calendarContainerStyles}>
       <CalendarHeader />
       <DayLabels />
-      <ul className={CalendarGridStyles}>
-        {squares.map((squareNumber, index) => {
-          const isInRenderingRange = index >= startPoint && index <= endPoint;
-          const date = squareNumber - startPoint;
-          const isValidMemory =
-            memoryIndex < memories.length &&
-            memories[memoryIndex].memoryDate === date;
-          const currentMemory = isValidMemory
-            ? memories[memoryIndex++]
-            : undefined;
+      {isFetching ? (
+        <LoadingArea />
+      ) : (
+        <ul className={CalendarGridStyles}>
+          {squares.map((squareNumber, index) => {
+            const isInRenderingRange = index >= startPoint && index <= endPoint;
+            const date = squareNumber - startPoint;
+            const isValidMemory =
+              memoryIndex < memories.length &&
+              memories[memoryIndex].memoryDate === date;
+            const currentMemory = isValidMemory
+              ? memories[memoryIndex++]
+              : undefined;
 
-          return isInRenderingRange ? (
-            <CalendarItem
-              key={squareNumber}
-              date={date}
-              isToday={isDateToday(date)}
-              memory={currentMemory}
-            />
-          ) : (
-            <div key={`out-of-range-${index}`} />
-          );
-        })}
-      </ul>
+            return isInRenderingRange ? (
+              <CalendarItem
+                key={squareNumber}
+                date={date}
+                isToday={isDateToday(date)}
+                memory={currentMemory}
+              />
+            ) : (
+              <div key={`out-of-range-${index}`} />
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

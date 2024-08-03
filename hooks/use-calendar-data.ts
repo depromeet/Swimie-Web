@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 
 import { CalendarResponse } from '@/features/main/calendar';
@@ -21,5 +21,6 @@ export const useCalendarData = () => {
   return useQuery<CalendarResponse>({
     queryKey: ['calendarData', year, month],
     queryFn: () => getCalendarData(year, month),
+    placeholderData: keepPreviousData,
   });
 };
