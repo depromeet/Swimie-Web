@@ -1,10 +1,10 @@
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { type DetailStrokes } from '../types';
+import { type DetailStroke } from '../types';
 
 type SwimStatsItem = {
-  item: DetailStrokes;
+  item: DetailStroke;
 };
 export const SwimStatsItem = ({ item }: SwimStatsItem) => {
   if (!item) return null;
