@@ -9,17 +9,22 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
   const { images, diary, recordAt } = data;
   const { year, month, day, weekday } = getFormatDate({ dateStr: recordAt });
 
+  if (!images && !diary) return null;
   return (
     <section className={containerStyle}>
       {/* NOTE: MVP에서는 한장만 표기 */}
       {Boolean(images?.length) && (
-        <div className={imageWrapperStyle}>
-          <Image
-            src={images[0].url}
-            alt="기록 이미지"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
+        <div className={image.containerStyle}>
+          <div className={image.wrapperStyle}>
+            <Image
+              src={images[0]?.url}
+              alt="기록 이미지"
+              fill
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </div>
         </div>
       )}
 
@@ -46,14 +51,19 @@ const containerStyle = flex({
   direction: 'column',
 });
 
-const imageWrapperStyle = css({
-  position: 'relative',
-  boxSizing: 'border-box',
-  aspectRatio: '5/6',
-  m: '20px',
-  backgroundColor: 'white',
-  overflow: 'hidden',
-});
+const image = {
+  containerStyle: css({
+    boxSizing: 'border-box',
+    backgroundColor: 'white',
+    overflow: 'hidden',
+  }),
+
+  wrapperStyle: css({
+    position: 'relative',
+    aspectRatio: '5/6',
+    m: '20px',
+  }),
+};
 
 const diaryWrapperStyle = css({
   p: '28px 20px',

@@ -10,14 +10,18 @@ import { PortalRoot } from './portal-root';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
-  title: '어푸',
+  title: 'swimie',
   description: '수영 기록 아카이빙 서비스',
 };
 
 const rootStyle = css({
   maxWidth: 'maxWidth',
   width: '100%',
+  height: 'auto',
+  minHeight: '100vh',
   margin: '0 auto',
+  borderLeft: '1px solid #eeeeee',
+  borderRight: '1px solid #eeeeee',
 });
 
 export default function RootLayout({

@@ -1,17 +1,12 @@
-'use client';
+import Link from 'next/link';
 
 import { css } from '@/styled-system/css';
 
-export const EditButton = () => {
-  // TODO: edit button click event
-  const handleClickEditButton = () => {
-    console.log('edit');
-  };
-
+export const EditButton = ({ memoryId }: { memoryId: string }) => {
   return (
-    <button className={editButtonStyle} onClick={handleClickEditButton}>
+    <Link href={`/record?memoryId=${memoryId}`} className={editButtonStyle}>
       수정
-    </button>
+    </Link>
   );
 };
 

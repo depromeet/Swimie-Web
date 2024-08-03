@@ -5,10 +5,14 @@ import { EditButton } from '@/features/record-detail/components';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-const DetailLayout = ({ children }: { children: ReactNode }) => {
+type DetailLayout = {
+  children: ReactNode;
+  params: { id: string };
+};
+const DetailLayout = ({ children, params }: DetailLayout) => {
   return (
     <div>
-      <HeaderBar rightContent={<EditButton />}>
+      <HeaderBar rightContent={<EditButton memoryId={params.id} />}>
         <div className={header.textStyle}>지영의 수영 기록</div>
       </HeaderBar>
       <div className={childrenWrapperStyle}>{children}</div>

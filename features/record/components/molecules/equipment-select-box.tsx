@@ -50,6 +50,7 @@ const layoutStyles = cva({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    maxWidth: '600px',
   },
   variants: {
     isSelected: {
@@ -64,6 +65,8 @@ const badgeStyles = flex({
   alignItems: 'center',
   width: '20vw',
   height: '20vw',
+  maxWidth: '120px',
+  maxHeight: '120px',
   backgroundColor: 'fill.normal',
   borderRadius: '10px',
   marginBottom: '4px',

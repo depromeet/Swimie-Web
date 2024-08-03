@@ -6,20 +6,21 @@ import { Image } from '@/components/atoms';
 import { Calendar } from '@/features/main/calendar';
 import { MainTab } from '@/features/main/main-tab';
 import { TabItemInfo } from '@/features/main/main-tab/main-tab';
+import { TimeLine } from '@/features/main/time-line';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-const SELECT_CALENDER_VIEW = 0;
+const SELECT_CALENDAR_VIEW = 0;
 const SELECT_TIMELINE_VIEW = 1;
 
 export default function Home() {
-  const [selected, setSelected] = useState<number>(SELECT_CALENDER_VIEW);
+  const [selected, setSelected] = useState<number>(SELECT_CALENDAR_VIEW);
 
   const tabInfos: Array<TabItemInfo> = [
     {
       text: '캘린더',
-      selected: selected === SELECT_CALENDER_VIEW,
-      onClick: () => setSelected(SELECT_CALENDER_VIEW),
+      selected: selected === SELECT_CALENDAR_VIEW,
+      onClick: () => setSelected(SELECT_CALENDAR_VIEW),
     },
     {
       text: '타임라인',
@@ -27,7 +28,7 @@ export default function Home() {
       onClick: () => setSelected(SELECT_TIMELINE_VIEW),
     },
   ];
-  const isSelectedCalenderView = selected === SELECT_CALENDER_VIEW;
+  const isSelectedCalendarView = selected === SELECT_CALENDAR_VIEW;
 
   return (
     <main className={styles}>
@@ -35,7 +36,7 @@ export default function Home() {
         <MainTab tabInfos={tabInfos} />
       </header>
       <section className={contentStyles}>
-        {isSelectedCalenderView ? (
+        {isSelectedCalendarView ? (
           <>
             <div className={profileContainerStyles}>
               <Image
@@ -55,20 +56,23 @@ export default function Home() {
             <Calendar />
           </>
         ) : (
-          ''
+          <TimeLine />
         )}
       </section>
     </main>
   );
 }
 
-const styles = css({
+const styles = flex({
   w: 'full',
   h: 'full',
   padding: '16px 20px',
+  direction: 'column',
 });
 
 const contentStyles = flex({
+  w: 'full',
+  h: 'full',
   padding: '16px 0',
   gap: '16px',
   direction: 'column',

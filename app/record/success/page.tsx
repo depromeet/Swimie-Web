@@ -17,7 +17,7 @@ export default function RecordSuccessPage({
         <SuccessCheckIcon />
         <h3 className={textStyles.title}>기록 완료!</h3>
         <p>
-          이번 달{' '}
+          {searchParams.month}월 달{' '}
           <span className={textStyles.sub}>{searchParams.rank}번째</span>{' '}
           기록이에요.
         </p>
