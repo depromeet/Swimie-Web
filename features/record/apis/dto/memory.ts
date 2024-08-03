@@ -28,10 +28,8 @@ export interface MemoryPullResponse {
       item: string;
       heartRate: number;
       pace: {
-        hour: number;
         minute: number;
         second: number;
-        nano: number;
       };
       kcal: number;
     };

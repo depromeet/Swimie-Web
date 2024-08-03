@@ -4,7 +4,8 @@ export interface RecordRequestProps {
   poolId?: number;
   item?: string;
   heartRate?: number;
-  pace?: string;
+  paceMinutes?: number;
+  paceSeconds?: number;
   kcal?: number;
   recordAt: string; // 필수
   startTime: string; // 필수

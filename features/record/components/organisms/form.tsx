@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtom, useSetAtom } from 'jotai';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useRouter } from 'next/navigation';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -12,7 +11,7 @@ import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useImagePresignedUrl, useMemory, usePullMemory } from '../../apis';
+import { useImagePresignedUrl, useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import {
   isDistancePageModalOpen,
@@ -34,13 +33,10 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
 export function Form() {
-  const searchParams = useSearchParams();
-  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
-  const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-10',
+      recordAt: '2024-07-09',
       startTime: '',
       endTime: '',
       lane: 25,
@@ -48,26 +44,6 @@ export function Form() {
       imageIdList: [],
     },
   });
-
-  useEffect(() => {
-    if (data) {
-      const prevData = data.data;
-      methods.reset({
-        recordAt: prevData.recordAt,
-        startTime: prevData.startTime,
-        endTime: prevData.endTime,
-        lane: prevData.lane,
-        diary: prevData.diary,
-        heartRate: prevData.memoryDetail.heartRate,
-        kcal: prevData.memoryDetail.kcal,
-        poolId: prevData.pool.id,
-        item: prevData.memoryDetail.item,
-      });
-      setFormSubInfo((prev) => ({ ...prev, poolName: data.data.pool.name }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
   const router = useRouter();
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
@@ -79,6 +55,7 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+  const formSubInfo = useAtomValue(formSubInfoState);
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
@@ -114,7 +91,7 @@ export function Form() {
           <TextField
             variant="select"
             isRequired
-            value={methods.getValues('recordAt')}
+            value="2024년 7월 25일"
             label="수영 날짜"
             wrapperClassName={css({ marginBottom: '24px' })}
           />
@@ -190,7 +167,7 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
-              label={searchParams.get('memoryId') ? '수정하기' : '기록하기'}
+              label="기록하기"
               size="large"
               className={buttonStyles.content}
               disabled={!isRecordAbled}
@@ -202,10 +179,7 @@ export function Form() {
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
-        <EquipmentSection
-          defaultValue={methods.getValues('item')}
-          title="장비"
-        />
+        <EquipmentSection title="장비" />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
       </form>

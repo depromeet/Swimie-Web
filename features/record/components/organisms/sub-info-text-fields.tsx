@@ -3,7 +3,8 @@
 import { useFormContext } from 'react-hook-form';
 
 import { TextField } from '@/components/molecules';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 import { useSubInfoTextFields } from '../../hooks';
 
@@ -20,13 +21,21 @@ export function SubInfoTextFields() {
         wrapperClassName={css({ marginBottom: '23px' })}
         onChange={handlers.onChangeHeartRate}
       />
-      <TextField
-        label="페이스"
-        unit="/100m"
-        value={watch('pace') ? (watch('pace') as string) : ''}
-        wrapperClassName={css({ marginBottom: '23px' })}
-        onChange={handlers.onChangePace}
-      />
+      <div className={paceStyles.layout}>
+        <TextField
+          label="페이스"
+          value={watch('paceMinutes') ? String(watch('paceMinutes')) : ''}
+          onChange={handlers.onChangePaceMinute}
+          wrapperClassName={paceStyles.field}
+        />
+        <span className={css({ fontSize: '30px' })}>:</span>
+        <TextField
+          unit="/100m"
+          value={watch('paceSeconds') ? String(watch('paceSeconds')) : ''}
+          onChange={handlers.onChangePaceSecond}
+          wrapperClassName={cx(paceStyles.field, css({ paddingTop: '24px' }))}
+        />
+      </div>
       <TextField
         label="칼로리"
         unit="Kcal"
@@ -36,3 +45,14 @@ export function SubInfoTextFields() {
     </>
   );
 }
+
+const paceStyles = {
+  layout: flex({
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '23px',
+  }),
+  field: css({
+    width: '42%',
+  }),
+};
