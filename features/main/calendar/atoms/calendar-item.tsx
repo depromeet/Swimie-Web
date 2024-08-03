@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { Memory } from '../molecules/calendar';
+import { Memory } from '../types';
 import { ItemContent } from './calendar-item-content';
 
 interface ItemLayoutProps {
