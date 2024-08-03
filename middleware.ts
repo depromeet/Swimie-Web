@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
     // TODO: refresh 사용하여 access 토큰 발급 + 헤더에 세팅
     if (isLoginPage) {
       // TODO: 로그인 페이지일 경우, '/'경로로 리다이렉트
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
     // TODO: 로그인 페이지가 아닌 경우, 토큰 발급만 진행
     return response;
