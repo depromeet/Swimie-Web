@@ -1,9 +1,14 @@
+import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 
-import { HeaderBar } from '@/components/molecules';
 import { EditButton } from '@/features/record-detail/components';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+const DynamicHeaderBar = dynamic(
+  () => import('@/components/molecules').then(({ HeaderBar }) => HeaderBar),
+  { ssr: false },
+);
 
 type DetailLayout = {
   children: ReactNode;
@@ -12,9 +17,9 @@ type DetailLayout = {
 const DetailLayout = ({ children, params }: DetailLayout) => {
   return (
     <div>
-      <HeaderBar rightContent={<EditButton memoryId={params.id} />}>
+      <DynamicHeaderBar rightContent={<EditButton memoryId={params.id} />}>
         <div className={header.textStyle}>지영의 수영 기록</div>
-      </HeaderBar>
+      </DynamicHeaderBar>
       <div className={childrenWrapperStyle}>{children}</div>
     </div>
   );
