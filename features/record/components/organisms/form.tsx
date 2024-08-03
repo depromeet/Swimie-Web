@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -36,11 +37,12 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 export function Form() {
   const searchParams = useSearchParams();
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   console.log(data);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-05-10',
+      recordAt: '2024-05-23',
       startTime: '',
       endTime: '',
       lane: 25,
@@ -48,6 +50,39 @@ export function Form() {
       imageIdList: [],
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      const prevData = data.data;
+      methods.reset({
+        recordAt: prevData.recordAt,
+        startTime: prevData.startTime,
+        endTime: prevData.endTime,
+        lane: prevData.lane,
+        poolId: prevData.pool.id ? prevData.pool.id : undefined,
+        diary: prevData.diary ? prevData.diary : undefined,
+        heartRate: prevData.memoryDetail.heartRate
+          ? prevData.memoryDetail.heartRate
+          : undefined,
+        paceMinutes: prevData.memoryDetail.paceMinutes
+          ? prevData.memoryDetail.paceMinutes
+          : undefined,
+        paceSeconds: prevData.memoryDetail.paceSeconds
+          ? prevData.memoryDetail.paceSeconds
+          : undefined,
+        kcal: prevData.memoryDetail.kcal
+          ? prevData.memoryDetail.kcal
+          : undefined,
+      });
+      setFormSubInfo({
+        imageFiles: [prevData.images[0].url],
+        poolName: prevData.pool.name ? prevData.pool.name : undefined,
+        totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const router = useRouter();
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
@@ -59,7 +94,6 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-  const formSubInfo = useAtomValue(formSubInfoState);
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
