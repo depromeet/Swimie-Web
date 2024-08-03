@@ -6,6 +6,7 @@ export * from './date-arrow-icon';
 export * from './delete-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
+export * from './loading-icon';
 export * from './search-icon';
 export * from './star-icon';
 export * from './star-icon-fill';

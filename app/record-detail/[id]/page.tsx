@@ -1,11 +1,13 @@
 import dynamic from 'next/dynamic';
 
 import { fetchData } from '@/apis/fetch-data';
+import { LoadingArea } from '@/components/atoms';
 import {
   DetailDescriptionSection,
   DetailDiarySection,
   type RecordDetailType,
 } from '@/features/record-detail';
+import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 const DynamicPreviewSection = dynamic(
@@ -13,7 +15,14 @@ const DynamicPreviewSection = dynamic(
     import('@/features/record-detail').then(
       ({ DetailPreviewSection }) => DetailPreviewSection,
     ),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => (
+      <div className={loadingWrapperStyle}>
+        <LoadingArea />
+      </div>
+    ),
+  },
 );
 
 type RecordDetail = {
@@ -42,4 +51,8 @@ export default async function RecordDetail({ params }: RecordDetail) {
 const containerStyle = flex({
   direction: 'column',
   gap: '12px',
+});
+
+const loadingWrapperStyle = css({
+  backgroundColor: 'white',
 });
