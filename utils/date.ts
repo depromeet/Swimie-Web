@@ -30,3 +30,13 @@ export const getFormatDate = ({ dateStr, padNum }: GetDate) => {
     weekday,
   };
 };
+
+export const isTodayDate = (dateStr: string) => {
+  const targetDate = new Date(dateStr);
+  const today = new Date();
+  return (
+    targetDate.getFullYear() === today.getFullYear() &&
+    targetDate.getMonth() === today.getMonth() &&
+    targetDate.getDate() === today.getDate()
+  );
+};
