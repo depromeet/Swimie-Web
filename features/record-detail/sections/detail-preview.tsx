@@ -70,7 +70,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     const stroke: DetailStroke = strokesMap[name];
     return {
       color,
-      waveHeight: stroke.meter / member.goal,
+      waveHeight: stroke?.meter / member?.goal ?? 0,
     };
   });
 
