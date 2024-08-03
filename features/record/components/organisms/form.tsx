@@ -2,7 +2,7 @@
 'use client';
 
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -13,6 +13,7 @@ import { flex } from '@/styled-system/patterns';
 
 import { useImagePresignedUrl, useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -33,6 +34,9 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
 export function Form() {
+  const searchParams = useSearchParams();
+  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  console.log(data);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
