@@ -2,17 +2,7 @@ import { error } from 'console';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { setAuthCookies } from '@/apis/server-cookie';
-
-interface LoginResponse {
-  status: number;
-  code: string;
-  message: string;
-  data: {
-    userId: number;
-    accessToken: string;
-    refreshToken: string;
-  };
-}
+import { LoginResponse } from '@/types/authType';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
