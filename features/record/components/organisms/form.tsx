@@ -2,7 +2,8 @@
 'use client';
 
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -11,7 +12,7 @@ import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useImagePresignedUrl, useMemory } from '../../apis';
+import { useImagePresignedUrl, useMemory, usePullMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import {
   isDistancePageModalOpen,
@@ -33,10 +34,12 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
 export function Form() {
+  const searchParams = useSearchParams();
+  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-09',
+      recordAt: '2024-07-10',
       startTime: '',
       endTime: '',
       lane: 25,
@@ -44,6 +47,22 @@ export function Form() {
       imageIdList: [],
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      methods.reset({
+        recordAt: data.data.recordAt,
+        startTime: data.data.startTime,
+        endTime: data.data.endTime,
+        lane: data.data.lane,
+        diary: data.data.diary,
+        heartRate: data.data.memoryDetail.heartRate,
+        kcal: data.data.memoryDetail.kcal,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const router = useRouter();
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
@@ -91,7 +110,7 @@ export function Form() {
           <TextField
             variant="select"
             isRequired
-            value="2024년 7월 25일"
+            value={methods.getValues('recordAt')}
             label="수영 날짜"
             wrapperClassName={css({ marginBottom: '24px' })}
           />
@@ -167,7 +186,7 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
-              label="기록하기"
+              label={searchParams.get('memoryId') ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
               disabled={!isRecordAbled}
