@@ -1,40 +1,41 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 import { LeftArrowIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 
 import { HeaderBarProps } from './type';
 
+const DynamicBackButton = dynamic(
+  () => import('./header-back-button').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => (
+      <div className={cx(backIconStyles)}>
+        <LeftArrowIcon />
+      </div>
+    ),
+  },
+);
 /**
- *
  * @param className header-bar에 외부 스타일 주입
  * @param arrowClassName left-arrow-icon에 외부 스타일 주입
  * @param children children 요소
- * @param backArrowClick 외부에서 뒤로가기 클릭 시 수행할 동작을 직접 선언(default: router.back())
+ * @param onClickBack 외부에서 뒤로가기 클릭 시 수행할 동작을 직접 선언(default: router.back())
  */
 export function HeaderBar({
   className,
-  arrowClassName,
+  backIconClassName,
   children,
-  onClickBackArrow,
+  onClickBack,
   rightContent,
 }: HeaderBarProps) {
-  const router = useRouter();
-
-  const handleBackClick = () => {
-    onClickBackArrow ? onClickBackArrow() : router.back();
-  };
   return (
     <header className={cx(headerBarStyles, className)}>
       <div className={parentStyles}>
-        <div
-          className={cx(arrowIconStyles, arrowClassName)}
-          onClick={handleBackClick}
-        >
-          <LeftArrowIcon />
-        </div>
+        <DynamicBackButton
+          className={cx(backIconStyles, backIconClassName)}
+          onClickBack={onClickBack}
+        />
         {children}
         {rightContent && <div className={rightAreaStyles}>{rightContent}</div>}
       </div>
@@ -59,7 +60,7 @@ const parentStyles = css({
   width: '100%',
 });
 
-const arrowIconStyles = css({
+const backIconStyles = css({
   position: 'absolute',
   left: '12px',
 });
