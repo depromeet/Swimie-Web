@@ -10,6 +10,7 @@ export type DetailPool = {
   lane: number;
 };
 
+export type StrokeMapType = Record<StrokeName, DetailStroke>;
 export type StrokeName = '자유형' | '배영' | '접영' | '평영' | '킥판';
 export type DetailStroke = {
   strokeId: number;
