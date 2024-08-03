@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtomValue, useSetAtom } from 'jotai';
-import { useRouter } from 'next/navigation';
+import { useAtom, useSetAtom } from 'jotai';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -11,8 +12,9 @@ import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useImagePresignedUrl, useMemory } from '../../apis';
+import { useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -33,10 +35,14 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
 export function Form() {
+  const searchParams = useSearchParams();
+  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
+
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-05-10',
+      recordAt: '2024-05-23',
       startTime: '',
       endTime: '',
       lane: 25,
@@ -44,18 +50,50 @@ export function Form() {
       imageIdList: [],
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      const prevData = data.data;
+      methods.reset({
+        recordAt: prevData.recordAt,
+        startTime: prevData.startTime,
+        endTime: prevData.endTime,
+        lane: prevData.lane,
+        poolId: prevData.pool.id ? prevData.pool.id : undefined,
+        diary: prevData.diary ? prevData.diary : undefined,
+        heartRate: prevData.memoryDetail.heartRate
+          ? prevData.memoryDetail.heartRate
+          : undefined,
+        paceMinutes: prevData.memoryDetail.paceMinutes
+          ? prevData.memoryDetail.paceMinutes
+          : undefined,
+        paceSeconds: prevData.memoryDetail.paceSeconds
+          ? prevData.memoryDetail.paceSeconds
+          : undefined,
+        kcal: prevData.memoryDetail.kcal
+          ? prevData.memoryDetail.kcal
+          : undefined,
+      });
+      setFormSubInfo({
+        imageFiles: [],
+        poolName: prevData.pool.name ? prevData.pool.name : undefined,
+        totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const router = useRouter();
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );
 
-  const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  // const { mutateAsync: imagePresign } = useImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-  const formSubInfo = useAtomValue(formSubInfoState);
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
@@ -65,15 +103,15 @@ export function Form() {
 
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (formSubInfo.imageFiles.length > 0) {
-      await imagePresign(formSubInfo.imageFiles).then(async (res) => {
-        await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
-          (res) => {
-            router.push(
-              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-            );
-          },
-        );
-      });
+      // await imagePresign(formSubInfo.imageFiles).then(async (res) => {
+      //   await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
+      //     (res) => {
+      //       router.push(
+      //         `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
+      //       );
+      //     },
+      //   );
+      // });
     } else {
       await memory(data).then((res) =>
         router.push(
