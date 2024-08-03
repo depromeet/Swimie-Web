@@ -36,7 +36,7 @@ export function Form() {
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-07-09',
+      recordAt: '2024-05-10',
       startTime: '',
       endTime: '',
       lane: 25,
@@ -69,7 +69,7 @@ export function Form() {
         await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
           (res) => {
             router.push(
-              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
             );
           },
         );
@@ -77,7 +77,7 @@ export function Form() {
     } else {
       await memory(data).then((res) =>
         router.push(
-          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}`,
+          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
         ),
       );
     }
@@ -86,7 +86,7 @@ export function Form() {
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={layoutStyles}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className={cx(formSectionStyles)}>
           <TextField
             variant="select"
@@ -182,6 +182,7 @@ export function Form() {
         <EquipmentSection title="장비" />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
+        <div className={blockStyles} />
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
@@ -190,10 +191,6 @@ export function Form() {
     </FormProvider>
   );
 }
-
-const layoutStyles = css({
-  paddingBottom: '100px',
-});
 
 const timeStyles = {
   layout: flex({
@@ -207,7 +204,8 @@ const timeStyles = {
 };
 
 const buttonStyles = {
-  layout: css({
+  layout: flex({
+    justifyContent: 'center',
     position: 'fixed',
     width: '100%',
     bottom: '32px',
@@ -218,5 +216,11 @@ const buttonStyles = {
 
   content: css({
     width: '100%',
+    maxWidth: '560px',
   }),
 };
+
+const blockStyles = css({
+  height: '100px',
+  backgroundColor: 'line.alternative',
+});

@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { RecordRequestProps } from './dto';
-import { MemoryResponse } from './dto/memory';
+import { MemoryResponse, RecordRequestProps } from './dto';
 
 async function memory(formData: RecordRequestProps): Promise<MemoryResponse> {
   const res = await fetch(`/api/memory`, {
