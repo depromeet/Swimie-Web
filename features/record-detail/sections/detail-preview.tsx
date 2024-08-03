@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Waves } from '@/components/atoms';
+import { Image, Waves } from '@/components/atoms';
 import { swims } from '@/constants/visualization';
+import placeholderImage from '@/public/images/fallbackImage.png';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
@@ -85,17 +86,29 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         />
 
         {/* 파도 svg */}
-        {Boolean(strokes?.length) && (
-          <div className={wavesStyle} ref={containerRef}>
-            {containerRef.current && (
-              <Waves
-                waves={wavesData}
-                width={containerSize.width}
-                height={containerSize.height}
-              />
-            )}
-          </div>
-        )}
+        <div className={wavesStyle} ref={containerRef}>
+          {strokes?.length ? (
+            <>
+              {containerRef.current && (
+                <Waves
+                  waves={wavesData}
+                  width={containerSize.width}
+                  height={containerSize.height}
+                />
+              )}
+            </>
+          ) : (
+            <Image
+              src={placeholderImage}
+              alt="placeholder"
+              width={containerSize.width}
+              height={containerSize.height}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          )}
+        </div>
 
         {/* preview description */}
         <div className={graphArea.textWrapper}>
@@ -136,9 +149,12 @@ const containerStyle = css({
   backgroundColor: 'white',
 });
 
-const wavesStyle = css({
+const wavesStyle = flex({
   height: '270px',
   width: 'full',
+  overflow: 'hidden',
+  justifyContent: 'center',
+  borderRadius: '3px',
 });
 
 const graphArea = {
