@@ -12,7 +12,7 @@ import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useImagePresignedUrl, useMemory } from '../../apis';
+import { useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import { usePullMemory } from '../../apis/use-pull-memory';
 import {
@@ -38,7 +38,7 @@ export function Form() {
   const searchParams = useSearchParams();
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
-  console.log(data);
+
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
@@ -75,7 +75,7 @@ export function Form() {
           : undefined,
       });
       setFormSubInfo({
-        imageFiles: [prevData.images[0].url],
+        imageFiles: [],
         poolName: prevData.pool.name ? prevData.pool.name : undefined,
         totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
       });
@@ -88,7 +88,7 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
 
-  const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  // const { mutateAsync: imagePresign } = useImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
@@ -103,15 +103,15 @@ export function Form() {
 
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (formSubInfo.imageFiles.length > 0) {
-      await imagePresign(formSubInfo.imageFiles).then(async (res) => {
-        await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
-          (res) => {
-            router.push(
-              `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-            );
-          },
-        );
-      });
+      // await imagePresign(formSubInfo.imageFiles).then(async (res) => {
+      //   await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
+      //     (res) => {
+      //       router.push(
+      //         `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
+      //       );
+      //     },
+      //   );
+      // });
     } else {
       await memory(data).then((res) =>
         router.push(

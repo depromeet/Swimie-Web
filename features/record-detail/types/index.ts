@@ -10,9 +10,11 @@ export type DetailPool = {
   lane: number;
 };
 
-export type DetailStrokes = {
+export type StrokeMapType = Record<StrokeName, DetailStroke>;
+export type StrokeName = '자유형' | '배영' | '접영' | '평영' | '킥판';
+export type DetailStroke = {
   strokeId: number;
-  name: '자유형' | '배영' | '접영' | '평영' | '킥판';
+  name: StrokeName;
   laps: number;
   meter: number;
 };
@@ -20,7 +22,8 @@ export type DetailStrokes = {
 export type DetailMemoryDetail = {
   item: string;
   heartRate: number;
-  pace: string;
+  paceMinutes: string;
+  paceSeconds: string;
   kcal: number;
 };
 
@@ -29,7 +32,7 @@ export type RecordDetailType = {
   member: DetailMember;
   pool: DetailPool;
   memoryDetail: DetailMemoryDetail;
-  strokes: DetailStrokes[];
+  strokes: DetailStroke[];
   images: {
     imageName: string;
     url: string;

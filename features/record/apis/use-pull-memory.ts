@@ -16,7 +16,7 @@ async function pullMemory(memoryId: number) {
 
 export function usePullMemory(memoryId: number) {
   return useQuery<MemoryPullResponse>({
-    queryKey: ['usePullMemory'],
+    queryKey: ['usePullMemory', memoryId],
     queryFn: () => pullMemory(memoryId),
     retry: 1,
     enabled: !!memoryId,

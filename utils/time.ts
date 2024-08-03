@@ -8,15 +8,14 @@ type GetTime = {
  *
  * @param {string} params.timeStr - 형식화할 시간 문자열
  * @param {'number' | 'string'} params.type - 반환 값 타입
- * @returns {Object} 시간 객체 (시간, 분, 초)
+ * @returns {Object} 시간 객체 (시간, 분)
  */
 export const getFormatTime = ({ timeStr, type = 'number' }: GetTime) => {
-  const [hour, minute, second] = timeStr.split(':');
+  const [hour, minute] = timeStr.split(':');
   const isTypeNumber = type === 'number';
 
   return {
     hour: isTypeNumber ? parseInt(hour, 10) : hour,
     minute: isTypeNumber ? parseInt(minute, 10) : minute,
-    second: isTypeNumber ? parseInt(second, 10) : second,
   };
 };

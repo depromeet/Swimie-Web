@@ -1,15 +1,35 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { Image, Waves } from '@/components/atoms';
+import { swims } from '@/constants/visualization';
+import placeholderImage from '@/public/images/fallbackImage.png';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
 
 import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
-import { type RecordDetailType } from '../types';
+import {
+  type DetailStroke,
+  type RecordDetailType,
+  type StrokeMapType,
+} from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    setContainerSize({
+      width: containerRef.current.offsetWidth,
+      height: containerRef.current.offsetHeight,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerRef.current]);
+
   const toolArr = useMemo(() => {
     return data.memoryDetail.item.split(',');
   }, [data.memoryDetail.item]);
@@ -22,8 +42,17 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     console.log('next');
   };
 
-  const { startTime, endTime, lane, strokes, totalLap, totalMeter, recordAt } =
-    data;
+  const {
+    startTime,
+    endTime,
+    lane,
+    strokes,
+    totalLap,
+    totalMeter,
+    recordAt,
+    member,
+  } = data;
+
   const { hour: startHour, minute: startMinute } = getFormatTime({
     timeStr: startTime,
     type: 'string',
@@ -32,6 +61,19 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     timeStr: endTime,
     type: 'string',
   });
+
+  const strokesMap: StrokeMapType = strokes.reduce((acc, stroke) => {
+    acc[stroke.name] = stroke;
+    return acc;
+  }, {} as StrokeMapType);
+  const wavesData = swims.map(({ name, color }) => {
+    const stroke: DetailStroke = strokesMap[name];
+    return {
+      color,
+      waveHeight: stroke?.meter / member?.goal ?? 0,
+    };
+  });
+
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
@@ -44,7 +86,30 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         />
 
         {/* 파도 svg */}
-        <div>물결이 ~~</div>
+        <div className={wavesStyle} ref={containerRef}>
+          {strokes?.length ? (
+            <>
+              {containerRef.current && (
+                <Waves
+                  waves={wavesData}
+                  width={containerSize.width}
+                  height={containerSize.height}
+                />
+              )}
+            </>
+          ) : (
+            <Image
+              src={placeholderImage}
+              alt="placeholder"
+              width={containerSize.width}
+              height={containerSize.height}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          )}
+          <p className={goalText}>목표 {member.goal.toLocaleString()}m</p>
+        </div>
 
         {/* preview description */}
         <div className={graphArea.textWrapper}>
@@ -83,6 +148,24 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
 const containerStyle = css({
   backgroundColor: 'white',
+});
+
+const wavesStyle = flex({
+  position: 'relative',
+  width: 'full',
+  aspectRatio: '335 / 270',
+  overflow: 'hidden',
+  justifyContent: 'center',
+  borderRadius: '3px',
+});
+
+const goalText = css({
+  position: 'absolute',
+  right: '8px',
+  bottom: '8px',
+  textStyle: 'label2.normal',
+  fontWeight: 'medium',
+  color: 'line.solid.neutral',
 });
 
 const graphArea = {
