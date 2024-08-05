@@ -45,7 +45,6 @@ export function Form() {
   const date = searchParams.get('date');
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
-
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       recordAt: date ? date : getToday(),
@@ -65,7 +64,7 @@ export function Form() {
         startTime: prevData.startTime,
         endTime: prevData.endTime,
         lane: prevData.lane,
-        poolId: prevData.pool.id ? prevData.pool.id : undefined,
+        poolId: prevData.pool ? prevData.pool.id : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
           ? prevData.memoryDetail.heartRate
@@ -82,7 +81,7 @@ export function Form() {
       });
       setFormSubInfo({
         imageFiles: [],
-        poolName: prevData.pool.name ? prevData.pool.name : undefined,
+        poolName: prevData.pool ? prevData.pool.name : undefined,
         totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
       });
     }
