@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { HeaderBar } from '@/components/molecules';
 import { Form } from '@/features/record';
 import { css } from '@/styled-system/css';
@@ -11,7 +13,9 @@ export default function RecordPage() {
       </HeaderBar>
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>
-      <Form />
+      <Suspense>
+        <Form />
+      </Suspense>
     </div>
   );
 }
