@@ -9,15 +9,15 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
   const { images, diary, recordAt } = data;
   const { year, month, day, weekday } = getFormatDate({ dateStr: recordAt });
 
-  if (!images && !diary) return null;
+  if (!images?.length && !diary) return null;
   return (
     <section className={containerStyle}>
       {/* NOTE: MVP에서는 한장만 표기 */}
-      {images && (
+      {Boolean(images?.length) && (
         <div className={image.containerStyle}>
           <div className={image.wrapperStyle}>
             <Image
-              src={images[0]?.url}
+              src={images?.[0]?.url ?? ''}
               alt="기록 이미지"
               fill
               style={{

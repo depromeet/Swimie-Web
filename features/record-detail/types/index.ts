@@ -33,14 +33,15 @@ export type RecordDetailType = {
   recordAt: string;
   startTime: string;
   endTime: string;
-  member?: DetailMember;
-  pool?: DetailPool;
-  memoryDetail?: DetailMemoryDetail;
-  strokes?: DetailStroke[];
-  images?: {
+  // 배열 데이터는 데이터가 없을 경우 빈 배열로 수신
+  strokes: DetailStroke[];
+  images: {
     imageName: string;
     url: string;
   }[];
+  member?: DetailMember;
+  pool?: DetailPool;
+  memoryDetail?: DetailMemoryDetail;
   duration?: string;
   lane?: number;
   totalLap?: number;
