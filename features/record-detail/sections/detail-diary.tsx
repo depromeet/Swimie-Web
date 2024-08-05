@@ -9,7 +9,7 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
   const { images, diary, recordAt } = data;
   const { year, month, day, weekday } = getFormatDate({ dateStr: recordAt });
 
-  if (!images && !diary) return null;
+  if (!images?.length && !diary) return null;
   return (
     <section className={containerStyle}>
       {/* NOTE: MVP에서는 한장만 표기 */}
@@ -17,7 +17,7 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
         <div className={image.containerStyle}>
           <div className={image.wrapperStyle}>
             <Image
-              src={images[0]?.url}
+              src={images?.[0]?.url ?? ''}
               alt="기록 이미지"
               fill
               style={{
@@ -28,20 +28,22 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
         </div>
       )}
 
-      <div className={diaryWrapperStyle}>
-        <div className={header.containerStyle}>
-          <div className={header.titleWrapperStyle}>
-            <SwimIcon width={28} height={28} />
-            <h1 className={header.title}>오늘의 수영 일기</h1>
+      {diary && (
+        <div className={diaryWrapperStyle}>
+          <div className={header.containerStyle}>
+            <div className={header.titleWrapperStyle}>
+              <SwimIcon width={28} height={28} />
+              <h1 className={header.title}>오늘의 수영 일기</h1>
+            </div>
+
+            <p
+              className={header.date}
+            >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
           </div>
 
-          <p
-            className={header.date}
-          >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
+          <div className={diaryDetailStyle}>{diary}</div>
         </div>
-
-        <div className={diaryDetailStyle}>{diary}</div>
-      </div>
+      )}
     </section>
   );
 };

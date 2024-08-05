@@ -15,20 +15,20 @@ const Page = () => {
   const setAuth = useSetAtom(AuthInfoAtom);
 
   useEffect(() => {
-    const GOOGLE_CODE = searchParams.get('code');
+    const KAKAO_CODE = searchParams.get('code');
 
     const postCode = async () => {
-      if (!GOOGLE_CODE) {
+      if (!KAKAO_CODE) {
         console.error('코드가 유효하지 않습니다.');
         return;
       }
       try {
-        const response = await fetch(`/api/kakao/oauth?code=${GOOGLE_CODE}`, {
+        const response = await fetch(`/api/kakao/oauth?code=${KAKAO_CODE}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ code: GOOGLE_CODE }),
+          body: JSON.stringify({ code: KAKAO_CODE }),
         });
 
         if (response.status === 200) {

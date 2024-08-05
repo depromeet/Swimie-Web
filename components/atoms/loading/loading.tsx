@@ -3,11 +3,11 @@ import { css } from '@/styled-system/css';
 import { LoadingIcon } from '../icons';
 
 interface LoadingScale {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
-export const LoadingArea = ({ width, height }: LoadingScale) => {
+export const LoadingArea = ({ width = 20, height = 20 }: LoadingScale) => {
   return (
     <div className={containerStyle}>
       <div className={wrapperStyle}>

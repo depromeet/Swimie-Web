@@ -29,20 +29,22 @@ export type DetailMemoryDetail = {
 
 export type RecordDetailType = {
   id: number;
-  member: DetailMember;
-  pool: DetailPool;
-  memoryDetail: DetailMemoryDetail;
+  type: 'NORMAL' | 'SINGLE' | 'MULTI';
+  recordAt: string;
+  startTime: string;
+  endTime: string;
+  // 배열 데이터는 데이터가 없을 경우 빈 배열로 수신
   strokes: DetailStroke[];
   images: {
     imageName: string;
     url: string;
   }[];
-  recordAt: string;
-  startTime: string;
-  endTime: string;
-  duration: string;
-  lane: number;
-  totalLap: number;
-  totalMeter: number;
-  diary: string;
+  member?: DetailMember;
+  pool?: DetailPool;
+  memoryDetail?: DetailMemoryDetail;
+  duration?: string;
+  lane?: number;
+  totalLap?: number;
+  totalMeter?: number;
+  diary?: string;
 };
