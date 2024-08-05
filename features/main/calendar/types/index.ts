@@ -1,3 +1,5 @@
+import { StrokeInfo } from '../../time-line';
+
 export type MemoryType = 'NORMAL' | 'SINGLE' | 'MULTI';
 
 export interface Strokes {
@@ -19,7 +21,7 @@ export interface Memory {
   type: MemoryType;
   totalDistance?: number;
   isAchieved?: boolean;
-  strokes?: Strokes;
+  strokes?: Array<StrokeInfo>;
   imageUrl?: string;
 }
 
