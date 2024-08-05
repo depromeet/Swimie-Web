@@ -11,6 +11,7 @@ import { Divider } from '@/components/atoms/divider';
 import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { formatDateToKorean, getToday } from '@/utils';
 
 import { useMemory } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
@@ -36,13 +37,13 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: watch의 성능 이슈 고민
 export function Form() {
   const searchParams = useSearchParams();
+  const date = searchParams.get('date');
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
 
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
-      // 달력 클릭하면 넘어오는 날짜를 default로 추후 수정
-      recordAt: '2024-05-23',
+      recordAt: date ? date : getToday(),
       startTime: '',
       endTime: '',
       lane: 25,
@@ -129,7 +130,7 @@ export function Form() {
           <TextField
             variant="select"
             isRequired
-            value="2024년 7월 25일"
+            value={formatDateToKorean(methods.getValues('recordAt'))}
             label="수영 날짜"
             wrapperClassName={css({ marginBottom: '24px' })}
           />

@@ -1,6 +1,8 @@
+import { useAtomValue } from 'jotai';
 import Link from 'next/link';
 import type { PropsWithChildren } from 'react';
 
+import { calendarDateAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -18,10 +20,16 @@ interface CalendarItemProps extends ItemLayoutProps {
 }
 
 export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
+  const { year, month } = useAtomValue(calendarDateAtom);
+  const targetDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
+
   if (!memory)
     return (
       <ItemLayout date={date} isToday={isToday}>
-        <Link href={`/record`} className={linkContainerStyles} />
+        <Link
+          href={`/record?date=${targetDate}`}
+          className={linkContainerStyles}
+        />
       </ItemLayout>
     );
 

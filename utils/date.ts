@@ -40,3 +40,13 @@ export const isTodayDate = (dateStr: string) => {
     targetDate.getDate() === today.getDate()
   );
 };
+
+export const getToday = () => {
+  const today = new Date();
+  return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+};
+
+export const formatDateToKorean = (dateStr: string, separator = '-') => {
+  const [year, month, date] = dateStr.split(separator);
+  return `${year}년 ${+month}월 ${+date}일`;
+};
