@@ -151,11 +151,11 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       )}
 
       {/* NOTE: 수영 장비 영역 */}
-      {memoryDetail?.item && (
+      {Boolean(memoryDetail?.item.length) && (
         <div className={toolsContainer}>
-          {memoryDetail.item.split(',').map((tool, index) => (
-            <SwimToolItem key={index} name={tool} />
-          ))}
+          {memoryDetail?.item
+            .split(',')
+            .map((tool, index) => <SwimToolItem key={index} name={tool} />)}
         </div>
       )}
     </section>
