@@ -13,7 +13,7 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
   return (
     <section className={containerStyle}>
       {/* NOTE: MVP에서는 한장만 표기 */}
-      {Boolean(images?.length) && (
+      {images && (
         <div className={image.containerStyle}>
           <div className={image.wrapperStyle}>
             <Image
@@ -28,20 +28,22 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
         </div>
       )}
 
-      <div className={diaryWrapperStyle}>
-        <div className={header.containerStyle}>
-          <div className={header.titleWrapperStyle}>
-            <SwimIcon width={28} height={28} />
-            <h1 className={header.title}>오늘의 수영 일기</h1>
+      {diary && (
+        <div className={diaryWrapperStyle}>
+          <div className={header.containerStyle}>
+            <div className={header.titleWrapperStyle}>
+              <SwimIcon width={28} height={28} />
+              <h1 className={header.title}>오늘의 수영 일기</h1>
+            </div>
+
+            <p
+              className={header.date}
+            >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
           </div>
 
-          <p
-            className={header.date}
-          >{`${year}년 ${month}월 ${day}일 ${weekday}`}</p>
+          <div className={diaryDetailStyle}>{diary}</div>
         </div>
-
-        <div className={diaryDetailStyle}>{diary}</div>
-      </div>
+      )}
     </section>
   );
 };
