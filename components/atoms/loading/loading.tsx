@@ -2,11 +2,16 @@ import { css } from '@/styled-system/css';
 
 import { LoadingIcon } from '../icons';
 
-export const LoadingArea = () => {
+interface LoadingScale {
+  width: number;
+  height: number;
+}
+
+export const LoadingArea = ({ width, height }: LoadingScale) => {
   return (
     <div className={containerStyle}>
       <div className={wrapperStyle}>
-        <LoadingIcon width={20} height={20} />
+        <LoadingIcon width={width} height={height} />
       </div>
     </div>
   );
