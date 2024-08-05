@@ -115,34 +115,33 @@ export function Form() {
   };
 
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
+    //기록에 사진이 있을 시
+    //Todo: 기록 에러 처리
     if (formSubInfo.imageFiles.length > 0) {
-      await getImagePresignedUrl([formSubInfo.imageFiles[0].name]).then(
-        async (getImagePresignUrlRes) => {
-          await imagePresign({
-            presignedUrl: getImagePresignUrlRes.data[0].presignedUrl,
-            file: getBlobData(formSubInfo.imageFiles[0]),
-          }).then(async () => {
-            await imageStatus([getImagePresignUrlRes.data[0].imageId]).then(
-              async () => {
-                await memory({
-                  ...data,
-                  imageIdList: [getImagePresignUrlRes.data[0].imageId],
-                }).then((res) =>
-                  router.push(
-                    `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-                  ),
-                );
-              },
-            );
-          });
-        },
-      );
-    } else {
-      await memory(data).then((res) =>
+      const getImagePresignedUrlRes = await getImagePresignedUrl([
+        formSubInfo.imageFiles[0].name,
+      ]);
+      await imagePresign({
+        presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+        file: getBlobData(formSubInfo.imageFiles[0]),
+      });
+      await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+      const memoryRes = await memory({
+        ...data,
+        imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+      });
+      if (memoryRes.status === 200)
         router.push(
-          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-        ),
-      );
+          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+        );
+    }
+    //기록에 사진이 없을 시
+    else {
+      const memoryRes = await memory(data);
+      if (memoryRes.status === 200)
+        router.push(
+          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+        );
     }
   };
 
