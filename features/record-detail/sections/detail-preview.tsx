@@ -60,14 +60,14 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
   });
 
   const wavesArr = useMemo(() => {
-    const strokesMap = strokes?.reduce((acc, stroke) => {
+    if (!strokes.length || !member?.goal) {
+      return null;
+    }
+
+    const strokesMap = strokes.reduce((acc, stroke) => {
       acc[stroke.name] = stroke;
       return acc;
     }, {} as StrokeMapType);
-
-    if (!strokesMap || !member?.goal) {
-      return null;
-    }
 
     return swims.map(({ name, color }) => {
       const stroke: DetailStroke = strokesMap[name];
@@ -142,7 +142,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       </div>
 
       {/* NOTE: 통계 영역 */}
-      {strokes && (
+      {Boolean(strokes?.length) && (
         <div className={statsContainer}>
           {strokes.map((item) => (
             <SwimStatsItem key={item.strokeId} item={item} />
