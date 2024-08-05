@@ -1,11 +1,12 @@
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
+import { useTimeLineData } from '@/hooks/use-timeline';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { MemoryType } from '../../calendar';
 import { TimeLineCard } from '../atoms';
+import { TimeLineContent } from '../types';
 
-const memories: Array<TimeLineMemory> = [
+const memories: Array<TimeLineContent> = [
   {
     memoryId: 1,
     type: 'MULTI',
@@ -173,31 +174,12 @@ const memories: Array<TimeLineMemory> = [
   },
 ];
 
-export interface StrokeInfo {
-  strokeId: number;
-  name: string;
-  laps: number;
-  meter: number;
-}
-
-export interface TimeLineMemory {
-  memoryId: number;
-  type: MemoryType;
-  recordAt: string;
-  startTime?: string;
-  endTime?: string;
-  lane: number;
-  diary?: string;
-  totalDistance?: number;
-  memoryDetailId: number;
-  kcal?: number;
-  strokes?: Array<StrokeInfo>;
-  isAchieved?: boolean;
-  images: Array<string>;
-}
-
 export const TimeLine = () => {
   const isEmptyTimeLine = memories.length === 0;
+  const { data: timelineData } = useTimeLineData();
+
+  if (!timelineData) return '';
+
   return (
     <>
       {isEmptyTimeLine ? (
