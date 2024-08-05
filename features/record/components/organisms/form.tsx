@@ -13,8 +13,13 @@ import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getToday } from '@/utils';
 
-import { useMemory } from '../../apis';
+import {
+  useGetImagePresignedUrl,
+  useImagePresignUrl,
+  useMemory,
+} from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { useImageStatus } from '../../apis/use-image-status';
 import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
@@ -89,8 +94,10 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
 
-  // const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
+  const { mutateAsync: imagePresign } = useImagePresignUrl();
+  const { mutateAsync: imageStatus } = useImageStatus();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -102,17 +109,34 @@ export function Form() {
 
   const isRecordAbled = startTime && endTime;
 
+  const getBlobData = (file: File) => {
+    const blobData = new Blob([file]);
+    return blobData;
+  };
+
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (formSubInfo.imageFiles.length > 0) {
-      // await imagePresign(formSubInfo.imageFiles).then(async (res) => {
-      //   await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
-      //     (res) => {
-      //       router.push(
-      //         `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-      //       );
-      //     },
-      //   );
-      // });
+      await getImagePresignedUrl([formSubInfo.imageFiles[0].name]).then(
+        async (getImagePresignUrlRes) => {
+          await imagePresign({
+            presignedUrl: getImagePresignUrlRes.data[0].presignedUrl,
+            file: getBlobData(formSubInfo.imageFiles[0]),
+          }).then(async () => {
+            await imageStatus([getImagePresignUrlRes.data[0].imageId]).then(
+              async () => {
+                await memory({
+                  ...data,
+                  imageIdList: [getImagePresignUrlRes.data[0].imageId],
+                }).then((res) =>
+                  router.push(
+                    `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
+                  ),
+                );
+              },
+            );
+          });
+        },
+      );
     } else {
       await memory(data).then((res) =>
         router.push(
