@@ -7,6 +7,7 @@
  */
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export async function fetchData<T>(
   endpoint: string,
@@ -30,6 +31,11 @@ export async function fetchData<T>(
     headers,
     body: body ? JSON.stringify(body) : undefined,
   });
+
+  // NOTE: UnAuthorize error
+  if (response.status === 401) {
+    redirect('/login');
+  }
 
   if (!response.ok) {
     console.error('요청을 다시 확인해주세요.', response.statusText);
