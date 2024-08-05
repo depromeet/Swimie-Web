@@ -30,10 +30,6 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef.current]);
 
-  const toolArr = useMemo(() => {
-    return data.memoryDetail.item.split(',');
-  }, [data.memoryDetail.item]);
-
   const handleClickPreviousDate = () => {
     console.log('prev');
   };
@@ -51,6 +47,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     totalMeter,
     recordAt,
     member,
+    memoryDetail,
   } = data;
 
   const { hour: startHour, minute: startMinute } = getFormatTime({
@@ -62,17 +59,24 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     type: 'string',
   });
 
-  const strokesMap: StrokeMapType = strokes.reduce((acc, stroke) => {
-    acc[stroke.name] = stroke;
-    return acc;
-  }, {} as StrokeMapType);
-  const wavesData = swims.map(({ name, color }) => {
-    const stroke: DetailStroke = strokesMap[name];
-    return {
-      color,
-      waveHeight: stroke?.meter / member?.goal ?? 0,
-    };
-  });
+  const wavesArr = useMemo(() => {
+    const strokesMap = strokes?.reduce((acc, stroke) => {
+      acc[stroke.name] = stroke;
+      return acc;
+    }, {} as StrokeMapType);
+
+    if (!strokesMap || !member?.goal) {
+      return null;
+    }
+
+    return swims.map(({ name, color }) => {
+      const stroke: DetailStroke = strokesMap[name];
+      return {
+        color,
+        waveHeight: stroke?.meter / member.goal ?? 0,
+      };
+    });
+  }, [member?.goal, strokes]);
 
   return (
     <section className={containerStyle}>
@@ -87,11 +91,11 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
         {/* 파도 svg */}
         <div className={wavesStyle} ref={containerRef}>
-          {strokes?.length ? (
+          {wavesArr ? (
             <>
               {containerRef.current && (
                 <Waves
-                  waves={wavesData}
+                  waves={wavesArr}
                   width={containerSize.width}
                   height={containerSize.height}
                 />
@@ -108,25 +112,37 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
               }}
             />
           )}
-          <p className={goalText}>목표 {member.goal.toLocaleString()}m</p>
+          {member?.goal && (
+            <p className={goalText}>목표 {member.goal.toLocaleString()}m</p>
+          )}
         </div>
 
         {/* preview description */}
         <div className={graphArea.textWrapper}>
           <div className={graphText.titleContainer}>
-            <h1 className={graphText.title}>{totalMeter.toLocaleString()}</h1>
-            <span className={graphText.unit}>m</span>
+            {!totalMeter ? (
+              <h1 className={graphText.placeholder}>{'오늘 수영 완료'}</h1>
+            ) : (
+              <>
+                <h1 className={graphText.title}>
+                  {totalMeter.toLocaleString()}
+                </h1>
+                <span className={graphText.unit}>m</span>
+              </>
+            )}
           </div>
           <p className={graphText.detail}>
-            {`${startHour}:${startMinute}`} ~ {`${endHour}:${endMinute}`} /{' '}
-            {totalLap}
-            lap / {lane}m 레인
+            <span>
+              {`${startHour}:${startMinute}`} ~ {`${endHour}:${endMinute}`}
+            </span>
+            {totalLap && <span>{totalLap} lap</span>}
+            {lane && <span>{lane}m 레인</span>}
           </p>
         </div>
       </div>
 
       {/* NOTE: 통계 영역 */}
-      {Boolean(strokes?.length) && (
+      {strokes && (
         <div className={statsContainer}>
           {strokes.map((item) => (
             <SwimStatsItem key={item.strokeId} item={item} />
@@ -135,9 +151,9 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       )}
 
       {/* NOTE: 수영 장비 영역 */}
-      {Boolean(toolArr?.length) && (
+      {memoryDetail?.item && (
         <div className={toolsContainer}>
-          {toolArr.map((tool, index) => (
+          {memoryDetail.item.split(',').map((tool, index) => (
             <SwimToolItem key={index} name={tool} />
           ))}
         </div>
@@ -187,6 +203,10 @@ const graphText = {
     gap: '2px',
     align: 'center',
   }),
+  placeholder: css({
+    textStyle: 'heading1',
+    fontWeight: 'bold',
+  }),
   title: css({
     textStyle: 'display2',
     fontWeight: 'bold',
@@ -200,6 +220,13 @@ const graphText = {
     textStyle: 'label1.normal',
     fontWeight: 'medium',
     color: 'text.placeHolder',
+
+    '& > span:not(:last-child)': {
+      '&:after': {
+        content: "'/'",
+        px: '4px',
+      },
+    },
   }),
 };
 

@@ -11,13 +11,15 @@ export const DetailDescriptionSection = ({
   data: RecordDetailType;
 }) => {
   const { pool, duration, memoryDetail } = data;
-  const { minute: durationMinute } = getFormatTime({ timeStr: duration });
 
   return (
     <section className={containerStyle}>
       <div className={infoWrapperStyle}>
         <SwimDescriptionItem title="수영 장소" value={pool?.name} />
-        <SwimDescriptionItem title="수영 시간" value={`${durationMinute}분`} />
+        <SwimDescriptionItem
+          title="수영 시간"
+          value={duration && `${getFormatTime({ timeStr: duration }).minute}분`}
+        />
       </div>
 
       <div className={detailWrapperStyle}>

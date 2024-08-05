@@ -29,20 +29,21 @@ export type DetailMemoryDetail = {
 
 export type RecordDetailType = {
   id: number;
-  member: DetailMember;
-  pool: DetailPool;
-  memoryDetail: DetailMemoryDetail;
-  strokes: DetailStroke[];
-  images: {
-    imageName: string;
-    url: string;
-  }[];
+  type: 'NORMAL' | 'SINGLE' | 'MULTI';
   recordAt: string;
   startTime: string;
   endTime: string;
-  duration: string;
-  lane: number;
-  totalLap: number;
-  totalMeter: number;
-  diary: string;
+  member?: DetailMember;
+  pool?: DetailPool;
+  memoryDetail?: DetailMemoryDetail;
+  strokes?: DetailStroke[];
+  images?: {
+    imageName: string;
+    url: string;
+  }[];
+  duration?: string;
+  lane?: number;
+  totalLap?: number;
+  totalMeter?: number;
+  diary?: string;
 };

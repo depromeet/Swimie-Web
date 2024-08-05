@@ -19,7 +19,7 @@ const DynamicPreviewSection = dynamic(
     ssr: false,
     loading: () => (
       <div className={loadingWrapperStyle}>
-        <LoadingArea width={20} height={20} />
+        <LoadingArea />
       </div>
     ),
   },
