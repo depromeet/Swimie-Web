@@ -4,18 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 import { Image } from '@/components/atoms';
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { Waves } from '@/components/atoms/waves';
-import { swims } from '@/constants/visualization';
 import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { createGradient } from '@/utils/visualization';
+import { createGradient, getSwimColor } from '@/utils/visualization';
 
-import { MemoryType, Strokes } from '../types';
+import { StrokeInfo } from '../../time-line';
+import { MemoryType } from '../types';
 
 interface ItemContentProps {
   type: MemoryType;
   totalDistance?: number;
-  strokes?: Strokes;
+  strokes?: Array<StrokeInfo>;
   isAchieved?: boolean;
   imageUrl?: string;
 }
@@ -42,9 +42,9 @@ export const ItemContent = ({
 
   const waves: Array<{ color: string; waveHeight: number }> = [];
   if (strokes) {
-    swims.forEach(({ name, color }) => {
-      const distance = strokes[name];
-      if (distance) waves.push({ color, waveHeight: distance / goal });
+    strokes.forEach(({ name, meter }) => {
+      const color = getSwimColor(name);
+      waves.push({ color, waveHeight: meter / goal });
     });
   }
 
