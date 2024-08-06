@@ -40,9 +40,11 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 
 //Todo: watch의 성능 이슈 고민
 //Todo: form.tsx 파일 내부 리팩토링
+//Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
+  const isEditMode = Boolean(searchParams.get('memoryId'));
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   console.log(data);
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
@@ -79,6 +81,7 @@ export function Form() {
         kcal: prevData.memoryDetail.kcal
           ? prevData.memoryDetail.kcal
           : undefined,
+        strokes: prevData.strokes ? prevData.strokes : undefined,
       });
       setFormSubInfo({
         imageFiles: [],
@@ -229,7 +232,7 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
-              label={searchParams.get('memoryId') ? '수정하기' : '기록하기'}
+              label={isEditMode ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
               disabled={!isRecordAbled}
@@ -239,7 +242,11 @@ export function Form() {
         <Divider variant="thick" />
         <PhotoSection
           title="오늘의 사진"
-          defaultImage={data?.data.images[0].url}
+          defaultImage={
+            data && data.data.images.length > 0
+              ? data?.data.images[0].url
+              : undefined
+          }
         />
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
@@ -254,7 +261,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal />
+      <DistancePageModal defaultStrokes={data?.data.strokes} />
       <TimeBottomSheet />
     </FormProvider>
   );

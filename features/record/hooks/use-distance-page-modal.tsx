@@ -9,7 +9,10 @@ import { StrokeProps } from '../types';
 
 type tabIndex = 0 | 1;
 
-export function useDistancePageModal<T>(lane: number) {
+export function useDistancePageModal<T>(
+  lane: number,
+  defaultStrokes?: StrokeProps[],
+) {
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
   const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(0);
@@ -47,6 +50,17 @@ export function useDistancePageModal<T>(lane: number) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strokes, lane]);
+
+  useEffect(() => {
+    if (defaultStrokes) {
+      defaultStrokes.forEach((strokes) => {
+        setStrokes((prev) => [
+          ...prev,
+          (prev[strokeOptions.indexOf(strokes.name)] = strokes),
+        ]);
+      });
+    }
+  }, [defaultStrokes]);
 
   const onClosePageModal = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
