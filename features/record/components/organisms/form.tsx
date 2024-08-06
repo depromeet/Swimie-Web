@@ -44,6 +44,7 @@ export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  console.log(data);
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -236,7 +237,10 @@ export function Form() {
           </div>
         </div>
         <Divider variant="thick" />
-        <PhotoSection title="오늘의 사진" />
+        <PhotoSection
+          title="오늘의 사진"
+          defaultImage={data?.data.images[0].url}
+        />
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
