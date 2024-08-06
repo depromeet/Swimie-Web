@@ -45,6 +45,7 @@ export default function Home() {
                 height={75}
                 src="/images/swimie-character.svg"
                 alt="swimie character"
+                priority
               />
               <div className={userInfoStyles}>
                 <p className={nicknameStyles}>수린이님,</p>
