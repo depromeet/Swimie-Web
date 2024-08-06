@@ -178,7 +178,7 @@ export const TimeLine = () => {
   const isEmptyTimeLine = memories.length === 0;
   const { data: timelineData } = useTimeLineData();
 
-  if (!timelineData) return '';
+  if (!timelineData) return null;
 
   return (
     <>
