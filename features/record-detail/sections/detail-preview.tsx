@@ -151,7 +151,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       )}
 
       {/* NOTE: 수영 장비 영역 */}
-      {Boolean(memoryDetail?.item.length) && (
+      {Boolean(memoryDetail?.item) && (
         <div className={toolsContainer}>
           {memoryDetail?.item
             .split(',')
