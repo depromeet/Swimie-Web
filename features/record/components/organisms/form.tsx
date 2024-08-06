@@ -244,7 +244,10 @@ export function Form() {
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
-        <EquipmentSection title="장비" />
+        <EquipmentSection
+          title="장비"
+          defaultEquipment={data?.data.memoryDetail.item}
+        />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
         <div className={blockStyles} />
