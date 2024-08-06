@@ -5,11 +5,10 @@ import { TimeLineResponse } from '@/features/main/time-line';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const cursorRecordAt = searchParams.get('cursorRecordAt')
-    ? `&cursorRecordAt=${searchParams.get('cursorRecordAt')}`
-    : '';
+  const cursorRecordAt = searchParams.get('cursorRecordAt');
+  const queryString = cursorRecordAt ? `?cursorRecordAt=${cursorRecordAt}` : '';
   const data = await fetchData<TimeLineResponse>(
-    `/memory/timeline${cursorRecordAt}`,
+    `/memory/timeline${queryString}`,
     'GET',
   );
 
