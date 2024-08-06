@@ -229,7 +229,7 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
-              label="기록하기"
+              label={searchParams.get('memoryId') ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
               disabled={!isRecordAbled}
