@@ -64,7 +64,7 @@ export function Form() {
         startTime: prevData.startTime,
         endTime: prevData.endTime,
         lane: prevData.lane,
-        poolId: prevData.pool ? prevData.pool.id : undefined,
+        poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
           ? prevData.memoryDetail.heartRate
