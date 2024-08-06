@@ -120,10 +120,11 @@ export function Form() {
       const getImagePresignedUrlRes = await getImagePresignedUrl([
         formSubInfo.imageFiles[0].name,
       ]);
-      await imagePresign({
+      const imagePresignRes = await imagePresign({
         presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
         file: getBlobData(formSubInfo.imageFiles[0]),
       });
+      if (imagePresignRes.status !== 200) return;
       await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
       const memoryRes = await memory({
         ...data,

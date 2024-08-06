@@ -3,16 +3,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { NextResponse } from 'next/server';
 
-async function imagePresignUrl(data: {
-  presignedUrl: string;
-  file: Blob;
-}): Promise<{ status: number }> {
+async function imagePresignUrl(data: { presignedUrl: string; file: Blob }) {
   const res = await fetch(data.presignedUrl, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'image/webp',
     },
-    body: JSON.stringify(data.file),
+    body: data.file,
   });
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (res.ok) {
