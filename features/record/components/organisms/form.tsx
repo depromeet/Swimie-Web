@@ -38,8 +38,8 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
+//Todo: form.tsx 파일 내부 리팩토링
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
@@ -115,16 +115,15 @@ export function Form() {
 
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록에 사진이 있을 시
-    //Todo: 기록 에러 처리
+    //Todo: 기록 에러 발생 시 처리
     if (formSubInfo.imageFiles.length > 0) {
       const getImagePresignedUrlRes = await getImagePresignedUrl([
         formSubInfo.imageFiles[0].name,
       ]);
-      const imagePresignRes = await imagePresign({
+      await imagePresign({
         presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
         file: getBlobData(formSubInfo.imageFiles[0]),
       });
-      if (imagePresignRes.status !== 200) return;
       await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
       const memoryRes = await memory({
         ...data,
