@@ -19,6 +19,7 @@ import {
   useMemory,
 } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { useImageEdit } from '../../apis/use-image-edit';
 import { useImageStatus } from '../../apis/use-image-status';
 import { useMemoryEdit } from '../../apis/use-memory-edit';
 import { usePullMemory } from '../../apis/use-pull-memory';
@@ -103,6 +104,7 @@ export function Form() {
   const { mutateAsync: memoryEdit } = useMemoryEdit();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageStatus } = useImageStatus();
+  const { mutateAsync: imageEdit } = useImageEdit();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -118,13 +120,32 @@ export function Form() {
     const blobData = new Blob([file]);
     return blobData;
   };
-
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록에 사진이 있을 시
     //Todo: 기록 에러 발생 시 처리
+
+    //기록 수정 모드일 때
     if (isEditMode) {
+      //이미지가 수정 되었을 때
       if (formSubInfo.imageFiles.length > 0) {
-        //이미지 수정 로직 포함
+        const getImagePresignedUrlRes = await imageEdit({
+          imageNames: [formSubInfo.imageFiles[0].name],
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        await imagePresign({
+          presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+          file: getBlobData(formSubInfo.imageFiles[0]),
+        });
+        await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+        const memoryRes = await memoryEdit({
+          formData: {
+            ...data,
+            imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+          },
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        if (memoryRes.status === 200)
+          router.push(`/record/success?editMode=true`);
       } else {
         const memoryEditRes = await memoryEdit({
           formData: data,
@@ -132,7 +153,9 @@ export function Form() {
         });
         if (memoryEditRes) router.push(`/record/success?editMode=true`);
       }
-    } else {
+    }
+    //기록 생성 모드일 때
+    else {
       if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await getImagePresignedUrl([
           formSubInfo.imageFiles[0].name,
