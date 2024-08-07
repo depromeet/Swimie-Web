@@ -17,9 +17,10 @@ export const DetailDescriptionSection = ({
   const heartRate = Boolean(memoryDetail?.heartRate)
     ? `${memoryDetail?.heartRate} bpm`
     : undefined;
-  const pace = Boolean(memoryDetail?.paceMinutes)
-    ? `${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`
-    : undefined;
+  const pace =
+    Boolean(memoryDetail?.paceMinutes) || Boolean(memoryDetail?.paceSeconds)
+      ? `${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`
+      : undefined;
   const kcal = Boolean(memoryDetail?.kcal)
     ? `${memoryDetail?.kcal}kcal`
     : undefined;
