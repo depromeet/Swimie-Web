@@ -43,12 +43,12 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 //Todo: watch의 성능 이슈 고민
 //Todo: form.tsx 파일 내부 리팩토링
 //Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
+//Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const isEditMode = Boolean(searchParams.get('memoryId'));
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
-  console.log(data);
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -120,10 +120,9 @@ export function Form() {
     const blobData = new Blob([file]);
     return blobData;
   };
-  const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
-    //기록에 사진이 있을 시
-    //Todo: 기록 에러 발생 시 처리
 
+  //Todo: 기록 에러 발생 시 처리
+  const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록 수정 모드일 때
     if (isEditMode) {
       //이미지가 수정 되었을 때
@@ -146,7 +145,9 @@ export function Form() {
         });
         if (memoryRes.status === 200)
           router.push(`/record/success?editMode=true`);
-      } else {
+      }
+      //이미지가 수정되지 않았을 때
+      else {
         const memoryEditRes = await memoryEdit({
           formData: data,
           memoryId: Number(searchParams.get('memoryId')),
@@ -156,6 +157,7 @@ export function Form() {
     }
     //기록 생성 모드일 때
     else {
+      //기록에서 이미지가 포함되었을 때
       if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await getImagePresignedUrl([
           formSubInfo.imageFiles[0].name,
@@ -174,7 +176,7 @@ export function Form() {
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
           );
       }
-      //기록에 사진이 없을 시
+      //기록에서 이미지가 포함되지 않았을 때
       else {
         const memoryRes = await memory(data);
         if (memoryRes.status === 200)
