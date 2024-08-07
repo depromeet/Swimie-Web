@@ -20,6 +20,7 @@ import {
 } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import { useImageStatus } from '../../apis/use-image-status';
+import { useMemoryEdit } from '../../apis/use-memory-edit';
 import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
@@ -99,6 +100,7 @@ export function Form() {
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
+  const { mutateAsync: memoryEdit } = useMemoryEdit();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageStatus } = useImageStatus();
 
@@ -120,31 +122,40 @@ export function Form() {
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록에 사진이 있을 시
     //Todo: 기록 에러 발생 시 처리
-    if (formSubInfo.imageFiles.length > 0) {
-      const getImagePresignedUrlRes = await getImagePresignedUrl([
-        formSubInfo.imageFiles[0].name,
-      ]);
-      await imagePresign({
-        presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
-        file: getBlobData(formSubInfo.imageFiles[0]),
-      });
-      await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
-      const memoryRes = await memory({
-        ...data,
-        imageIdList: [getImagePresignedUrlRes.data[0].imageId],
-      });
-      if (memoryRes.status === 200)
-        router.push(
-          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-        );
-    }
-    //기록에 사진이 없을 시
-    else {
-      const memoryRes = await memory(data);
-      if (memoryRes.status === 200)
-        router.push(
-          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-        );
+    if (isEditMode) {
+      if (formSubInfo.imageFiles.length > 0) {
+        const getImagePresignedUrlRes = await getImagePresignedUrl([
+          formSubInfo.imageFiles[0].name,
+        ]);
+        await imagePresign({
+          presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+          file: getBlobData(formSubInfo.imageFiles[0]),
+        });
+        await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+        const memoryRes = await memory({
+          ...data,
+          imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+        });
+        if (memoryRes.status === 200)
+          router.push(
+            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+          );
+      }
+      //기록에 사진이 없을 시
+      else {
+        const memoryRes = await memory(data);
+        if (memoryRes.status === 200)
+          router.push(
+            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+          );
+      }
+    } else {
+      if (formSubInfo.imageFiles.length > 0) {
+        //이미지 수정 로직 포함
+      } else {
+        const memoryEditRes = await memoryEdit(data);
+        if (memoryEditRes) router.push(`/record/success?editMode=true`);
+      }
     }
   };
 
