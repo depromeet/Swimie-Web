@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import { css } from '@/styled-system/css';
 import { grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
@@ -13,14 +14,15 @@ export const DetailDescriptionSection = ({
   const { pool, duration, memoryDetail } = data;
 
   // NOTE: data type이 number이므로 0일 경우 예외처리를 위해 Boolean 사용
-  const heartRate = memoryDetail?.heartRate
+  const heartRate = Boolean(memoryDetail?.heartRate)
     ? `${memoryDetail?.heartRate} bpm`
     : undefined;
-  const pace =
-    Boolean(memoryDetail?.paceMinutes) && Boolean(memoryDetail?.paceSeconds)
-      ? `${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`
-      : undefined;
-  const kcal = memoryDetail?.kcal ? `${memoryDetail?.kcal}kcal` : undefined;
+  const pace = Boolean(memoryDetail?.paceMinutes)
+    ? `${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`
+    : undefined;
+  const kcal = Boolean(memoryDetail?.kcal)
+    ? `${memoryDetail?.kcal}kcal`
+    : undefined;
 
   return (
     <section className={containerStyle}>
