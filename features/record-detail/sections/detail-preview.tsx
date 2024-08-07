@@ -1,21 +1,16 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules';
-import { swims } from '@/constants/visualization';
 import placeholderImage from '@/public/images/fallbackImage.png';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
 
 import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
-import {
-  type DetailStroke,
-  type RecordDetailType,
-  type StrokeMapType,
-} from '../types';
+import { type RecordDetailType } from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,25 +56,6 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     type: 'string',
   });
 
-  const wavesArr = useMemo(() => {
-    if (!strokes.length || !member?.goal) {
-      return null;
-    }
-
-    const strokesMap = strokes.reduce((acc, stroke) => {
-      acc[stroke.name] = stroke;
-      return acc;
-    }, {} as StrokeMapType);
-
-    return swims.map(({ name, color }) => {
-      const stroke: DetailStroke = strokesMap[name];
-      return {
-        color,
-        waveHeight: stroke?.meter / member.goal ?? 0,
-      };
-    });
-  }, [member?.goal, strokes]);
-
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
@@ -93,7 +69,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
         {/* 파도 svg */}
         <div className={wavesStyle} ref={containerRef}>
-          {wavesArr ? (
+          {strokes?.length ? (
             <>
               {containerRef.current && (
                 <RecordMark
