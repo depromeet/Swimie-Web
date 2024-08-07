@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules';
 import placeholderImage from '@/public/images/fallbackImage.png';
@@ -13,19 +11,6 @@ import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
 import { type RecordDetailType } from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    setContainerSize({
-      width: containerRef.current.offsetWidth,
-      height: containerRef.current.offsetHeight,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerRef.current]);
-
   const handleClickPreviousDate = () => {
     console.log('prev');
   };
@@ -68,27 +53,22 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         />
 
         {/* 파도 svg */}
-        <div className={wavesStyle} ref={containerRef}>
+        <div className={wavesStyle}>
           {strokes?.length ? (
-            <>
-              {containerRef.current && (
-                <RecordMark
-                  isAchieved={Boolean(
-                    member?.goal && totalMeter && totalMeter > member?.goal,
-                  )}
-                  strokes={strokes}
-                  totalDistance={totalMeter}
-                  type={type}
-                  renderType="detail"
-                />
+            <RecordMark
+              isAchieved={Boolean(
+                member?.goal && totalMeter && totalMeter > member?.goal,
               )}
-            </>
+              strokes={strokes}
+              totalDistance={totalMeter}
+              type={type}
+              renderType="detail"
+            />
           ) : (
             <Image
               src={placeholderImage}
               alt="placeholder"
-              width={containerSize.width}
-              height={containerSize.height}
+              fill
               style={{
                 objectFit: 'cover',
               }}
