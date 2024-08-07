@@ -1,9 +1,12 @@
 import { flex } from '@/styled-system/patterns';
 
-export default function Mypage() {
+type Mypage = {
+  params: { id: string };
+};
+export default function Profile({ params }: Mypage) {
   return (
     <article className={containerStyle}>
-      <p>본인의 mypage 입니다.</p>
+      <p>{params.id}의 profile 입니다.</p>
     </article>
   );
 }
