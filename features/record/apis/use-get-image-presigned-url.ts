@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { ImagePresignedResponse } from './dto';
 
-async function imagePresignedUrl(
+async function getImagePresignedUrl(
   imageNames: string[],
 ): Promise<ImagePresignedResponse> {
-  const res = await fetch(`/api/image/presigned`, {
+  const res = await fetch(`/api/image/presigned/url`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,8 +17,8 @@ async function imagePresignedUrl(
   return res.json();
 }
 
-export function useImagePresignedUrl() {
+export function useGetImagePresignedUrl() {
   return useMutation({
-    mutationFn: imagePresignedUrl,
+    mutationFn: getImagePresignedUrl,
   });
 }

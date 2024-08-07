@@ -13,8 +13,13 @@ import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getToday } from '@/utils';
 
-import { useMemory } from '../../apis';
+import {
+  useGetImagePresignedUrl,
+  useImagePresignUrl,
+  useMemory,
+} from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { useImageStatus } from '../../apis/use-image-status';
 import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
@@ -33,14 +38,13 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: null 타입 제거
 //Todo: watch의 성능 이슈 고민
+//Todo: form.tsx 파일 내부 리팩토링
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const { data } = usePullMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
-
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       recordAt: date ? date : getToday(),
@@ -60,7 +64,7 @@ export function Form() {
         startTime: prevData.startTime,
         endTime: prevData.endTime,
         lane: prevData.lane,
-        poolId: prevData.pool.id ? prevData.pool.id : undefined,
+        poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
           ? prevData.memoryDetail.heartRate
@@ -77,7 +81,7 @@ export function Form() {
       });
       setFormSubInfo({
         imageFiles: [],
-        poolName: prevData.pool.name ? prevData.pool.name : undefined,
+        poolName: prevData.pool ? prevData.pool.name : undefined,
         totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
       });
     }
@@ -89,8 +93,10 @@ export function Form() {
     isLaneLengthBottomSheetOpen,
   );
 
-  // const { mutateAsync: imagePresign } = useImagePresignedUrl();
+  const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
+  const { mutateAsync: imagePresign } = useImagePresignUrl();
+  const { mutateAsync: imageStatus } = useImageStatus();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -102,23 +108,39 @@ export function Form() {
 
   const isRecordAbled = startTime && endTime;
 
+  const getBlobData = (file: File) => {
+    const blobData = new Blob([file]);
+    return blobData;
+  };
+
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
+    //기록에 사진이 있을 시
+    //Todo: 기록 에러 발생 시 처리
     if (formSubInfo.imageFiles.length > 0) {
-      // await imagePresign(formSubInfo.imageFiles).then(async (res) => {
-      //   await memory({ ...data, imageIdList: [res.data[0].imageId] }).then(
-      //     (res) => {
-      //       router.push(
-      //         `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-      //       );
-      //     },
-      //   );
-      // });
-    } else {
-      await memory(data).then((res) =>
+      const getImagePresignedUrlRes = await getImagePresignedUrl([
+        formSubInfo.imageFiles[0].name,
+      ]);
+      await imagePresign({
+        presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+        file: getBlobData(formSubInfo.imageFiles[0]),
+      });
+      await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+      const memoryRes = await memory({
+        ...data,
+        imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+      });
+      if (memoryRes.status === 200)
         router.push(
-          `/record/success?rank=${res.data.rank}&memoryId=${res.data.memoryId}&month=${res.data.month}`,
-        ),
-      );
+          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+        );
+    }
+    //기록에 사진이 없을 시
+    else {
+      const memoryRes = await memory(data);
+      if (memoryRes.status === 200)
+        router.push(
+          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+        );
     }
   };
 
