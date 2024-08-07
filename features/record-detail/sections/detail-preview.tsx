@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Image, Waves } from '@/components/atoms';
+import { Image } from '@/components/atoms';
+import { RecordMark } from '@/components/molecules';
 import { swims } from '@/constants/visualization';
 import placeholderImage from '@/public/images/fallbackImage.png';
 import { css } from '@/styled-system/css';
@@ -48,6 +49,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     recordAt,
     member,
     memoryDetail,
+    type,
   } = data;
 
   const { hour: startHour, minute: startMinute } = getFormatTime({
@@ -94,10 +96,14 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
           {wavesArr ? (
             <>
               {containerRef.current && (
-                <Waves
-                  waves={wavesArr}
-                  width={containerSize.width}
-                  height={containerSize.height}
+                <RecordMark
+                  isAchieved={Boolean(
+                    member?.goal && totalMeter && totalMeter > member?.goal,
+                  )}
+                  strokes={strokes}
+                  totalDistance={totalMeter}
+                  type={type}
+                  renderType="detail"
                 />
               )}
             </>
