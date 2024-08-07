@@ -124,6 +124,16 @@ export function Form() {
     //Todo: 기록 에러 발생 시 처리
     if (isEditMode) {
       if (formSubInfo.imageFiles.length > 0) {
+        //이미지 수정 로직 포함
+      } else {
+        const memoryEditRes = await memoryEdit({
+          formData: data,
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        if (memoryEditRes) router.push(`/record/success?editMode=true`);
+      }
+    } else {
+      if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await getImagePresignedUrl([
           formSubInfo.imageFiles[0].name,
         ]);
@@ -148,13 +158,6 @@ export function Form() {
           router.push(
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
           );
-      }
-    } else {
-      if (formSubInfo.imageFiles.length > 0) {
-        //이미지 수정 로직 포함
-      } else {
-        const memoryEditRes = await memoryEdit(data);
-        if (memoryEditRes) router.push(`/record/success?editMode=true`);
       }
     }
   };

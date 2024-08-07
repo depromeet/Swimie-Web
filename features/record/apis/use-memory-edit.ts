@@ -2,18 +2,19 @@ import { useMutation } from '@tanstack/react-query';
 
 import { MemoryPullResponse, RecordRequestProps } from './dto';
 
-async function memoryEdit(
-  formData: RecordRequestProps,
-): Promise<MemoryPullResponse> {
+async function memoryEdit(data: {
+  formData: RecordRequestProps;
+  memoryId: number;
+}): Promise<MemoryPullResponse> {
   const res = await fetch(
-    `/api/memory/edit
+    `/api/memory/edit/${data.memoryId}
     `,
     {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(data.formData),
     },
   );
 
