@@ -1,9 +1,11 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { Waves } from '@/components/atoms';
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { StrokeInfo } from '@/features/main/time-line';
-import { css, cx } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { createGradient, getSwimColor } from '@/utils';
 
@@ -12,6 +14,7 @@ interface RecordMarkProps {
   isAchieved?: boolean;
   totalDistance?: number;
   strokes?: Array<StrokeInfo>;
+  renderType?: 'calendar' | 'detail';
 }
 
 // TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
@@ -22,6 +25,7 @@ export const RecordMark = ({
   isAchieved,
   totalDistance,
   strokes,
+  renderType = 'calendar',
 }: RecordMarkProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [contentSize, setContentSize] = useState<{
@@ -51,7 +55,7 @@ export const RecordMark = ({
   if (type === 'NORMAL')
     return (
       <div ref={ref} className={wrapperStyles}>
-        <div className={cx(layoutStyles, normalStyles)}>
+        <div className={cx(layoutStyles({ renderType }), normalStyles)}>
           <SwimmerIcon />
         </div>
       </div>
@@ -60,9 +64,11 @@ export const RecordMark = ({
     return (
       <div ref={ref} className={wrapperStyles}>
         {isAchieved ? (
-          <div className={cx(layoutStyles, singleAchievedStyles)} />
+          <div
+            className={cx(layoutStyles({ renderType }), singleAchievedStyles)}
+          />
         ) : (
-          <div className={layoutStyles}>
+          <div className={layoutStyles({ renderType })}>
             {totalDistance && (
               <Waves
                 width={contentSize.width}
@@ -87,10 +93,10 @@ export const RecordMark = ({
       {isAchieved ? (
         <div
           style={{ backgroundImage: `linear-gradient(0deg, ${gradientProps})` }}
-          className={layoutStyles}
+          className={layoutStyles({ renderType })}
         />
       ) : (
-        <div className={layoutStyles}>
+        <div className={layoutStyles({ renderType })}>
           {totalDistance && (
             <Waves
               width={contentSize.width}
@@ -111,13 +117,27 @@ const wrapperStyles = flex({
   justifyContent: 'center',
 });
 
-const layoutStyles = flex({
-  width: '95%',
-  aspectRatio: 'auto 3/4',
-  alignItems: 'center',
-  justifyContent: 'center',
-  rounded: '2px',
-  overflow: 'hidden',
+const layoutStyles = cva({
+  base: {
+    display: 'flex',
+    aspectRatio: 'auto 3/4',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rounded: '2px',
+    overflow: 'hidden',
+  },
+  variants: {
+    renderType: {
+      calendar: {
+        width: '95%',
+        aspectRatio: 'auto 3/4',
+      },
+      detail: {
+        width: '100%',
+        aspectRatio: 'auto 335 / 270',
+      },
+    },
+  },
 });
 
 const normalStyles = css({ backgroundColor: 'blue.90' });
