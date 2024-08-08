@@ -25,7 +25,7 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: { type: 'select', options: ['solid', 'outlined', 'text'] },
     },
-    type: {
+    buttonType: {
       control: {
         type: 'select',
         options: ['primary', 'secondary', 'assistive'],
@@ -58,7 +58,7 @@ export const Default: Story = {
     label: 'Label',
     size: 'large',
     variant: 'solid',
-    type: 'primary',
+    buttonType: 'primary',
     interaction: 'normal',
   },
 };

@@ -12,7 +12,7 @@ export const Button = ({
   rightIconSrc,
   label,
   variant = 'solid',
-  type = 'primary',
+  buttonType = 'primary',
   interaction = 'normal',
   className,
   onClick,
@@ -72,7 +72,7 @@ export const Button = ({
         border: '1px solid',
         borderColor: disabled
           ? 'line.normal'
-          : type === 'primary'
+          : buttonType === 'primary'
             ? '#3B87F4'
             : '#70737C38',
       }),
@@ -129,7 +129,7 @@ export const Button = ({
     baseStyles,
     sizeStylesMap.get(size),
     variantStylesMap.get(variant),
-    typeStylesMap.get(type),
+    typeStylesMap.get(buttonType),
     interactionStylesMap.get(interaction),
     css({
       fontWeight: '600',
@@ -142,7 +142,8 @@ export const Button = ({
         height: '100%',
         borderRadius: 'inherit',
         backgroundColor:
-          type === 'primary' && (variant === 'outlined' || variant === 'text')
+          buttonType === 'primary' &&
+          (variant === 'outlined' || variant === 'text')
             ? 'blue.60'
             : 'text.normal',
         opacity: 0,

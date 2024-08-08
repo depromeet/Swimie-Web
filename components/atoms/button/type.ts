@@ -4,7 +4,7 @@ export interface ButtonProps {
   size?: 'large' | 'medium' | 'small';
   interaction?: 'normal' | 'hovered' | 'focused' | 'pressed';
   variant?: 'solid' | 'outlined' | 'text';
-  type?: 'primary' | 'secondary' | 'assistive';
+  buttonType?: 'primary' | 'secondary' | 'assistive';
   leftIconSrc?: string;
   rightIconSrc?: string;
   onClick?: () => void;
