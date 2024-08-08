@@ -39,7 +39,7 @@ export const TimeLine = () => {
           >
             <ol className={flex({ direction: 'column', gap: '50px' })}>
               {contents.map((content) => (
-                <TimeLineCard key={content.memoryId} memory={content} />
+                <TimeLineCard key={content.memoryId} content={content} />
               ))}
             </ol>
           </InfiniteScroller>
