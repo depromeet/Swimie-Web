@@ -15,6 +15,7 @@ export const Button = ({
   buttonType = 'primary',
   interaction = 'normal',
   className,
+  type,
   onClick,
 }: ButtonProps) => {
   const baseStyles = flex({
@@ -161,7 +162,7 @@ export const Button = ({
   });
 
   return (
-    <button className={buttonStyles} onClick={onClick}>
+    <button className={buttonStyles} onClick={onClick} type={type}>
       {leftIconSrc && (
         <div className={iconWrapperStyles}>
           <Image

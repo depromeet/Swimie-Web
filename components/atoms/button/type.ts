@@ -5,6 +5,7 @@ export interface ButtonProps {
   interaction?: 'normal' | 'hovered' | 'focused' | 'pressed';
   variant?: 'solid' | 'outlined' | 'text';
   buttonType?: 'primary' | 'secondary' | 'assistive';
+  type?: 'button' | 'reset' | 'submit';
   leftIconSrc?: string;
   rightIconSrc?: string;
   onClick?: () => void;
