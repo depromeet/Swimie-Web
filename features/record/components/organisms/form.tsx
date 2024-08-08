@@ -19,8 +19,8 @@ import {
   useMemory,
 } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { useEditMemory } from '../../apis/use-edit-memory';
 import { useImageStatus } from '../../apis/use-image-status';
-import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -45,7 +45,7 @@ export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const isEditMode = Boolean(searchParams.get('memoryId'));
-  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const { data } = useEditMemory(Number(searchParams.get('memoryId')));
   console.log(data);
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({

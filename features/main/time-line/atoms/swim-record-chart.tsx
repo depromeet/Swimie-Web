@@ -2,7 +2,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getSwimColor } from '@/utils';
 
-import { StrokeInfo } from '../molecules';
+import { StrokeInfo } from '../types';
 
 interface SwimRecordChartProps {
   width: number;

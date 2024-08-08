@@ -45,7 +45,7 @@ export const Dialog = ({
                   onClick={buttons.cancel.onClick}
                   label={buttons.cancel.text}
                   size="large"
-                  type="secondary"
+                  buttonType="secondary"
                   variant="outlined"
                 />
               )}

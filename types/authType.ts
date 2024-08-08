@@ -4,6 +4,7 @@ export interface LoginResponse {
   message: string;
   data: {
     userId: number;
+    nickname: string;
     accessToken: string;
     refreshToken: string;
   };
@@ -16,6 +17,7 @@ export interface AuthResponse {
   data: {
     data: {
       userId: number;
+      nickname: string;
       accessToken: string;
       refreshToken: string;
     };
