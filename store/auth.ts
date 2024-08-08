@@ -2,12 +2,12 @@ import { atom } from 'jotai';
 
 export interface AuthInfo {
   isLogined: boolean;
-  userName: string;
+  nickname: string;
   userId: number;
 }
 
 export const AuthInfoAtom = atom<AuthInfo>({
   isLogined: false,
-  userName: '',
+  nickname: '',
   userId: 0,
 });
