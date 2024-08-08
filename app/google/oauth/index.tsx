@@ -36,6 +36,7 @@ const Page = () => {
 
           setAuth({
             isLogined: true,
+            userName: data.data.data.name,
             userId: data.data.data.userId,
           });
 
