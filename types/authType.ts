@@ -4,7 +4,7 @@ export interface LoginResponse {
   message: string;
   data: {
     userId: number;
-    name: string;
+    nickname: string;
     accessToken: string;
     refreshToken: string;
   };
@@ -17,7 +17,7 @@ export interface AuthResponse {
   data: {
     data: {
       userId: number;
-      name: string;
+      nickname: string;
       accessToken: string;
       refreshToken: string;
     };
