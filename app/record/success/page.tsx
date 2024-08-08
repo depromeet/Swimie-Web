@@ -64,5 +64,6 @@ const buttonStyles = css({
   position: 'fixed',
   bottom: '36px',
   width: 'full',
+  maxWidth: 'maxWidth',
   padding: '0 20px',
 });
