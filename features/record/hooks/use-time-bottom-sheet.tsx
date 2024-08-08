@@ -9,11 +9,21 @@ export function useTimeBottomSheet(isBottomSheetOpen: boolean) {
   const width = useGetBrowserWidth();
 
   useEffect(() => {
+    let timer: number | undefined;
+
     if (isBottomSheetOpen) {
-      setTimeout(() => {
+      timer = window.setTimeout(() => {
         setShowTimePicker(true);
       }, 150);
-    } else setShowTimePicker(false);
+    } else {
+      setShowTimePicker(false);
+    }
+
+    return () => {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    };
   }, [isBottomSheetOpen]);
 
   return { width, showTimePicker };
