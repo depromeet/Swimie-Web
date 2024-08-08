@@ -13,7 +13,7 @@ type FollowListItem = {
   onClick?: () => void;
   onClickFollow?: () => void;
 };
-export const FollowListItem = ({ isFollow }: FollowListItem) => {
+export const ProfileListItem = ({ isFollow }: FollowListItem) => {
   return (
     <div className={containerStyle}>
       <div className={profileImageStyle}>

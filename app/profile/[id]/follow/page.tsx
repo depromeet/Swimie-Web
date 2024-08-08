@@ -1,18 +1,18 @@
-import { FollowListItem } from '@/features/profile-follow/components';
+import { ProfileListItem } from '@/components/molecules';
 import { flex } from '@/styled-system/patterns';
 
 export default function ProfileFollow() {
   return (
     <article className={containerStyle}>
       <p>팔로우 목록입니다.</p>
-      <FollowListItem isFollow={false} />
-      <FollowListItem isFollow={false} />
-      <FollowListItem isFollow={false} />
-      <FollowListItem isFollow={true} />
-      <FollowListItem isFollow={true} />
-      <FollowListItem isFollow={false} />
-      <FollowListItem isFollow={false} />
-      <FollowListItem isFollow={false} />
+      <ProfileListItem isFollow={false} />
+      <ProfileListItem isFollow={false} />
+      <ProfileListItem isFollow={false} />
+      <ProfileListItem isFollow={true} />
+      <ProfileListItem isFollow={true} />
+      <ProfileListItem isFollow={false} />
+      <ProfileListItem isFollow={false} />
+      <ProfileListItem isFollow={false} />
     </article>
   );
 }
