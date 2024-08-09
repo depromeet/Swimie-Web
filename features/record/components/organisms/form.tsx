@@ -46,7 +46,6 @@ export function Form() {
   const date = searchParams.get('date');
   const isEditMode = Boolean(searchParams.get('memoryId'));
   const { data } = useEditMemory(Number(searchParams.get('memoryId')));
-  console.log(data);
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
