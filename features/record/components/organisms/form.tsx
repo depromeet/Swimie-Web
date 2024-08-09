@@ -17,12 +17,12 @@ import {
   useGetImagePresignedUrl,
   useImagePresignUrl,
   useMemory,
+  usePullEditMemory,
 } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
 import { useImageEdit } from '../../apis/use-image-edit';
 import { useImageStatus } from '../../apis/use-image-status';
 import { useMemoryEdit } from '../../apis/use-memory-edit';
-import { usePullMemory } from '../../apis/use-pull-memory';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -48,7 +48,7 @@ export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const isEditMode = Boolean(searchParams.get('memoryId'));
-  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const { data } = usePullEditMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -144,7 +144,9 @@ export function Form() {
           memoryId: Number(searchParams.get('memoryId')),
         });
         if (memoryRes.status === 200)
-          router.push(`/record/success?editMode=true`);
+          router.push(
+            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+          );
       }
       //이미지가 수정되지 않았을 때
       else {
@@ -152,7 +154,10 @@ export function Form() {
           formData: data,
           memoryId: Number(searchParams.get('memoryId')),
         });
-        if (memoryEditRes) router.push(`/record/success?editMode=true`);
+        if (memoryEditRes)
+          router.push(
+            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+          );
       }
     }
     //기록 생성 모드일 때

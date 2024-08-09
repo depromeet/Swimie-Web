@@ -9,9 +9,12 @@ import { StrokeProps } from '../types';
 
 type tabIndex = 0 | 1;
 
+//Todo: 상태들 리팩토링 & 각 로직들 리팩토링
 export function useDistancePageModal<T>(
   lane: number,
   defaultStrokes?: StrokeProps[],
+  defaultTotalMeter?: number,
+  defaultTotalLap?: number,
 ) {
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
@@ -53,13 +56,24 @@ export function useDistancePageModal<T>(
 
   useEffect(() => {
     if (defaultStrokes) {
-      defaultStrokes.forEach((strokes) => {
-        setStrokes((prev) => [
-          ...prev,
-          (prev[strokeOptions.indexOf(strokes.name)] = strokes),
-        ]);
-      });
+      if (defaultStrokes.length === 1 && defaultStrokes[0].name === '총거리') {
+        setTotalMeter(String(defaultTotalMeter));
+      } else if (
+        defaultStrokes.length === 1 &&
+        defaultStrokes[0].name === '총바퀴'
+      ) {
+        setTotalLaps(String(defaultTotalLap));
+      } else {
+        defaultStrokes.forEach((strokes) => {
+          setStrokes((prev) => [
+            ...prev,
+            (prev[strokeOptions.indexOf(strokes.name)] = strokes),
+          ]);
+        });
+      }
+      setTotalDistance(defaultTotalMeter as number);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultStrokes]);
 
   const onClosePageModal = () => {
