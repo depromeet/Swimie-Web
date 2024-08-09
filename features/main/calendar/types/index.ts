@@ -11,7 +11,7 @@ export interface Strokes {
 }
 
 export interface MemberInfo {
-  name: string;
+  name?: string;
   goal: number;
 }
 

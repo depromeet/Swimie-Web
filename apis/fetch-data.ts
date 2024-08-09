@@ -7,7 +7,8 @@
  */
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+
+import { NewTokenData } from './refresh-token';
 
 export async function fetchData<T>(
   endpoint: string,
@@ -32,14 +33,33 @@ export async function fetchData<T>(
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  // NOTE: UnAuthorize error
-  if (response.status === 401) {
-    redirect('/login');
-  }
+  if (response.status === 401 || response.status === 404) {
+    const cookieStore = cookies();
+    const refreshToken = cookies().get('refreshToken')?.value;
 
-  if (!response.ok) {
-    console.error('요청을 다시 확인해주세요.', response.statusText);
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (refreshToken) {
+      const refreshResponse = await fetch(`${BASE_URL}/login/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: refreshToken,
+        },
+      });
+
+      if (refreshResponse.ok) {
+        const data = (await refreshResponse.json()) as NewTokenData;
+        const newAccessToken = `Bearer ${data?.data?.accessToken}`;
+
+        cookieStore.set('accessToken', newAccessToken, {
+          maxAge: 3600, // 1시간
+          httpOnly: true,
+          secure: true,
+        });
+
+        // 재시도: 새로운 토큰으로 요청
+        return fetchData<T>(endpoint, method, body);
+      }
+    }
   }
 
   return response.json() as Promise<T>;

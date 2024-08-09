@@ -36,9 +36,9 @@ const Page = () => {
 
           setAuth({
             isLogined: true,
+            nickname: data.data.data.nickname,
             userId: data.data.data.userId,
           });
-
           router.push('/');
         }
       } catch (error) {

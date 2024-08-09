@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import { css } from '@/styled-system/css';
 import { grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
@@ -12,6 +13,18 @@ export const DetailDescriptionSection = ({
 }) => {
   const { pool, duration, memoryDetail } = data;
 
+  // NOTE: data type이 number이므로 0일 경우 예외처리를 위해 Boolean 사용
+  const heartRate = Boolean(memoryDetail?.heartRate)
+    ? `${memoryDetail?.heartRate} bpm`
+    : undefined;
+  const pace =
+    Boolean(memoryDetail?.paceMinutes) || Boolean(memoryDetail?.paceSeconds)
+      ? `${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`
+      : undefined;
+  const kcal = Boolean(memoryDetail?.kcal)
+    ? `${memoryDetail?.kcal}kcal`
+    : undefined;
+
   return (
     <section className={containerStyle}>
       <div className={infoWrapperStyle}>
@@ -23,18 +36,9 @@ export const DetailDescriptionSection = ({
       </div>
 
       <div className={detailWrapperStyle}>
-        <SwimDescriptionItem
-          title="♥️심박수"
-          value={`${memoryDetail?.heartRate} bpm`}
-        />
-        <SwimDescriptionItem
-          title="⏱️평균 페이스"
-          value={`${memoryDetail?.paceMinutes}’${memoryDetail?.paceSeconds}’’/100 m`}
-        />
-        <SwimDescriptionItem
-          title="🔥칼로리"
-          value={`${memoryDetail?.kcal}kcal`}
-        />
+        <SwimDescriptionItem title="♥️심박수" value={heartRate} />
+        <SwimDescriptionItem title="⏱️평균 페이스" value={pace} />
+        <SwimDescriptionItem title="🔥칼로리" value={kcal} />
       </div>
     </section>
   );
