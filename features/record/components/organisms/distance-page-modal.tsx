@@ -21,9 +21,15 @@ import { StrokeDistanceFields } from './stroke-distance-fields';
 
 interface DistancePageModalProps {
   defaultStrokes?: StrokeProps[];
+  defaultTotalMeter?: number;
+  defaultTotalLap?: number;
 }
 
-export function DistancePageModal({ defaultStrokes }: DistancePageModalProps) {
+export function DistancePageModal({
+  defaultStrokes,
+  defaultTotalMeter,
+  defaultTotalLap,
+}: DistancePageModalProps) {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
   const setFormSubInfo = useSetAtom(formSubInfoState);
@@ -41,6 +47,8 @@ export function DistancePageModal({ defaultStrokes }: DistancePageModalProps) {
   } = useDistancePageModal<HTMLDivElement>(
     getValues('lane') as number,
     defaultStrokes,
+    defaultTotalMeter,
+    defaultTotalLap,
   );
 
   const isAssistiveIndexZero = assistiveTabIndex === 0;
@@ -74,6 +82,7 @@ export function DistancePageModal({ defaultStrokes }: DistancePageModalProps) {
   const handleBackArrowClick = () => {
     handlers.onClosePageModal();
   };
+
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
       setFormSubInfo((prev) => ({
