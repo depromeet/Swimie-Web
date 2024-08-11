@@ -17,16 +17,15 @@ export const CheerItem = ({ icon, title, isSelected }: CheerItem) => {
 
 const ContainerStyle = cva({
   base: {
-    p: '8px 14px',
+    width: 'fit-content',
     display: 'flex',
     gap: '8px',
+    p: '8px 14px',
     color: 'text.normal',
     textStyle: 'body1.normal',
     fontWeight: 'medium',
     border: '1px solid',
-    borderColor: 'line.neutral',
     rounded: '8px',
-    width: 'fit-content',
   },
   variants: {
     isSelected: {
