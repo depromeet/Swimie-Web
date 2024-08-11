@@ -78,6 +78,7 @@ const header = {
 const containerStyle = flex({
   direction: 'column',
   gap: '12px',
+  backgroundColor: 'background.gray',
 });
 
 const loadingWrapperStyle = css({

@@ -12,5 +12,5 @@ const DetailLayout = ({ children }: DetailLayout) => {
 export default DetailLayout;
 
 const childrenWrapperStyle = css({
-  backgroundColor: 'background.gray',
+  pb: '80px',
 });
