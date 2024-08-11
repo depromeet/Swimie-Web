@@ -36,6 +36,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
     'GET',
   );
 
+  // TODO: isMyRecordDetail 분기처리 필요
   // TODO: add loading state
   if (!data) return null;
   return (
@@ -46,6 +47,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
         </div>
       </HeaderBar>
       <article className={containerStyle}>
+        <button className={fabCheerButton}>정지영님에게 응원 보내기 👏</button>
         {/* preview section */}
         <DynamicPreviewSection data={data} />
         {/* description section */}
@@ -76,9 +78,23 @@ const header = {
 };
 
 const containerStyle = flex({
+  position: 'relative',
   direction: 'column',
   gap: '12px',
   backgroundColor: 'background.gray',
+});
+
+const fabCheerButton = css({
+  position: 'fixed',
+  right: '20px',
+  bottom: '35px',
+  p: '10px 20px',
+  backgroundColor: 'primary.swim.총거리.default',
+  color: 'white',
+  textStyle: 'body2.normal',
+  fontWeight: 'bold',
+  rounded: 'full',
+  cursor: 'pointer',
 });
 
 const loadingWrapperStyle = css({
