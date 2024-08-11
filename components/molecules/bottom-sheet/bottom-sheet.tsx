@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { Dim } from '@/components/atoms';
 import { css, cva, cx } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 type Direction = 'top' | 'bottom';
 
@@ -142,8 +143,7 @@ const headerStyle = {
   }),
 };
 
-const bodyStyle = css({
-  display: 'flex',
+const bodyStyle = flex({
   direction: 'column',
   marginTop: '-1px',
   width: '100%',
