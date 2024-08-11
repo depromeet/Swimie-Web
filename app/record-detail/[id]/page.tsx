@@ -95,6 +95,7 @@ const fabCheerButton = css({
   fontWeight: 'bold',
   rounded: 'full',
   cursor: 'pointer',
+  shadow: 'emphasize',
 });
 
 const loadingWrapperStyle = css({
