@@ -1,3 +1,4 @@
+export * from './cheer-item';
 export * from './date-picker';
 export * from './edit-button';
 export * from './swim-description-item';
