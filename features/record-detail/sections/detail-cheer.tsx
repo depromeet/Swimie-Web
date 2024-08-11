@@ -15,6 +15,7 @@ export const DetailCheer = () => {
     open();
   };
 
+  // TODO: 응원하기 flow 구현
   return (
     <>
       <button className={FloatingCheerButton} onClick={handleClickCheerButton}>
@@ -66,7 +67,7 @@ const FloatingCheerButton = css({
   shadow: 'emphasize',
 
   '@media (min-width: 600px)': {
-    right: 'calc(50% - 300px + 16px);',
+    right: 'calc(50% - 300px + 20px);',
   },
 });
 
