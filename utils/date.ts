@@ -50,3 +50,12 @@ export const formatDateToKorean = (dateStr: string, separator = '-') => {
   const [year, month, date] = dateStr.split(separator);
   return `${year}년 ${+month}월 ${+date}일`;
 };
+
+export const formatDateToDash = (dateStr: string) => {
+  const [year, month, date] = dateStr.split(' ');
+
+  const formattedMonth = month.replace('월', '').padStart(2, '0');
+  const formattedDate = date.replace('일', '').padStart(2, '0');
+
+  return `${year.replace('년', '')}-${formattedMonth}-${formattedDate}`;
+};

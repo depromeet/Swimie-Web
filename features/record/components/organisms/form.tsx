@@ -11,7 +11,7 @@ import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { formatDateToKorean, getToday } from '@/utils';
+import { formatDateToDash, formatDateToKorean, getToday } from '@/utils';
 
 import {
   useGetImagePresignedUrl,
@@ -19,7 +19,7 @@ import {
   useMemory,
   usePullEditMemory,
 } from '../../apis';
-import { RecordRequestProps } from '../../apis/dto';
+import { RecordRequestProps, SubmitRecordRequestProps } from '../../apis/dto';
 import { useImageEdit } from '../../apis/use-image-edit';
 import { useImageStatus } from '../../apis/use-image-status';
 import { useMemoryEdit } from '../../apis/use-memory-edit';
@@ -55,12 +55,12 @@ export function Form() {
       recordAt: date ? date : getToday(),
       startTime: '',
       endTime: '',
-      lane: '25m',
+      laneMeter: '25m',
+      lane: 25,
       strokes: [],
       imageIdList: [],
     },
   });
-
   useEffect(() => {
     if (data) {
       const prevData = data.data;
@@ -68,8 +68,10 @@ export function Form() {
         recordAt: formatDateToKorean(prevData.recordAt),
         startTime: prevData.startTime,
         endTime: prevData.endTime,
-        lane: prevData.lane + 'm',
+        lane: prevData.lane,
+        laneMeter: prevData.lane + 'm',
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
+        poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
           ? prevData.memoryDetail.heartRate
@@ -84,6 +86,9 @@ export function Form() {
           ? prevData.memoryDetail.kcal
           : undefined,
         strokes: prevData.strokes ? prevData.strokes : undefined,
+        totalDistance: prevData.totalMeter
+          ? prevData.totalMeter + 'm'
+          : undefined,
       });
       setFormSubInfo({
         imageFiles: [],
@@ -113,9 +118,30 @@ export function Form() {
     return blobData;
   };
 
+  const modifySubmitData = (data: SubmitRecordRequestProps) => {
+    const modifiedData = { ...data };
+
+    if (isEditMode)
+      modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
+    Object.keys(data).map((field) => {
+      const key = field as keyof typeof data;
+      if (
+        (typeof data[key] === 'string' && data[key] === '') || // 수정: 'typeof data[key]'을 'string' 체크로 수정
+        (typeof data[key] === 'number' && isNaN(data[key]))
+      ) {
+        delete modifiedData[key];
+      }
+    });
+
+    return modifiedData;
+  };
+
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록 수정 모드일 때
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { poolName, laneMeter, totalDistance, ...restData } = data;
+    const submitData = modifySubmitData(restData);
     if (isEditMode) {
       //이미지가 수정 되었을 때
       if (formSubInfo.imageFiles.length > 0) {
@@ -130,7 +156,7 @@ export function Form() {
         await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
         const memoryRes = await memoryEdit({
           formData: {
-            ...data,
+            ...submitData,
             imageIdList: [getImagePresignedUrlRes.data[0].imageId],
           },
           memoryId: Number(searchParams.get('memoryId')),
@@ -143,7 +169,7 @@ export function Form() {
       //이미지가 수정되지 않았을 때
       else {
         const memoryEditRes = await memoryEdit({
-          formData: data,
+          formData: submitData,
           memoryId: Number(searchParams.get('memoryId')),
         });
         if (memoryEditRes)
@@ -165,7 +191,7 @@ export function Form() {
         });
         await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
         const memoryRes = await memory({
-          ...data,
+          ...submitData,
           imageIdList: [getImagePresignedUrlRes.data[0].imageId],
         });
         if (memoryRes.status === 200)
@@ -175,7 +201,7 @@ export function Form() {
       }
       //기록에서 이미지가 포함되지 않았을 때
       else {
-        const memoryRes = await memory(data);
+        const memoryRes = await memory(submitData);
         if (memoryRes.status === 200)
           router.push(
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
@@ -239,7 +265,7 @@ export function Form() {
             }
           />
           <SelectTextField
-            fieldName="lane"
+            fieldName="laneMeter"
             label="레인 길이"
             wrapperClassName={css({ marginBottom: '24px' })}
             onClick={() => setIsLaneLengthBottomSheetOpen(true)}
@@ -286,7 +312,11 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal defaultStrokes={data?.data.strokes} />
+      <DistancePageModal
+        defaultStrokes={data?.data.strokes}
+        defaultTotalMeter={data?.data.totalMeter}
+        defaultTotalLap={data?.data.totalLap}
+      />
       <TimeBottomSheet />
     </FormProvider>
   );

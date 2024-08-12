@@ -56,6 +56,8 @@ export function useDistancePageModal<T>(
 
   useEffect(() => {
     if (defaultStrokes) {
+      setStrokesMeterModified(true);
+      setStrokesLapsModified(true);
       if (defaultStrokes.length === 1 && defaultStrokes[0].name === '총거리') {
         setTotalMeter(String(defaultTotalMeter));
       } else if (
