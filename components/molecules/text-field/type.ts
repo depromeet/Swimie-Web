@@ -11,6 +11,7 @@ export interface TextFieldProps {
   hasDownArrow?: boolean;
   placeholder?: string;
   maxLength?: number;
+  registerName?: string;
   className?: string;
   wrapperClassName?: string;
   absoluteClassName?: string;

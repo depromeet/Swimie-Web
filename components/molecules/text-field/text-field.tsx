@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { DownArrowIcon } from '@/components/atoms';
 import { css, cva, cx } from '@/styled-system/css';
@@ -39,6 +40,7 @@ export function TextField({
   placeholder,
   unit,
   maxLength,
+  registerName,
   className,
   wrapperClassName,
   absoluteClassName,
@@ -47,6 +49,7 @@ export function TextField({
   onChange,
 }: TextFieldProps) {
   const { focused, isWritten, handlers } = useTextField(value);
+  const { register } = useFormContext();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
@@ -62,6 +65,7 @@ export function TextField({
     >
       <div className={cx(inputWrapperStyles)}>
         <input
+          {...(registerName ? register(registerName) : {})}
           readOnly={variant === 'select'}
           type={inputType}
           value={value}
