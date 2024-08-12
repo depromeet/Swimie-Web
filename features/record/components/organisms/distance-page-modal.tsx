@@ -24,6 +24,7 @@ interface DistancePageModalProps {
   defaultTotalLap?: number;
 }
 
+//Todo: 코드 리팩토링 & 리렌더링 고민
 export function DistancePageModal({
   defaultStrokes,
   defaultTotalMeter,
