@@ -22,6 +22,7 @@ import { useTextField } from './use-text-field';
  * @param placeholder placeholder 값
  * @param unit variant==='type' 일 때 입력값 단위
  * @param maxLength input의 최대길이
+ * @param registerName input 요소를 구독할 때 사용할 name
  * @param className input태그 추가 스타일
  * @param wrapperClassName text-field-wrapper 컴포넌트 추가 스타일 부여
  * @param absoluteClassName 화살표 icon / unit 문자 추가 스타일 부여
@@ -48,8 +49,8 @@ export function TextField({
   onClick,
   onChange,
 }: TextFieldProps) {
-  const { focused, isWritten, handlers } = useTextField(value);
   const { register } = useFormContext();
+  const { focused, isWritten, handlers } = useTextField(value, registerName);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
@@ -64,30 +65,64 @@ export function TextField({
       className={wrapperClassName}
     >
       <div className={cx(inputWrapperStyles)}>
-        <input
-          {...(registerName ? register(registerName) : {})}
-          readOnly={variant === 'select'}
-          type={inputType}
-          value={value}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          onChange={handleInputChange}
-          onFocus={
-            variant === 'text' ? () => handlers.onChangeFocus(true) : undefined
-          }
-          onBlur={
-            variant === 'text' ? () => handlers.onChangeFocus(false) : undefined
-          }
-          className={cx(
-            css(
-              (variant === 'text' && isWritten) || focused
-                ? inputStyles.raw({ isWritten: true })
-                : inputStyles.raw({ isWritten: false }),
-            ),
-            className,
-          )}
-          onClick={onClick}
-        />
+        {registerName ? (
+          <input
+            {...(registerName
+              ? register(registerName, {
+                  valueAsNumber: inputType === 'number' ? true : false,
+                })
+              : {})}
+            type={inputType}
+            placeholder={placeholder}
+            onFocus={
+              variant === 'text'
+                ? () => handlers.onChangeFocus(true)
+                : undefined
+            }
+            onBlur={
+              variant === 'text'
+                ? () => handlers.onChangeFocus(false)
+                : undefined
+            }
+            className={cx(
+              css(
+                (variant === 'text' && isWritten) || focused
+                  ? inputStyles.raw({ isWritten: true })
+                  : inputStyles.raw({ isWritten: false }),
+              ),
+              className,
+            )}
+          />
+        ) : (
+          <input
+            readOnly={variant === 'select'}
+            type={inputType}
+            value={value}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            onChange={handleInputChange}
+            onFocus={
+              variant === 'text'
+                ? () => handlers.onChangeFocus(true)
+                : undefined
+            }
+            onBlur={
+              variant === 'text'
+                ? () => handlers.onChangeFocus(false)
+                : undefined
+            }
+            className={cx(
+              css(
+                (variant === 'text' && isWritten) || focused
+                  ? inputStyles.raw({ isWritten: true })
+                  : inputStyles.raw({ isWritten: false }),
+              ),
+              className,
+            )}
+            onClick={onClick}
+          />
+        )}
+
         {/* span태그 컴포넌트로 공통 생성 시 수정 */}
         {variant === 'select' && hasDownArrow && (
           <span className={cx(absoluteStyles, absoluteClassName)}>

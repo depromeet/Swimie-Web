@@ -8,6 +8,7 @@ export function SubInfoTextFields() {
   return (
     <>
       <TextField
+        inputType="number"
         registerName="heartRate"
         label="심박수"
         unit="BPM"
@@ -15,18 +16,25 @@ export function SubInfoTextFields() {
       />
       <div className={paceStyles.layout}>
         <TextField
+          inputType="number"
           registerName="paceMinutes"
           label="페이스"
           wrapperClassName={paceStyles.field}
         />
         <span className={css({ fontSize: '30px' })}>:</span>
         <TextField
+          inputType="number"
           registerName="paceSeconds"
           unit="/100m"
           wrapperClassName={cx(paceStyles.field, css({ paddingTop: '24px' }))}
         />
       </div>
-      <TextField registerName="kcal" label="칼로리" unit="Kcal" />
+      <TextField
+        inputType="number"
+        registerName="kcal"
+        label="칼로리"
+        unit="Kcal"
+      />
     </>
   );
 }
