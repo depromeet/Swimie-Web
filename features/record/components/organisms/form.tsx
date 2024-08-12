@@ -51,7 +51,7 @@ export function Form() {
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
-      recordAt: date ? date : getToday(),
+      recordAt: date ? formatDateToKorean(date) : getToday(),
       startTime: '',
       endTime: '',
       laneMeter: '25m',
@@ -97,9 +97,6 @@ export function Form() {
   }, [data]);
 
   const router = useRouter();
-  const setIsLaneLengthBottomSheetOpen = useSetAtom(
-    isLaneLengthBottomSheetOpen,
-  );
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
@@ -111,6 +108,9 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+  const setIsLaneLengthBottomSheetOpen = useSetAtom(
+    isLaneLengthBottomSheetOpen,
+  );
 
   const getBlobData = (file: File) => {
     const blobData = new Blob([file]);
@@ -120,8 +120,7 @@ export function Form() {
   const modifySubmitData = (data: SubmitRecordRequestProps) => {
     const modifiedData = { ...data };
 
-    if (isEditMode)
-      modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
+    modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
     Object.keys(data).map((field) => {
       const key = field as keyof typeof data;
       if (
@@ -311,11 +310,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal
-        defaultStrokes={data?.data.strokes}
-        defaultTotalMeter={data?.data.totalMeter}
-        defaultTotalLap={data?.data.totalLap}
-      />
+      <DistancePageModal defaultStrokes={data?.data.strokes} />
       <TimeBottomSheet />
     </FormProvider>
   );

@@ -1,8 +1,6 @@
 import { atom } from 'jotai';
 
 interface FormSubInfoProps {
-  poolName?: string;
-  totalDistance?: number;
   imageFiles: File[];
 }
 
