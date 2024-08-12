@@ -40,7 +40,6 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: watch의 성능 이슈 고민
 //Todo: form.tsx 파일 내부 리팩토링
 //Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
@@ -126,7 +125,7 @@ export function Form() {
     Object.keys(data).map((field) => {
       const key = field as keyof typeof data;
       if (
-        (typeof data[key] === 'string' && data[key] === '') || // 수정: 'typeof data[key]'을 'string' 체크로 수정
+        (typeof data[key] === 'string' && data[key] === '') ||
         (typeof data[key] === 'number' && isNaN(data[key]))
       ) {
         delete modifiedData[key];
