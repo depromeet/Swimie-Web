@@ -8,7 +8,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
-import { TextField } from '@/components/molecules';
+import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getToday } from '@/utils';
@@ -55,7 +55,7 @@ export function Form() {
       recordAt: date ? date : getToday(),
       startTime: '',
       endTime: '',
-      lane: 25,
+      lane: '25m',
       strokes: [],
       imageIdList: [],
     },
@@ -65,10 +65,10 @@ export function Form() {
     if (data) {
       const prevData = data.data;
       methods.reset({
-        recordAt: prevData.recordAt,
+        recordAt: formatDateToKorean(prevData.recordAt),
         startTime: prevData.startTime,
         endTime: prevData.endTime,
-        lane: prevData.lane,
+        lane: prevData.lane + 'm',
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
@@ -87,8 +87,6 @@ export function Form() {
       });
       setFormSubInfo({
         imageFiles: [],
-        poolName: prevData.pool ? prevData.pool.name : undefined,
-        totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,12 +107,6 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-
-  const startTime = methods.watch('startTime');
-  const endTime = methods.watch('endTime');
-  const diary = methods.watch('diary');
-
-  const isRecordAbled = startTime && endTime;
 
   const getBlobData = (file: File) => {
     const blobData = new Blob([file]);
@@ -197,19 +189,16 @@ export function Form() {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className={cx(formSectionStyles)}>
-          <TextField
-            variant="select"
+          <SelectTextField
+            fieldName="recordAt"
             isRequired
-            value={formatDateToKorean(methods.getValues('recordAt'))}
             label="수영 날짜"
             wrapperClassName={css({ marginBottom: '24px' })}
           />
           <div className={timeStyles.layout}>
-            <TextField
-              variant="select"
+            <SelectTextField
+              fieldName="startTime"
               isRequired
-              hasDownArrow
-              value={startTime || ''}
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
@@ -222,11 +211,9 @@ export function Form() {
               }
             />
             <span className={css({ fontSize: '30px' })}>-</span>
-            <TextField
-              variant="select"
+            <SelectTextField
+              fieldName="endTime"
               isRequired
-              hasDownArrow
-              value={endTime || ''}
               label="수영 시간"
               placeholder="00:00"
               wrapperClassName={timeStyles.field}
@@ -239,9 +226,8 @@ export function Form() {
               }
             />
           </div>
-          <TextField
-            variant="select"
-            value={formSubInfo.poolName || ''}
+          <SelectTextField
+            fieldName="poolName"
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
@@ -252,19 +238,14 @@ export function Form() {
               })
             }
           />
-          <TextField
-            variant="select"
-            value={methods.watch('lane') + 'm'}
+          <SelectTextField
+            fieldName="lane"
             label="레인 길이"
-            hasDownArrow
             wrapperClassName={css({ marginBottom: '24px' })}
             onClick={() => setIsLaneLengthBottomSheetOpen(true)}
           />
-          <TextField
-            variant="select"
-            value={
-              formSubInfo.totalDistance ? formSubInfo.totalDistance + 'm' : ''
-            }
+          <SelectTextField
+            fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
             onClick={() =>
@@ -279,7 +260,7 @@ export function Form() {
               label={isEditMode ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
-              disabled={!isRecordAbled}
+              // disabled={!isRecordAbled}
             />
           </div>
         </div>
@@ -293,7 +274,7 @@ export function Form() {
           }
         />
         <Divider variant="thick" />
-        <DiarySection title="일기" value={diary || ''} />
+        <DiarySection title="일기" />
         <Divider variant="thick" />
         <EquipmentSection
           title="장비"

@@ -1,23 +1,29 @@
 import { ReactNode } from 'react';
 
 export interface TextFieldProps {
-  variant?: 'text' | 'select';
-  value?: string;
+  inputType?: string;
   label?: string;
   isRequired?: boolean;
-  inputType?: string;
-  unit?: string;
+  value?: string;
   subText?: string;
-  hasDownArrow?: boolean;
   placeholder?: string;
+  unit?: string;
   maxLength?: number;
   registerName?: string;
   className?: string;
   wrapperClassName?: string;
   absoluteClassName?: string;
   subTextClassName?: string;
-  onClick?: () => void;
   onChange?: (text: string) => void;
+}
+
+export interface SelectTextFieldProps
+  extends Omit<
+    TextFieldProps,
+    'onChange' | 'inputType' | 'value' | 'unit' | 'maxLength' | 'registerName'
+  > {
+  fieldName?: string;
+  onClick?: () => void;
 }
 
 export interface TextFieldWrapperProps

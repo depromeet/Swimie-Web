@@ -1,26 +1,36 @@
 import { ChangeEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { css, cx } from '@/styled-system/css';
 
 export interface TextAreaProps {
-  value: string;
+  registerName?: string;
+  value?: string;
   placeholder: string;
   className?: string;
   onChange?: (text: string) => void;
 }
 
 export function TextArea({
+  registerName,
   value,
   placeholder,
   className,
   onChange,
 }: TextAreaProps) {
+  const { register } = useFormContext();
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     onChange?.(newText);
   };
 
-  return (
+  return registerName ? (
+    <textarea
+      {...register(registerName)}
+      placeholder={placeholder}
+      className={cx(layoutStyles, className)}
+    />
+  ) : (
     <textarea
       value={value}
       placeholder={placeholder}

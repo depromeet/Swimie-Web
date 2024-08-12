@@ -10,8 +10,10 @@ export interface RecordRequestProps {
   recordAt: string; // 필수
   startTime: string; // 필수
   endTime: string; // 필수
-  lane: number; //디폴트 25
+  lane: string; //디폴트 25
   diary?: string;
   strokes: StrokeProps[];
   imageIdList: number[];
+  poolName?: string;
+  totalDistance?: string;
 }
