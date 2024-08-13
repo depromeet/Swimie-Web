@@ -54,13 +54,17 @@ export default async function RecordDetail({ params }: RecordDetail) {
         </div>
       </HeaderBar>
       <article className={containerStyle}>
-        {/* preview section */}
-        <DynamicPreviewSection data={data} />
+        <div>
+          {/* cheer section */}
+          <DynamicCheerSection data={data} />
+          {/* preview section */}
+          <DynamicPreviewSection data={data} />
+        </div>
+
         {/* description section */}
         <DetailDescriptionSection data={data} />
         {/* diary section */}
         <DetailDiarySection data={data} />
-        <DynamicCheerSection data={data} />
       </article>
     </>
   );
