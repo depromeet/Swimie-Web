@@ -10,14 +10,14 @@ export const CheerItem = ({ icon, title, isSelected }: CheerItem) => {
   if (!icon?.length && !title?.length) return null;
   return (
     // NOTE: isSelected undefined 대응하여 Boolean 사용
-    <div className={ContainerStyle({ isSelected: Boolean(isSelected) })}>
+    <div className={containerStyle({ isSelected: Boolean(isSelected) })}>
       {icon?.length && <div>{icon}</div>}
       {title?.length && <p>{title}</p>}
     </div>
   );
 };
 
-const ContainerStyle = cva({
+const containerStyle = cva({
   base: {
     width: 'fit-content',
     display: 'flex',
