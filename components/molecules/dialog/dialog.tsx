@@ -54,6 +54,8 @@ export const Dialog = ({
                   onClick={buttons.confirm.onClick}
                   label={buttons.confirm.text}
                   size="large"
+                  buttonType="primary"
+                  variant="solid"
                 />
               )}
             </div>

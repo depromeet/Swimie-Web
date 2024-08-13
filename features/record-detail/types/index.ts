@@ -48,3 +48,8 @@ export type RecordDetailType = {
   totalMeter?: number;
   diary?: string;
 };
+
+export type DetailCheerItem = {
+  emoji?: string;
+  comment?: string;
+};
