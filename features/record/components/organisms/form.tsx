@@ -130,7 +130,8 @@ export function Form() {
       const isEmptyString =
         typeof modifiedData[key] === 'string' && modifiedData[key] === '';
       const isNotANumber =
-        typeof modifiedData[key] === 'number' && isNaN(modifiedData[key]);
+        typeof modifiedData[key] === 'number' &&
+        isNaN(modifiedData[key] as number);
       if (isEmptyString || isNotANumber) {
         delete modifiedData[key];
       }
