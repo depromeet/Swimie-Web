@@ -19,6 +19,7 @@ export const FollowTabSection = ({ tab }: FollowTabSection) => {
     router.push(currentUrl.toString());
   };
 
+  // TODO: tab style이 figma와 다름
   return (
     <Tab>
       <TabItem
