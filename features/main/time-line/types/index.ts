@@ -1,8 +1,10 @@
+import { StrokeName } from '@/features/record-detail';
+
 import { MemberInfo, MemoryType } from '../../calendar';
 
 export interface StrokeInfo {
   strokeId: number;
-  name: string;
+  name: StrokeName;
   laps: number;
   meter: number;
 }
