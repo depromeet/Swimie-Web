@@ -1,6 +1,7 @@
 import { Strokes } from '@/features/main/calendar';
 
 export const swims: Array<{ name: keyof Strokes; color: string }> = [
+  { name: '총거리', color: '#3B87F4' },
   { name: '자유형', color: '#3B87F4' },
   { name: '평영', color: '#F3DD6E' },
   { name: '배영', color: '#EB5A3F' },

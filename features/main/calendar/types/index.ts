@@ -3,6 +3,7 @@ import { StrokeInfo } from '../../time-line';
 export type MemoryType = 'NORMAL' | 'SINGLE' | 'MULTI';
 
 export interface Strokes {
+  총거리?: number;
   자유형?: number;
   평영?: number;
   배영?: number;
