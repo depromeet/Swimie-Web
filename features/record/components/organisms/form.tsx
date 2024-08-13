@@ -14,15 +14,16 @@ import { flex } from '@/styled-system/patterns';
 import { formatDateToDash, formatDateToKorean, getToday } from '@/utils';
 
 import {
+  RecordRequestProps,
+  SubmitRecordRequestProps,
   useGetImagePresignedUrl,
+  useImageEdit,
   useImagePresignUrl,
+  useImageStatus,
   useMemory,
+  useMemoryEdit,
   usePullEditMemory,
 } from '../../apis';
-import { RecordRequestProps, SubmitRecordRequestProps } from '../../apis/dto';
-import { useImageEdit } from '../../apis/use-image-edit';
-import { useImageStatus } from '../../apis/use-image-status';
-import { useMemoryEdit } from '../../apis/use-memory-edit';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -111,6 +112,9 @@ export function Form() {
   const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );
+
+  const startTime = methods.watch('startTime');
+  const endTime = methods.watch('endTime');
 
   const getBlobData = (file: File) => {
     const blobData = new Blob([file]);
@@ -281,10 +285,12 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
+              buttonType="primary"
+              variant="solid"
               label={isEditMode ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
-              // disabled={!isRecordAbled}
+              disabled={!startTime || !endTime}
             />
           </div>
         </div>

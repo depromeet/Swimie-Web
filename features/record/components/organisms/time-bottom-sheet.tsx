@@ -92,6 +92,8 @@ export function TimeBottomSheet() {
       </ConfigProvider>
       <div className={layoutStyles.button}>
         <Button
+          buttonType="primary"
+          variant="solid"
           size="large"
           label="완료"
           interaction="normal"

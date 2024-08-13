@@ -181,6 +181,8 @@ export function DistancePageModal({
         </section>
         <div className={layout.button}>
           <Button
+            buttonType="primary"
+            variant="solid"
             size="large"
             label={buttonLabel}
             interaction="normal"
