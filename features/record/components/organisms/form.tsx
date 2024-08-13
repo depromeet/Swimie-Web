@@ -17,10 +17,12 @@ import {
   useGetImagePresignedUrl,
   useImagePresignUrl,
   useMemory,
+  usePullEditMemory,
 } from '../../apis';
 import { RecordRequestProps } from '../../apis/dto';
+import { useImageEdit } from '../../apis/use-image-edit';
 import { useImageStatus } from '../../apis/use-image-status';
-import { usePullMemory } from '../../apis/use-pull-memory';
+import { useMemoryEdit } from '../../apis/use-memory-edit';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -40,10 +42,13 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 
 //Todo: watch의 성능 이슈 고민
 //Todo: form.tsx 파일 내부 리팩토링
+//Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
+//Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
-  const { data } = usePullMemory(Number(searchParams.get('memoryId')));
+  const isEditMode = Boolean(searchParams.get('memoryId'));
+  const { data } = usePullEditMemory(Number(searchParams.get('memoryId')));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -78,6 +83,7 @@ export function Form() {
         kcal: prevData.memoryDetail.kcal
           ? prevData.memoryDetail.kcal
           : undefined,
+        strokes: prevData.strokes ? prevData.strokes : undefined,
       });
       setFormSubInfo({
         imageFiles: [],
@@ -95,8 +101,10 @@ export function Form() {
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
+  const { mutateAsync: memoryEdit } = useMemoryEdit();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageStatus } = useImageStatus();
+  const { mutateAsync: imageEdit } = useImageEdit();
 
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -113,34 +121,74 @@ export function Form() {
     return blobData;
   };
 
+  //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
-    //기록에 사진이 있을 시
-    //Todo: 기록 에러 발생 시 처리
-    if (formSubInfo.imageFiles.length > 0) {
-      const getImagePresignedUrlRes = await getImagePresignedUrl([
-        formSubInfo.imageFiles[0].name,
-      ]);
-      await imagePresign({
-        presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
-        file: getBlobData(formSubInfo.imageFiles[0]),
-      });
-      await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
-      const memoryRes = await memory({
-        ...data,
-        imageIdList: [getImagePresignedUrlRes.data[0].imageId],
-      });
-      if (memoryRes.status === 200)
-        router.push(
-          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-        );
+    //기록 수정 모드일 때
+    if (isEditMode) {
+      //이미지가 수정 되었을 때
+      if (formSubInfo.imageFiles.length > 0) {
+        const getImagePresignedUrlRes = await imageEdit({
+          imageNames: [formSubInfo.imageFiles[0].name],
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        await imagePresign({
+          presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+          file: getBlobData(formSubInfo.imageFiles[0]),
+        });
+        await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+        const memoryRes = await memoryEdit({
+          formData: {
+            ...data,
+            imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+          },
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        if (memoryRes.status === 200)
+          router.push(
+            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+          );
+      }
+      //이미지가 수정되지 않았을 때
+      else {
+        const memoryEditRes = await memoryEdit({
+          formData: data,
+          memoryId: Number(searchParams.get('memoryId')),
+        });
+        if (memoryEditRes)
+          router.push(
+            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+          );
+      }
     }
-    //기록에 사진이 없을 시
+    //기록 생성 모드일 때
     else {
-      const memoryRes = await memory(data);
-      if (memoryRes.status === 200)
-        router.push(
-          `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-        );
+      //기록에서 이미지가 포함되었을 때
+      if (formSubInfo.imageFiles.length > 0) {
+        const getImagePresignedUrlRes = await getImagePresignedUrl([
+          formSubInfo.imageFiles[0].name,
+        ]);
+        await imagePresign({
+          presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
+          file: getBlobData(formSubInfo.imageFiles[0]),
+        });
+        await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
+        const memoryRes = await memory({
+          ...data,
+          imageIdList: [getImagePresignedUrlRes.data[0].imageId],
+        });
+        if (memoryRes.status === 200)
+          router.push(
+            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+          );
+      }
+      //기록에서 이미지가 포함되지 않았을 때
+      else {
+        const memoryRes = await memory(data);
+        if (memoryRes.status === 200)
+          router.push(
+            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
+          );
+      }
     }
   };
 
@@ -228,7 +276,7 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
-              label="기록하기"
+              label={isEditMode ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
               disabled={!isRecordAbled}
@@ -236,18 +284,28 @@ export function Form() {
           </div>
         </div>
         <Divider variant="thick" />
-        <PhotoSection title="오늘의 사진" />
+        <PhotoSection
+          title="오늘의 사진"
+          defaultImage={
+            data && data.data.images.length > 0
+              ? data?.data.images[0].url
+              : undefined
+          }
+        />
         <Divider variant="thick" />
         <DiarySection title="일기" value={diary || ''} />
         <Divider variant="thick" />
-        <EquipmentSection title="장비" />
+        <EquipmentSection
+          title="장비"
+          defaultEquipment={data?.data.memoryDetail.item}
+        />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />
         <div className={blockStyles} />
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal />
+      <DistancePageModal defaultStrokes={data?.data.strokes} />
       <TimeBottomSheet />
     </FormProvider>
   );

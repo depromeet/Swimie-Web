@@ -1,8 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
-import { ChangeEvent, useRef, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
@@ -14,13 +13,16 @@ import { FormSectionProps } from '../../types/form-section';
 import { DeletePhotoIcon } from '../atoms/delete-photo-icon';
 import { CameraBox } from '../molecules';
 
+interface PhotoSectionProps extends FormSectionProps {
+  defaultImage?: string;
+}
+
 /**
  * @param title 사진 section의 제목
  */
-export function PhotoSection({ title }: FormSectionProps) {
+export function PhotoSection({ title, defaultImage }: PhotoSectionProps) {
   const [image, setImage] = useState<string[]>([]);
   const fileInput = useRef<HTMLInputElement>(null);
-  const { setValue } = useFormContext();
 
   const setFormSubInfo = useSetAtom(formSubInfoState);
 
@@ -64,8 +66,12 @@ export function PhotoSection({ title }: FormSectionProps) {
     }
   };
 
+  useEffect(() => {
+    if (defaultImage) setImage([defaultImage]);
+  }, [defaultImage]);
+
   const handleImageDeleteClick = () => {
-    setValue('imageFiles', []);
+    setFormSubInfo((prev) => ({ ...prev, imageFiles: [] }));
     setImage([]);
   };
 
