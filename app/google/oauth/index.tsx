@@ -16,7 +16,6 @@ const Page = () => {
 
   useEffect(() => {
     const GOOGLE_CODE = searchParams.get('code');
-    console.log('추출한 코드:', GOOGLE_CODE);
 
     const postCode = async () => {
       if (!GOOGLE_CODE) {
@@ -32,9 +31,6 @@ const Page = () => {
           body: JSON.stringify({ code: GOOGLE_CODE }),
         });
 
-        console.log('전달한 코드:', JSON.stringify({ code: GOOGLE_CODE }));
-        console.log('응답:', response);
-
         if (response.status === 200) {
           const data = (await response.json()) as AuthResponse;
 
@@ -43,7 +39,7 @@ const Page = () => {
             nickname: data.data.data.nickname,
             userId: data.data.data.userId,
           });
-          router.push('/join/nickname');
+          router.push('/');
         }
       } catch (error) {
         console.error('Error:', error);

@@ -46,9 +46,6 @@ const meta: Meta<typeof Button> = {
     rightIconSrc: {
       control: 'text',
     },
-    className: {
-      control: 'text',
-    },
   },
 };
 
@@ -60,6 +57,8 @@ export const Default: Story = {
   args: {
     label: 'Label',
     size: 'large',
+    variant: 'solid',
+    buttonType: 'primary',
     interaction: 'normal',
   },
 };
