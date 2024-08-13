@@ -46,7 +46,12 @@ export const DetailCheer = () => {
             size="large"
             onClick={close}
           />
-          <Button label="보내기" size="large" />
+          <Button
+            label="보내기"
+            size="large"
+            variant="solid"
+            buttonType="primary"
+          />
         </div>
       </BottomSheet>
     </>
