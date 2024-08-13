@@ -10,14 +10,14 @@ export async function middleware(request: NextRequest) {
   const loginPageRegex = /^\/login$/;
   const isLoginPage = loginPageRegex.test(request.nextUrl.pathname);
 
-  // NOTE: token 없으므로 login page로 리다이렉트
+  // NOTE: refreshToken이 없으면 로그인 페이지로 리다이렉트
   if (!refreshToken) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // NOTE: accessToken 재발급
-  if (refreshToken && !accessToken) {
-    const responseData = await fetch(
+  // NOTE: accessToken이 없으면 재발급 시도
+  if (!accessToken) {
+    const refreshResponse = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/login/refresh`,
       {
         method: 'POST',
@@ -28,25 +28,32 @@ export async function middleware(request: NextRequest) {
       },
     );
 
-    const data = (await responseData.json()) as NewTokenData;
-    accessToken = `Bearer ${data?.data?.accessToken}`;
+    if (refreshResponse.ok) {
+      const data = (await refreshResponse.json()) as NewTokenData;
+      accessToken = `Bearer ${data.data.accessToken}`;
 
-    const response = NextResponse.next();
-    response.cookies.set('accessToken', accessToken, {
-      maxAge: 3600,
-      httpOnly: true,
-      secure: true,
-    });
+      const response = NextResponse.next();
+      response.cookies.set('accessToken', accessToken, {
+        maxAge: 3600, // 1시간
+        httpOnly: true,
+        secure: true,
+      });
 
-    response.headers.set('Authorization', accessToken);
+      response.headers.set('Authorization', accessToken);
 
-    // NOTE: 로그인 페이지일 경우, '/'경로로 리다이렉트
-    if (isLoginPage) {
-      return NextResponse.redirect(new URL('/', request.url));
+      // NOTE: 로그인 페이지일 경우, '/' 경로로 리다이렉트
+      if (isLoginPage) {
+        return NextResponse.redirect(new URL('/', request.url));
+      }
+
+      return response;
+    } else {
+      // NOTE: 리프레시 토큰이 유효하지 않은 경우 로그인 페이지로 리다이렉트
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-    // NOTE: 로그인 페이지가 아닌 경우, 토큰 발급만 진행
-    return response;
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

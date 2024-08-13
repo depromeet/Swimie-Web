@@ -48,7 +48,7 @@ export async function fetchData<T>(
 
       if (refreshResponse.ok) {
         const data = (await refreshResponse.json()) as NewTokenData;
-        const newAccessToken = `Bearer ${data?.data?.accessToken}`;
+        const newAccessToken = `Bearer ${data.data.accessToken}`;
 
         cookieStore.set('accessToken', newAccessToken, {
           maxAge: 3600, // 1시간
