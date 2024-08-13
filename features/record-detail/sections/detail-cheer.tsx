@@ -18,7 +18,7 @@ export const DetailCheer = () => {
   // TODO: 응원하기 flow 구현
   return (
     <>
-      <button className={FloatingCheerButton} onClick={handleClickCheerButton}>
+      <button className={floatingCheerButton} onClick={handleClickCheerButton}>
         정지영님에게 응원 보내기 👏
       </button>
       <BottomSheet
@@ -26,7 +26,7 @@ export const DetailCheer = () => {
         isOpen={isOpen}
         onClose={close}
       >
-        <div className={TagContainer}>
+        <div className={tagContainerStyle}>
           <CheerItem icon="🔥" title="오늘도 힘내요!" />
           <CheerItem icon="🦭" title="물개세요?" />
           <CheerItem icon="🏊‍♀️️" />
@@ -39,7 +39,7 @@ export const DetailCheer = () => {
           <CheerItem icon="🏊" title="다음에 같이 수영해요" />
           <CheerItem icon="😲" title="대단해요!" />
         </div>
-        <div className={ButtonContainer}>
+        <div className={buttonContainerStyle}>
           <Button
             label="닫기"
             variant="outlined"
@@ -58,7 +58,7 @@ export const DetailCheer = () => {
   );
 };
 
-const FloatingCheerButton = css({
+const floatingCheerButton = css({
   position: 'fixed',
   right: '20px',
   bottom: '35px',
@@ -76,14 +76,14 @@ const FloatingCheerButton = css({
   },
 });
 
-const TagContainer = flex({
+const tagContainerStyle = flex({
   wrap: 'wrap',
   gap: '10px',
   rowGap: '10px',
   p: '8px 20px',
 });
 
-const ButtonContainer = grid({
+const buttonContainerStyle = grid({
   gap: '10px',
   p: '16px 20px 0 20px',
   gridTemplateColumns: '1fr 1fr',
