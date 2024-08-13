@@ -125,12 +125,14 @@ export function Form() {
     const modifiedData = { ...data };
 
     modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
-    Object.keys(data).map((field) => {
-      const key = field as keyof typeof data;
-      if (
-        (typeof data[key] === 'string' && data[key] === '') ||
-        (typeof data[key] === 'number' && isNaN(data[key]))
-      ) {
+    Object.keys(modifiedData).map((field) => {
+      const key = field as keyof typeof modifiedData;
+      const isEmptyString =
+        typeof modifiedData[key] === 'string' && modifiedData[key] === '';
+      const isNotANumber =
+        typeof modifiedData[key] === 'number' &&
+        isNaN(modifiedData[key] as number);
+      if (isEmptyString || isNotANumber) {
         delete modifiedData[key];
       }
     });
