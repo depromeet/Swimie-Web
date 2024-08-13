@@ -55,7 +55,9 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   const handleClickCheerItem = (index: number) => {
     setCheerList((prev) =>
       prev.map((item, idx) =>
-        idx === index ? { ...item, isSelected: !item.isSelected } : item,
+        idx === index
+          ? { ...item, isSelected: !item.isSelected }
+          : { ...item, isSelected: false },
       ),
     );
   };
