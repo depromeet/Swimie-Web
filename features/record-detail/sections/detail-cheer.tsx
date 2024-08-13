@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Button } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
 import { useBottomSheet } from '@/hooks';
@@ -7,19 +9,72 @@ import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { CheerItem } from '../components';
+import { RecordDetailType } from '../types';
 
-export const DetailCheer = () => {
+const initialCheerList = [
+  {
+    emoji: '🔥',
+    comment: '오늘도 힘내요!',
+    isSelected: false,
+  },
+  {
+    emoji: '🦭',
+    comment: '물개세요?',
+    isSelected: false,
+  },
+  {
+    emoji: '🏊',
+    isSelected: false,
+  },
+  {
+    emoji: '👏',
+    isSelected: false,
+  },
+  {
+    emoji: '🏊‍♂️',
+    comment: '진정한 수영인으로 인정합니다',
+    isSelected: false,
+  },
+  {
+    emoji: '🏊‍♂️',
+    comment: '다음에 같이 수영해요',
+    isSelected: false,
+  },
+  {
+    emoji: '😲',
+    comment: '대단해요!',
+    isSelected: false,
+  },
+];
+
+export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
+  const [cheerList, setCheerList] = useState(initialCheerList);
   const [isOpen, open, close] = useBottomSheet();
 
-  const handleClickCheerButton = () => {
-    open();
+  const handleClickCheerItem = (index: number) => {
+    setCheerList((prev) =>
+      prev.map((item, idx) =>
+        idx === index ? { ...item, isSelected: !item.isSelected } : item,
+      ),
+    );
+  };
+
+  const handleClickSendCheer = () => {
+    const selectedCheerList = cheerList.filter(({ isSelected }) => isSelected);
+    if (!selectedCheerList.length) {
+      alert('응원 문구를 선택해주세요.');
+      return;
+    }
+
+    // TODO: 응원 보내기 api 연동
+    console.log('send!', selectedCheerList);
   };
 
   // TODO: 응원하기 flow 구현
   return (
     <>
-      <button className={floatingCheerButton} onClick={handleClickCheerButton}>
-        정지영님에게 응원 보내기 👏
+      <button className={floatingCheerButton} onClick={open}>
+        {data.member?.name}님에게 응원 보내기 👏
       </button>
       <BottomSheet
         header={{ title: '응원 보내기' }}
@@ -27,17 +82,13 @@ export const DetailCheer = () => {
         onClose={close}
       >
         <div className={tagContainerStyle}>
-          <CheerItem icon="🔥" title="오늘도 힘내요!" />
-          <CheerItem icon="🦭" title="물개세요?" />
-          <CheerItem icon="🏊‍♀️️" />
-          <CheerItem icon="👏" />
-          <CheerItem
-            icon="🏊‍♂️"
-            title="진정한 수영인으로 인정합니다"
-            isSelected={true}
-          />
-          <CheerItem icon="🏊" title="다음에 같이 수영해요" />
-          <CheerItem icon="😲" title="대단해요!" />
+          {cheerList.map((item, index) => (
+            <CheerItem
+              key={index}
+              onClick={() => handleClickCheerItem(index)}
+              {...item}
+            />
+          ))}
         </div>
         <div className={buttonContainerStyle}>
           <Button
@@ -51,6 +102,7 @@ export const DetailCheer = () => {
             size="large"
             variant="solid"
             buttonType="primary"
+            onClick={handleClickSendCheer}
           />
         </div>
       </BottomSheet>

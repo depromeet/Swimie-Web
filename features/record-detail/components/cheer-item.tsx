@@ -1,19 +1,24 @@
 import { cva } from '@/styled-system/css';
 
+import { DetailCheerItem } from '../types';
+
 type CheerItem = {
-  icon?: string;
-  title?: string;
   isSelected?: boolean;
-};
+  onClick?: () => void;
+} & DetailCheerItem;
+
 // TODO: 로직 구현에 맞춰 props 수정
-export const CheerItem = ({ icon, title, isSelected }: CheerItem) => {
-  if (!icon?.length && !title?.length) return null;
+export const CheerItem = ({ isSelected, onClick, ...item }: CheerItem) => {
+  if (!item?.emoji?.length && !item?.comment?.length) return null;
   return (
     // NOTE: isSelected undefined 대응하여 Boolean 사용
-    <div className={containerStyle({ isSelected: Boolean(isSelected) })}>
-      {icon?.length && <div>{icon}</div>}
-      {title?.length && <p>{title}</p>}
-    </div>
+    <button
+      className={containerStyle({ isSelected: Boolean(isSelected) })}
+      onClick={onClick}
+    >
+      {item?.emoji?.length && <div>{item.emoji}</div>}
+      {item?.comment?.length && <p>{item.comment}</p>}
+    </button>
   );
 };
 
@@ -28,6 +33,7 @@ const containerStyle = cva({
     fontWeight: 'medium',
     border: '1px solid',
     rounded: '8px',
+    cursor: 'pointer',
   },
   variants: {
     isSelected: {

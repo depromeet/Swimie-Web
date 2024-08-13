@@ -60,7 +60,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
         <DetailDescriptionSection data={data} />
         {/* diary section */}
         <DetailDiarySection data={data} />
-        <DynamicCheerSection />
+        <DynamicCheerSection data={data} />
       </article>
     </>
   );
