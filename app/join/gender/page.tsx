@@ -10,7 +10,7 @@ import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export interface GenderData {
-  gender: string;
+  gender: 'W' | 'M';
 }
 
 export interface GenderResponse {
@@ -26,9 +26,9 @@ export interface GenderResponse {
 
 export default function JoinPage() {
   const router = useRouter();
-  const [selectedGender, setSelectedGender] = useState<string>('');
+  const [selectedGender, setSelectedGender] = useState<'W' | 'M' | ''>('');
 
-  const handleGenderSelect = (gender: string) => {
+  const handleGenderSelect = (gender: 'W' | 'M') => {
     setSelectedGender(gender);
   };
 
@@ -65,34 +65,13 @@ export default function JoinPage() {
 
   return (
     <div>
-      <HeaderBar className={css({ marginBottom: '24px' })} />
-      <div
-        className={flex({
-          direction: 'column',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '20px',
-        })}
-      >
+      <HeaderBar className={headerStyles} />
+      <div className={pageStyles}>
         <div>
-          <div className={css({ textStyle: 'heading4', fontWeight: 'bold' })}>
-            성별을 입력해주세요
-          </div>
-          <div
-            className={css({ textStyle: 'label2', color: 'text.placeHolder' })}
-          >
-            맞춤형 기록을 도와드려요!
-          </div>
+          <div className={noticeStyles}>성별을 입력해주세요</div>
+          <div className={subNoticeStyles}>맞춤형 기록을 도와드려요!</div>
         </div>
-        <div
-          className={css({
-            display: 'flex',
-            width: 'full',
-            gap: '10px',
-            height: '140px',
-            margin: '28px 0px',
-          })}
-        >
+        <div className={buttonsStyles}>
           <Button
             className={buttonStyles({
               gender: selectedGender === 'W' ? 'W' : 'default',
@@ -122,6 +101,34 @@ export default function JoinPage() {
     </div>
   );
 }
+
+const headerStyles = css({
+  marginBottom: '24px',
+});
+
+const pageStyles = flex({
+  direction: 'column',
+  justifyContent: 'center',
+  textAlign: 'center',
+  padding: '20px',
+});
+
+const noticeStyles = css({
+  textStyle: 'heading4',
+  fontWeight: 'bold',
+});
+
+const subNoticeStyles = css({
+  textStyle: 'label2',
+  color: 'text.placeHolder',
+});
+
+const buttonsStyles = flex({
+  width: 'full',
+  gap: '10px',
+  height: '140px',
+  margin: '28px 0px',
+});
 
 const buttonStyles = cva({
   base: {
