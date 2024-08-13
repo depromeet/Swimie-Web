@@ -73,6 +73,7 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
 
   return (
     <>
+      {/* TODO: 응원 조회 api 연동 및 모달 open 기능 구현 */}
       <div className={slider.containerStyle} ref={sliderRef}>
         <div className={slider.wrapperStyle}>
           <CheerItem
