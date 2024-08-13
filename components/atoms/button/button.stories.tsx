@@ -10,7 +10,7 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div className={css({ margin: 10 })}>
+      <div className={css({ m: 10 })}>
         <Story />
       </div>
     ),
