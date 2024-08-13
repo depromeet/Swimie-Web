@@ -5,7 +5,7 @@ import { CalendarResponse } from '@/features/main/calendar';
 import { calendarDateAtom } from '@/store';
 import { AuthInfoAtom } from '@/store/auth';
 
-const getCalendarData = async (year: number, month: number) => {
+export const getCalendarData = async (year: number, month: number) => {
   const res = await fetch(`/api/memory/calendar?year=${year}&month=${month}`, {
     method: 'GET',
     headers: {
