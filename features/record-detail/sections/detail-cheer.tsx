@@ -190,6 +190,7 @@ const cheerButtonWrapperStyle = css({
   rounded: 'full',
   cursor: 'pointer',
   shadow: 'emphasize',
+  zIndex: 100,
 
   '@media (min-width: 600px)': {
     right: 'calc(50% - 300px + 20px);',
