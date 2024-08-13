@@ -1,1 +1,1 @@
-export * from './time-line-card';
+export * from './swim-record-chart';

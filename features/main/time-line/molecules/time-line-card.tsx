@@ -6,8 +6,8 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getFormatDate, isTodayDate } from '@/utils';
 
+import { SwimRecordChart } from '../atoms/swim-record-chart';
 import { TimeLineContent } from '../types';
-import { SwimRecordChart } from './swim-record-chart';
 
 interface TimeLineCardLayoutProps {
   date: string;

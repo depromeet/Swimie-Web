@@ -4,8 +4,7 @@ import { InfiniteScroller } from '@/components/molecules/infinite-scroller';
 import { useTimeLineData } from '@/hooks/use-timeline';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-import { TimeLineCard } from '../atoms';
+import { TimeLineCard } from '../molecules';
 
 export const TimeLine = () => {
   const { data: timelineData, fetchNextPage, hasNextPage } = useTimeLineData();
