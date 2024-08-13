@@ -11,6 +11,8 @@ export const Waves = ({
   width: number;
   height: number;
 }) => {
+  if (!width || !height) return null;
+
   const coefficient =
     AMPLITUDE_COEFFICIENT + (width > 150 ? AMPLITUDE_COEFFICIENT_OFFSET : 0);
   const waveAmplitude = (coefficient * width) / height;
