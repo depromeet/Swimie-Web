@@ -23,7 +23,9 @@ export default function ProfileFollow({
 
   return (
     <>
-      <HeaderBar />
+      <HeaderBar>
+        <div className={headerNicknameStyle}>수영왕 정지영</div>
+      </HeaderBar>
       <DynamicTabSection tab={tab} />
       <article className={containerStyle}>
         <ProfileListItem isFollow={false} />
@@ -38,6 +40,15 @@ export default function ProfileFollow({
     </>
   );
 }
+
+const headerNicknameStyle = flex({
+  w: 'full',
+  justify: 'center',
+  align: 'center',
+  color: 'text.normal',
+  textStyle: 'heading6',
+  fontWeight: 'medium',
+});
 
 const containerStyle = flex({
   direction: 'column',
