@@ -13,6 +13,16 @@ export const DetailDescriptionSection = ({
 }) => {
   const { pool, duration, memoryDetail } = data;
 
+  const getFormatDurationTime = () => {
+    if (!duration) return undefined;
+
+    const { hour, minute } = getFormatTime({ timeStr: duration });
+    const hourStr = hour === 0 ? '' : `${hour}시간 `;
+    const minuteStr = minute === 0 ? '' : `${minute}분`;
+
+    return `${hourStr}${minuteStr}`;
+  };
+
   // NOTE: data type이 number이므로 0일 경우 예외처리를 위해 Boolean 사용
   const heartRate = Boolean(memoryDetail?.heartRate)
     ? `${memoryDetail?.heartRate} bpm`
@@ -31,7 +41,7 @@ export const DetailDescriptionSection = ({
         <SwimDescriptionItem title="수영 장소" value={pool?.name} />
         <SwimDescriptionItem
           title="수영 시간"
-          value={duration && `${getFormatTime({ timeStr: duration }).minute}분`}
+          value={getFormatDurationTime()}
         />
       </div>
 
