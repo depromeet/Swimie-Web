@@ -14,9 +14,9 @@ export const Button = ({
   variant,
   buttonType,
   interaction = 'normal',
-  className,
   type,
   onClick,
+  className,
 }: ButtonProps) => {
   const baseStyles = flex({
     alignItems: 'center',
