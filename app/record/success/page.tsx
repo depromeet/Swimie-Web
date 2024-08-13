@@ -35,7 +35,13 @@ export default function RecordSuccessPage({
         href={`/record-detail/${searchParams.memoryId}`}
         className={buttonStyles}
       >
-        <Button label="확인" size="large" className={css({ width: 'full' })} />
+        <Button
+          buttonType="primary"
+          variant="solid"
+          label="확인"
+          size="large"
+          className={css({ width: 'full' })}
+        />
       </Link>
     </div>
   );

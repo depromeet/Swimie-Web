@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { MemoryPullResponse, RecordRequestProps } from './dto';
+import { MemoryPullResponse, SubmitRecordRequestProps } from './dto';
 
 async function memoryEdit(data: {
-  formData: RecordRequestProps;
+  formData: SubmitRecordRequestProps;
   memoryId: number;
 }): Promise<MemoryPullResponse> {
   const res = await fetch(

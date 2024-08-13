@@ -1,6 +1,6 @@
 'use client';
 
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -15,7 +15,6 @@ import { css } from '@/styled-system/css';
 
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
-import { formSubInfoState } from '../../store/form-sub-info';
 import { StrokeProps } from '../../types';
 import { StrokeDistanceFields } from './stroke-distance-fields';
 
@@ -25,6 +24,7 @@ interface DistancePageModalProps {
   defaultTotalLap?: number;
 }
 
+//Todo: 코드 리팩토링 & 리렌더링 고민
 export function DistancePageModal({
   defaultStrokes,
   defaultTotalMeter,
@@ -32,7 +32,6 @@ export function DistancePageModal({
 }: DistancePageModalProps) {
   const { getValues, setValue } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
-  const setFormSubInfo = useSetAtom(formSubInfoState);
 
   const {
     pageModalRef,
@@ -40,7 +39,7 @@ export function DistancePageModal({
     assistiveTabIndex,
     totalMeter,
     totalLaps,
-    totalDistance,
+    totalStrokeDistance,
     strokes,
     buttonLabel,
     handlers,
@@ -85,16 +84,8 @@ export function DistancePageModal({
 
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
-      setFormSubInfo((prev) => ({
-        ...prev,
-        totalDistance: Number(totalMeter),
-      }));
-    else
-      setFormSubInfo((prev) => ({
-        ...prev,
-        totalDistance: Number(totalDistance),
-      }));
-
+      setValue('totalDistance', totalMeter + 'm');
+    else setValue('totalDistance', totalStrokeDistance + 'm');
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
         if (totalMeter) {
@@ -190,6 +181,8 @@ export function DistancePageModal({
         </section>
         <div className={layout.button}>
           <Button
+            buttonType="primary"
+            variant="solid"
             size="large"
             label={buttonLabel}
             interaction="normal"

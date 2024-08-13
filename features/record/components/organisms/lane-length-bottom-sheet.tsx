@@ -28,6 +28,7 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
   const [isOpen, setIsOpen] = useAtom(isLaneLengthBottomSheetOpen);
 
   const handleSelectLaneLength = (value: string) => {
+    setValue('laneMeter', value);
     setValue('lane', Number(value.slice(0, -1)));
   };
 

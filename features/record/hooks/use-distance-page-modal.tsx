@@ -22,7 +22,7 @@ export function useDistancePageModal<T>(
   const [assistiveTabIndex, setAssistiveTabIndex] = useState<tabIndex>(0);
   const [totalMeter, setTotalMeter] = useState<string>('');
   const [totalLaps, setTotalLaps] = useState<string>('');
-  const [totalDistance, setTotalDistance] = useState<number>(0);
+  const [totalStrokeDistance, setTotalStrokeDistance] = useState<number>(0);
   const [strokes, setStrokes] = useState<StrokeProps[]>(
     Array.from({ length: strokeOptions.length }, (_, i) => ({
       name: strokeOptions[i],
@@ -44,18 +44,20 @@ export function useDistancePageModal<T>(
       strokes.forEach((stroke) => {
         sum += stroke.meter;
       });
-      setTotalDistance(sum);
+      setTotalStrokeDistance(sum);
     } else {
       strokes.forEach((stroke) => {
         sum += stroke.laps * lane;
       });
-      setTotalDistance(sum);
+      setTotalStrokeDistance(sum);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strokes, lane]);
 
   useEffect(() => {
     if (defaultStrokes) {
+      setStrokesMeterModified(true);
+      setStrokesLapsModified(true);
       if (defaultStrokes.length === 1 && defaultStrokes[0].name === '총거리') {
         setTotalMeter(String(defaultTotalMeter));
       } else if (
@@ -71,7 +73,7 @@ export function useDistancePageModal<T>(
           ]);
         });
       }
-      setTotalDistance(defaultTotalMeter as number);
+      setTotalStrokeDistance(defaultTotalMeter as number);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultStrokes]);
@@ -100,7 +102,7 @@ export function useDistancePageModal<T>(
   const onChangeTotalLaps = (text: string) => {
     totalMeter && setTotalMeter('');
     setTotalLaps(text);
-    setTotalDistance(text ? Number(text) * lane : 0);
+    setTotalStrokeDistance(text ? Number(text) * lane : 0);
     resetStrokesMeter();
     resetStrokesLaps();
   };
@@ -161,7 +163,7 @@ export function useDistancePageModal<T>(
   const buttonLabel =
     secondaryTabIndex === 0 && assistiveTabIndex === 0
       ? '완료'
-      : `${totalDistance ? totalDistance + 'm' : ''} 완료`;
+      : `${totalStrokeDistance ? totalStrokeDistance + 'm' : ''} 완료`;
 
   return {
     pageModalRef,
@@ -169,7 +171,7 @@ export function useDistancePageModal<T>(
     assistiveTabIndex,
     totalMeter,
     totalLaps,
-    totalDistance,
+    totalStrokeDistance,
     strokes,
     buttonLabel,
     handlers: {

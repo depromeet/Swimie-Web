@@ -8,21 +8,22 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
-import { TextField } from '@/components/molecules';
+import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { formatDateToKorean, getToday } from '@/utils';
+import { formatDateToDash, formatDateToKorean, getToday } from '@/utils';
 
 import {
+  RecordRequestProps,
+  SubmitRecordRequestProps,
   useGetImagePresignedUrl,
+  useImageEdit,
   useImagePresignUrl,
+  useImageStatus,
   useMemory,
+  useMemoryEdit,
   usePullEditMemory,
 } from '../../apis';
-import { RecordRequestProps } from '../../apis/dto';
-import { useImageEdit } from '../../apis/use-image-edit';
-import { useImageStatus } from '../../apis/use-image-status';
-import { useMemoryEdit } from '../../apis/use-memory-edit';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -40,7 +41,6 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: watch의 성능 이슈 고민
 //Todo: form.tsx 파일 내부 리팩토링
 //Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
@@ -52,24 +52,26 @@ export function Form() {
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
-      recordAt: date ? date : getToday(),
+      recordAt: date ? formatDateToKorean(date) : getToday(),
       startTime: '',
       endTime: '',
+      laneMeter: '25m',
       lane: 25,
       strokes: [],
       imageIdList: [],
     },
   });
-
   useEffect(() => {
     if (data) {
       const prevData = data.data;
       methods.reset({
-        recordAt: prevData.recordAt,
+        recordAt: formatDateToKorean(prevData.recordAt),
         startTime: prevData.startTime,
         endTime: prevData.endTime,
         lane: prevData.lane,
+        laneMeter: prevData.lane + 'm',
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
+        poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
         heartRate: prevData.memoryDetail.heartRate
           ? prevData.memoryDetail.heartRate
@@ -84,20 +86,18 @@ export function Form() {
           ? prevData.memoryDetail.kcal
           : undefined,
         strokes: prevData.strokes ? prevData.strokes : undefined,
+        totalDistance: prevData.totalMeter
+          ? prevData.totalMeter + 'm'
+          : undefined,
       });
       setFormSubInfo({
         imageFiles: [],
-        poolName: prevData.pool ? prevData.pool.name : undefined,
-        totalDistance: prevData.totalMeter ? prevData.totalMeter : undefined,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const router = useRouter();
-  const setIsLaneLengthBottomSheetOpen = useSetAtom(
-    isLaneLengthBottomSheetOpen,
-  );
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
@@ -109,21 +109,41 @@ export function Form() {
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
   const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+  const setIsLaneLengthBottomSheetOpen = useSetAtom(
+    isLaneLengthBottomSheetOpen,
+  );
 
   const startTime = methods.watch('startTime');
   const endTime = methods.watch('endTime');
-  const diary = methods.watch('diary');
-
-  const isRecordAbled = startTime && endTime;
 
   const getBlobData = (file: File) => {
     const blobData = new Blob([file]);
     return blobData;
   };
 
+  const modifySubmitData = (data: SubmitRecordRequestProps) => {
+    const modifiedData = { ...data };
+
+    modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
+    Object.keys(data).map((field) => {
+      const key = field as keyof typeof data;
+      if (
+        (typeof data[key] === 'string' && data[key] === '') ||
+        (typeof data[key] === 'number' && isNaN(data[key]))
+      ) {
+        delete modifiedData[key];
+      }
+    });
+
+    return modifiedData;
+  };
+
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     //기록 수정 모드일 때
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { poolName, laneMeter, totalDistance, ...restData } = data;
+    const submitData = modifySubmitData(restData);
     if (isEditMode) {
       //이미지가 수정 되었을 때
       if (formSubInfo.imageFiles.length > 0) {
@@ -138,7 +158,7 @@ export function Form() {
         await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
         const memoryRes = await memoryEdit({
           formData: {
-            ...data,
+            ...submitData,
             imageIdList: [getImagePresignedUrlRes.data[0].imageId],
           },
           memoryId: Number(searchParams.get('memoryId')),
@@ -151,7 +171,7 @@ export function Form() {
       //이미지가 수정되지 않았을 때
       else {
         const memoryEditRes = await memoryEdit({
-          formData: data,
+          formData: submitData,
           memoryId: Number(searchParams.get('memoryId')),
         });
         if (memoryEditRes)
@@ -173,7 +193,7 @@ export function Form() {
         });
         await imageStatus([getImagePresignedUrlRes.data[0].imageId]);
         const memoryRes = await memory({
-          ...data,
+          ...submitData,
           imageIdList: [getImagePresignedUrlRes.data[0].imageId],
         });
         if (memoryRes.status === 200)
@@ -183,7 +203,7 @@ export function Form() {
       }
       //기록에서 이미지가 포함되지 않았을 때
       else {
-        const memoryRes = await memory(data);
+        const memoryRes = await memory(submitData);
         if (memoryRes.status === 200)
           router.push(
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
@@ -197,19 +217,16 @@ export function Form() {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className={cx(formSectionStyles)}>
-          <TextField
-            variant="select"
+          <SelectTextField
+            fieldName="recordAt"
             isRequired
-            value={formatDateToKorean(methods.getValues('recordAt'))}
             label="수영 날짜"
             wrapperClassName={css({ marginBottom: '24px' })}
           />
           <div className={timeStyles.layout}>
-            <TextField
-              variant="select"
+            <SelectTextField
+              fieldName="startTime"
               isRequired
-              hasDownArrow
-              value={startTime || ''}
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
@@ -222,11 +239,9 @@ export function Form() {
               }
             />
             <span className={css({ fontSize: '30px' })}>-</span>
-            <TextField
-              variant="select"
+            <SelectTextField
+              fieldName="endTime"
               isRequired
-              hasDownArrow
-              value={endTime || ''}
               label="수영 시간"
               placeholder="00:00"
               wrapperClassName={timeStyles.field}
@@ -239,9 +254,8 @@ export function Form() {
               }
             />
           </div>
-          <TextField
-            variant="select"
-            value={formSubInfo.poolName || ''}
+          <SelectTextField
+            fieldName="poolName"
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
@@ -252,19 +266,14 @@ export function Form() {
               })
             }
           />
-          <TextField
-            variant="select"
-            value={methods.watch('lane') + 'm'}
+          <SelectTextField
+            fieldName="laneMeter"
             label="레인 길이"
-            hasDownArrow
             wrapperClassName={css({ marginBottom: '24px' })}
             onClick={() => setIsLaneLengthBottomSheetOpen(true)}
           />
-          <TextField
-            variant="select"
-            value={
-              formSubInfo.totalDistance ? formSubInfo.totalDistance + 'm' : ''
-            }
+          <SelectTextField
+            fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
             onClick={() =>
@@ -276,10 +285,12 @@ export function Form() {
           />
           <div className={buttonStyles.layout}>
             <Button
+              buttonType="primary"
+              variant="solid"
               label={isEditMode ? '수정하기' : '기록하기'}
               size="large"
               className={buttonStyles.content}
-              disabled={!isRecordAbled}
+              disabled={!startTime || !endTime}
             />
           </div>
         </div>
@@ -293,7 +304,7 @@ export function Form() {
           }
         />
         <Divider variant="thick" />
-        <DiarySection title="일기" value={diary || ''} />
+        <DiarySection title="일기" />
         <Divider variant="thick" />
         <EquipmentSection
           title="장비"
