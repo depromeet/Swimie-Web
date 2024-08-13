@@ -48,7 +48,7 @@ const TimeLineCardBody = ({
   endTime,
   diary,
   totalDistance,
-  memoryDetailId,
+  memoryId,
   kcal,
   strokes,
   isAchieved,
@@ -61,10 +61,7 @@ const TimeLineCardBody = ({
   }, []);
 
   return (
-    <Link
-      href={`/record-detail/${memoryDetailId}`}
-      className={cardWrapperStyles}
-    >
+    <Link href={`/record-detail/${memoryId}`} className={cardWrapperStyles}>
       <div className={flex()} ref={ref}>
         <div className={titleStyles}>
           {type !== 'NORMAL' && totalDistance ? (
