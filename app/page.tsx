@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import { GlobalNavigationBar } from '@/components/molecules';
 import { UserCalendarProfile } from '@/features/main/calendar';
 import { MainTab } from '@/features/main/main-tab';
 import { TabItemInfo } from '@/features/main/main-tab/main-tab';
@@ -36,7 +35,6 @@ export default function Home() {
       <section className={contentStyles}>
         {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
       </section>
-      <GlobalNavigationBar />
     </main>
   );
 }

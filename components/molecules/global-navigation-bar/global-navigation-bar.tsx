@@ -10,7 +10,8 @@ export function GlobalNavigationBar() {
   const barItemLabels = ['기록', '마이', '소식'];
   const [barIndex, setBarIndex] = useState<number>(0);
 
-  const barItemClicked = (index: number) => {
+  //Todo: 라우팅 처리
+  const handleClickBarItem = (index: number) => {
     setBarIndex(index);
   };
   return (
@@ -21,7 +22,7 @@ export function GlobalNavigationBar() {
           label={label}
           index={i}
           selected={i === barIndex}
-          onClick={barItemClicked}
+          onClick={handleClickBarItem}
         />
       ))}
     </footer>
@@ -31,9 +32,9 @@ export function GlobalNavigationBar() {
 const footerStyles = flex({
   justifyContent: 'space-between',
   w: 'full',
+  maxWidth: 'maxWidth',
   position: 'fixed',
   bottom: 0,
-  left: 0,
-  padding: '12px 42px',
+  padding: '12px 42px calc(env(safe-area-inset-bottom) + 12px) 42px',
   backgroundColor: 'white',
 });
