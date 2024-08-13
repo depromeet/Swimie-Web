@@ -6,7 +6,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getFormatDate, isTodayDate } from '@/utils';
 
-import type { TimeLineMemory } from '../molecules';
+import { TimeLineContent } from '../types';
 import { SwimRecordChart } from './swim-record-chart';
 
 interface TimeLineCardLayoutProps {
@@ -14,14 +14,14 @@ interface TimeLineCardLayoutProps {
 }
 
 interface TimeLineCardProps {
-  memory: TimeLineMemory;
+  content: TimeLineContent;
 }
 
-export const TimeLineCard = ({ memory }: TimeLineCardProps) => {
-  const { recordAt } = memory;
+export const TimeLineCard = ({ content }: TimeLineCardProps) => {
+  const { recordAt } = content;
   return (
     <TimeLineCardLayout date={recordAt}>
-      <TimeLineCardBody {...memory} />
+      <TimeLineCardBody {...content} />
     </TimeLineCardLayout>
   );
 };
@@ -52,13 +52,14 @@ const TimeLineCardBody = ({
   kcal,
   strokes,
   isAchieved,
-}: TimeLineMemory) => {
+}: TimeLineContent) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [currentWidth, setCurrentWidth] = useState<number>(0);
 
   useEffect(() => {
     if (ref.current) setCurrentWidth(ref.current.offsetWidth);
   }, []);
+
   return (
     <Link
       href={`/record-detail/${memoryDetailId}`}
@@ -80,11 +81,11 @@ const TimeLineCardBody = ({
           </div>
         </div>
       </div>
-      {strokes && (
+      {strokes && totalDistance && isAchieved !== undefined && (
         <SwimRecordChart
           width={currentWidth}
-          isAchieved={isAchieved!}
-          totalDistance={totalDistance!}
+          isAchieved={isAchieved}
+          totalDistance={totalDistance}
           strokes={strokes}
         />
       )}

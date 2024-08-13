@@ -41,8 +41,8 @@ PageModal.displayName = 'PageModal';
 const layoutStyles = css({
   position: 'fixed',
   bottom: 0,
-  left: 0,
   width: '100vw',
+  maxWidth: 'maxWidth',
   height: '100vh',
   backgroundColor: 'white',
   zIndex: 1000,
