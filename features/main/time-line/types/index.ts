@@ -29,9 +29,8 @@ export interface TimeLineContent {
   lane: number;
   diary?: string;
   totalDistance?: number;
-  memoryDetailId: number;
   kcal?: number;
   strokes?: Array<StrokeInfo>;
   isAchieved?: boolean;
-  images: Array<string>;
+  imageUrl: string;
 }
