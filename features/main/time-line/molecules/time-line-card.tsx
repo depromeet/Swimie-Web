@@ -4,7 +4,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { getFormatDate, isTodayDate } from '@/utils';
+import { formatMeters, getFormatDate, isTodayDate } from '@/utils';
 
 import { SwimRecordChart } from '../atoms/swim-record-chart';
 import { TimeLineContent } from '../types';
@@ -93,10 +93,6 @@ const TimeLineCardBody = ({
       )}
     </Link>
   );
-};
-
-const formatMeters = (price: number) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 const dateStyles = css({ textStyle: 'label1.normal', fontWeight: 'bold' });
