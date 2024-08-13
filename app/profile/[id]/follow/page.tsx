@@ -19,7 +19,7 @@ export default function ProfileFollow({
 }: {
   searchParams: { tab: FollowTab };
 }) {
-  const { tab } = searchParams;
+  const { tab = 'follow' } = searchParams;
 
   return (
     <>
