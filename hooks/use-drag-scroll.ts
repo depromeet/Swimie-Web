@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+/**
+ * @description 마우스로 드래그하고자 하는 영역에 사용합니다.
+ */
 export const useDragScroll = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDown = useRef<boolean>(false);
