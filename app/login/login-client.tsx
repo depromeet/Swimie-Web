@@ -15,6 +15,10 @@ export default function LoginClient() {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=select_account&access_type=offline`;
   };
 
+  const appleLogin = () => {
+    window.location.href = ` https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
+  };
+
   return (
     <div className={loginPage}>
       <div className={logo}>Swimie</div>
@@ -31,7 +35,7 @@ export default function LoginClient() {
             <span>Google로 로그인</span>
           </div>
         </button>
-        <button className={appleLoginButton}>
+        <button className={appleLoginButton} onClick={appleLogin}>
           <div className={buttonContent}>
             <AppleLogoIcon />
             <span>Apple ID로 로그인</span>
