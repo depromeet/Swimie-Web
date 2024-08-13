@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
-import { useBottomSheet } from '@/hooks';
+import { useBottomSheet, useDragScroll } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
@@ -50,6 +50,7 @@ const initialCheerList = [
 export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   const [cheerList, setCheerList] = useState(initialCheerList);
   const [isOpen, open, close] = useBottomSheet();
+  const { sliderRef } = useDragScroll();
 
   const handleClickCheerItem = (index: number) => {
     setCheerList((prev) =>
@@ -70,10 +71,50 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
     console.log('send!', selectedCheerList);
   };
 
-  // TODO: 응원하기 flow 구현
   return (
     <>
-      <button className={floatingCheerButton} onClick={open}>
+      <div className={slider.containerStyle} ref={sliderRef}>
+        <div className={slider.wrapperStyle}>
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <CheerItem
+            emoji="🖤"
+            comment="너무 멋져요"
+            nickname="수영왕지영"
+            size="small"
+          />
+          <button className={slider.entireCheerButton}>응원 전체보기</button>
+        </div>
+      </div>
+      <button className={cheerButtonWrapperStyle} onClick={open}>
         {data.member?.name}님에게 응원 보내기 👏
       </button>
       <BottomSheet
@@ -110,7 +151,33 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   );
 };
 
-const floatingCheerButton = css({
+const slider = {
+  containerStyle: css({
+    overflowX: 'scroll',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  }),
+
+  wrapperStyle: flex({
+    gap: '10px',
+    width: 'max-content',
+    backgroundColor: 'white',
+    p: '20px 20px 0px',
+  }),
+
+  entireCheerButton: css({
+    textStyle: 'label1.normal',
+    fontWeight: 'medium',
+    color: 'background.white',
+    backgroundColor: 'text.neutral',
+    rounded: '7px',
+    p: '7px 12px',
+  }),
+};
+
+const cheerButtonWrapperStyle = css({
   position: 'fixed',
   right: '20px',
   bottom: '35px',
