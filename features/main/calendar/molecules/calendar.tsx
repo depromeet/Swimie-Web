@@ -33,7 +33,7 @@ export const Calendar = () => {
     <div className={calendarContainerStyles}>
       <CalendarHeader />
       <DayLabels />
-      {isFetching && memories === undefined ? (
+      {isFetching ? (
         <LoadingArea />
       ) : (
         <ul className={CalendarGridStyles}>
