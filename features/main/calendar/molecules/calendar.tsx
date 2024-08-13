@@ -1,6 +1,12 @@
+'use  client';
+
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
+
 import { LoadingArea } from '@/components/atoms';
 import { useCalendarData } from '@/hooks';
 import { useCalendarRendaringData } from '@/hooks/use-calendar-rendering-data';
+import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -8,20 +14,26 @@ import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
 
 export const Calendar = () => {
+  const setSwimCount = useSetAtom(calendarSwimCountAtom);
   const { data, isFetching } = useCalendarData();
   const [squares, startPoint, endPoint, isDateToday] =
     useCalendarRendaringData();
   let memoryIndex = 0;
 
-  if (!data?.data) return null;
+  const memories = data?.data.memories;
 
-  const { memories } = data.data;
+  useEffect(() => {
+    if (!memories) return;
+    setSwimCount(memories.length);
+  }, [memories, setSwimCount]);
+
+  if (!memories) return null;
 
   return (
     <div className={calendarContainerStyles}>
       <CalendarHeader />
       <DayLabels />
-      {isFetching ? (
+      {isFetching && memories === undefined ? (
         <LoadingArea />
       ) : (
         <ul className={CalendarGridStyles}>

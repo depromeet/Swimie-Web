@@ -11,4 +11,6 @@ export const calendarDateAtom = atom<CalendarDate>({
   month: dayjs().get('month') + 1,
 });
 
+export const calendarSwimCountAtom = atom<number>(0);
+
 export const calendarViewImageAtom = atom<boolean>(false);
