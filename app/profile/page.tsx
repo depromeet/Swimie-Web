@@ -56,7 +56,7 @@ export default function Profile() {
           />
         </div>
       </section>
-      <Tab type="primary" className={css({ padding: '20px' })}>
+      <Tab type="primary">
         <TabItem
           text="통계"
           selected={selectedTab === 'statistics'}
