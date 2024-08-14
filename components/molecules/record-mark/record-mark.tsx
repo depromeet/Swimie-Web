@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { Waves } from '@/components/atoms';
-import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
+import { SwimmerIcon, Waves } from '@/components/atoms';
 import { StrokeInfo } from '@/features/main/time-line';
 import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
