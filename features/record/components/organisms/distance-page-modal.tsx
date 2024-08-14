@@ -131,7 +131,7 @@ export function DistancePageModal({
     >
       <div ref={pageModalRef}>
         <HeaderBar>
-          <HeaderBar.BackButton onClickBack={handleBackArrowClick} />
+          <HeaderBar.BackButton onClick={handleBackArrowClick} />
         </HeaderBar>
         <h1 className={titleStyles}>수영 거리를 입력해주세요</h1>
         <section className={layout.tab}>
