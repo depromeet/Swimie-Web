@@ -10,36 +10,36 @@ import { Tab, TabItem } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export default function Profile() {
-  const [selectedTab, setSelectedTab] = useState<'statistics' | 'badge'>(
-    'statistics',
-  );
+export type ProfileType = 'statistics' | 'badge';
 
-  const handleClickTab = (tab: 'statistics' | 'badge') => {
+export default function Profile() {
+  const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
+
+  const handleClickTab = (tab: ProfileType) => {
     setSelectedTab(tab);
   };
 
   return (
     <article className={containerStyle}>
-      <section className={profileStyles}>
-        <div className={infoStyles}>
+      <section className={profileContainer}>
+        <div className={inforWrapper}>
           <UserImageIcon />
           <div>
             <div className={nameStyles}>김스위미</div>
             <div className={introStyles}>한 줄 소개</div>
           </div>
         </div>
-        <div className={friendInfoStyles}>
-          <div className={friendStyles}>
-            <div className={friendTypeStyles}>팔로워</div>
-            <div className={friendCountStyles}>0</div>
+        <div className={friendStyles.container}>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로워</div>
+            <div className={friendStyles.count}>0</div>
           </div>
-          <div className={friendStyles}>
-            <div className={friendTypeStyles}>팔로잉</div>
-            <div className={friendCountStyles}>0</div>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로잉</div>
+            <div className={friendStyles.count}>0</div>
           </div>
         </div>
-        <div className={buttonListStyles}>
+        <div className={buttonContainer}>
           <Button
             size="small"
             label="프로필 편집"
@@ -73,7 +73,7 @@ export default function Profile() {
         />
       </Tab>
       {selectedTab === 'statistics' && (
-        <div className={TabContentStyle}>
+        <div className={TabContainer}>
           <StatisticsIcon />
           <div className={descriptionStyles}>
             <div className={titleStyles}>통계 기능이 곧 출시돼요!</div>
@@ -83,7 +83,7 @@ export default function Profile() {
       )}
 
       {selectedTab === 'badge' && (
-        <div className={TabContentStyle}>
+        <div className={TabContainer}>
           <BadgeIcon />
           <div className={descriptionStyles}>
             <div className={titleStyles}>배지 기능이 곧 출시돼요!</div>
@@ -100,14 +100,14 @@ const containerStyle = flex({
   gap: '12px',
 });
 
-const profileStyles = flex({
+const profileContainer = flex({
   direction: 'column',
   alignItems: 'flex-start',
   gap: '20px',
   padding: '20px',
 });
 
-const infoStyles = flex({
+const inforWrapper = flex({
   alignItems: 'flex-start',
   gap: '21px',
   alignSelf: 'stretch',
@@ -125,31 +125,30 @@ const introStyles = css({
   color: 'text.alternative',
 });
 
-const friendInfoStyles = flex({
-  alignItems: 'center',
-  gap: '40px',
-  alignSelf: 'stretch',
-});
+const friendStyles = {
+  container: flex({
+    alignItems: 'center',
+    gap: '40px',
+    alignSelf: 'stretch',
+  }),
+  item: flex({
+    direction: 'column',
+    alignItems: 'flex-start',
+    gap: '2px',
+  }),
+  type: css({
+    textStyle: 'label2',
+    fontWeight: '500',
+    color: 'text.alternative',
+  }),
+  count: css({
+    textStyle: 'body2.normal',
+    fontWeight: '600',
+    color: 'text.normal',
+  }),
+};
 
-const friendStyles = flex({
-  direction: 'column',
-  alignItems: 'flex-start',
-  gap: '2px',
-});
-
-const friendTypeStyles = css({
-  textStyle: 'label2',
-  fontWeight: '500',
-  color: 'text.alternative',
-});
-
-const friendCountStyles = css({
-  textStyle: 'body2.normal',
-  fontWeight: '600',
-  color: 'text.normal',
-});
-
-const buttonListStyles = flex({
+const buttonContainer = flex({
   width: '100%',
   alignItems: 'flex-start',
   gap: '10px',
@@ -160,7 +159,7 @@ const buttonStyle = css({
   flexGrow: 1,
 });
 
-const TabContentStyle = flex({
+const TabContainer = flex({
   direction: 'column',
   alignItems: 'center',
   justifyContent: 'center',
