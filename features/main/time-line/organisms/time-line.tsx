@@ -8,6 +8,7 @@ import { TimeLineCard } from '../molecules';
 import { CardWrapper } from '../atoms/card-wrapper';
 import { TimeLineContent } from '../types';
 import { formatDateToKorean } from '@/utils';
+import { Fragment } from 'react';
 
 interface GroupedTimelineContents {
   date: string;
@@ -39,26 +40,24 @@ export const TimeLine = () => {
             onIntersect={() => fetchNextPage()}
           >
             <ol className={listStyles}>
-              {groupedContents.map(({ date, contents }, groupIndex) => {
-                return (
-                  <>
-                    <CardWrapper key={date}>
-                      <p className={dateStyles}>{formatDateToKorean(date)}</p>
+              {groupedContents.map(({ date, contents }, groupIndex) => (
+                <Fragment key={date}>
+                  <CardWrapper>
+                    <p className={dateStyles}>{formatDateToKorean(date)}</p>
+                  </CardWrapper>
+                  {contents.map((content, contentIndex) => (
+                    <CardWrapper
+                      key={content.memoryId}
+                      isLast={
+                        lastGroupIndex === groupIndex &&
+                        lastContentIndex === contentIndex
+                      }
+                    >
+                      <TimeLineCard content={content} />
                     </CardWrapper>
-                    {contents.map((content, contentIndex) => (
-                      <CardWrapper
-                        key={content.memoryId}
-                        isLast={
-                          lastGroupIndex === groupIndex &&
-                          lastContentIndex === contentIndex
-                        }
-                      >
-                        <TimeLineCard content={content} />
-                      </CardWrapper>
-                    ))}
-                  </>
-                );
-              })}
+                  ))}
+                </Fragment>
+              ))}
             </ol>
           </InfiniteScroller>
         </>
