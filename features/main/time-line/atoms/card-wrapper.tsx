@@ -11,10 +11,10 @@ export const CardWrapper = ({
   children,
 }: PropsWithChildren<CardWrapperProps>) => {
   return (
-    <div className={wrapperStyles}>
+    <li className={wrapperStyles}>
       {children}
       {!isLast && <div className={lineStyles} />}
-    </div>
+    </li>
   );
 };
 
