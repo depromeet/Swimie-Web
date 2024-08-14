@@ -43,7 +43,7 @@ export const TimeLine = () => {
               {groupedContents.map(({ date, contents }, groupIndex) => (
                 <Fragment key={date}>
                   <CardWrapper>
-                    <p className={dateStyles}>{formatDateToKorean(date)}</p>
+                    <p className={dateStyles}>{formatDateToKorean(date, 2)}</p>
                   </CardWrapper>
                   {contents.map((content, contentIndex) => (
                     <CardWrapper
