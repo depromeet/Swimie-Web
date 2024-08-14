@@ -6,6 +6,12 @@ import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
 import { CardWrapper } from '../atoms/card-wrapper';
+import { TimeLineContent } from '../types';
+
+interface GroupedTimelineContents {
+  date: string;
+  contents: Array<TimeLineContent>;
+}
 
 export const TimeLine = () => {
   const { data: timelineData, fetchNextPage, hasNextPage } = useTimeLineData();
@@ -13,8 +19,10 @@ export const TimeLine = () => {
   if (!timelineData) return null;
 
   const contents = timelineData.pages.flatMap(({ data }) => data.content);
+  const groupedContents = groupBySameYearAndMonth(contents);
   const isEmptyTimeLine = contents.length === 0;
-  const lastCardIndex = contents.length - 1;
+  const lastGroupIndex = groupedContents.length - 1;
+  const lastContentIndex = groupedContents[lastGroupIndex].contents.length - 1;
 
   return (
     <>
@@ -30,20 +38,54 @@ export const TimeLine = () => {
             onIntersect={() => fetchNextPage()}
           >
             <ol className={listStyles}>
-              {contents.map((content, index) => (
-                <CardWrapper
-                  key={content.memoryId}
-                  isLast={lastCardIndex === index}
-                >
-                  <TimeLineCard content={content} />
-                </CardWrapper>
-              ))}
+              {groupedContents.map(({ date, contents }, groupIndex) => {
+                return (
+                  <>
+                    <CardWrapper key={date}>
+                      <p className={dateStyles}>{date}</p>
+                    </CardWrapper>
+                    {contents.map((content, contentIndex) => (
+                      <CardWrapper
+                        key={content.memoryId}
+                        isLast={
+                          lastGroupIndex === groupIndex &&
+                          lastContentIndex === contentIndex
+                        }
+                      >
+                        <TimeLineCard content={content} />
+                      </CardWrapper>
+                    ))}
+                  </>
+                );
+              })}
             </ol>
           </InfiniteScroller>
         </>
       )}
     </>
   );
+};
+
+const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
+  const grouped: { [key: string]: Array<TimeLineContent> } = contents.reduce(
+    (acc: { [key: string]: Array<TimeLineContent> }, item: TimeLineContent) => {
+      const [year, month] = item.recordAt.split('-');
+      const key = `${year}-${month}`;
+
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(item);
+
+      return acc;
+    },
+    {},
+  );
+
+  const result: Array<GroupedTimelineContents> = [];
+  Object.keys(grouped).forEach((key) => {
+    result.push({ date: key, contents: grouped[key] });
+  });
+
+  return result;
 };
 
 const fullspaceStyles = css({ width: 'full', height: 'full' });
@@ -60,3 +102,5 @@ const descriptionStyles = css({
 });
 
 const listStyles = flex({ direction: 'column', gap: '50px' });
+
+const dateStyles = css({ textStyle: 'heading4', fontWeight: 'bold' });
