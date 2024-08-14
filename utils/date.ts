@@ -48,7 +48,7 @@ export const getToday = () => {
 
 export const formatDateToKorean = (dateStr: string, separator = '-') => {
   const [year, month, date] = dateStr.split(separator);
-  return `${year}년 ${+month}월 ${+date}일`;
+  return `${year}년 ${+month}월${date ? ` ${+date}일` : ''} `;
 };
 
 export const formatDateToDash = (dateStr: string) => {

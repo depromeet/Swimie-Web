@@ -7,6 +7,7 @@ import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
 import { CardWrapper } from '../atoms/card-wrapper';
 import { TimeLineContent } from '../types';
+import { formatDateToKorean } from '@/utils';
 
 interface GroupedTimelineContents {
   date: string;
@@ -42,7 +43,7 @@ export const TimeLine = () => {
                 return (
                   <>
                     <CardWrapper key={date}>
-                      <p className={dateStyles}>{date}</p>
+                      <p className={dateStyles}>{formatDateToKorean(date)}</p>
                     </CardWrapper>
                     {contents.map((content, contentIndex) => (
                       <CardWrapper

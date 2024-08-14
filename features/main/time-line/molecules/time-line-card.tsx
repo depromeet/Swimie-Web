@@ -30,11 +30,11 @@ const TimeLineCardLayout = ({
   children,
   date,
 }: PropsWithChildren<TimeLineCardLayoutProps>) => {
-  const { month, day, weekday } = getFormatDate({ dateStr: date });
+  const { day, weekday } = getFormatDate({ dateStr: date });
   return (
     <li className={flex({ direction: 'column', gap: '10px' })}>
       <p className={dateStyles}>
-        {`${month}월 ${day}일 ${weekday}`}
+        {`${day}일 ${weekday}`}
         {isTodayDate(date) ? <span className={todayStyles}>Today</span> : ''}
       </p>
       {children}
