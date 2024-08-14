@@ -125,7 +125,6 @@ const layoutStyles = {
 const panelStyles = css({
   position: 'fixed',
   bottom: '82px',
-  left: 0,
   textStyle: 'heading3',
   fontWeight: 400,
 });
