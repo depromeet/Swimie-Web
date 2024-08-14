@@ -53,9 +53,9 @@ export default async function RecordDetail({ params }: RecordDetail) {
         <HeaderBar.Title>
           {data.member?.name ?? '스위미'}의 수영 기록
         </HeaderBar.Title>
-        <HeaderBar.RightIcons>
-          {[{ icon: <EditButton memoryId={params.id} />, key: 'edit' }]}
-        </HeaderBar.RightIcons>
+        <HeaderBar.RightContent>
+          {[{ component: <EditButton memoryId={params.id} />, key: 'edit' }]}
+        </HeaderBar.RightContent>
         <div className={header.textStyle}></div>
       </HeaderBar>
       <article className={containerStyle}>

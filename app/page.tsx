@@ -34,12 +34,12 @@ export default function Home() {
     <>
       <HeaderBar>
         <HeaderBar.LogoButton className={css({ left: '20px' })} />
-        <HeaderBar.RightIcons className={css({ right: '20px' })}>
+        <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
-            { icon: <BellIcon />, key: 'bell' },
-            { icon: <SettingIcon />, key: 'setting' },
+            { component: <BellIcon />, key: 'bell' },
+            { component: <SettingIcon />, key: 'setting' },
           ]}
-        </HeaderBar.RightIcons>
+        </HeaderBar.RightContent>
       </HeaderBar>
       <main className={styles}>
         <header>

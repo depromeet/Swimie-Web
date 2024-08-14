@@ -71,15 +71,17 @@ function Title({ children, className }: TitleProps) {
   return <h3 className={cx(titleStyles, className)}>{children}</h3>;
 }
 
-interface RightIcons {
-  children?: { icon: ReactNode; key: string | number }[];
+interface RightContentProps {
+  children?: { component: ReactNode; key: string | number }[];
   className?: string;
 }
 
-function RightIcons({ children, className }: RightIcons) {
+function RightContent({ children, className }: RightContentProps) {
   return (
     <div className={cx(layoutStyles.rightIcon, className)}>
-      {children?.map((object) => <div key={object.key}>{object.icon}</div>)}
+      {children?.map((object) => (
+        <div key={object.key}>{object.component}</div>
+      ))}
     </div>
   );
 }
@@ -122,7 +124,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
   const rightIcons = getChildrenArray(
     children,
     2,
-    (<RightIcons />).type as FunctionComponent,
+    (<RightContent />).type as FunctionComponent,
   );
   return (
     <header className={cx(layoutStyles.header, className)}>
@@ -140,7 +142,7 @@ export const HeaderBar = Object.assign(HeaderBarLayout, {
   BackButton,
   LogoButton,
   Title,
-  RightIcons,
+  RightContent,
 });
 
 const layoutStyles = {
