@@ -5,6 +5,7 @@ import { useTimeLineData } from '@/hooks/use-timeline';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
+import { CardWrapper } from '../atoms/card-wrapper';
 
 export const TimeLine = () => {
   const { data: timelineData, fetchNextPage, hasNextPage } = useTimeLineData();
@@ -13,6 +14,7 @@ export const TimeLine = () => {
 
   const contents = timelineData.pages.flatMap(({ data }) => data.content);
   const isEmptyTimeLine = contents.length === 0;
+  const lastCardIndex = contents.length - 1;
 
   return (
     <>
@@ -28,8 +30,13 @@ export const TimeLine = () => {
             onIntersect={() => fetchNextPage()}
           >
             <ol className={listStyles}>
-              {contents.map((content) => (
-                <TimeLineCard key={content.memoryId} content={content} />
+              {contents.map((content, index) => (
+                <CardWrapper
+                  key={content.memoryId}
+                  isLast={lastCardIndex === index}
+                >
+                  <TimeLineCard content={content} />
+                </CardWrapper>
               ))}
             </ol>
           </InfiniteScroller>
