@@ -56,7 +56,6 @@ export default async function RecordDetail({ params }: RecordDetail) {
         <HeaderBar.RightContent>
           {[{ component: <EditButton memoryId={params.id} />, key: 'edit' }]}
         </HeaderBar.RightContent>
-        <div className={header.textStyle}></div>
       </HeaderBar>
       <article className={containerStyle}>
         <div>
@@ -74,24 +73,6 @@ export default async function RecordDetail({ params }: RecordDetail) {
     </>
   );
 }
-
-const header = {
-  textStyle: flex({
-    w: 'full',
-    justify: 'center',
-    align: 'center',
-    color: 'text.normal',
-    textStyle: 'heading6',
-    fontWeight: 'medium',
-  }),
-
-  editButtonStyle: css({
-    color: 'primary.swim.총거리.default',
-    textStyle: 'body2.normal',
-    fontWeight: 'medium',
-    mr: '8px',
-  }),
-};
 
 const containerStyle = flex({
   direction: 'column',
