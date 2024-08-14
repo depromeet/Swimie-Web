@@ -5,10 +5,10 @@ import { useTimeLineData } from '@/hooks/use-timeline';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
-import { CardWrapper } from '../atoms/card-wrapper';
 import { TimeLineContent } from '../types';
 import { formatDateToKorean } from '@/utils';
 import { Fragment } from 'react';
+import { CardWrapper } from '../atoms';
 
 interface GroupedTimelineContents {
   date: string;
@@ -34,33 +34,31 @@ export const TimeLine = () => {
           <p className={descriptionStyles}>아직 수영 기록이 없어요!</p>
         </div>
       ) : (
-        <>
-          <InfiniteScroller
-            isLastPage={!hasNextPage}
-            onIntersect={() => fetchNextPage()}
-          >
-            <ol className={listStyles}>
-              {groupedContents.map(({ date, contents }, groupIndex) => (
-                <Fragment key={date}>
-                  <CardWrapper>
-                    <p className={dateStyles}>{formatDateToKorean(date, 2)}</p>
+        <InfiniteScroller
+          isLastPage={!hasNextPage}
+          onIntersect={() => fetchNextPage()}
+        >
+          <ol className={listStyles}>
+            {groupedContents.map(({ date, contents }, groupIndex) => (
+              <Fragment key={date}>
+                <CardWrapper>
+                  <p className={dateStyles}>{formatDateToKorean(date, 2)}</p>
+                </CardWrapper>
+                {contents.map((content, contentIndex) => (
+                  <CardWrapper
+                    key={content.memoryId}
+                    isLast={
+                      lastGroupIndex === groupIndex &&
+                      lastContentIndex === contentIndex
+                    }
+                  >
+                    <TimeLineCard content={content} />
                   </CardWrapper>
-                  {contents.map((content, contentIndex) => (
-                    <CardWrapper
-                      key={content.memoryId}
-                      isLast={
-                        lastGroupIndex === groupIndex &&
-                        lastContentIndex === contentIndex
-                      }
-                    >
-                      <TimeLineCard content={content} />
-                    </CardWrapper>
-                  ))}
-                </Fragment>
-              ))}
-            </ol>
-          </InfiniteScroller>
-        </>
+                ))}
+              </Fragment>
+            ))}
+          </ol>
+        </InfiniteScroller>
       )}
     </>
   );
@@ -69,8 +67,7 @@ export const TimeLine = () => {
 const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   const grouped: { [key: string]: Array<TimeLineContent> } = contents.reduce(
     (acc: { [key: string]: Array<TimeLineContent> }, item: TimeLineContent) => {
-      const [year, month] = item.recordAt.split('-');
-      const key = `${year}-${month}`;
+      const key = item.recordAt;
 
       if (!acc[key]) acc[key] = [];
       acc[key].push(item);
