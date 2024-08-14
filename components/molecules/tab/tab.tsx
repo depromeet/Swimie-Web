@@ -21,6 +21,7 @@ export const Tab = ({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
+    padding: '20px',
   });
 
   const primaryStyles = css({
