@@ -64,10 +64,11 @@ function LogoButton({ onClick, className }: LogoButtonProps) {
 
 interface TitleProps {
   children?: ReactNode;
+  className?: string;
 }
 
-function Title({ children }: TitleProps) {
-  return <h3 className={titleStyles}>{children}</h3>;
+function Title({ children, className }: TitleProps) {
+  return <h3 className={cx(titleStyles, className)}>{children}</h3>;
 }
 
 interface RightIcons {
