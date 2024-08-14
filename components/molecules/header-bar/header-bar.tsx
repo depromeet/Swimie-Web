@@ -66,11 +66,12 @@ function Title({ children }: TitleProps) {
 
 interface RightIcons {
   children?: { icon: ReactNode; key: string | number }[];
+  className?: string;
 }
 
-function RightIcons({ children }: RightIcons) {
+function RightIcons({ children, className }: RightIcons) {
   return (
-    <div className={layoutStyles.rightIcon}>
+    <div className={cx(layoutStyles.rightIcon, className)}>
       {children?.map((object) => <div key={object.key}>{object.icon}</div>)}
     </div>
   );
@@ -151,7 +152,7 @@ const layoutStyles = {
     alignItems: 'center',
     w: 'full',
   }),
-  rightIcon: css({
+  rightIcon: flex({
     position: 'absolute',
     right: '12px',
     gap: '24px',
