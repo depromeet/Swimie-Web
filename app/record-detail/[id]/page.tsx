@@ -48,10 +48,15 @@ export default async function RecordDetail({ params }: RecordDetail) {
   if (!data) return null;
   return (
     <>
-      <HeaderBar rightContent={<EditButton memoryId={params.id} />}>
-        <div className={header.textStyle}>
+      <HeaderBar>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>
           {data.member?.name ?? '스위미'}의 수영 기록
-        </div>
+        </HeaderBar.Title>
+        <HeaderBar.RightIcons>
+          {[{ icon: <EditButton memoryId={params.id} />, key: 'edit' }]}
+        </HeaderBar.RightIcons>
+        <div className={header.textStyle}></div>
       </HeaderBar>
       <article className={containerStyle}>
         <div>

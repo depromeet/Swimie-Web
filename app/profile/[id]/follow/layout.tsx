@@ -9,7 +9,9 @@ type Layout = {
 const Layout = ({ children }: Layout) => {
   return (
     <div>
-      <HeaderBar />
+      <HeaderBar>
+        <HeaderBar.BackButton />
+      </HeaderBar>
       <div className={childrenWrapperStyle}>{children}</div>
     </div>
   );
