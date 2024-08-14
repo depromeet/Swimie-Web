@@ -35,25 +35,31 @@ const DynamicLogoButton = dynamic(
 );
 
 interface BackButtonProps {
-  onClickBack?: () => void;
+  onClick?: () => void;
   className?: string;
 }
 
-function BackButton({ onClickBack, className }: BackButtonProps) {
+function BackButton({ onClick, className }: BackButtonProps) {
   return (
     <DynamicBackButton
       className={cx(leftIconStyles, className)}
-      onClickBack={onClickBack}
+      onClickBack={onClick}
     />
   );
 }
 
 interface LogoButtonProps {
+  onClick?: () => void;
   className?: string;
 }
 
-function LogoButton({ className }: LogoButtonProps) {
-  return <DynamicLogoButton className={cx(leftIconStyles, className)} />;
+function LogoButton({ onClick, className }: LogoButtonProps) {
+  return (
+    <DynamicLogoButton
+      className={cx(leftIconStyles, className)}
+      onClickLogo={onClick}
+    />
+  );
 }
 
 interface TitleProps {

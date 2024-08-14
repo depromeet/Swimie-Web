@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation';
 import { LogoIcon } from '@/components/atoms';
 
 interface LogoButtonProps {
+  onClickLogo?: () => void;
   className?: string;
 }
 
-export function LogoButton({ className }: LogoButtonProps) {
+export function LogoButton({ onClickLogo, className }: LogoButtonProps) {
   const router = useRouter();
 
   const handleLogoClick = () => {
-    router.push('/');
+    onClickLogo ? onClickLogo : router.push('/');
   };
 
   return (
