@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
-import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
+import { SwimmerIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatMeters, getFormatDate, isTodayDate } from '@/utils';

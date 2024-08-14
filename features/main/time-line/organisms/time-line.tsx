@@ -1,7 +1,4 @@
 /* eslint-disable */
-import { SwimmerIcon } from '@/components/atoms/icons/swimmer-icon';
-import { InfiniteScroller } from '@/components/molecules/infinite-scroller';
-import { useTimeLineData } from '@/hooks/use-timeline';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
@@ -9,6 +6,9 @@ import { TimeLineContent } from '../types';
 import { formatDateToKorean } from '@/utils';
 import { Fragment } from 'react';
 import { CardWrapper } from '../atoms';
+import { InfiniteScroller } from '@/components/molecules';
+import { SwimmerIcon } from '@/components/atoms';
+import { useTimeLineData } from '@/hooks';
 
 interface GroupedTimelineContents {
   date: string;

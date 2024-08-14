@@ -12,4 +12,5 @@ export * from './star-icon';
 export * from './star-icon-fill';
 export * from './success-check-icon';
 export * from './swim-icon';
+export * from './swimmer-icon';
 export * from './types';

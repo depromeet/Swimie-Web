@@ -2,6 +2,7 @@ export * from './bottom-sheet';
 export * from './dialog';
 export * from './global-navigation-bar';
 export * from './header-bar';
+export * from './infinite-scroller';
 export * from './page-modal';
 export * from './profile-list-item';
 export * from './record-mark';
