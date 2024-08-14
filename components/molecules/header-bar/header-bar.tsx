@@ -127,14 +127,17 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
     (<RightContent />).type as FunctionComponent,
   );
   return (
-    <header className={cx(layoutStyles.header, className)}>
-      <div className={layoutStyles.content}>
-        {backButton}
-        {logoButton}
-        {title}
-        {rightIcons}
-      </div>
-    </header>
+    <>
+      <div style={{ height: '44px' }} className={className} />
+      <header className={layoutStyles.header}>
+        <div className={layoutStyles.content}>
+          {backButton}
+          {logoButton}
+          {title}
+          {rightIcons}
+        </div>
+      </header>
+    </>
   );
 }
 
@@ -147,8 +150,9 @@ export const HeaderBar = Object.assign(HeaderBarLayout, {
 
 const layoutStyles = {
   header: css({
-    position: 'sticky',
+    position: 'fixed',
     top: 0,
+    w: 'full',
     display: 'flex',
     alignItems: 'center',
     minHeight: '44px',
