@@ -15,7 +15,7 @@ import { TextFieldWrapper } from './text-field-wrapper';
 import { SelectTextFieldProps } from './type';
 
 /**
- * text-field 컴포넌트.
+ * select-text-field 컴포넌트.
  * @param label 라벨 이름
  * @param isRequired 필수 여부
  * @param subText 추가 설명 텍스트
