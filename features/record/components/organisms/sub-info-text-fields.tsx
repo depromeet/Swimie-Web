@@ -1,37 +1,65 @@
 'use client';
 
-import { TextField } from '@/components/molecules';
+import { useFormContext, useWatch } from 'react-hook-form';
+
+import { FormTextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export function SubInfoTextFields() {
+  const { register, control } = useFormContext();
+
   return (
     <>
-      <TextField
+      <FormTextField
+        {...register('heartRate')}
+        registerdFieldValue={
+          useWatch({
+            control,
+            name: 'heartRate' as string,
+          }) as number
+        }
         inputType="number"
-        registerName="heartRate"
         label="심박수"
         unit="BPM"
         wrapperClassName={css({ marginBottom: '23px' })}
       />
       <div className={paceStyles.layout}>
-        <TextField
+        <FormTextField
+          {...register('paceMinutes')}
+          registerdFieldValue={
+            useWatch({
+              control,
+              name: 'paceMinutes' as string,
+            }) as number
+          }
           inputType="number"
-          registerName="paceMinutes"
           label="페이스"
           wrapperClassName={paceStyles.field}
         />
         <span className={css({ fontSize: '30px' })}>:</span>
-        <TextField
+        <FormTextField
+          {...register('paceSeconds')}
+          registerdFieldValue={
+            useWatch({
+              control,
+              name: 'paceSeconds' as string,
+            }) as number
+          }
           inputType="number"
-          registerName="paceSeconds"
           unit="/100m"
           wrapperClassName={cx(paceStyles.field, css({ paddingTop: '24px' }))}
         />
       </div>
-      <TextField
+      <FormTextField
+        {...register('kcal')}
+        registerdFieldValue={
+          useWatch({
+            control,
+            name: 'kcal' as string,
+          }) as number
+        }
         inputType="number"
-        registerName="kcal"
         label="칼로리"
         unit="Kcal"
       />
