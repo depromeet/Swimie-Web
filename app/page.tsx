@@ -43,10 +43,8 @@ export default function Home() {
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>
+      <MainTab tabInfos={tabInfos} />
       <main className={styles}>
-        <header>
-          <MainTab tabInfos={tabInfos} />
-        </header>
         <section className={contentStyles}>
           {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
         </section>
