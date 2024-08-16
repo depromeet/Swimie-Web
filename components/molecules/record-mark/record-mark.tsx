@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { SwimmerIcon, Waves } from '@/components/atoms';
-import { StrokeInfo } from '@/features/main/time-line';
+import { StrokeInfo } from '@/features/main';
 import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { createGradient, getSwimColor } from '@/utils';

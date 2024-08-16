@@ -1,9 +1,10 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 
-import { CalendarResponse } from '@/features/main/calendar';
 import { calendarDateAtom } from '@/store';
 import { AuthInfoAtom } from '@/store/auth';
+
+import { CalendarResponse } from '../types';
 
 export const getCalendarData = async (year: number, month: number) => {
   const res = await fetch(`/api/memory/calendar?year=${year}&month=${month}`, {

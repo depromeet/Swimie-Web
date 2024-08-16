@@ -2,12 +2,12 @@ import { useAtomValue } from 'jotai';
 
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules/record-mark';
+import { StrokeInfo } from '@/features/main';
 import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { StrokeInfo } from '../../time-line';
-import { MemoryType } from '../types';
+import { MemoryType } from '../../../types/calendar';
 
 interface ItemContentProps {
   type: MemoryType;

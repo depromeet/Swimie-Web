@@ -4,10 +4,12 @@ import { useState } from 'react';
 
 import { BellIcon, SettingIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
-import { UserCalendarProfile } from '@/features/main/calendar';
-import { MainTab } from '@/features/main/main-tab';
-import { TabItemInfo } from '@/features/main/main-tab/main-tab';
-import { TimeLine } from '@/features/main/time-line';
+import {
+  MainTab,
+  TabItemInfo,
+  TimeLine,
+  UserCalendarProfile,
+} from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 

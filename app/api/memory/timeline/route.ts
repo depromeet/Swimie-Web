@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
-import { TimeLineResponse } from '@/features/main/time-line';
+import { TimeLineResponse } from '@/features/main';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

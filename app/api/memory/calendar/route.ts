@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
-import { CalendarResponse } from '@/features/main/calendar';
+import { CalendarResponse } from '@/features/main';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

@@ -1,6 +1,6 @@
 import { StrokeName } from '@/features/record-detail';
 
-import { MemberInfo, MemoryType } from '../../calendar';
+import { MemberInfo, MemoryType } from '../components';
 
 export interface StrokeInfo {
   strokeId: number;
