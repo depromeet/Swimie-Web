@@ -66,7 +66,8 @@ export const CheerModal = ({
 
 const contentWrapper = css({
   flexGrow: 1,
-  height: '332px',
+  height: 'full',
+  maxHeight: '332px',
   overflowY: 'scroll',
 
   '&::-webkit-scrollbar': {
