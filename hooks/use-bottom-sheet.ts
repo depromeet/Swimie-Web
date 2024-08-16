@@ -23,5 +23,5 @@ export const useBottomSheet = () => {
     setIsOpen(false);
   };
 
-  return [isOpen, open, close] as const;
+  return { isOpen, open, close } as const;
 };
