@@ -14,8 +14,9 @@ import {
 import { TextFieldWrapper } from './text-field-wrapper';
 import { SelectTextFieldProps } from './type';
 
+//Todo: react-hook-form 내에서 사용이 아닌 다른 곳에서도 사용될 시, useController 외부에서 주입되도록 분리
 /**
- * select-text-field 컴포넌트.
+ * @description react-hook-form 내에서 클릭 시, 바텀 시트 / 페이지 모달로 넘어가게 하기 위한 용도의 text-field 컴포넌트
  * @param label 라벨 이름
  * @param isRequired 필수 여부
  * @param subText 추가 설명 텍스트

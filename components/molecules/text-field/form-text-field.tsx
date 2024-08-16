@@ -15,7 +15,7 @@ import { FormTextFieldProps } from './type';
 import { useFormTextField } from './use-form-text-field';
 
 /**
- * form-text-field 컴포넌트.
+ * @description react-hook-form 내에서 사용할 수 있는 text-field 컴포넌트
  * @param inputType input 태그의 type (기본값: 'text')
  * @param label 라벨 이름
  * @param isRequired 필수 여부
