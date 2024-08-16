@@ -153,6 +153,7 @@ const layoutStyles = {
     position: 'fixed',
     top: 0,
     w: 'full',
+    maxW: 'maxWidth',
     display: 'flex',
     alignItems: 'center',
     minHeight: '44px',
