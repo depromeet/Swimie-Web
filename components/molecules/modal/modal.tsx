@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { Button, Dim } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export type ModalProps = {
@@ -15,6 +15,7 @@ export type ModalProps = {
     onClick: () => void;
   };
   isDim?: boolean;
+  isBodyFadeOut?: boolean;
 };
 
 export const Modal = ({
@@ -25,6 +26,7 @@ export const Modal = ({
   children,
   button,
   isDim = true,
+  isBodyFadeOut,
 }: ModalProps) => {
   if (!isOpen) return null;
   return (
@@ -36,7 +38,11 @@ export const Modal = ({
             <span className={text.descriptionStyle}>{description}</span>
           )}
         </h1>
-        {children && <div className={bodyStyle}>{children}</div>}
+        {children && (
+          <div className={bodyStyle({ isBodyFadeOut: Boolean(isBodyFadeOut) })}>
+            {children}
+          </div>
+        )}
         {button && (
           <Button
             label={button.text}
@@ -92,8 +98,28 @@ const text = {
   }),
 };
 
-const bodyStyle = css({
-  marginTop: '-1px',
-  width: '100%',
-  backgroundColor: 'white',
+const bodyStyle = cva({
+  base: {
+    position: 'relative',
+    marginTop: '-1px',
+    width: 'full',
+    height: 'full',
+    backgroundColor: 'white',
+    overflow: 'hidden',
+  },
+  variants: {
+    isBodyFadeOut: {
+      true: {
+        '&:after': {
+          position: 'absolute',
+          bottom: 0,
+          content: "''",
+          width: 'full',
+          height: '40px',
+          background:
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%)',
+        },
+      },
+    },
+  },
 });
