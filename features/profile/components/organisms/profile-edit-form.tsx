@@ -14,6 +14,7 @@ interface ProfileEditFormProps {
 }
 
 //Todo: api 연결
+//Todo: 한줄 소개 현재 글자 수 세는 UI 추가
 export function ProfileEditForm() {
   const { register, control, handleSubmit } = useForm<ProfileEditFormProps>({
     defaultValues: {},
@@ -27,7 +28,7 @@ export function ProfileEditForm() {
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layoutStyles.form}>
       <section className={layoutStyles.imageEdit}>
         <div className={layoutStyles.imageEditIcon}>
           <UserImageIcon width={100} height={100} />
@@ -67,6 +68,9 @@ export function ProfileEditForm() {
 }
 
 const layoutStyles = {
+  form: css({
+    padding: '0 20px',
+  }),
   imageEdit: flex({
     justifyContent: 'center',
     padding: '40px 0 0 0',
