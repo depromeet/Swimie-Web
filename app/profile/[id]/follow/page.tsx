@@ -24,7 +24,8 @@ export default function ProfileFollow({
   return (
     <>
       <HeaderBar>
-        <div className={headerNicknameStyle}>수영왕 정지영</div>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>수영왕 정지영</HeaderBar.Title>
       </HeaderBar>
       <DynamicTabSection tab={tab} />
       <article className={containerStyle}>
@@ -40,15 +41,6 @@ export default function ProfileFollow({
     </>
   );
 }
-
-const headerNicknameStyle = flex({
-  w: 'full',
-  justify: 'center',
-  align: 'center',
-  color: 'text.normal',
-  textStyle: 'heading6',
-  fontWeight: 'medium',
-});
 
 const containerStyle = flex({
   direction: 'column',
