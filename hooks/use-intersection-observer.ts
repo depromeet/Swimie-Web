@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useEffect, useRef } from 'react';
 
 type IntersectHandler = (
