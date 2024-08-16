@@ -57,7 +57,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
 
     const shouldEmphasize = isWritten || focused;
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event).catch((error) => {
         console.log('Error during change:', error);
       });
@@ -78,7 +78,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             placeholder={placeholder}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
-            onChange={handleChange}
+            onChange={handleInputChange}
             className={cx(
               css(
                 shouldEmphasize
