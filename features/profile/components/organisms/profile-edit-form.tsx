@@ -22,7 +22,6 @@ export function ProfileEditForm() {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
-    //기록 수정 모드일 때
     console.log(data);
   };
 
