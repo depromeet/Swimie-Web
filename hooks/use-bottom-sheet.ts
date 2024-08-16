@@ -4,6 +4,8 @@ import { useAtom } from 'jotai';
 
 import { bottomSheetAtom } from '@/store';
 
+import { usePreventBodyScroll } from './use-prevent-body-scroll';
+
 /**
  * @description 바텀시트를 조작하기 위해 사용합니다.
  *
@@ -14,6 +16,8 @@ import { bottomSheetAtom } from '@/store';
  */
 export const useBottomSheet = () => {
   const [isOpen, setIsOpen] = useAtom(bottomSheetAtom);
+
+  usePreventBodyScroll({ isOpen });
 
   const open = () => {
     setIsOpen(true);

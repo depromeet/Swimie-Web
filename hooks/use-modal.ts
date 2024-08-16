@@ -4,6 +4,8 @@ import { useAtom } from 'jotai';
 
 import { modalAtom } from '@/store';
 
+import { usePreventBodyScroll } from './use-prevent-body-scroll';
+
 /**
  * @description 모달을 조작하기 위해 사용합니다.
  *
@@ -14,6 +16,8 @@ import { modalAtom } from '@/store';
  */
 export const useModal = () => {
   const [isOpen, setIsOpen] = useAtom(modalAtom);
+
+  usePreventBodyScroll({ isOpen });
 
   const open = () => {
     setIsOpen(true);
