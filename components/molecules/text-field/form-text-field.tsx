@@ -58,9 +58,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
     const shouldEmphasize = isWritten || focused;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      onChange(event).catch((error) => {
-        console.log('Error during change:', error);
-      });
+      void onChange(event);
     };
 
     return (
