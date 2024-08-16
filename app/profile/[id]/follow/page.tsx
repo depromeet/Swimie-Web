@@ -1,23 +1,49 @@
-import { ProfileListItem } from '@/components/molecules';
+import dynamic from 'next/dynamic';
+
+import { HeaderBar, ProfileListItem } from '@/components/molecules';
+import { type FollowTab } from '@/features/follow';
 import { flex } from '@/styled-system/patterns';
 
-export default function ProfileFollow() {
+const DynamicTabSection = dynamic(
+  () =>
+    import('@/features/follow').then(
+      ({ FollowTabSection }) => FollowTabSection,
+    ),
+  {
+    ssr: false,
+  },
+);
+
+export default function ProfileFollow({
+  searchParams,
+}: {
+  searchParams: { tab: FollowTab };
+}) {
+  const { tab = 'follow' } = searchParams;
+
   return (
-    <article className={containerStyle}>
-      <p>팔로우 목록입니다.</p>
-      <ProfileListItem isFollow={false} />
-      <ProfileListItem isFollow={false} />
-      <ProfileListItem isFollow={false} />
-      <ProfileListItem isFollow={true} />
-      <ProfileListItem isFollow={true} />
-      <ProfileListItem isFollow={false} />
-      <ProfileListItem isFollow={false} />
-      <ProfileListItem isFollow={false} />
-    </article>
+    <>
+      <HeaderBar>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>수영왕 정지영</HeaderBar.Title>
+      </HeaderBar>
+      <DynamicTabSection tab={tab} />
+      <article className={containerStyle}>
+        <ProfileListItem isFollow={false} />
+        <ProfileListItem isFollow={false} />
+        <ProfileListItem isFollow={false} />
+        <ProfileListItem isFollow={true} />
+        <ProfileListItem isFollow={true} />
+        <ProfileListItem isFollow={false} />
+        <ProfileListItem isFollow={false} />
+        <ProfileListItem isFollow={false} />
+      </article>
+    </>
   );
 }
 
 const containerStyle = flex({
   direction: 'column',
   gap: '12px',
+  p: '16px 20px',
 });
