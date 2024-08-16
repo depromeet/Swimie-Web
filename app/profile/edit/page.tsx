@@ -1,14 +1,22 @@
-import { ProfileEditForm } from '@/features/profile';
+import { HeaderBar } from '@/components/molecules';
+import { BlueTextButton, ProfileEditForm } from '@/features/profile';
 import { css } from '@/styled-system/css';
 
 //Todo: api 연결
 export default function ProfileEditPage() {
   return (
-    <div className={layoutStyles}>
-      {/* Todo: header-bar 머지 후 연결 */}
-      프로필 편집 페이지
-      <ProfileEditForm />
-    </div>
+    <>
+      <HeaderBar>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>프로필 편집</HeaderBar.Title>
+        <HeaderBar.RightContent>
+          {[{ component: <BlueTextButton label="저장" />, key: 'save' }]}
+        </HeaderBar.RightContent>
+      </HeaderBar>
+      <div className={layoutStyles}>
+        <ProfileEditForm />
+      </div>
+    </>
   );
 }
 
