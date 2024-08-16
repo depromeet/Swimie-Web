@@ -2,8 +2,9 @@
 
 import { ChangeEvent } from 'react';
 
-import { css, cx } from '@/styled-system/css';
+import { cx } from '@/styled-system/css';
 
+import { layoutStyles } from './style';
 import { TextAreaProps } from './type';
 
 export function TextArea({
@@ -26,15 +27,3 @@ export function TextArea({
     />
   );
 }
-
-const layoutStyles = css({
-  w: '100%',
-  h: '135px',
-  padding: '16px 12px',
-  borderRadius: '10px',
-  border: '1px solid',
-  borderColor: 'line.normal',
-  outline: 'none',
-  textStyle: 'body2.normal',
-  fontWeight: 500,
-});
