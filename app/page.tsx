@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 
+import { BellIcon, SettingIcon } from '@/components/atoms';
+import { HeaderBar } from '@/components/molecules';
 import { UserCalendarProfile } from '@/features/main/calendar';
 import { MainTab } from '@/features/main/main-tab';
 import { TabItemInfo } from '@/features/main/main-tab/main-tab';
 import { TimeLine } from '@/features/main/time-line';
+import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 const SELECT_CALENDAR_VIEW = 0;
@@ -28,14 +31,25 @@ export default function Home() {
   const isSelectedCalendarView = selected === SELECT_CALENDAR_VIEW;
 
   return (
-    <main className={styles}>
-      <header>
-        <MainTab tabInfos={tabInfos} />
-      </header>
-      <section className={contentStyles}>
-        {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
-      </section>
-    </main>
+    <>
+      <HeaderBar>
+        <HeaderBar.LogoButton className={css({ left: '20px' })} />
+        <HeaderBar.RightContent className={css({ right: '20px' })}>
+          {[
+            { component: <BellIcon />, key: 'bell' },
+            { component: <SettingIcon />, key: 'setting' },
+          ]}
+        </HeaderBar.RightContent>
+      </HeaderBar>
+      <main className={styles}>
+        <header>
+          <MainTab tabInfos={tabInfos} />
+        </header>
+        <section className={contentStyles}>
+          {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
+        </section>
+      </main>
+    </>
   );
 }
 

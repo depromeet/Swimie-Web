@@ -73,7 +73,9 @@ export default function JoinPage() {
 
   return (
     <div>
-      <HeaderBar className={css({ marginBottom: '24px' })} />
+      <HeaderBar className={css({ marginBottom: '24px' })}>
+        <HeaderBar.BackButton />
+      </HeaderBar>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={flex({
