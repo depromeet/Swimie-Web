@@ -9,7 +9,8 @@ export default function RecordPage() {
   return (
     <div>
       <HeaderBar className={css({ marginBottom: '24px' })}>
-        <h3 className={titleStyles.header}>수영 기록하기</h3>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>수영 기록하기</HeaderBar.Title>
       </HeaderBar>
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>

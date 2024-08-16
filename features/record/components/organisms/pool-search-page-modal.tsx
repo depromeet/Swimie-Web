@@ -39,7 +39,9 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
       ref={pageModalRef}
     >
       <div ref={pageModalRef}>
-        <HeaderBar onClickBack={() => handlers.onClosePageModal()} />
+        <HeaderBar>
+          <HeaderBar.BackButton onClick={() => handlers.onClosePageModal()} />
+        </HeaderBar>
         <div className={layoutStyles}>
           <h2 className={textStyles.title}>{title}</h2>
           <SearchBar

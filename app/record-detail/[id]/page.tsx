@@ -48,10 +48,14 @@ export default async function RecordDetail({ params }: RecordDetail) {
   if (!data) return null;
   return (
     <>
-      <HeaderBar rightContent={<EditButton memoryId={params.id} />}>
-        <div className={header.textStyle}>
+      <HeaderBar>
+        <HeaderBar.BackButton />
+        <HeaderBar.Title>
           {data.member?.name ?? '스위미'}의 수영 기록
-        </div>
+        </HeaderBar.Title>
+        <HeaderBar.RightContent>
+          {[{ component: <EditButton memoryId={params.id} />, key: 'edit' }]}
+        </HeaderBar.RightContent>
       </HeaderBar>
       <article className={containerStyle}>
         <div>
@@ -69,24 +73,6 @@ export default async function RecordDetail({ params }: RecordDetail) {
     </>
   );
 }
-
-const header = {
-  textStyle: flex({
-    w: 'full',
-    justify: 'center',
-    align: 'center',
-    color: 'text.normal',
-    textStyle: 'heading6',
-    fontWeight: 'medium',
-  }),
-
-  editButtonStyle: css({
-    color: 'primary.swim.총거리.default',
-    textStyle: 'body2.normal',
-    fontWeight: 'medium',
-    mr: '8px',
-  }),
-};
 
 const containerStyle = flex({
   direction: 'column',

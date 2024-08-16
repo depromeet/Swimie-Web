@@ -65,7 +65,9 @@ export default function JoinPage() {
 
   return (
     <div>
-      <HeaderBar className={headerStyles} />
+      <HeaderBar className={headerStyles}>
+        <HeaderBar.BackButton />
+      </HeaderBar>
       <div className={pageStyles}>
         <div>
           <div className={noticeStyles}>성별을 입력해주세요</div>
