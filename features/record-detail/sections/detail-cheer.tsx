@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 
-import { Button } from '@/components/atoms';
-import { BottomSheet } from '@/components/molecules';
-import { useBottomSheet, useDragScroll } from '@/hooks';
+import { useBottomSheet, useDragScroll, useModal } from '@/hooks';
 import { css } from '@/styled-system/css';
-import { flex, grid } from '@/styled-system/patterns';
+import { flex } from '@/styled-system/patterns';
 
-import { CheerItem } from '../components';
+import { CheerBottomSheet, CheerItem, CheerModal } from '../components';
 import { RecordDetailType } from '../types';
 
 const initialCheerList = [
@@ -49,7 +47,17 @@ const initialCheerList = [
 
 export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   const [cheerList, setCheerList] = useState(initialCheerList);
-  const [isOpen, open, close] = useBottomSheet();
+  const {
+    isOpen: isOpenBottomSheet,
+    open: openBottomSheet,
+    close: closeBottomSheet,
+  } = useBottomSheet();
+  const {
+    isOpen: isOpenModal,
+    open: openModal,
+    close: closeModal,
+  } = useModal();
+
   const { sliderRef } = useDragScroll();
 
   const handleClickCheerItem = (index: number) => {
@@ -76,6 +84,7 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   return (
     <>
       {/* TODO: 응원 조회 api 연동 및 모달 open 기능 구현 */}
+      {/* NOTE: 칭찬 미리보기 목록 */}
       <div className={slider.containerStyle} ref={sliderRef}>
         <div className={slider.wrapperStyle}>
           <CheerItem
@@ -114,42 +123,34 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
             nickname="수영왕지영"
             size="small"
           />
-          <button className={slider.entireCheerButton}>응원 전체보기</button>
+          <button className={slider.entireCheerButton} onClick={openModal}>
+            응원 전체보기
+          </button>
         </div>
       </div>
-      <button className={cheerButtonWrapperStyle} onClick={open}>
+
+      {/* NOTE: 칭찬 FAB Button */}
+      <button className={cheerButtonWrapperStyle} onClick={openBottomSheet}>
         {data.member?.name}님에게 응원 보내기 👏
       </button>
-      <BottomSheet
+
+      {/* NOTE: 칭찬 모달 */}
+      <CheerModal
+        isOpen={isOpenModal}
+        onClose={closeModal}
+        title="8월 16일의 응원"
+        description="5"
+      />
+
+      {/* NOTE: 칭찬 바텀시트 */}
+      <CheerBottomSheet
         header={{ title: '응원 보내기' }}
-        isOpen={isOpen}
-        onClose={close}
-      >
-        <div className={tagContainerStyle}>
-          {cheerList.map((item, index) => (
-            <CheerItem
-              key={index}
-              onClick={() => handleClickCheerItem(index)}
-              {...item}
-            />
-          ))}
-        </div>
-        <div className={buttonContainerStyle}>
-          <Button
-            label="닫기"
-            variant="outlined"
-            size="large"
-            onClick={close}
-          />
-          <Button
-            label="보내기"
-            size="large"
-            variant="solid"
-            buttonType="primary"
-            onClick={handleClickSendCheer}
-          />
-        </div>
-      </BottomSheet>
+        isOpen={isOpenBottomSheet}
+        onClose={closeBottomSheet}
+        cheerList={cheerList}
+        onClickCheerItem={handleClickCheerItem}
+        onClickSendCheer={handleClickSendCheer}
+      />
     </>
   );
 };
@@ -197,17 +198,4 @@ const cheerButtonWrapperStyle = css({
   '@media (min-width: 600px)': {
     right: 'calc(50% - 300px + 20px);',
   },
-});
-
-const tagContainerStyle = flex({
-  wrap: 'wrap',
-  gap: '10px',
-  rowGap: '10px',
-  p: '8px 20px',
-});
-
-const buttonContainerStyle = grid({
-  gap: '10px',
-  p: '16px 20px 0 20px',
-  gridTemplateColumns: '1fr 1fr',
 });
