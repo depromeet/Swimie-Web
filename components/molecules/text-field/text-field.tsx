@@ -2,11 +2,11 @@
 
 import { ChangeEvent } from 'react';
 
-import { css, cva, cx } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import {
   absoluteStyles,
-  inputStyles,
+  inputFieldStyles,
   inputWrapperStyles,
   subTextStyles,
 } from './style';
@@ -48,10 +48,12 @@ export function TextField({
   const { focused, isWritten, handlers } = useTextField(value);
 
   const shouldEmphasize = isWritten || focused;
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     onChange?.(newText);
   };
+
   return (
     <TextFieldWrapper
       isRequired={isRequired}
@@ -87,13 +89,3 @@ export function TextField({
     </TextFieldWrapper>
   );
 }
-
-const inputFieldStyles = cva({
-  base: inputStyles,
-  variants: {
-    isWritten: {
-      true: { borderBottomColor: 'blue.60' },
-      false: { borderBottomColor: 'line.alternative' },
-    },
-  },
-});
