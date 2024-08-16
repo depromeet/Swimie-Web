@@ -5,6 +5,8 @@ import { useAtom } from 'jotai';
 import { DialogProps } from '@/components/molecules';
 import { dialogAtom } from '@/store';
 
+import { usePreventBodyScroll } from './use-prevent-body-scroll';
+
 /**
  * @description Dialog를 조작하기 위해 사용합니다.
  *
@@ -26,6 +28,8 @@ import { dialogAtom } from '@/store';
 type DialogOptions = Omit<DialogProps, 'isOpen' | 'onClose'>;
 export const useDialog = () => {
   const [dialogState, setDialogState] = useAtom(dialogAtom);
+
+  usePreventBodyScroll({ isOpen: dialogState.isOpen });
 
   const dialog = (options: DialogOptions) => {
     setDialogState({
