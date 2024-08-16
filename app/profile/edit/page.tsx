@@ -1,6 +1,5 @@
 import { HeaderBar } from '@/components/molecules';
 import { BlueTextButton, ProfileEditForm } from '@/features/profile';
-import { css } from '@/styled-system/css';
 
 //Todo: api 연결
 export default function ProfileEditPage() {
@@ -13,13 +12,7 @@ export default function ProfileEditPage() {
           {[{ component: <BlueTextButton label="저장" />, key: 'save' }]}
         </HeaderBar.RightContent>
       </HeaderBar>
-      <div className={layoutStyles}>
-        <ProfileEditForm />
-      </div>
+      <ProfileEditForm />
     </>
   );
 }
-
-const layoutStyles = css({
-  padding: '0 20px',
-});
