@@ -1,6 +1,8 @@
 'use client';
 
-import { TextArea } from '@/components/molecules';
+import { useFormContext } from 'react-hook-form';
+
+import { FormTextArea } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import { formSectionStyles } from '../../styles/form-section';
@@ -11,11 +13,12 @@ import { FormSectionProps } from '../../types/form-section';
  * @param value textArea의 value 주입
  */
 export function DiarySection({ title }: FormSectionProps) {
+  const { register } = useFormContext();
   return (
     <section className={formSectionStyles}>
       <h1 className={titleStyles}>{title}</h1>
-      <TextArea
-        registerName="diary"
+      <FormTextArea
+        {...register('diary')}
         placeholder="오늘 무엇을 배웠나요? 오늘 무엇을 느꼈나요?"
       />
     </section>
