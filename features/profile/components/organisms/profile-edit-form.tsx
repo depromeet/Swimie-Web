@@ -13,6 +13,7 @@ interface ProfileEditFormProps {
   introduce?: string;
 }
 
+//Todo: 사진 선택 창 연결
 //Todo: api 연결
 //Todo: 한줄 소개 현재 글자 수 세는 UI 추가
 export function ProfileEditForm() {
