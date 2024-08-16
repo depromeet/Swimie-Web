@@ -1,12 +1,12 @@
 'use client';
 
-import React, { forwardRef } from 'react';
+import React, { ChangeEvent, forwardRef } from 'react';
 
-import { css, cva, cx } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 
 import {
   absoluteStyles,
-  inputStyles,
+  inputFieldStyles,
   inputWrapperStyles,
   subTextStyles,
 } from './style';
@@ -57,6 +57,12 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
 
     const shouldEmphasize = isWritten || focused;
 
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      onChange(event).catch((error) => {
+        console.log('Error during change:', error);
+      });
+    };
+
     return (
       <TextFieldWrapper
         isRequired={isRequired}
@@ -72,6 +78,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             placeholder={placeholder}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
+            onChange={handleChange}
             className={cx(
               css(
                 shouldEmphasize
@@ -80,8 +87,6 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
               ),
               className,
             )}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onChange={onChange}
           />
           {unit && (
             <span className={cx(absoluteStyles, absoluteClassName)}>
@@ -96,13 +101,3 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
 );
 
 FormTextField.displayName = 'FormTextField';
-
-const inputFieldStyles = cva({
-  base: inputStyles,
-  variants: {
-    isWritten: {
-      true: { borderBottomColor: 'blue.60' },
-      false: { borderBottomColor: 'line.alternative' },
-    },
-  },
-});
