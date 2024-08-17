@@ -16,7 +16,7 @@ export function SubInfoTextFields() {
         registerdFieldValue={
           useWatch({
             control,
-            name: 'heartRate' as string,
+            name: 'heartRate',
           }) as number
         }
         inputType="number"
@@ -30,7 +30,7 @@ export function SubInfoTextFields() {
           registerdFieldValue={
             useWatch({
               control,
-              name: 'paceMinutes' as string,
+              name: 'paceMinutes',
             }) as number
           }
           inputType="number"
@@ -43,7 +43,7 @@ export function SubInfoTextFields() {
           registerdFieldValue={
             useWatch({
               control,
-              name: 'paceSeconds' as string,
+              name: 'paceSeconds',
             }) as number
           }
           inputType="number"
