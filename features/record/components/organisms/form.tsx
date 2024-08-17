@@ -166,7 +166,7 @@ export function Form() {
           memoryId: Number(searchParams.get('memoryId')),
         });
         if (memoryRes.status === 200)
-          router.push(
+          router.replace(
             `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
           );
       }
@@ -177,7 +177,7 @@ export function Form() {
           memoryId: Number(searchParams.get('memoryId')),
         });
         if (memoryEditRes)
-          router.push(
+          router.replace(
             `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
           );
       }
@@ -199,7 +199,7 @@ export function Form() {
           imageIdList: [getImagePresignedUrlRes.data[0].imageId],
         });
         if (memoryRes.status === 200)
-          router.push(
+          router.replace(
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
           );
       }
@@ -207,7 +207,7 @@ export function Form() {
       else {
         const memoryRes = await memory(submitData);
         if (memoryRes.status === 200)
-          router.push(
+          router.replace(
             `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
           );
       }

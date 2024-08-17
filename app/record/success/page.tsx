@@ -34,6 +34,7 @@ export default function RecordSuccessPage({
       <Link
         href={`/record-detail/${searchParams.memoryId}`}
         className={buttonStyles}
+        replace
       >
         <Button
           buttonType="primary"
