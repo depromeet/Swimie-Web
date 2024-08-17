@@ -85,13 +85,14 @@ export function PhotoSection({ title, defaultImage }: PhotoSectionProps) {
             alt="오늘의 사진"
             fill
             sizes="100vw"
-            className="rounded-[10px]"
+            className={css({ borderRadius: '10px' })}
           />
           <DeletePhotoIcon
             className={css({
               position: 'absolute',
               top: '16px',
               right: '16px',
+              cursor: 'pointer',
             })}
             onClick={handleImageDeleteClick}
           />
@@ -114,8 +115,8 @@ const imageStyles = css({
   position: 'relative',
   width: 'calc(100vw - 40px)',
   height: 'calc(100vw - 40px)',
-  maxWidth: '600px',
-  maxHeight: '600px',
+  maxWidth: '560px',
+  maxHeight: '560px',
 });
 
 const titleStyles = css({
