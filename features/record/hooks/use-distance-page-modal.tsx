@@ -47,7 +47,7 @@ export function useDistancePageModal<T>(
       setTotalStrokeDistance(sum);
     } else {
       strokes.forEach((stroke) => {
-        sum += stroke.laps * lane;
+        sum += stroke.laps * lane * 2;
       });
       setTotalStrokeDistance(sum);
     }
@@ -102,7 +102,7 @@ export function useDistancePageModal<T>(
   const onChangeTotalLaps = (text: string) => {
     totalMeter && setTotalMeter('');
     setTotalLaps(text);
-    setTotalStrokeDistance(text ? Number(text) * lane : 0);
+    setTotalStrokeDistance(text ? Number(text) * lane * 2 : 0);
     resetStrokesMeter();
     resetStrokesLaps();
   };
