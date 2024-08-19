@@ -65,7 +65,7 @@ export function AlarmElement({
 
 const layoutStyles = {
   total: cva({
-    base: { display: 'flex', position: 'relative', padding: '16px 0' },
+    base: { display: 'flex', position: 'relative', padding: '16px 20px' },
     variants: {
       isClicked: {
         true: {},
@@ -80,7 +80,6 @@ const layoutStyles = {
       direction: 'column',
       justifyContent: 'space-between',
       marginLeft: '16px',
-      width: '60%',
       gap: '4px',
       wordBreak: 'keep-all',
     },
@@ -89,15 +88,13 @@ const layoutStyles = {
         follow: {
           width: '60%',
         },
-        cheer: {
-          width: '100%',
-        },
+        cheer: {},
       },
     },
   }),
   button: css({
     position: 'absolute',
-    right: 0,
+    right: '20px',
   }),
 };
 
