@@ -167,17 +167,14 @@ export const Button = ({
     <button className={buttonStyles} onClick={onClick} type={type}>
       {(leftIconSrc || isLoading) && (
         <div className={iconWrapperStyles}>
-          {isLoading ? (
-            <LoadingIcon />
-          ) : (
-            leftIconSrc && (
-              <Image
-                src={leftIconSrc}
-                alt="left icon"
-                width={iconSize}
-                height={iconSize}
-              />
-            )
+          {isLoading && <LoadingIcon />}
+          {leftIconSrc && (
+            <Image
+              src={leftIconSrc}
+              alt="left icon"
+              width={iconSize}
+              height={iconSize}
+            />
           )}
         </div>
       )}
