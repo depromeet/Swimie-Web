@@ -4,8 +4,10 @@ import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
 import { LoadingArea } from '@/components/atoms';
-import { useCalendarRendaringData } from '@/features/main/hooks';
-import { useCalendarData } from '@/hooks';
+import {
+  useCalendarData,
+  useCalendarRendaringData,
+} from '@/features/main/hooks';
 import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
