@@ -18,5 +18,5 @@ export function AlarmList({ alarms }: AlarmListProps) {
 }
 
 const layoutStyles = css({
-  padding: '0 20px 40px 20px',
+  paddingBottom: '40px',
 });

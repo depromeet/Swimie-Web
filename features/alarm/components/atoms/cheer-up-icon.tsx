@@ -16,4 +16,5 @@ const layoutStyles = flex({
   height: '40px',
   borderRadius: 'full',
   backgroundColor: '#88D4B0',
+  flexShrink: 0,
 });
