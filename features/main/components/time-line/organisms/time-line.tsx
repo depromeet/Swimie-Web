@@ -8,7 +8,7 @@ import { CardWrapper } from '../atoms';
 import { InfiniteScroller } from '@/components/molecules';
 import { SwimmerIcon } from '@/components/atoms';
 import { useTimeLineData } from '@/hooks';
-import { TimeLineContent } from '@/features/main/types';
+import { TimeLineContent } from '@/features/main';
 
 interface GroupedTimelineContents {
   date: string;
