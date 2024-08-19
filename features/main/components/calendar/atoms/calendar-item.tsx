@@ -6,7 +6,7 @@ import { calendarDateAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { Memory } from '../types';
+import { Memory } from '../../../types/calendar';
 import { ItemContent } from './calendar-item-content';
 
 interface ItemLayoutProps {

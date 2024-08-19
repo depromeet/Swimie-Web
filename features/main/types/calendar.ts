@@ -1,4 +1,4 @@
-import { StrokeInfo } from '../../time-line';
+import { StrokeInfo } from './time-line';
 
 export type MemoryType = 'NORMAL' | 'SINGLE' | 'MULTI';
 

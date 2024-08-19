@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import type { Directions } from '@/components/atoms/icons';
-import { TriangleArrowIcon } from '@/components/atoms/icons/triangle-arrow-icon';
+import { type Directions, TriangleArrowIcon } from '@/components/atoms';
 
 interface MoveMonthButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   width: number;

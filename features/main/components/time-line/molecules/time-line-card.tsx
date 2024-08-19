@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
 import { SwimmerIcon } from '@/components/atoms';
+import { TimeLineContent } from '@/features/main/types';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatMeters, getFormatDate, isTodayDate } from '@/utils';
 
 import { SwimRecordChart } from '../atoms/swim-record-chart';
-import { TimeLineContent } from '../types';
 
 interface TimeLineCardLayoutProps {
   date: string;
