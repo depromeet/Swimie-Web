@@ -75,7 +75,7 @@ const containerStyle = css({
   translateX: '-1/2',
   translateY: '-1/2',
   padding: '24px',
-  zIndex: 1000,
+  zIndex: 850,
   backgroundColor: 'white',
   borderRadius: '12px',
   w: '304px',

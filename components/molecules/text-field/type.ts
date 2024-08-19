@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ChangeHandler } from 'react-hook-form';
 
 export interface TextFieldProps {
   inputType?: string;
@@ -9,12 +10,18 @@ export interface TextFieldProps {
   placeholder?: string;
   unit?: string;
   maxLength?: number;
-  registerName?: string;
   className?: string;
   wrapperClassName?: string;
   absoluteClassName?: string;
   subTextClassName?: string;
   onChange?: (text: string) => void;
+}
+
+export interface FormTextFieldProps
+  extends Omit<TextFieldProps, 'value' | 'onChange'> {
+  registerdFieldValue: string | number;
+  onChange: ChangeHandler;
+  name: string;
 }
 
 export interface SelectTextFieldProps

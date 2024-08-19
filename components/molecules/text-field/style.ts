@@ -1,4 +1,4 @@
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 
 export const inputWrapperStyles = css({
   position: 'relative',
@@ -6,6 +6,19 @@ export const inputWrapperStyles = css({
   display: 'flex',
   alignItems: 'center',
   marginTop: '2px',
+});
+
+export const absoluteStyles = css({
+  position: 'absolute',
+  right: 0,
+  textStyle: 'heading4',
+  fontWeight: '500',
+});
+
+export const subTextStyles = css({
+  color: 'text.alternative',
+  textStyle: 'label1.normal',
+  fontWeight: '500',
 });
 
 export const inputStyles = {
@@ -23,15 +36,12 @@ export const inputStyles = {
   borderBottomColor: 'line.alternative',
 };
 
-export const absoluteStyles = css({
-  position: 'absolute',
-  right: 0,
-  textStyle: 'heading4',
-  fontWeight: '500',
-});
-
-export const subTextStyles = css({
-  color: 'text.alternative',
-  textStyle: 'label1.normal',
-  fontWeight: '500',
+export const inputFieldStyles = cva({
+  base: inputStyles,
+  variants: {
+    isWritten: {
+      true: { borderBottomColor: 'blue.60' },
+      false: { borderBottomColor: 'line.alternative' },
+    },
+  },
 });

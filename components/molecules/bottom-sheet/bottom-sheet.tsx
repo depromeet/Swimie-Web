@@ -71,7 +71,7 @@ export const BottomSheet = ({
         <div className={bodyStyle}>{children}</div>
       </div>
 
-      {isOpen && <Dim onClick={onClose} />}
+      {isOpen && <Dim onClick={onClose} zIndex={500} />}
     </>
   );
 };
@@ -94,7 +94,7 @@ const containerStyle = css({
   position: 'fixed',
   right: 0,
   left: 0,
-  zIndex: 1000,
+  zIndex: 550,
   boxSizing: 'border-box',
   width: '100%',
   overflow: 'hidden',

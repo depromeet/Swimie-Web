@@ -2,20 +2,20 @@
 
 import { useAtom } from 'jotai';
 
-import { bottomSheetAtom } from '@/store';
+import { modalAtom } from '@/store';
 
 import { usePreventBodyScroll } from './use-prevent-body-scroll';
 
 /**
- * @description 바텀시트를 조작하기 위해 사용합니다.
+ * @description 모달을 조작하기 위해 사용합니다.
  *
  * 사용 방법
- * const [isOpen, open, close] = useBottomSheet();
+ * const [isOpen, open, close] = useModal();
  *
- * return <BottomSheet isOpen={isOpen} onClose={close}>
+ * return <Modal isOpen={isOpen} onClose={close}>
  */
-export const useBottomSheet = () => {
-  const [isOpen, setIsOpen] = useAtom(bottomSheetAtom);
+export const useModal = () => {
+  const [isOpen, setIsOpen] = useAtom(modalAtom);
 
   usePreventBodyScroll({ isOpen });
 

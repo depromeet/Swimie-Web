@@ -57,6 +57,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
           {[{ component: <EditButton memoryId={params.id} />, key: 'edit' }]}
         </HeaderBar.RightContent>
       </HeaderBar>
+
       <article className={containerStyle}>
         <div>
           {/* cheer section */}
