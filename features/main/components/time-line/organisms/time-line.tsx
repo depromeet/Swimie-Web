@@ -7,8 +7,7 @@ import { Fragment } from 'react';
 import { CardWrapper } from '../atoms';
 import { InfiniteScroller } from '@/components/molecules';
 import { SwimmerIcon } from '@/components/atoms';
-import { useTimeLineData } from '@/hooks';
-import { TimeLineContent } from '@/features/main';
+import { TimeLineContent, useTimeLineData } from '@/features/main';
 
 interface GroupedTimelineContents {
   date: string;
