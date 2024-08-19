@@ -39,7 +39,12 @@ const Page = () => {
             nickname: data.data.data.nickname,
             userId: data.data.data.userId,
           });
-          router.push('/join/nickname');
+
+          if (data.data.data.isSignUpComplete) {
+            router.push('/');
+          } else {
+            router.push('/join/nickname');
+          }
         }
       } catch (error) {
         console.error('Error:', error);

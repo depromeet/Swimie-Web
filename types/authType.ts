@@ -7,6 +7,7 @@ export interface LoginResponse {
     nickname: string;
     accessToken: string;
     refreshToken: string;
+    isSignUpComplete: boolean;
   };
 }
 
@@ -20,6 +21,7 @@ export interface AuthResponse {
       nickname: string;
       accessToken: string;
       refreshToken: string;
+      isSignUpComplete: boolean;
     };
   };
 }
