@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { LoadingIcon } from '../icons';
 import { ButtonProps } from './type';
 
 export const Button = ({
@@ -17,6 +18,7 @@ export const Button = ({
   type,
   onClick,
   className,
+  isLoading,
 }: ButtonProps) => {
   const baseStyles = flex({
     alignItems: 'center',
@@ -163,14 +165,28 @@ export const Button = ({
 
   return (
     <button className={buttonStyles} onClick={onClick} type={type}>
-      {leftIconSrc && (
+      {(leftIconSrc || isLoading) && (
         <div className={iconWrapperStyles}>
-          <Image
-            src={leftIconSrc}
-            alt="left icon"
-            width={iconSize}
-            height={iconSize}
-          />
+          {isLoading && <LoadingIcon />}
+          {leftIconSrc && (
+            <Image
+              src={leftIconSrc}
+              alt="left icon"
+              width={iconSize}
+              height={iconSize}
+            />
+          )}
+            <LoadingIcon />
+          ) : (
+            leftIconSrc && (
+              <Image
+                src={leftIconSrc}
+                alt="left icon"
+                width={iconSize}
+                height={iconSize}
+              />
+            )
+          )}
         </div>
       )}
       {label}

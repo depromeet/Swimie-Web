@@ -10,4 +10,5 @@ export interface ButtonProps {
   rightIconSrc?: string;
   onClick?: () => void;
   className?: string;
+  isLoading?: boolean;
 }
