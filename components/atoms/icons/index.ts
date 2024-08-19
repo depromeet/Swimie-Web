@@ -3,6 +3,7 @@ export * from './camera-icon';
 export * from './check-icon';
 export * from './check-in-circle-icon';
 export * from './chevron-icon';
+export * from './clap-icon';
 export * from './date-arrow-icon';
 export * from './default-image-icon';
 export * from './delete-icon';
