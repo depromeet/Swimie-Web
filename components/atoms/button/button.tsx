@@ -176,17 +176,6 @@ export const Button = ({
               height={iconSize}
             />
           )}
-            <LoadingIcon />
-          ) : (
-            leftIconSrc && (
-              <Image
-                src={leftIconSrc}
-                alt="left icon"
-                width={iconSize}
-                height={iconSize}
-              />
-            )
-          )}
         </div>
       )}
       {label}
