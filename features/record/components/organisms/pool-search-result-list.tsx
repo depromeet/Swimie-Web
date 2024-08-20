@@ -41,14 +41,13 @@ export function PoolSearchResultList({
 
 const resultStyles = {
   list: css({
-    padding: '8px 0',
+    padding: '16px 0',
     marginBottom: '8px',
     overflow: 'auto',
     WebkitOverflowScrolling: 'touch',
     scrollbarWidth: 'none',
   }),
   element: css({
-    padding: '6px 10px',
     marginBottom: '8px',
   }),
 };
