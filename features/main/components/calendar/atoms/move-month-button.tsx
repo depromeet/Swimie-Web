@@ -1,23 +1,31 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import { type Directions, TriangleArrowIcon } from '@/components/atoms';
+import {
+  type Directions,
+  TriangleArrowIcon,
+  TriangleArrowIconReverse,
+} from '@/components/atoms';
 
 interface MoveMonthButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   width: number;
   height: number;
-  direction: Directions;
+  direction?: Directions;
 }
 
 export const MoveMonthButton = ({
   className,
   width,
   height,
-  direction,
+  direction = 'left',
   ...props
 }: MoveMonthButtonProps) => {
   return (
     <button className={className} {...props}>
-      <TriangleArrowIcon width={width} height={height} direction={direction} />
+      {direction === 'left' ? (
+        <TriangleArrowIcon width={width} height={height} />
+      ) : (
+        <TriangleArrowIconReverse width={width} height={height} />
+      )}
     </button>
   );
 };
