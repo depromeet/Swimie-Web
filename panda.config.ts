@@ -56,6 +56,11 @@ export default defineConfig({
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        skeleton: {
+          '0%': { backgroundColor: '#70737C14' },
+          '50%': { backgroundColor: '#ebebeb' },
+          '100%': { backgroundColor: '#70737C14' },
+        },
       },
     },
   },
