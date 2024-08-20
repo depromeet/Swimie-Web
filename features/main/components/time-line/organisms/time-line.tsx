@@ -23,7 +23,10 @@ export const TimeLine = () => {
   const groupedContents = groupBySameYearAndMonth(contents);
   const isEmptyTimeLine = contents.length === 0;
   const lastGroupIndex = groupedContents.length - 1;
-  const lastContentIndex = groupedContents[lastGroupIndex].contents.length - 1;
+  const lastContentIndex =
+    groupedContents[lastGroupIndex] === undefined
+      ? 0
+      : groupedContents[lastGroupIndex].contents.length - 1;
 
   return (
     <>
@@ -84,7 +87,7 @@ const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   return result;
 };
 
-const fullspaceStyles = css({ width: 'full', height: 'full' });
+const fullspaceStyles = css({ pt: '55%', width: 'full', height: 'full' });
 
 const iconContainer = flex({
   direction: 'column',
