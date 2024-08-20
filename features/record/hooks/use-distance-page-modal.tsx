@@ -1,10 +1,11 @@
 'use client';
 
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
-import { strokeOptions } from '../constants';
+import { laneOptions, strokeOptions } from '../constants';
 import { isDistancePageModalOpen } from '../store';
+import { formSubInfoState } from '../store/form-sub-info';
 import { StrokeProps } from '../types';
 
 type tabIndex = 0 | 1;
@@ -16,6 +17,7 @@ export function useDistancePageModal<T>(
   defaultTotalMeter?: number,
   defaultTotalLap?: number,
 ) {
+  const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
   const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(0);
@@ -41,18 +43,22 @@ export function useDistancePageModal<T>(
       return;
     }
     if (assistiveTabIndex === 0) {
+      if (formSubInfo.isDistanceLapModified)
+        setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: false }));
       strokes.forEach((stroke) => {
         sum += stroke.meter;
       });
       setTotalStrokeDistance(sum);
     } else {
+      if (!formSubInfo.isDistanceLapModified)
+        setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
       strokes.forEach((stroke) => {
-        sum += stroke.laps * lane;
+        sum += stroke.laps * lane * 2;
       });
       setTotalStrokeDistance(sum);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [strokes, lane]);
+  }, [strokes]);
 
   useEffect(() => {
     if (defaultStrokes) {
@@ -64,8 +70,14 @@ export function useDistancePageModal<T>(
         defaultStrokes.length === 1 &&
         defaultStrokes[0].name === '총바퀴'
       ) {
+        setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
         setTotalLaps(String(defaultTotalLap));
       } else {
+        if (
+          defaultStrokes.every((stroke) => stroke.laps) &&
+          !formSubInfo.isDistanceLapModified
+        )
+          setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
         defaultStrokes.forEach((strokes) => {
           setStrokes((prev) => [
             ...prev,
@@ -77,6 +89,20 @@ export function useDistancePageModal<T>(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultStrokes]);
+
+  useEffect(() => {
+    if (
+      formSubInfo.isDistanceLapModified &&
+      lane === Number(laneOptions[0].label.slice(0, -1))
+    )
+      setTotalStrokeDistance((prev) => prev / 2);
+    else if (
+      formSubInfo.isDistanceLapModified &&
+      lane === Number(laneOptions[1].label.slice(0, -1))
+    )
+      setTotalStrokeDistance((prev) => prev * 2);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lane]);
 
   const onClosePageModal = () => {
     setPageModalState({ isOpen: false, jumpDirection: 'backward' });
@@ -92,6 +118,8 @@ export function useDistancePageModal<T>(
 
   //총거리를 m 입력했을 때, 다른 필드들에 값이 있다면 초기화
   const onChangeTotalMeter = (text: string) => {
+    if (formSubInfo.isDistanceLapModified)
+      setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: false }));
     totalLaps && setTotalLaps('');
     setTotalMeter(text);
     resetStrokesMeter();
@@ -100,9 +128,11 @@ export function useDistancePageModal<T>(
 
   //총거리를 바퀴단위로 입력했을 때, 다른 필드들에 값이 있다면 초기화
   const onChangeTotalLaps = (text: string) => {
+    if (!formSubInfo.isDistanceLapModified)
+      setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
     totalMeter && setTotalMeter('');
     setTotalLaps(text);
-    setTotalStrokeDistance(text ? Number(text) * lane : 0);
+    setTotalStrokeDistance(text ? Number(text) * lane * 2 : 0);
     resetStrokesMeter();
     resetStrokesLaps();
   };

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import {
@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@/components/molecules';
 import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
 
 import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
@@ -30,8 +31,13 @@ export function DistancePageModal({
   defaultTotalMeter,
   defaultTotalLap,
 }: DistancePageModalProps) {
-  const { getValues, setValue } = useFormContext();
+  const { setValue, control } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
+
+  const lane = useWatch({
+    control,
+    name: 'lane',
+  }) as number;
 
   const {
     pageModalRef,
@@ -44,7 +50,7 @@ export function DistancePageModal({
     buttonLabel,
     handlers,
   } = useDistancePageModal<HTMLDivElement>(
-    getValues('lane') as number,
+    lane,
     defaultStrokes,
     defaultTotalMeter,
     defaultTotalLap,
@@ -144,7 +150,7 @@ export function DistancePageModal({
               />
             ))}
           </Tab>
-          <Tab type="assistive">
+          <div className={layout.assistiveTab}>
             {assistiveTabItems.map((tabItem) => (
               <TabItem
                 key={tabItem.text + assistiveTabIndex}
@@ -152,7 +158,7 @@ export function DistancePageModal({
                 {...tabItem}
               />
             ))}
-          </Tab>
+          </div>
         </section>
         <section className={layout.record}>
           {secondaryTabIndex === 0 && (
@@ -198,6 +204,9 @@ export function DistancePageModal({
 }
 
 const layout = {
+  assistiveTab: flex({
+    gap: '10px',
+  }),
   tab: css({
     width: '100%',
     marginTop: '16px',

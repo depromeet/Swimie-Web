@@ -25,7 +25,7 @@ export function SelectElement({
   onChangeValue,
 }: SelectElementProps) {
   const handleListElementClick = () => {
-    onChangeValue?.(label);
+    if (!isSelected) onChangeValue?.(label);
     onCloseWrapper?.();
   };
   return (
