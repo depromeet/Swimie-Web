@@ -57,7 +57,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             value={poolSearchText}
             placeholder="수영장 검색"
             onChange={handlePoolSearchTextChange}
-            className={css({ marginBottom: '12px' })}
+            className={css({ marginBottom: '8px' })}
           />
           {!poolSearchText && isDataEmpty && (
             <p className={textStyles.searchInfo}>
@@ -68,16 +68,18 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
           {/* Todo: 스켈레톤 컴포넌트 */}
           {!poolSearchText && !isDataEmpty && (
             <Suspense fallback={<PoolSearchSkeleton />}>
-              {data?.data.favoritePools.map((pool) => (
-                <PoolSearchResultElement
-                  key={pool.poolId}
-                  {...pool}
-                  isFavorite
-                />
-              ))}
-              {data?.data.searchedPools.map((pool) => (
-                <PoolSearchResultElement key={pool.poolId} {...pool} />
-              ))}
+              <div className={css({ padding: '16px 0' })}>
+                {data?.data.favoritePools.map((pool) => (
+                  <PoolSearchResultElement
+                    key={pool.poolId}
+                    {...pool}
+                    isFavorite
+                  />
+                ))}
+                {data?.data.searchedPools.map((pool) => (
+                  <PoolSearchResultElement key={pool.poolId} {...pool} />
+                ))}
+              </div>
             </Suspense>
           )}
           {poolSearchText && (
