@@ -4,7 +4,12 @@
 import { useAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
@@ -105,8 +110,14 @@ export function Form() {
   const { isLoading, getBlobData, modifySubmitData, handlers } =
     useRecordForm();
 
-  const startTime = methods.watch('startTime');
-  const endTime = methods.watch('endTime');
+  const startTime = useWatch({
+    control: methods.control,
+    name: 'startTime',
+  });
+  const endTime = useWatch({
+    control: methods.control,
+    name: 'endTime',
+  });
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
