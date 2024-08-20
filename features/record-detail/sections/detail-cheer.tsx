@@ -6,6 +6,7 @@ import { useBottomSheet, useDragScroll, useModal } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { useCheerPreviewList } from '../apis';
 import { CheerBottomSheet, CheerItem, CheerModal } from '../components';
 import { RecordDetailType } from '../types';
 
@@ -46,7 +47,9 @@ const initialCheerList = [
 ];
 
 export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
+  const { data: cheerPreviewData } = useCheerPreviewList(data.id);
   const [cheerList, setCheerList] = useState(initialCheerList);
+
   const {
     isOpen: isOpenBottomSheet,
     open: openBottomSheet,
@@ -81,60 +84,39 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
     console.log('send!', selectedCheerList);
   };
 
+  const { isMyMemory } = data;
+  const reactions = cheerPreviewData?.reactions || [];
   return (
     <>
-      {/* TODO: 응원 조회 api 연동 및 모달 open 기능 구현 */}
-      {/* NOTE: 칭찬 미리보기 목록 */}
-      <div className={slider.containerStyle} ref={sliderRef}>
-        <div className={slider.wrapperStyle}>
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <CheerItem
-            emoji="🖤"
-            comment="너무 멋져요"
-            nickname="수영왕지영"
-            size="small"
-          />
-          <button className={slider.entireCheerButton} onClick={openModal}>
-            응원 전체보기
-          </button>
+      {/* NOTE: 응원 미리보기 목록 */}
+      {reactions && Boolean(reactions.length) && (
+        <div className={slider.containerStyle} ref={sliderRef}>
+          <div className={slider.wrapperStyle}>
+            {reactions.map((item) => (
+              <CheerItem
+                {...item}
+                key={item.reactionId}
+                onClick={openModal}
+                size="small"
+              />
+            ))}
+            {reactions.length > 10 && (
+              <button className={slider.entireCheerButton} onClick={openModal}>
+                응원 전체보기
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* NOTE: 칭찬 FAB Button */}
-      <button className={cheerButtonWrapperStyle} onClick={openBottomSheet}>
-        {data.member?.name}님에게 응원 보내기 👏
-      </button>
+      {/* NOTE: 응원 FAB Button */}
+      {!isMyMemory && (
+        <button className={cheerButtonWrapperStyle} onClick={openBottomSheet}>
+          {data.member?.name}님에게 응원 보내기 👏
+        </button>
+      )}
 
-      {/* NOTE: 칭찬 모달 */}
+      {/* NOTE: 응원 모달 */}
       <CheerModal
         isOpen={isOpenModal}
         onClose={closeModal}
@@ -142,7 +124,7 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
         description="5"
       />
 
-      {/* NOTE: 칭찬 바텀시트 */}
+      {/* NOTE: 응원 바텀시트 */}
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
         isOpen={isOpenBottomSheet}
@@ -184,7 +166,7 @@ const slider = {
 const cheerButtonWrapperStyle = css({
   position: 'fixed',
   right: '20px',
-  bottom: '35px',
+  bottom: 'calc(35px + env(safe-area-inset-bottom))',
   p: '10px 20px',
   backgroundColor: 'primary.swim.총거리.default',
   color: 'white',

@@ -16,7 +16,7 @@ export const SwimStatsItem = ({ item }: SwimStatsItem) => {
       <h2 className={css(text.distance.raw({ unit: 'meter' }))}>
         {meter.toLocaleString()}m
       </h2>
-      <p className={css(text.distance.raw({ unit: 'laps' }))}>{laps}laps</p>
+      <p className={css(text.distance.raw({ unit: 'laps' }))}>{laps}바퀴</p>
     </div>
   );
 };
