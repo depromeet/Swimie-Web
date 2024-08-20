@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { LoadingIcon } from '../icons';
+import { LoadingButtonIcon } from '../icons/loading-button-icon';
 import { ButtonProps } from './type';
 
 export const Button = ({
@@ -167,7 +167,7 @@ export const Button = ({
     <button className={buttonStyles} onClick={onClick} type={type}>
       {(leftIconSrc || isLoading) && (
         <div className={iconWrapperStyles}>
-          {isLoading && <LoadingIcon />}
+          {isLoading && <LoadingButtonIcon />}
           {leftIconSrc && (
             <Image
               src={leftIconSrc}
