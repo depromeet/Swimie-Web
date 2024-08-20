@@ -47,9 +47,20 @@ export type RecordDetailType = {
   totalLap?: number;
   totalMeter?: number;
   diary?: string;
+  isMyMemory?: boolean;
 };
 
 export type DetailCheerItem = {
   emoji?: string;
   comment?: string;
 };
+
+export type DetailCheerPreview = {
+  reactions: CheerPreview[];
+};
+
+export type CheerPreview = {
+  reactionId: number;
+  nickname: string;
+  profileImageUrl: string;
+} & DetailCheerItem;
