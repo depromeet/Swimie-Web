@@ -23,7 +23,7 @@ const layoutStyles = {
   total: flex({
     justifyContent: 'center',
     alignItems: 'center',
-    height: 'calc(100vh - 88px)',
+    height: 'calc(100dvh - 88px)',
   }),
 
   content: flex({
