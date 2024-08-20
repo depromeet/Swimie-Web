@@ -1,4 +1,9 @@
-import { nameOfDays } from '@/constants/date';
+import {
+  HOURS_PER_DAY,
+  MINUTES_PER_HOUR,
+  nameOfDays,
+  SECONDS_PER_MINUTE,
+} from '@/constants/date';
 
 type GetDate = {
   dateStr: string;
@@ -62,4 +67,22 @@ export const formatDateToDash = (dateStr: string) => {
   const formattedDate = date.replace('일', '').padStart(2, '0');
 
   return `${year.replace('년', '')}-${formattedMonth}-${formattedDate}`;
+};
+
+export const convertTimeToElapsedTime = (time: string) => {
+  const start = new Date(time);
+  const end = new Date();
+
+  const seconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+  if (seconds < SECONDS_PER_MINUTE) return '방금 전';
+
+  const minutes = seconds / SECONDS_PER_MINUTE;
+  if (minutes < MINUTES_PER_HOUR) return `${Math.floor(minutes)}분 전`;
+
+  const hours = minutes / MINUTES_PER_HOUR;
+  if (hours < HOURS_PER_DAY) return `${Math.floor(hours)}시간 전`;
+
+  const days = hours / HOURS_PER_DAY;
+
+  return `${Math.floor(days)}일 전`;
 };
