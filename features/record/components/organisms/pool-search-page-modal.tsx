@@ -1,7 +1,7 @@
 'use client';
 
 import { debounce } from 'lodash';
-import { Suspense, useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 
 import { HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
@@ -9,8 +9,17 @@ import { css } from '@/styled-system/css';
 
 import { useSearchPoolInitial } from '../../apis';
 import { usePoolSearchPageModal } from '../../hooks';
-import { PoolSearchResultElement } from '../molecules';
-import { PoolSearchResultList } from './pool-search-result-list';
+const PoolSearchResultElement = lazy(() =>
+  import('../molecules').then((module) => ({
+    default: module.PoolSearchResultElement,
+  })),
+);
+import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
+const PoolSearchResultList = lazy(() =>
+  import('./pool-search-result-list').then((module) => ({
+    default: module.PoolSearchResultList,
+  })),
+);
 
 interface PoolSearchPageModalProps {
   title: string;
@@ -23,7 +32,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const { pageModalRef, pageModalState, handlers } = usePoolSearchPageModal();
   const [poolSearchText, setPoolSearchText] = useState('');
 
-  const { data } = useSearchPoolInitial(poolSearchText);
+  const { data } = useSearchPoolInitial(poolSearchText, pageModalState.isOpen);
   const isDataEmpty =
     data?.data.favoritePools.length === 0 &&
     data?.data.searchedPools.length === 0;
@@ -58,7 +67,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
           )}
           {/* Todo: 스켈레톤 컴포넌트 */}
           {!poolSearchText && !isDataEmpty && (
-            <Suspense fallback={'스켈레톤 컴포넌트'}>
+            <Suspense fallback={<PoolSearchSkeleton />}>
               {data?.data.favoritePools.map((pool) => (
                 <PoolSearchResultElement
                   key={pool.poolId}
@@ -72,7 +81,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             </Suspense>
           )}
           {poolSearchText && (
-            <Suspense fallback={'스켈레톤 컴포넌트'}>
+            <Suspense fallback={<PoolSearchSkeleton />}>
               <PoolSearchResultList poolSearchText={poolSearchText} />
             </Suspense>
           )}

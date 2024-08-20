@@ -21,13 +21,14 @@ async function searchPool(nameQuery: string, cursorId: unknown) {
 }
 
 export default function useSearchPool(nameQuery: string) {
-  const { data, ...queryInfo } = useInfiniteQuery<SearchPoolResultResponse>({
-    queryKey: ['useSearchPool', nameQuery],
-    queryFn: ({ pageParam = undefined }) => searchPool(nameQuery, pageParam),
-    initialPageParam: undefined,
-    getNextPageParam: (lastPage) =>
-      lastPage.data.hasNext ? lastPage.data.cursorId : undefined,
-  });
+  const { data, isLoading, ...queryInfo } =
+    useInfiniteQuery<SearchPoolResultResponse>({
+      queryKey: ['useSearchPool', nameQuery],
+      queryFn: ({ pageParam = undefined }) => searchPool(nameQuery, pageParam),
+      initialPageParam: undefined,
+      getNextPageParam: (lastPage) =>
+        lastPage.data.hasNext ? lastPage.data.cursorId : undefined,
+    });
   const { hasNextPage, fetchNextPage } = queryInfo;
 
   const { ref, inView } = useInView({
@@ -45,5 +46,5 @@ export default function useSearchPool(nameQuery: string) {
     data?.pages.map((page) => page.data.poolInfos).flat() || [];
   const getByFarPoolData: PoolProps[] = rawPoolData;
 
-  return { ref, getByFarPoolData };
+  return { ref, isLoading, getByFarPoolData };
 }
