@@ -34,5 +34,5 @@ export interface TimeLineContent {
   kcal?: number;
   strokes?: Array<StrokeInfo>;
   isAchieved?: boolean;
-  imageUrl: string;
+  imageUrl?: string;
 }
