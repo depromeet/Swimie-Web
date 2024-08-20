@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import { DefaultProfileIcon, Image } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { convertTimeToElapsedTime, getFormatDate } from '@/utils';
 
@@ -14,6 +14,7 @@ export interface NewsItemWrapperProps {
   memberNickName: string;
   recordAt: string;
   createdAt: string;
+  isLast?: boolean;
 }
 
 export const NewsItemWrapper = ({
@@ -22,13 +23,12 @@ export const NewsItemWrapper = ({
   memberNickName,
   recordAt,
   createdAt,
+  isLast,
   children,
 }: PropsWithChildren<NewsItemWrapperProps>) => {
   const { month, day } = getFormatDate({ dateStr: recordAt });
-  console.log(createdAt);
-  console.log(new Date());
   return (
-    <li>
+    <li className={cx(containerStyles, isLast ? emptyStyle : lastItemStyles)}>
       <div className={userInfoStyles}>
         <div className={userProfileImageWrapperStyles}>
           {isRecentNews && <div className={newMarkStyles} />}
@@ -53,6 +53,14 @@ export const NewsItemWrapper = ({
     </li>
   );
 };
+
+const emptyStyle = '';
+
+const containerStyles = css({ py: '32px' });
+const lastItemStyles = css({
+  borderBottom: '2px solid',
+  borderColor: 'line.solid.alternative',
+});
 
 const userInfoStyles = flex({
   position: 'relative',
