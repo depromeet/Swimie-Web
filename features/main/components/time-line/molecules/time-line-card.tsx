@@ -14,16 +14,24 @@ interface TimeLineCardLayoutProps {
 }
 
 interface TimeLineCardProps {
+  isViewDate?: boolean;
   content: TimeLineContent;
 }
 
-export const TimeLineCard = ({ content }: TimeLineCardProps) => {
+export const TimeLineCard = ({
+  isViewDate = true,
+  content,
+}: TimeLineCardProps) => {
   const { recordAt } = content;
-  return (
-    <TimeLineCardLayout date={recordAt}>
-      <TimeLineCardBody {...content} />
-    </TimeLineCardLayout>
-  );
+
+  if (isViewDate)
+    return (
+      <TimeLineCardLayout date={recordAt}>
+        <TimeLineCardBody {...content} />
+      </TimeLineCardLayout>
+    );
+
+  return <TimeLineCardBody {...content} />;
 };
 
 const TimeLineCardLayout = ({
