@@ -19,4 +19,5 @@ export * from './success-check-icon';
 export * from './swim-icon';
 export * from './swimmer-icon';
 export * from './triangle-arrow-icon';
+export * from './triangle-arrow-icon-reverse';
 export * from './types';

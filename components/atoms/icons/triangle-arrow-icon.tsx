@@ -1,34 +1,25 @@
-// import { css } from '@/styled-system/css';
-import { getRotateDegree } from '@/utils/icons';
-
-import type { Directions } from './types';
-
 interface TriangleArrowIconProps extends React.SVGProps<SVGSVGElement> {
   color?: string;
-  direction: Directions;
 }
 
 export const TriangleArrowIcon = ({
   color = '#37383C',
-  direction,
   width,
   height,
   ...props
 }: TriangleArrowIconProps) => {
-  const degree = getRotateDegree(direction);
   return (
     <svg
       {...props}
-      transform={`rotate(${degree})`}
       width={width}
       height={height}
-      viewBox="0 0 9 14"
+      viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
+        d="M6.98147 12.7602C6.51432 12.3611 6.51432 11.6389 6.98147 11.2398L13.3045 5.83663C13.9534 5.28207 14.9541 5.74323 14.9541 6.59687L14.9541 17.4031C14.9541 18.2568 13.9534 18.7179 13.3045 18.1634L6.98147 12.7602Z"
         fill={color}
-        d="M0.981468 7.7603C0.514323 7.36112 0.514321 6.639 0.981467 6.23982L7.30446 0.836695C7.95343 0.282135 8.9541 0.743294 8.9541 1.59694L8.9541 12.4032C8.9541 13.2568 7.95343 13.718 7.30446 13.1634L0.981468 7.7603Z"
         fillOpacity="0.16"
       />
     </svg>

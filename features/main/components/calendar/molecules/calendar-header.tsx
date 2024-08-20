@@ -27,8 +27,8 @@ export const CalendarHeader = () => {
     <div className={HeaderContainerStyles}>
       <div className={DateButtonContainerStyles}>
         <MoveMonthButton
-          width={9}
-          height={14}
+          width={24}
+          height={24}
           direction="left"
           onClick={handleClickPrevMonth}
         />
@@ -36,8 +36,8 @@ export const CalendarHeader = () => {
           {formatYearYY(year)}년 {month}월
         </p>
         <MoveMonthButton
-          width={9}
-          height={14}
+          width={24}
+          height={24}
           direction="right"
           onClick={handleClickNextMonth}
         />
