@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import {
@@ -31,8 +31,13 @@ export function DistancePageModal({
   defaultTotalMeter,
   defaultTotalLap,
 }: DistancePageModalProps) {
-  const { getValues, setValue } = useFormContext();
+  const { setValue, control } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
+
+  const lane = useWatch({
+    control,
+    name: 'lane',
+  }) as number;
 
   const {
     pageModalRef,
@@ -45,7 +50,7 @@ export function DistancePageModal({
     buttonLabel,
     handlers,
   } = useDistancePageModal<HTMLDivElement>(
-    getValues('lane') as number,
+    lane,
     defaultStrokes,
     defaultTotalMeter,
     defaultTotalLap,

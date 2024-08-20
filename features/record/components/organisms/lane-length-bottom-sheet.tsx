@@ -1,12 +1,14 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { useFormContext } from 'react-hook-form';
+import { useAtom, useAtomValue } from 'jotai';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { BottomSheet } from '@/components/molecules';
 import { flex } from '@/styled-system/patterns';
 
+import { laneOptions } from '../../constants';
 import { isLaneLengthBottomSheetOpen } from '../../store';
+import { formSubInfoState } from '../../store/form-sub-info';
 import { SelectList } from '../molecules';
 
 interface LaneLengthBottomSheetProps {
@@ -17,17 +19,23 @@ interface LaneLengthBottomSheetProps {
  * @param title 레인 길이 선택 bottom-sheet 제목
  */
 export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
-  const laneOptions = [
-    {
-      index: 0,
-      label: '25m',
-    },
-    { index: 1, label: '50m' },
-  ];
-  const { getValues, setValue } = useFormContext();
+  const { getValues, setValue, control } = useFormContext();
   const [isOpen, setIsOpen] = useAtom(isLaneLengthBottomSheetOpen);
+  const formSubInfo = useAtomValue(formSubInfoState);
+
+  const totalDistance = useWatch({
+    control,
+    name: 'totalDistance',
+  }) as string;
 
   const handleSelectLaneLength = (value: string) => {
+    if (formSubInfo.isDistanceLapModified && value === laneOptions[0].label)
+      setValue('totalDistance', Number(totalDistance?.slice(0, -1)) / 2 + 'm');
+    else if (
+      formSubInfo.isDistanceLapModified &&
+      value === laneOptions[1].label
+    )
+      setValue('totalDistance', Number(totalDistance?.slice(0, -1)) * 2 + 'm');
     setValue('laneMeter', value);
     setValue('lane', Number(value.slice(0, -1)));
   };
