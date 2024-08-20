@@ -28,6 +28,7 @@ const barStyles = cva({
     height: '24px',
     backgroundColor: 'fill.normal',
     borderRadius: '4px',
+    animation: 'skeleton 1.5s infinite',
   },
   variants: {
     length: {
