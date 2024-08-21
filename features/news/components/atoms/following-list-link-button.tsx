@@ -76,7 +76,7 @@ export const FollowingListLinkButton = () => {
 
 const linkStyles = flex({
   position: 'relative',
-  top: '-12px',
+  top: '-16px',
 });
 
 const containerStyles = flex({
