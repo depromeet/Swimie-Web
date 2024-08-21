@@ -22,21 +22,21 @@ export function useRecordForm() {
     isLaneLengthBottomSheetOpen,
   );
 
-  const onOpenPoolSearchPageModal = () => {
+  const openPoolSearchPageModal = () => {
     setIsPoolSearchPageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
-  const onOpenDistancePageModal = () => {
+  const openDistancePageModal = () => {
     setIsDistancePageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
-  const onOpenStartTimeBottomSheet = () => {
+  const openStartTimeBottomSheet = () => {
     setTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'start',
@@ -44,7 +44,7 @@ export function useRecordForm() {
     }));
   };
 
-  const onOpenEndTimeBottomSheet = () => {
+  const openEndTimeBottomSheet = () => {
     setTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'end',
@@ -52,7 +52,7 @@ export function useRecordForm() {
     }));
   };
 
-  const onOpenLaneLengthBottomSheet = () => {
+  const openLaneLengthBottomSheet = () => {
     setIsLaneLengthBottomSheetOpen(true);
   };
 
@@ -89,11 +89,11 @@ export function useRecordForm() {
     getBlobData,
     modifySubmitData,
     handlers: {
-      onOpenPoolSearchPageModal,
-      onOpenDistancePageModal,
-      onOpenStartTimeBottomSheet,
-      onOpenEndTimeBottomSheet,
-      onOpenLaneLengthBottomSheet,
+      openPoolSearchPageModal,
+      openDistancePageModal,
+      openStartTimeBottomSheet,
+      openEndTimeBottomSheet,
+      openLaneLengthBottomSheet,
       onChangeIsLoading,
     },
   };
