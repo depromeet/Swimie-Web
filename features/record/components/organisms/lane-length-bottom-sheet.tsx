@@ -4,6 +4,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { BottomSheet } from '@/components/molecules';
+import { usePreventBodyScroll } from '@/hooks';
 import { flex } from '@/styled-system/patterns';
 
 import { laneOptions } from '../../constants';
@@ -22,6 +23,8 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
   const { getValues, setValue, control } = useFormContext();
   const [isOpen, setIsOpen] = useAtom(isLaneLengthBottomSheetOpen);
   const formSubInfo = useAtomValue(formSubInfoState);
+
+  usePreventBodyScroll({ isOpen });
 
   const totalDistance = useWatch({
     control,
