@@ -9,7 +9,7 @@ export type Cheer = {
 } & DetailCheerItem;
 
 const fetchCheer = async (params: Cheer) => {
-  const res = await fetch(`/api/reaction`, {
+  const res = await fetch(`/api/memory/reaction`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

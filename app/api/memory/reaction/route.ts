@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     status: number;
     code: 'REACTION_1' | 'REACTION_2';
     message: string;
-  }>(`/reaction`, 'POST', body);
+  }>(`/memory/reaction`, 'POST', body);
 
   return NextResponse.json(data);
 }
