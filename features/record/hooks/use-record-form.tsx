@@ -1,8 +1,9 @@
 'use client';
 
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 
+import { usePreventBodyScroll } from '@/hooks';
 import { formatDateToDash } from '@/utils';
 
 import { SubmitRecordRequestProps } from '../apis';
@@ -15,29 +16,40 @@ import {
 
 export function useRecordForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
-  const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
-  const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-  const setIsLaneLengthBottomSheetOpen = useSetAtom(
+  const [poolSearchPageModalOpen, setPoolSearchPageModalOpen] = useAtom(
+    isPoolSearchPageModalOpen,
+  );
+  const [distancePageModalOpen, setDistancePageModalOpen] = useAtom(
+    isDistancePageModalOpen,
+  );
+  const [swimTimeBottomSheetState, setSwimTimeBottomSheetState] =
+    useAtom(timeBottomSheetState);
+  const [laneLengthBottomSheetOpen, setLaneLengthBottomSheetOpen] = useAtom(
     isLaneLengthBottomSheetOpen,
   );
 
+  const isPageModalOpened =
+    poolSearchPageModalOpen.isOpen || distancePageModalOpen.isOpen;
+  const isBottomSheetOpened =
+    swimTimeBottomSheetState.isOpen || laneLengthBottomSheetOpen;
+  usePreventBodyScroll({ isOpen: isPageModalOpened || isBottomSheetOpened });
+
   const onOpenPoolSearchPageModal = () => {
-    setIsPoolSearchPageModalOpen({
+    setPoolSearchPageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
   const onOpenDistancePageModal = () => {
-    setIsDistancePageModalOpen({
+    setDistancePageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
   const onOpenStartTimeBottomSheet = () => {
-    setTimeBottomSheetState((prev) => ({
+    setSwimTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'start',
       isOpen: true,
@@ -45,7 +57,7 @@ export function useRecordForm() {
   };
 
   const onOpenEndTimeBottomSheet = () => {
-    setTimeBottomSheetState((prev) => ({
+    setSwimTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'end',
       isOpen: true,
@@ -53,7 +65,7 @@ export function useRecordForm() {
   };
 
   const onOpenLaneLengthBottomSheet = () => {
-    setIsLaneLengthBottomSheetOpen(true);
+    setLaneLengthBottomSheetOpen(true);
   };
 
   const onChangeIsLoading = (loadingState: boolean) => {
