@@ -17,12 +17,12 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
   const handleClickPreviousDate = () => {
     if (!data.prevId) return;
-    router.push(`/record-detail/${data.prevId}`);
+    router.replace(`/record-detail/${data.prevId}`);
   };
 
   const handleClickNextDate = () => {
     if (!data.nextId) return;
-    router.push(`/record-detail/${data.nextId}`);
+    router.replace(`/record-detail/${data.nextId}`);
   };
 
   const {
