@@ -9,7 +9,7 @@ export * from './default-image-icon';
 export * from './default-profile-icon';
 export * from './delete-icon';
 export { DownArrowIcon } from './down-arrow-icon';
-export * from './find-friends-icon';
+export * from './find-member-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
 export * from './loading-icon';
 export * from './logo-icon';

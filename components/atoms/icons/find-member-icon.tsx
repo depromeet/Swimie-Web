@@ -1,4 +1,4 @@
-export const FindFriendsIcon = ({
+export const FindMemberIcon = ({
   width,
   height,
 }: React.SVGProps<SVGSVGElement>) => {
