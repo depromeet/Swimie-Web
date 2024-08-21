@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
-import { Image, SwimmerIcon } from '@/components/atoms';
+import { DividerIcon, Image, SwimmerIcon } from '@/components/atoms';
 import { TimeLineContent } from '@/features/main/types';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -83,7 +83,12 @@ const TimeLineCardBody = ({
           )}
           <div className={descriptionStyles}>
             {startTime && endTime && <p>{`${startTime} ~ ${endTime}`}</p>}
-            {kcal && <p>{kcal}kcal</p>}
+            {kcal && (
+              <>
+                <DividerIcon />
+                <p>{kcal}kcal</p>
+              </>
+            )}
           </div>
         </div>
         {imageUrl && (
@@ -141,6 +146,7 @@ const completeStyles = flex({
 
 const descriptionStyles = flex({
   gap: '14px',
+  alignItems: 'center',
   textStyle: 'label1.normal',
   fontWeight: 'medium',
   color: 'neutral.70',
