@@ -5,8 +5,8 @@ import { getFormatDate } from '@/utils';
 
 type DatePicker = {
   recordDateStr: string;
-  onClickPrevious: () => void;
-  onClickNext: () => void;
+  onClickPrevious?: () => void;
+  onClickNext?: () => void;
 };
 
 export const DatePicker = ({
@@ -21,13 +21,17 @@ export const DatePicker = ({
 
   return (
     <div className={containerStyle}>
-      <button onClick={onClickPrevious}>
-        <DateLeftArrowIcon />
-      </button>
+      {onClickPrevious && (
+        <button onClick={onClickPrevious}>
+          <DateLeftArrowIcon />
+        </button>
+      )}
       <p className={textStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
-      <button onClick={onClickNext}>
-        <DateRightArrowIcon />
-      </button>
+      {onClickNext && (
+        <button onClick={onClickNext}>
+          <DateRightArrowIcon />
+        </button>
+      )}
     </div>
   );
 };

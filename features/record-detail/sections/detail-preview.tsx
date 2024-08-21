@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules';
 import placeholderImage from '@/public/images/fallbackImage.png';
@@ -11,12 +13,16 @@ import { DatePicker, SwimStatsItem, SwimToolItem } from '../components';
 import { type RecordDetailType } from '../types';
 
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
+  const router = useRouter();
+
   const handleClickPreviousDate = () => {
-    console.log('prev');
+    if (!data.prevId) return;
+    router.push(`/record-detail/${data.prevId}`);
   };
 
   const handleClickNextDate = () => {
-    console.log('next');
+    if (!data.nextId) return;
+    router.push(`/record-detail/${data.nextId}`);
   };
 
   const {
@@ -48,8 +54,8 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         {/* 날짜 선택 */}
         <DatePicker
           recordDateStr={recordAt}
-          onClickPrevious={handleClickPreviousDate}
-          onClickNext={handleClickNextDate}
+          onClickPrevious={data.prevId ? handleClickPreviousDate : undefined}
+          onClickNext={data.nextId ? handleClickNextDate : undefined}
         />
 
         {/* 파도 svg */}
