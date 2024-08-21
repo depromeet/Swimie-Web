@@ -34,7 +34,7 @@ export const CheerProgress = ({
       const removeTimeout = setTimeout(() => {
         setIsVisible(false);
         onChangeOpen(false);
-      }, 1500); // wait for fade-out transition to complete
+      }, 1500);
 
       return () => {
         clearTimeout(hideTimeout);
