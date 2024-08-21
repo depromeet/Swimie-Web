@@ -7,15 +7,24 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { useCheer, useCheerPreviewList } from '../apis';
-import { CheerBottomSheet, CheerItem, CheerModal } from '../components';
+import {
+  CheerBottomSheet,
+  CheerItem,
+  CheerModal,
+  CheerProgress,
+} from '../components';
 import { initialCheerList } from '../data';
-import { RecordDetailType } from '../types';
+import { DetailCheerItemSelected, RecordDetailType } from '../types';
 
 export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
-  const { data: cheerPreviewData } = useCheerPreviewList(data.id);
   const { mutate: mutateCheer } = useCheer();
+  const { data: cheerPreviewData, refetch: refetchCheer } = useCheerPreviewList(
+    data.id,
+  );
 
   const [cheerList, setCheerList] = useState(initialCheerList);
+  const [selectedCheerItem, setSelectedCheerItem] =
+    useState<DetailCheerItemSelected>();
 
   const {
     isOpen: isOpenBottomSheet,
@@ -44,11 +53,31 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
     const selectedCheerItem = cheerList.find(({ isSelected }) => isSelected);
     if (!selectedCheerItem) return;
 
-    mutateCheer({
-      emoji: selectedCheerItem.emoji,
-      comment: selectedCheerItem.comment,
-      memoryId: data.id,
-    });
+    mutateCheer(
+      {
+        emoji: selectedCheerItem.emoji,
+        comment: selectedCheerItem.comment,
+        memoryId: data.id,
+      },
+      {
+        onSuccess: ({ status, code }) => {
+          if (status === 400 || code === 'REACTION_2') {
+            // TODO: api 에러 예외처리
+            alert('자신의 게시물 || 3개의 응원 등록 예외처리');
+            return;
+          }
+
+          void refetchCheer();
+          setSelectedCheerItem(selectedCheerItem);
+          closeBottomSheet();
+        },
+      },
+    );
+  };
+
+  const handleChangeSelectedItem = (isOpen: boolean) => {
+    if (isOpen) return;
+    setSelectedCheerItem(undefined);
   };
 
   const { isMyMemory } = data;
@@ -83,6 +112,13 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
         </button>
       )}
 
+      <CheerProgress
+        isOpen={Boolean(selectedCheerItem)}
+        onChangeOpen={handleChangeSelectedItem}
+        authorName={data.member?.name ?? ''}
+        cheerItem={selectedCheerItem}
+      />
+
       {/* NOTE: 응원 모달 */}
       <CheerModal
         isOpen={isOpenModal}
@@ -107,6 +143,7 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
 const slider = {
   containerStyle: css({
     overflowX: 'scroll',
+    backgroundColor: 'white',
 
     '&::-webkit-scrollbar': {
       display: 'none',
