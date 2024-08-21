@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -154,11 +152,17 @@ export const Button = ({
     }),
   );
 
-  const iconSize = size === 'large' ? 20 : size === 'medium' ? 18 : 16;
+  const iconSizeMap = {
+    large: '24px',
+    medium: '20px',
+    small: '16px',
+  };
+
+  const iconSize = iconSizeMap[size];
 
   const iconWrapperStyles = flex({
-    width: `${iconSize}px`,
-    height: `${iconSize}px`,
+    width: iconSize,
+    height: iconSize,
     alignItems: 'center',
     justifyContent: 'center',
   });
@@ -168,27 +172,11 @@ export const Button = ({
       {(leftIconSrc || isLoading) && (
         <div className={iconWrapperStyles}>
           {isLoading && <LoadingButtonIcon />}
-          {leftIconSrc && (
-            <Image
-              src={leftIconSrc}
-              alt="left icon"
-              width={iconSize}
-              height={iconSize}
-            />
-          )}
+          {!isLoading && leftIconSrc}
         </div>
       )}
       {label}
-      {rightIconSrc && (
-        <div className={iconWrapperStyles}>
-          <Image
-            src={rightIconSrc}
-            alt="right icon"
-            width={iconSize}
-            height={iconSize}
-          />
-        </div>
-      )}
+      {rightIconSrc && <div className={iconWrapperStyles}>{rightIconSrc}</div>}
     </button>
   );
 };

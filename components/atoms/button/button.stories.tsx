@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { css } from '@/styled-system/css';
 
+import BadgeIcon from '../icons/badge-icon';
+import StatisticsIcon from '../icons/statistics-icon';
 import { Button } from './button';
 
 const meta: Meta<typeof Button> = {
@@ -41,10 +43,16 @@ const meta: Meta<typeof Button> = {
       control: 'text',
     },
     leftIconSrc: {
-      control: 'text',
+      control: 'object',
+      table: {
+        disable: true,
+      },
     },
     rightIconSrc: {
-      control: 'text',
+      control: 'object',
+      table: {
+        disable: true,
+      },
     },
     className: {
       control: 'text',
@@ -75,5 +83,27 @@ export const text: Story = {
   args: {
     ...Default.args,
     variant: 'text',
+  },
+};
+
+export const leftIcon: Story = {
+  args: {
+    ...Default.args,
+    leftIconSrc: <BadgeIcon />,
+  },
+};
+
+export const rightIcon: Story = {
+  args: {
+    ...Default.args,
+    rightIconSrc: <StatisticsIcon />,
+  },
+};
+
+export const bothIcon: Story = {
+  args: {
+    ...Default.args,
+    leftIconSrc: <BadgeIcon />,
+    rightIconSrc: <StatisticsIcon />,
   },
 };
