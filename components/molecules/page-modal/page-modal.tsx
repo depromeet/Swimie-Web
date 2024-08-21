@@ -5,6 +5,7 @@ import './page-modal.css';
 import { ForwardedRef, forwardRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
+import { usePreventBodyScroll } from '@/hooks';
 import { css, cx } from '@/styled-system/css';
 
 import { PageModalProps } from './type';
@@ -20,6 +21,7 @@ export const PageModal = forwardRef(
     { isOpen, jumpDirection, children, className }: PageModalProps,
     ref: ForwardedRef<HTMLElement>,
   ) => {
+    usePreventBodyScroll({ isOpen });
     return (
       <CSSTransition
         nodeRef={ref}

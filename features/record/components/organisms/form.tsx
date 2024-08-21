@@ -1,21 +1,25 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { formatDateToDash, formatDateToKorean, getToday } from '@/utils';
+import { formatDateToKorean, getToday } from '@/utils';
 
 import {
   RecordRequestProps,
-  SubmitRecordRequestProps,
   useGetImagePresignedUrl,
   useImageEdit,
   useImagePresignUrl,
@@ -24,12 +28,7 @@ import {
   useMemoryEdit,
   usePullEditMemory,
 } from '../../apis';
-import {
-  isDistancePageModalOpen,
-  isLaneLengthBottomSheetOpen,
-  isPoolSearchPageModalOpen,
-  timeBottomSheetState,
-} from '../../store';
+import { useRecordForm } from '../../hooks';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { DiarySection } from './diary-section';
@@ -55,8 +54,10 @@ export function Form() {
       recordAt: date ? formatDateToKorean(date) : getToday(),
       startTime: '',
       endTime: '',
+      poolName: '',
       laneMeter: '25m',
       lane: 25,
+      totalDistance: '',
       strokes: [],
       imageIdList: [],
     },
@@ -106,38 +107,34 @@ export function Form() {
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
 
-  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
-  const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
-  const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
-  const setIsLaneLengthBottomSheetOpen = useSetAtom(
-    isLaneLengthBottomSheetOpen,
-  );
+  const { isLoading, getBlobData, modifySubmitData, handlers } =
+    useRecordForm();
 
-  const startTime = methods.watch('startTime');
-  const endTime = methods.watch('endTime');
+  const startTime = useWatch({
+    control: methods.control,
+    name: 'startTime',
+  });
+  const endTime = useWatch({
+    control: methods.control,
+    name: 'endTime',
+  });
 
-  const getBlobData = (file: File) => {
-    const blobData = new Blob([file]);
-    return blobData;
+  const handleRecordEditSuccess = () => {
+    handlers.onChangeIsLoading(false);
+    router.replace(
+      `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+    );
   };
 
-  const modifySubmitData = (data: SubmitRecordRequestProps) => {
-    const modifiedData = { ...data };
-
-    modifiedData.recordAt = formatDateToDash(modifiedData.recordAt);
-    Object.keys(modifiedData).map((field) => {
-      const key = field as keyof typeof modifiedData;
-      const isEmptyString =
-        typeof modifiedData[key] === 'string' && modifiedData[key] === '';
-      const isNotANumber =
-        typeof modifiedData[key] === 'number' &&
-        isNaN(modifiedData[key] as number);
-      if (isEmptyString || isNotANumber) {
-        delete modifiedData[key];
-      }
-    });
-
-    return modifiedData;
+  const handleRecordMakeSuccess = (memoryRes: {
+    rank: number;
+    memoryId: number;
+    month: number;
+  }) => {
+    handlers.onChangeIsLoading(false);
+    router.replace(
+      `/record/success?rank=${memoryRes.rank}&memoryId=${memoryRes.memoryId}&month=${memoryRes.month}`,
+    );
   };
 
   //Todo: 기록 에러 발생 시 처리
@@ -146,6 +143,7 @@ export function Form() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
     const submitData = modifySubmitData(restData);
+    handlers.onChangeIsLoading(true);
     if (isEditMode) {
       //이미지가 수정 되었을 때
       if (formSubInfo.imageFiles.length > 0) {
@@ -165,10 +163,9 @@ export function Form() {
           },
           memoryId: Number(searchParams.get('memoryId')),
         });
-        if (memoryRes.status === 200)
-          router.replace(
-            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
-          );
+        if (memoryRes.status === 200) {
+          handleRecordEditSuccess();
+        }
       }
       //이미지가 수정되지 않았을 때
       else {
@@ -176,10 +173,9 @@ export function Form() {
           formData: submitData,
           memoryId: Number(searchParams.get('memoryId')),
         });
-        if (memoryEditRes)
-          router.replace(
-            `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
-          );
+        if (memoryEditRes.status === 200) {
+          handleRecordEditSuccess();
+        }
       }
     }
     //기록 생성 모드일 때
@@ -198,18 +194,16 @@ export function Form() {
           ...submitData,
           imageIdList: [getImagePresignedUrlRes.data[0].imageId],
         });
-        if (memoryRes.status === 200)
-          router.replace(
-            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-          );
+        if (memoryRes.status === 200) {
+          handleRecordMakeSuccess(memoryRes.data);
+        }
       }
       //기록에서 이미지가 포함되지 않았을 때
       else {
         const memoryRes = await memory(submitData);
-        if (memoryRes.status === 200)
-          router.replace(
-            `/record/success?rank=${memoryRes.data.rank}&memoryId=${memoryRes.data.memoryId}&month=${memoryRes.data.month}`,
-          );
+        if (memoryRes.status === 200) {
+          handleRecordMakeSuccess(memoryRes.data);
+        }
       }
     }
   };
@@ -232,29 +226,17 @@ export function Form() {
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
-              onClick={() =>
-                setTimeBottomSheetState((prev) => ({
-                  ...prev,
-                  variant: 'start',
-                  isOpen: true,
-                }))
-              }
+              onClick={() => handlers.openStartTimeBottomSheet()}
             />
             <span className={css({ fontSize: '30px' })}>-</span>
             <SelectTextField
               fieldName="endTime"
               placeholder="00:00"
+              onClick={() => handlers.openEndTimeBottomSheet()}
               wrapperClassName={cx(
                 timeStyles.field,
                 css({ marginTop: '24px' }),
               )}
-              onClick={() =>
-                setTimeBottomSheetState((prev) => ({
-                  ...prev,
-                  variant: 'end',
-                  isOpen: true,
-                }))
-              }
             />
           </div>
           <SelectTextField
@@ -262,32 +244,23 @@ export function Form() {
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={() =>
-              setIsPoolSearchPageModalOpen({
-                isOpen: true,
-                jumpDirection: 'forward',
-              })
-            }
+            onClick={() => handlers.openPoolSearchPageModal()}
           />
           <SelectTextField
             fieldName="laneMeter"
             label="레인 길이"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={() => setIsLaneLengthBottomSheetOpen(true)}
+            onClick={() => handlers.openLaneLengthBottomSheet()}
           />
           <SelectTextField
             fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
-            onClick={() =>
-              setIsDistancePageModalOpen({
-                isOpen: true,
-                jumpDirection: 'forward',
-              })
-            }
+            onClick={() => handlers.openDistancePageModal()}
           />
           <div className={buttonStyles.layout}>
             <Button
+              isLoading={isLoading}
               buttonType="primary"
               variant="solid"
               label={isEditMode ? '수정하기' : '기록하기'}
@@ -319,11 +292,7 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal
-        defaultStrokes={data?.data.strokes}
-        defaultTotalMeter={data?.data.totalMeter}
-        defaultTotalLap={data?.data.totalLap}
-      />
+      <DistancePageModal defaultStrokes={data?.data.strokes} />
       <TimeBottomSheet />
     </FormProvider>
   );

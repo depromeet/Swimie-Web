@@ -63,7 +63,6 @@ export function SelectTextField({
               className,
             )}
             onClick={onClick}
-            onChange={field.onChange}
           />
         }
 

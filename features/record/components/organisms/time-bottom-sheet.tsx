@@ -7,6 +7,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
+import { usePreventBodyScroll } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -20,6 +21,8 @@ export function TimeBottomSheet() {
   const { width, showTimePicker } = useTimeBottomSheet(
     timeBottmSheetState.isOpen,
   );
+
+  usePreventBodyScroll({ isOpen: timeBottmSheetState.isOpen });
 
   const handleTimeChange = (date: dayjs.Dayjs) => {
     setTimeBottmSheetState((prev) => ({ ...prev, time: date.format('HH:mm') }));
