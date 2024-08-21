@@ -8,6 +8,7 @@ export * from './date-arrow-icon';
 export * from './default-image-icon';
 export * from './default-profile-icon';
 export * from './delete-icon';
+export * from './divider-icon';
 export { DownArrowIcon } from './down-arrow-icon';
 export { LeftArrowIcon } from './left-arrow-icon';
 export * from './loading-icon';
