@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import { fetchData } from '@/apis/fetch-data';
-import { LoadingArea } from '@/components/atoms';
+import { LeftArrowIcon, LoadingArea } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
 import {
   DetailDescriptionSection,
@@ -11,6 +11,13 @@ import {
 import { EditButton } from '@/features/record-detail/components';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
+);
 
 const DynamicPreviewSection = dynamic(
   () =>
@@ -49,7 +56,9 @@ export default async function RecordDetail({ params }: RecordDetail) {
   return (
     <>
       <HeaderBar>
-        <HeaderBar.BackButton />
+        <HeaderBar.LeftContent>
+          <DynamicBackButton />
+        </HeaderBar.LeftContent>
         <HeaderBar.Title>
           {data.member?.name ?? '스위미'}의 수영 기록
         </HeaderBar.Title>

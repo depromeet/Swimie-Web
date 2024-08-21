@@ -1,15 +1,26 @@
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
+import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
 import { Form } from '@/features/record';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
+);
 
 export default function RecordPage() {
   return (
     <div>
       <HeaderBar className={css({ marginBottom: '24px' })}>
-        <HeaderBar.BackButton />
+        <HeaderBar.LeftContent>
+          <DynamicBackButton />
+        </HeaderBar.LeftContent>
         <HeaderBar.Title>수영 기록하기</HeaderBar.Title>
       </HeaderBar>
       {/* Title 컴포넌트 생성 시 대체 */}

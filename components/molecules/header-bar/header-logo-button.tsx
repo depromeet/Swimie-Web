@@ -1,24 +1,18 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { LogoIcon } from '@/components/atoms';
 
 interface LogoButtonProps {
-  onClickLogo?: () => void;
+  route?: string;
   className?: string;
 }
 
-export function LogoButton({ onClickLogo, className }: LogoButtonProps) {
-  const router = useRouter();
-
-  const handleLogoClick = () => {
-    onClickLogo ? onClickLogo : router.push('/');
-  };
-
+export function LogoButton({ route = '/', className }: LogoButtonProps) {
   return (
-    <button className={className} onClick={handleLogoClick}>
+    <Link href={route} className={className}>
       <LogoIcon />
-    </button>
+    </Link>
   );
 }

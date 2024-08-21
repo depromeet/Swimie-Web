@@ -1,8 +1,9 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
-import { BellIcon, SettingIcon } from '@/components/atoms';
+import { BellIcon, LogoIcon, SettingIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
 import {
   MainTab,
@@ -12,6 +13,13 @@ import {
 } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+const DynamicLogoButton = dynamic(
+  () => import('@/components/molecules').then(({ LogoButton }) => LogoButton),
+  {
+    ssr: false,
+    loading: () => <LogoIcon />,
+  },
+);
 
 const SELECT_CALENDAR_VIEW = 0;
 const SELECT_TIMELINE_VIEW = 1;
@@ -35,7 +43,9 @@ export default function Home() {
   return (
     <>
       <HeaderBar>
-        <HeaderBar.LogoButton className={css({ left: '20px' })} />
+        <HeaderBar.LeftContent className={css({ left: '20px' })}>
+          <DynamicLogoButton />
+        </HeaderBar.LeftContent>
         <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
             { component: <BellIcon />, key: 'bell' },
