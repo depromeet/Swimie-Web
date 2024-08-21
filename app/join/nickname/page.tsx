@@ -2,22 +2,14 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Button, LeftArrowIcon } from '@/components/atoms';
-import { HeaderBar } from '@/components/molecules';
+import { Button } from '@/components/atoms';
+import { BackButton, HeaderBar } from '@/components/molecules';
 import { AuthInfoAtom } from '@/store/auth';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-const DynamicBackButton = dynamic(
-  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
-  {
-    ssr: false,
-    loading: () => <LeftArrowIcon />,
-  },
-);
 
 export interface NicknameData {
   nickname: string;
@@ -82,7 +74,7 @@ export default function JoinPage() {
   return (
     <div>
       <HeaderBar.LeftContent>
-        <DynamicBackButton />
+        <BackButton />
       </HeaderBar.LeftContent>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
