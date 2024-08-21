@@ -55,7 +55,9 @@ export const CheerProgress = ({
         <div className={content.badgeStyle}>
           <p className={content.descriptionStyle}>
             {cheerItem.emoji}{' '}
-            {cheerItem.comment && <span>{cheerItem.comment}</span>}
+            {Boolean(cheerItem.comment?.length) && (
+              <span>{cheerItem.comment}</span>
+            )}
           </p>
         </div>
       </div>
@@ -87,6 +89,7 @@ const containerStyle = css({
 const content = {
   wrapperStyle: flex({
     direction: 'column',
+    alignItems: 'center',
     gap: '20px',
     position: 'fixed',
     top: '50%',
@@ -104,6 +107,7 @@ const content = {
   }),
 
   badgeStyle: css({
+    width: 'fit-content',
     p: '10px 18px',
     backgroundColor: 'white',
     rounded: '8px',
