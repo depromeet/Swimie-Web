@@ -2,11 +2,11 @@ import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
 import { flex, grid } from '@/styled-system/patterns';
 
-import { DetailCheerItem } from '../types';
+import { DetailCheerItemSelected } from '../types';
 import { CheerItem } from './cheer-item';
 
 type CheerBottomSheet = {
-  cheerList: DetailCheerItem[];
+  cheerList: DetailCheerItemSelected[];
   onClickCheerItem: (index: number) => void;
   onClickSendCheer: () => void;
 } & BottomSheetProps;
@@ -42,6 +42,7 @@ export const CheerBottomSheet = ({
           variant="solid"
           buttonType="primary"
           onClick={onClickSendCheer}
+          disabled={!cheerList.find(({ isSelected }) => isSelected)}
         />
       </div>
     </BottomSheet>
