@@ -112,6 +112,7 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
         </button>
       )}
 
+      {/* NOTE: 응원 Progress 모달 */}
       <CheerProgress
         isOpen={Boolean(selectedCheerItem)}
         onChangeOpen={handleChangeSelectedItem}
