@@ -6,48 +6,15 @@ import { useBottomSheet, useDragScroll, useModal } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useCheerPreviewList } from '../apis';
+import { useCheer, useCheerPreviewList } from '../apis';
 import { CheerBottomSheet, CheerItem, CheerModal } from '../components';
+import { initialCheerList } from '../data';
 import { RecordDetailType } from '../types';
-
-const initialCheerList = [
-  {
-    emoji: '🔥',
-    comment: '오늘도 힘내요!',
-    isSelected: false,
-  },
-  {
-    emoji: '🦭',
-    comment: '물개세요?',
-    isSelected: false,
-  },
-  {
-    emoji: '🏊',
-    isSelected: false,
-  },
-  {
-    emoji: '👏',
-    isSelected: false,
-  },
-  {
-    emoji: '🏊‍♂️',
-    comment: '진정한 수영인으로 인정합니다',
-    isSelected: false,
-  },
-  {
-    emoji: '🏊‍♂️',
-    comment: '다음에 같이 수영해요',
-    isSelected: false,
-  },
-  {
-    emoji: '😲',
-    comment: '대단해요!',
-    isSelected: false,
-  },
-];
 
 export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   const { data: cheerPreviewData } = useCheerPreviewList(data.id);
+  const { mutate: mutateCheer } = useCheer();
+
   const [cheerList, setCheerList] = useState(initialCheerList);
 
   const {
@@ -74,14 +41,14 @@ export const DetailCheer = ({ data }: { data: RecordDetailType }) => {
   };
 
   const handleClickSendCheer = () => {
-    const selectedCheerList = cheerList.filter(({ isSelected }) => isSelected);
-    if (!selectedCheerList.length) {
-      alert('응원 문구를 선택해주세요.');
-      return;
-    }
+    const selectedCheerItem = cheerList.find(({ isSelected }) => isSelected);
+    if (!selectedCheerItem) return;
 
-    // TODO: 응원 보내기 api 연동
-    console.log('send!', selectedCheerList);
+    mutateCheer({
+      emoji: selectedCheerItem.emoji,
+      comment: selectedCheerItem.comment,
+      memoryId: data.id,
+    });
   };
 
   const { isMyMemory } = data;
