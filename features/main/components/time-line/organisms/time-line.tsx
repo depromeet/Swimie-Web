@@ -2,7 +2,7 @@
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
-import { formatDateToKorean } from '@/utils';
+import { formatDateToKorean, getFormatDate } from '@/utils';
 import { Fragment } from 'react';
 import { CardWrapper } from '../atoms';
 import { InfiniteScroller } from '@/components/molecules';
@@ -69,7 +69,8 @@ export const TimeLine = () => {
 const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   const grouped: { [key: string]: Array<TimeLineContent> } = contents.reduce(
     (acc: { [key: string]: Array<TimeLineContent> }, item: TimeLineContent) => {
-      const key = item.recordAt;
+      const { year, month } = getFormatDate({ dateStr: item.recordAt });
+      const key = `${year}-${month}`;
 
       if (!acc[key]) acc[key] = [];
       acc[key].push(item);
