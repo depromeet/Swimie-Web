@@ -231,11 +231,12 @@ export function Form() {
             <span className={css({ fontSize: '30px' })}>-</span>
             <SelectTextField
               fieldName="endTime"
-              isRequired
-              label="수영 시간"
               placeholder="00:00"
-              wrapperClassName={timeStyles.field}
               onClick={() => handlers.openEndTimeBottomSheet()}
+              wrapperClassName={cx(
+                timeStyles.field,
+                css({ marginTop: '24px' }),
+              )}
             />
           </div>
           <SelectTextField

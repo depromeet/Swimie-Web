@@ -11,11 +11,10 @@ interface PoolSearchResultListProps {
 export function PoolSearchResultList({
   poolSearchText,
 }: PoolSearchResultListProps) {
-  const { ref, getByFarPoolData } = useSearchPool(poolSearchText);
-
+  const { ref, isLoading, getByFarPoolData } = useSearchPool(poolSearchText);
   return (
     <ul className={resultStyles.list}>
-      {getByFarPoolData.length === 0 ? (
+      {!isLoading && getByFarPoolData.length === 0 && (
         <div className={textStyles.layout}>
           <p
             className={textStyles.noResult}
@@ -24,7 +23,9 @@ export function PoolSearchResultList({
             등록되지 않은 수영장일 수 있어요
           </p>
         </div>
-      ) : (
+      )}
+      {!isLoading &&
+        getByFarPoolData.length > 0 &&
         getByFarPoolData.map((result, i) => (
           <PoolSearchResultElement
             key={result.poolId}
@@ -33,22 +34,20 @@ export function PoolSearchResultList({
             ref={ref}
             className={resultStyles.element}
           />
-        ))
-      )}
+        ))}
     </ul>
   );
 }
 
 const resultStyles = {
   list: css({
-    padding: '8px 0',
+    padding: '16px 0',
     marginBottom: '8px',
     overflow: 'auto',
     WebkitOverflowScrolling: 'touch',
     scrollbarWidth: 'none',
   }),
   element: css({
-    padding: '6px 10px',
     marginBottom: '8px',
   }),
 };

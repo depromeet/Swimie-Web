@@ -14,11 +14,11 @@ async function searchPoolInitial() {
   return res.json();
 }
 
-export function useSearchPoolInitial(nameQuery: string) {
+export function useSearchPoolInitial(nameQuery: string, isOpen: boolean) {
   return useQuery<SearchPoolInitialResultResponse>({
     queryKey: ['useSearchPoolInitial'],
     queryFn: searchPoolInitial,
     retry: 1,
-    enabled: !nameQuery,
+    enabled: !nameQuery && isOpen,
   });
 }
