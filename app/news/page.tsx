@@ -1,9 +1,14 @@
 import { NewsList } from '@/features/news';
+import { css } from '@/styled-system/css';
 
 export default function NewsPage() {
   return (
-    <div>
+    <section className={sectionStyle}>
       <NewsList />
-    </div>
+    </section>
   );
 }
+
+const sectionStyle = css({
+  px: '20px',
+});
