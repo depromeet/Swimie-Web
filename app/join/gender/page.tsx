@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { Button, LeftArrowIcon } from '@/components/atoms';
-import { HeaderBar } from '@/components/molecules';
+import { Button } from '@/components/atoms';
+import { BackButton, HeaderBar } from '@/components/molecules';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-const DynamicBackButton = dynamic(
-  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
-  {
-    ssr: false,
-    loading: () => <LeftArrowIcon />,
-  },
-);
 
 export interface GenderData {
   gender: 'W' | 'M';
@@ -75,7 +67,7 @@ export default function JoinPage() {
     <div>
       <HeaderBar className={headerStyles}>
         <HeaderBar.LeftContent>
-          <DynamicBackButton />
+          <BackButton />
         </HeaderBar.LeftContent>
       </HeaderBar>
       <div className={pageStyles}>

@@ -3,7 +3,7 @@
 import { debounce } from 'lodash';
 import { lazy, Suspense, useState } from 'react';
 
-import { HeaderBar, PageModal } from '@/components/molecules';
+import { BackButton, HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
@@ -14,22 +14,12 @@ const PoolSearchResultElement = lazy(() =>
     default: module.PoolSearchResultElement,
   })),
 );
-import dynamic from 'next/dynamic';
-
-import { LeftArrowIcon } from '@/components/atoms';
 
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
   import('./pool-search-result-list').then((module) => ({
     default: module.PoolSearchResultList,
   })),
-);
-const DynamicBackButton = dynamic(
-  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
-  {
-    ssr: false,
-    loading: () => <LeftArrowIcon />,
-  },
 );
 
 interface PoolSearchPageModalProps {
@@ -61,9 +51,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
       <div ref={pageModalRef}>
         <HeaderBar>
           <HeaderBar.LeftContent>
-            <DynamicBackButton
-              onClickBack={() => handlers.onClosePageModal()}
-            />
+            <BackButton onClickBack={() => handlers.onClosePageModal()} />
           </HeaderBar.LeftContent>
         </HeaderBar>
         <div className={layoutStyles}>
