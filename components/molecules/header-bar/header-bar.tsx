@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import {
   Children,
   FunctionComponent,
@@ -7,59 +6,18 @@ import {
   ReactNode,
 } from 'react';
 
-import { LeftArrowIcon, LogoIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-const DynamicBackButton = dynamic(
-  () => import('./header-back-button').then(({ BackButton }) => BackButton),
-  {
-    ssr: false,
-    loading: () => (
-      <div className={cx(leftIconStyles)}>
-        <LeftArrowIcon />
-      </div>
-    ),
-  },
-);
-const DynamicLogoButton = dynamic(
-  () => import('./header-logo-button').then(({ LogoButton }) => LogoButton),
-  {
-    ssr: false,
-    loading: () => (
-      <div className={cx(leftIconStyles)}>
-        <LogoIcon />
-      </div>
-    ),
-  },
-);
+import { leftIconStyles } from './style';
 
-interface BackButtonProps {
-  onClick?: () => void;
+interface LeftContentProps {
+  children?: ReactNode;
   className?: string;
 }
 
-function BackButton({ onClick, className }: BackButtonProps) {
-  return (
-    <DynamicBackButton
-      className={cx(leftIconStyles, className)}
-      onClickBack={onClick}
-    />
-  );
-}
-
-interface LogoButtonProps {
-  onClick?: () => void;
-  className?: string;
-}
-
-function LogoButton({ onClick, className }: LogoButtonProps) {
-  return (
-    <DynamicLogoButton
-      className={cx(leftIconStyles, className)}
-      onClickLogo={onClick}
-    />
-  );
+function LeftContent({ children, className }: LeftContentProps) {
+  return <div className={cx(leftIconStyles, className)}>{children}</div>;
 }
 
 interface TitleProps {
@@ -106,22 +64,17 @@ interface HeaderBarProps {
 }
 
 function HeaderBarLayout({ children, className }: HeaderBarProps) {
-  const backButton = getChildrenArray(
+  const leftContent = getChildrenArray(
     children,
     1,
-    (<BackButton />).type as FunctionComponent,
-  );
-  const logoButton = getChildrenArray(
-    children,
-    1,
-    (<LogoButton />).type as FunctionComponent,
+    (<LeftContent />).type as FunctionComponent,
   );
   const title = getChildrenArray(
     children,
     1,
     (<Title />).type as FunctionComponent,
   );
-  const rightIcons = getChildrenArray(
+  const rightContent = getChildrenArray(
     children,
     2,
     (<RightContent />).type as FunctionComponent,
@@ -131,10 +84,9 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
       <div style={{ height: '44px' }} className={className} />
       <header className={layoutStyles.header}>
         <div className={layoutStyles.content}>
-          {backButton}
-          {logoButton}
+          {leftContent}
           {title}
-          {rightIcons}
+          {rightContent}
         </div>
       </header>
     </>
@@ -142,8 +94,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
 }
 
 export const HeaderBar = Object.assign(HeaderBarLayout, {
-  BackButton,
-  LogoButton,
+  LeftContent,
   Title,
   RightContent,
 });
@@ -172,11 +123,6 @@ const layoutStyles = {
     gap: '24px',
   }),
 };
-
-const leftIconStyles = css({
-  position: 'absolute',
-  left: '12px',
-});
 
 const titleStyles = flex({
   justifyContent: 'center',

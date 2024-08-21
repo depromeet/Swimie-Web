@@ -1,9 +1,10 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
+import dynamic from 'next/dynamic';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { Button } from '@/components/atoms';
+import { Button, LeftArrowIcon } from '@/components/atoms';
 import {
   HeaderBar,
   PageModal,
@@ -18,6 +19,13 @@ import { useDistancePageModal } from '../../hooks';
 import { isDistancePageModalOpen } from '../../store';
 import { StrokeProps } from '../../types';
 import { StrokeDistanceFields } from './stroke-distance-fields';
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
+);
 
 interface DistancePageModalProps {
   defaultStrokes?: StrokeProps[];
@@ -137,7 +145,9 @@ export function DistancePageModal({
     >
       <div ref={pageModalRef}>
         <HeaderBar>
-          <HeaderBar.BackButton onClick={handleBackArrowClick} />
+          <HeaderBar.LeftContent>
+            <DynamicBackButton onClickBack={handleBackArrowClick} />
+          </HeaderBar.LeftContent>
         </HeaderBar>
         <h1 className={titleStyles}>수영 거리를 입력해주세요</h1>
         <section className={layout.tab}>

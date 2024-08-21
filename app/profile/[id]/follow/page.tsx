@@ -1,8 +1,16 @@
 import dynamic from 'next/dynamic';
 
+import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar, ProfileListItem } from '@/components/molecules';
 import { type FollowTab } from '@/features/follow';
 import { flex } from '@/styled-system/patterns';
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
+);
 
 const DynamicTabSection = dynamic(
   () =>
@@ -24,7 +32,9 @@ export default function ProfileFollow({
   return (
     <>
       <HeaderBar>
-        <HeaderBar.BackButton />
+        <HeaderBar.LeftContent>
+          <DynamicBackButton />
+        </HeaderBar.LeftContent>
         <HeaderBar.Title>수영왕 정지영</HeaderBar.Title>
       </HeaderBar>
       <DynamicTabSection tab={tab} />

@@ -1,6 +1,16 @@
+import dynamic from 'next/dynamic';
+
+import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
 import { AlarmElementProps, NoAlarm } from '@/features/alarm';
 import { AlarmList } from '@/features/alarm/components/organisms/alarm-list';
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
+);
 
 //Todo: 알람 불러오는 Api 연결
 export default function AlarmPage() {
@@ -51,7 +61,9 @@ export default function AlarmPage() {
   return (
     <>
       <HeaderBar>
-        <HeaderBar.BackButton />
+        <HeaderBar.LeftContent>
+          <DynamicBackButton />
+        </HeaderBar.LeftContent>
         <HeaderBar.Title>알림</HeaderBar.Title>
       </HeaderBar>
       {!dummyAlarms ? (

@@ -14,11 +14,22 @@ const PoolSearchResultElement = lazy(() =>
     default: module.PoolSearchResultElement,
   })),
 );
+import dynamic from 'next/dynamic';
+
+import { LeftArrowIcon } from '@/components/atoms';
+
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
   import('./pool-search-result-list').then((module) => ({
     default: module.PoolSearchResultList,
   })),
+);
+const DynamicBackButton = dynamic(
+  () => import('@/components/molecules').then(({ BackButton }) => BackButton),
+  {
+    ssr: false,
+    loading: () => <LeftArrowIcon />,
+  },
 );
 
 interface PoolSearchPageModalProps {
@@ -49,7 +60,11 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     >
       <div ref={pageModalRef}>
         <HeaderBar>
-          <HeaderBar.BackButton onClick={() => handlers.onClosePageModal()} />
+          <HeaderBar.LeftContent>
+            <DynamicBackButton
+              onClickBack={() => handlers.onClosePageModal()}
+            />
+          </HeaderBar.LeftContent>
         </HeaderBar>
         <div className={layoutStyles}>
           <h2 className={textStyles.title}>{title}</h2>
