@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { DetailCheerItem } from '../types';
 
-type Cheer = {
+export type Cheer = {
   memoryId: number;
 } & DetailCheerItem;
 
