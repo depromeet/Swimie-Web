@@ -53,9 +53,13 @@ export type RecordDetailType = {
 };
 
 export type DetailCheerItem = {
-  emoji?: string;
+  emoji: string;
   comment?: string;
 };
+
+export type DetailCheerItemSelected = {
+  isSelected?: boolean;
+} & DetailCheerItem;
 
 export type DetailCheerPreview = {
   reactions: CheerPreview[];
