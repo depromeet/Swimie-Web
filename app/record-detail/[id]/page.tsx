@@ -34,9 +34,21 @@ const DynamicPreviewSection = dynamic(
   },
 );
 
-const DynamicCheerSection = dynamic(
+const DynamicCheerFabSection = dynamic(
   () =>
-    import('@/features/record-detail').then(({ DetailCheer }) => DetailCheer),
+    import('@/features/record-detail').then(
+      ({ DetailCheerFabSection }) => DetailCheerFabSection,
+    ),
+  {
+    ssr: false,
+  },
+);
+
+const DynamicCheerModalSection = dynamic(
+  () =>
+    import('@/features/record-detail').then(
+      ({ DetailCheerModalSection }) => DetailCheerModalSection,
+    ),
   {
     ssr: false,
   },
@@ -71,8 +83,12 @@ export default async function RecordDetail({ params }: RecordDetail) {
 
       <article className={containerStyle}>
         <div>
-          {/* cheer section */}
-          <DynamicCheerSection data={data} />
+          {/* cheer modal section */}
+          <DynamicCheerModalSection data={data} />
+
+          {/* cheer fab section */}
+          <DynamicCheerFabSection data={data} />
+
           {/* preview section */}
           <DynamicPreviewSection data={data} />
         </div>
