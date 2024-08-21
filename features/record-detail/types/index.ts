@@ -39,6 +39,8 @@ export type RecordDetailType = {
     imageName: string;
     url: string;
   }[];
+  prevId?: number;
+  nextId?: number;
   member?: DetailMember;
   pool?: DetailPool;
   memoryDetail?: DetailMemoryDetail;
