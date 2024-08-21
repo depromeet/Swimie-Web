@@ -7,7 +7,7 @@ import { flex } from '@/styled-system/patterns';
 
 export default function RecordPage() {
   return (
-    <div>
+    <div className={css({ overflow: 'auto' })}>
       <HeaderBar className={css({ marginBottom: '24px' })}>
         <HeaderBar.BackButton />
         <HeaderBar.Title>수영 기록하기</HeaderBar.Title>

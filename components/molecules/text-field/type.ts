@@ -29,6 +29,7 @@ export interface SelectTextFieldProps
     TextFieldProps,
     'onChange' | 'inputType' | 'value' | 'unit' | 'maxLength' | 'registerName'
   > {
+  subFieldText?: string;
   fieldName?: string;
   onClick?: () => void;
 }

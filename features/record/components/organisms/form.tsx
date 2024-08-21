@@ -226,7 +226,7 @@ export function Form() {
               placeholder="00:00"
               label="수영 시간"
               wrapperClassName={timeStyles.field}
-              onClick={() => handlers.onOpenStartTimeBottomSheet()}
+              onClick={() => handlers.openStartTimeBottomSheet()}
             />
             <span className={css({ fontSize: '30px' })}>-</span>
             <SelectTextField
@@ -235,7 +235,7 @@ export function Form() {
               label="수영 시간"
               placeholder="00:00"
               wrapperClassName={timeStyles.field}
-              onClick={() => handlers.onOpenEndTimeBottomSheet()}
+              onClick={() => handlers.openEndTimeBottomSheet()}
             />
           </div>
           <SelectTextField
@@ -243,19 +243,19 @@ export function Form() {
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={() => handlers.onOpenPoolSearchPageModal()}
+            onClick={() => handlers.openPoolSearchPageModal()}
           />
           <SelectTextField
             fieldName="laneMeter"
             label="레인 길이"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={() => handlers.onOpenLaneLengthBottomSheet()}
+            onClick={() => handlers.openLaneLengthBottomSheet()}
           />
           <SelectTextField
             fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
-            onClick={() => handlers.onOpenDistancePageModal()}
+            onClick={() => handlers.openDistancePageModal()}
           />
           <div className={buttonStyles.layout}>
             <Button

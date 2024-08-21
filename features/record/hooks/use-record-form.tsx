@@ -1,9 +1,8 @@
 'use client';
 
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useState } from 'react';
 
-import { usePreventBodyScroll } from '@/hooks';
 import { formatDateToDash } from '@/utils';
 
 import { SubmitRecordRequestProps } from '../apis';
@@ -16,56 +15,45 @@ import {
 
 export function useRecordForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [poolSearchPageModalOpen, setPoolSearchPageModalOpen] = useAtom(
-    isPoolSearchPageModalOpen,
-  );
-  const [distancePageModalOpen, setDistancePageModalOpen] = useAtom(
-    isDistancePageModalOpen,
-  );
-  const [swimTimeBottomSheetState, setSwimTimeBottomSheetState] =
-    useAtom(timeBottomSheetState);
-  const [laneLengthBottomSheetOpen, setLaneLengthBottomSheetOpen] = useAtom(
+  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+  const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
+  const setTimeBottomSheetState = useSetAtom(timeBottomSheetState);
+  const setIsLaneLengthBottomSheetOpen = useSetAtom(
     isLaneLengthBottomSheetOpen,
   );
 
-  const isPageModalOpened =
-    poolSearchPageModalOpen.isOpen || distancePageModalOpen.isOpen;
-  const isBottomSheetOpened =
-    swimTimeBottomSheetState.isOpen || laneLengthBottomSheetOpen;
-  usePreventBodyScroll({ isOpen: isPageModalOpened || isBottomSheetOpened });
-
-  const onOpenPoolSearchPageModal = () => {
-    setPoolSearchPageModalOpen({
+  const openPoolSearchPageModal = () => {
+    setIsPoolSearchPageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
-  const onOpenDistancePageModal = () => {
-    setDistancePageModalOpen({
+  const openDistancePageModal = () => {
+    setIsDistancePageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
     });
   };
 
-  const onOpenStartTimeBottomSheet = () => {
-    setSwimTimeBottomSheetState((prev) => ({
+  const openStartTimeBottomSheet = () => {
+    setTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'start',
       isOpen: true,
     }));
   };
 
-  const onOpenEndTimeBottomSheet = () => {
-    setSwimTimeBottomSheetState((prev) => ({
+  const openEndTimeBottomSheet = () => {
+    setTimeBottomSheetState((prev) => ({
       ...prev,
       variant: 'end',
       isOpen: true,
     }));
   };
 
-  const onOpenLaneLengthBottomSheet = () => {
-    setLaneLengthBottomSheetOpen(true);
+  const openLaneLengthBottomSheet = () => {
+    setIsLaneLengthBottomSheetOpen(true);
   };
 
   const onChangeIsLoading = (loadingState: boolean) => {
@@ -101,11 +89,11 @@ export function useRecordForm() {
     getBlobData,
     modifySubmitData,
     handlers: {
-      onOpenPoolSearchPageModal,
-      onOpenDistancePageModal,
-      onOpenStartTimeBottomSheet,
-      onOpenEndTimeBottomSheet,
-      onOpenLaneLengthBottomSheet,
+      openPoolSearchPageModal,
+      openDistancePageModal,
+      openStartTimeBottomSheet,
+      openEndTimeBottomSheet,
+      openLaneLengthBottomSheet,
       onChangeIsLoading,
     },
   };

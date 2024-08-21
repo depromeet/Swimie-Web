@@ -59,7 +59,6 @@ export function SelectTextField({
             placeholder={placeholder}
             className={cx(css(inputStyles), className)}
             onClick={onClick}
-            onChange={field.onChange}
           />
         }
 
