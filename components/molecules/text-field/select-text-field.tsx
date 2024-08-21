@@ -57,7 +57,11 @@ export function SelectTextField({
             {...field}
             readOnly
             placeholder={placeholder}
-            className={cx(css(inputStyles), className)}
+            className={cx(
+              css(inputStyles),
+              css({ cursor: 'pointer' }),
+              className,
+            )}
             onClick={onClick}
             onChange={field.onChange}
           />
