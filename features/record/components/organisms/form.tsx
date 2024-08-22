@@ -46,8 +46,9 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
-  const isEditMode = Boolean(searchParams.get('memoryId'));
-  const { data } = usePullEditMemory(Number(searchParams.get('memoryId')));
+  const memoryId = searchParams.get('memoryId');
+  const isEditMode = Boolean(memoryId);
+  const { data } = usePullEditMemory(Number(memoryId));
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -102,7 +103,7 @@ export function Form() {
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
-  const { mutateAsync: memoryEdit } = useMemoryEdit();
+  const { mutateAsync: memoryEdit } = useMemoryEdit(memoryId);
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
@@ -122,7 +123,7 @@ export function Form() {
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
     router.replace(
-      `/record/success?editMode=true&memoryId=${Number(searchParams.get('memoryId'))}`,
+      `/record/success?editMode=true&memoryId=${Number(memoryId)}`,
     );
   };
 
@@ -149,7 +150,7 @@ export function Form() {
       if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await imageEdit({
           imageNames: [formSubInfo.imageFiles[0].name],
-          memoryId: Number(searchParams.get('memoryId')),
+          memoryId: Number(memoryId),
         });
         await imagePresign({
           presignedUrl: getImagePresignedUrlRes.data[0].presignedUrl,
@@ -161,7 +162,7 @@ export function Form() {
             ...submitData,
             imageIdList: [getImagePresignedUrlRes.data[0].imageId],
           },
-          memoryId: Number(searchParams.get('memoryId')),
+          memoryId: Number(memoryId),
         });
         if (memoryRes.status === 200) {
           handleRecordEditSuccess();
@@ -171,7 +172,7 @@ export function Form() {
       else {
         const memoryEditRes = await memoryEdit({
           formData: submitData,
-          memoryId: Number(searchParams.get('memoryId')),
+          memoryId: Number(memoryId),
         });
         if (memoryEditRes.status === 200) {
           handleRecordEditSuccess();
