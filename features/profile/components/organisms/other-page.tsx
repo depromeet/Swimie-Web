@@ -10,10 +10,9 @@ import { Tab, TabItem } from '@/components/molecules';
 import { Calendar } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { ProfileType } from '@/types/profileType';
 
 import FollowButton from '../atoms/follow-button';
-
-export type ProfileType = 'statistics' | 'badge' | 'record';
 
 export function OtherPage({
   profileData,
@@ -42,7 +41,7 @@ export function OtherPage({
         </div>
       </div>
       <div className={buttonContainer}>
-        <FollowButton />
+        <FollowButton followingId={profileData.memberId} />
       </div>
       <Tab type="primary">
         <TabItem

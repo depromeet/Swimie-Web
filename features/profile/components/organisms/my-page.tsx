@@ -10,8 +10,7 @@ import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { Tab, TabItem } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-export type ProfileType = 'statistics' | 'badge' | 'record';
+import { ProfileType } from '@/types/profileType';
 
 export function MyProfile({
   profileData,
