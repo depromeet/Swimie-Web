@@ -14,6 +14,8 @@ export async function fetchData<T>(
   endpoint: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   body?: object,
+  revalidateTag?: string,
+  cache?: RequestCache,
 ): Promise<T> {
   const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
   const url = `${BASE_URL}${endpoint}`;
@@ -44,6 +46,8 @@ export async function fetchData<T>(
           'Content-Type': 'application/json',
           Authorization: refreshToken,
         },
+        next: revalidateTag ? { tags: [revalidateTag] } : undefined,
+        cache: cache ?? undefined,
       });
 
       if (refreshResponse.ok) {
