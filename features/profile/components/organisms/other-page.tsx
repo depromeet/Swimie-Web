@@ -2,78 +2,77 @@
 
 import { useState } from 'react';
 
-import { Button } from '@/components/atoms';
+import { ProfileProps } from '@/app/profile/[id]/page';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { Tab, TabItem } from '@/components/molecules';
+import { Calendar } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { ProfileType } from '@/types/profileType';
 
-export type ProfileType = 'statistics' | 'badge';
+import FollowButton from '../atoms/follow-button';
 
-export default function Profile() {
+export function OtherPage({
+  profileData,
+}: {
+  profileData: ProfileProps['data'];
+}) {
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
 
-  const handleClickTab = (tab: ProfileType) => {
-    setSelectedTab(tab);
-  };
-
   return (
-    <article className={containerStyle}>
-      <section className={profileContainer}>
-        <div className={inforWrapper}>
-          <UserImageIcon />
-          <div>
-            <div className={nameStyles}>김스위미</div>
-            <div className={introStyles}>한 줄 소개</div>
-          </div>
+    <section className={profileContainer}>
+      <div className={inforWrapper}>
+        <UserImageIcon />
+        <div>
+          <div className={nameStyles}>{profileData.nickname}</div>
+          <div className={introStyles}>{profileData.introduction}</div>
         </div>
-        <div className={friendStyles.container}>
-          <div className={friendStyles.item}>
-            <div className={friendStyles.type}>팔로워</div>
-            <div className={friendStyles.count}>0</div>
-          </div>
-          <div className={friendStyles.item}>
-            <div className={friendStyles.type}>팔로잉</div>
-            <div className={friendStyles.count}>0</div>
-          </div>
+      </div>
+      <div className={friendStyles.container}>
+        <div className={friendStyles.item}>
+          <div className={friendStyles.type}>팔로워</div>
+          <div className={friendStyles.count}>{profileData.followerCount}</div>
         </div>
-        <div className={buttonContainer}>
-          <Button
-            size="small"
-            label="프로필 편집"
-            buttonType="assistive"
-            variant="outlined"
-            className={buttonStyle}
-          />
-          <Button
-            size="small"
-            label="프로필 공유"
-            buttonType="assistive"
-            variant="outlined"
-            className={buttonStyle}
-          />
+        <div className={friendStyles.item}>
+          <div className={friendStyles.type}>팔로잉</div>
+          <div className={friendStyles.count}>{profileData.followingCount}</div>
         </div>
-      </section>
+      </div>
+      <div className={buttonContainer}>
+        <FollowButton followingId={profileData.memberId} />
+      </div>
       <Tab type="primary">
+        <TabItem
+          text="기록"
+          selected={selectedTab === 'record'}
+          type="primary"
+          variant="fill"
+          onClick={() => setSelectedTab('record')}
+        />
         <TabItem
           text="통계"
           selected={selectedTab === 'statistics'}
           type="primary"
           variant="fill"
-          onClick={() => handleClickTab('statistics')}
+          onClick={() => setSelectedTab('statistics')}
         />
         <TabItem
           text="배지"
           selected={selectedTab === 'badge'}
           type="primary"
           variant="fill"
-          onClick={() => handleClickTab('badge')}
+          onClick={() => setSelectedTab('badge')}
         />
       </Tab>
+      {selectedTab === 'record' && (
+        <div className={recordContainer}>
+          <Calendar />
+        </div>
+      )}
       {selectedTab === 'statistics' && (
-        <div className={TabContainer}>
+        <div className={tabContainer}>
           <StatisticsIcon />
           <div className={descriptionStyles}>
             <div className={titleStyles}>통계 기능이 곧 출시돼요!</div>
@@ -81,9 +80,8 @@ export default function Profile() {
           </div>
         </div>
       )}
-
       {selectedTab === 'badge' && (
-        <div className={TabContainer}>
+        <div className={tabContainer}>
           <BadgeIcon />
           <div className={descriptionStyles}>
             <div className={titleStyles}>배지 기능이 곧 출시돼요!</div>
@@ -91,14 +89,9 @@ export default function Profile() {
           </div>
         </div>
       )}
-    </article>
+    </section>
   );
 }
-
-const containerStyle = flex({
-  direction: 'column',
-  gap: '12px',
-});
 
 const profileContainer = flex({
   direction: 'column',
@@ -123,6 +116,7 @@ const introStyles = css({
   textStyle: 'body2.normal',
   fontWeight: '500',
   color: 'text.alternative',
+  width: '254px',
 });
 
 const friendStyles = {
@@ -155,16 +149,18 @@ const buttonContainer = flex({
   alignSelf: 'stretch',
 });
 
-const buttonStyle = css({
-  flexGrow: 1,
-});
-
-const TabContainer = flex({
+const tabContainer = flex({
   direction: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   gap: '20px',
   paddingTop: '80px',
+  width: '100%',
+});
+
+const recordContainer = css({
+  width: '100%',
+  padding: '20px',
 });
 
 const descriptionStyles = flex({
