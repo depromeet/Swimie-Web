@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import { BellIcon, SettingIcon } from '@/components/atoms';
@@ -12,6 +13,13 @@ import {
 } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+const DynamicAlarmButton = dynamic(
+  () => import('@/components/molecules').then(({ AlarmButton }) => AlarmButton),
+  {
+    ssr: false,
+    loading: () => <BellIcon />,
+  },
+);
 
 const SELECT_CALENDAR_VIEW = 0;
 const SELECT_TIMELINE_VIEW = 1;
@@ -40,7 +48,7 @@ export default function Home() {
         </HeaderBar.LeftContent>
         <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
-            { component: <BellIcon />, key: 'bell' },
+            { component: <DynamicAlarmButton />, key: 'bell' },
             { component: <SettingIcon />, key: 'setting' },
           ]}
         </HeaderBar.RightContent>
