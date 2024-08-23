@@ -54,7 +54,7 @@ export const CheerModal = ({
     >
       <Virtuoso
         data={flattenData}
-        overscan={300}
+        overscan={200}
         rangeChanged={handleRangeChanged}
         className={contentWrapper}
         itemContent={(_, item) => (
@@ -64,6 +64,10 @@ export const CheerModal = ({
           width: '100%',
           height: '332px',
           overflowY: 'scroll',
+          paddingBottom: '40px',
+        }}
+        components={{
+          Footer: () => <div style={{ height: '40px' }} />,
         }}
       />
     </Modal>
@@ -71,8 +75,6 @@ export const CheerModal = ({
 };
 
 const contentWrapper = css({
-  pb: '40px',
-
   '&::-webkit-scrollbar': {
     display: 'none',
   },
