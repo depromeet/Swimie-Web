@@ -3,9 +3,10 @@
 import { Virtuoso } from 'react-virtuoso';
 
 import { Modal, ModalProps } from '@/components/molecules';
+import { useDialog } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { useCheerList } from '../apis';
+import { useCheerList, useCheerPreviewList, useCheerRemove } from '../apis';
 import { CheerModalItem } from './cheer-modal-item';
 
 // TODO: data 연동 및 props 수정
@@ -22,12 +23,16 @@ export const CheerModal = ({
   onClose,
   title,
 }: CheerModal) => {
+  const { dialog, close: closeDialog } = useDialog();
+  const { mutate: removeCheer } = useCheerRemove();
+  const { refetch: refetchCheerPreview } = useCheerPreviewList(memoryId);
   const {
     flattenData,
     totalCount,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    refetch: refetchCheerList,
   } = useCheerList(memoryId);
 
   const fetchNextData = () => {
@@ -41,6 +46,30 @@ export const CheerModal = ({
     if (range.endIndex >= currentContentsLastIndex - 3) {
       void fetchNextData();
     }
+  };
+
+  const handleClickRemoveCheer = (reactionId: number) => {
+    dialog({
+      title: '정말 삭제하시겠습니까?',
+      description: '삭제된 응원은 복구할 수 없습니다.',
+      buttons: {
+        confirm: {
+          text: '삭제',
+          onClick: () => {
+            removeCheer(reactionId, {
+              onSuccess: () => {
+                void refetchCheerList();
+                void refetchCheerPreview();
+              },
+            });
+          },
+        },
+        cancel: {
+          text: '취소',
+          onClick: closeDialog,
+        },
+      },
+    });
   };
 
   return (
@@ -65,6 +94,7 @@ export const CheerModal = ({
           <CheerModalItem
             key={item.reactionId}
             isMyMemory={isMyMemory}
+            onClickRemove={() => handleClickRemoveCheer(item.reactionId)}
             {...item}
           />
         )}

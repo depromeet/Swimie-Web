@@ -2,14 +2,12 @@ import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { DetailCheerItem } from '../types';
+import { CheerPreview } from '../types';
 
 type CheerModalItem = {
-  reactionId: number;
-  nickname: string;
-  profileImageUrl: string;
   isMyMemory: boolean;
-} & DetailCheerItem;
+  onClickRemove?: () => void;
+} & CheerPreview;
 
 export const CheerModalItem = ({
   nickname,
@@ -17,6 +15,7 @@ export const CheerModalItem = ({
   emoji,
   comment,
   isMyMemory,
+  onClickRemove,
 }: CheerModalItem) => {
   return (
     <div className={containerStyle}>
@@ -37,7 +36,11 @@ export const CheerModalItem = ({
           <span>{emoji}</span>
           {comment && <span>{comment}</span>}
         </div>
-        {isMyMemory && <button className={removeButtonStyle}>삭제</button>}
+        {isMyMemory && onClickRemove && (
+          <button className={removeButtonStyle} onClick={onClickRemove}>
+            삭제
+          </button>
+        )}
       </div>
     </div>
   );
