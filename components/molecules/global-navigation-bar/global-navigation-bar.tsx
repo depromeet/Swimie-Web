@@ -9,13 +9,15 @@ import { BarItem } from './bar-item';
 import { useGlobalNavigationBar } from './use-global-navigation-bar';
 
 export function GlobalNavigationBar() {
+  //Todo: 내 userId api로 받아온 후, 마이페이지 route 추가
   const barItems = [
     { label: '기록', icon: RecordIcon, route: '/' },
     { label: '소식', icon: NewsIcon, route: '/news' },
     { label: '마이', icon: MyIcon, route: '/' },
   ];
-
-  const { barIndex, handlers } = useGlobalNavigationBar();
+  const { barIndex, handlers } = useGlobalNavigationBar(
+    barItems.map((item) => item.route),
+  );
 
   return (
     <footer className={footerStyles}>
