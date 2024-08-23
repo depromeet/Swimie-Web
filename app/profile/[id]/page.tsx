@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { LoadingArea, SettingIcon } from '@/components/atoms';
-import { HeaderBar } from '@/components/molecules';
+import { GlobalNavigationBar, HeaderBar } from '@/components/molecules';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
 import { css } from '@/styled-system/css';
@@ -68,6 +68,7 @@ export default function Profile({ params }: Mypage) {
       ) : (
         <OtherPage profileData={profileData} />
       )}
+      <GlobalNavigationBar />
     </article>
   );
 }
