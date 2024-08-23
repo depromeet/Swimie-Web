@@ -69,9 +69,16 @@ export async function generateMetadata({
     `recordDetail${params.id}`,
   );
 
+  const title = `🏊 ${data.member?.name}의 수영 기록`;
+  const description = '친구의 수영 기록을 확인해보세요!';
+
   return {
-    title: `🏊 ${data.member?.name}의 수영 기록`,
-    description: '친구의 수영 기록을 확인해보세요!',
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
   };
 }
 
