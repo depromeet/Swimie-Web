@@ -12,11 +12,12 @@ import { CheerModalItem } from './cheer-modal-item';
 type CheerModal = {
   memoryId: number;
   isMyMemory: boolean;
-  cheerList?: string[];
+  initialItemIndex?: number;
 } & ModalProps;
 export const CheerModal = ({
   memoryId,
   isMyMemory,
+  initialItemIndex,
   isOpen,
   onClose,
   title,
@@ -57,6 +58,7 @@ export const CheerModal = ({
       <Virtuoso
         data={flattenData}
         overscan={200}
+        initialTopMostItemIndex={initialItemIndex}
         rangeChanged={handleRangeChanged}
         className={contentWrapper}
         itemContent={(_, item) => (
