@@ -12,5 +12,5 @@ const DetailLayout = ({ children }: DetailLayout) => {
 export default DetailLayout;
 
 const childrenWrapperStyle = css({
-  pb: '80px',
+  pb: 'calc(80px + env(safe-area-inset-bottom))',
 });
