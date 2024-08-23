@@ -68,7 +68,7 @@ export const Calendar = () => {
 
 const calendarContainerStyles = flex({
   width: 'full',
-  height: 'full',
+  height: '100%',
   flexDir: 'column',
   gap: '16px',
 });

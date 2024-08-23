@@ -17,11 +17,9 @@ export const metadata: Metadata = {
 const rootStyle = css({
   maxWidth: 'maxWidth',
   width: '100%',
-  height: 'auto',
-  minHeight: '100vh',
+  height: '100dvh',
   margin: '0 auto',
-  borderLeft: '1px solid #eeeeee',
-  borderRight: '1px solid #eeeeee',
+  overflow: 'scroll',
 });
 
 export default function RootLayout({
@@ -34,10 +32,16 @@ export default function RootLayout({
       <body className={rootStyle}>
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
-          {children}
+          <div className={containerStyle}>{children}</div>
           <PortalRoot />
         </ReactQueryProvider>
       </body>
     </html>
   );
 }
+
+const containerStyle = css({
+  minHeight: '100%',
+  borderLeft: '1px solid #eeeeee',
+  borderRight: '1px solid #eeeeee',
+});
