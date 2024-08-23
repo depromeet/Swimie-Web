@@ -6,7 +6,7 @@ import { DetailCheerPreview } from '../types';
 
 const fetchCheerList = async (memoryId: number, cursorId?: number) => {
   const res = await fetch(
-    `/api/memory/${memoryId}/reactions/detail${cursorId ?? `?cursorId=${cursorId}`}`,
+    `/api/memory/${memoryId}/reactions/detail${cursorId ? `?cursorId=${cursorId}` : ''}`,
     {
       headers: {
         'Content-Type': 'application/json',
