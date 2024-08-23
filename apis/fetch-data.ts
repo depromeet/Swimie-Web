@@ -47,7 +47,7 @@ export async function fetchData<T>(
           Authorization: refreshToken,
         },
         next: revalidateTag ? { tags: [revalidateTag] } : undefined,
-        cache: cache ?? undefined,
+        cache: cache,
       });
 
       if (refreshResponse.ok) {
