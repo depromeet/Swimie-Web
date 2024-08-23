@@ -42,6 +42,26 @@ export default function RootLayout({
 
 const containerStyle = css({
   minHeight: '100%',
-  borderLeft: '1px solid #eeeeee',
-  borderRight: '1px solid #eeeeee',
+
+  // NOTE: border option
+  '&:before, &:after': {
+    content: "''",
+    display: 'block',
+    width: '1px',
+    height: '100%',
+    position: 'fixed',
+    top: 0,
+    zIndex: 9999,
+    backgroundColor: '#8a8a8a1a',
+  },
+
+  '&:before': {
+    right: '50%',
+    transform: 'translate(-300px)',
+  },
+
+  '&:after': {
+    right: '50%',
+    transform: 'translate(300px)',
+  },
 });
