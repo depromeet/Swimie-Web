@@ -7,7 +7,10 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { memoryId: number; cursorId?: number } },
 ) {
-  const { memoryId, cursorId } = params;
+  const { memoryId } = params;
+  const { searchParams } = new URL(request.url);
+  const cursorId = searchParams.get('cursorId');
+
   const data = await fetchData<SearchPoolInitialResultResponse>(
     `/memory/${memoryId}/reactions/detail?${cursorId ? `cursorId=${cursorId}` : ''}`,
     'GET',
