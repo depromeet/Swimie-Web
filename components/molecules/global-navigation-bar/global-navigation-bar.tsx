@@ -13,7 +13,7 @@ export function GlobalNavigationBar() {
   const barItems = [
     { label: '기록', icon: RecordIcon, route: '/' },
     { label: '소식', icon: NewsIcon, route: '/news' },
-    { label: '마이', icon: MyIcon, route: '/' },
+    { label: '마이', icon: MyIcon, route: '/profile/2' },
   ];
   const { barIndex, handlers } = useGlobalNavigationBar(
     barItems.map((item) => item.route),
