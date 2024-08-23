@@ -1,15 +1,16 @@
-import { SwimIcon } from '@/components/atoms';
+import { Image } from '@/components/atoms';
+import { SwimToolImages, SwimToolName } from '@/public/images/swim-tools';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 type SwimToolItem = {
-  name: string;
+  name: SwimToolName;
 };
 export const SwimToolItem = ({ name }: SwimToolItem) => {
   return (
     <div className={containerStyle}>
       <div className={iconStyle}>
-        <SwimIcon />
+        <Image src={SwimToolImages[name]} alt={name} width={32} height={32} />
       </div>
       <p className={textStyle}>{name}</p>
     </div>
