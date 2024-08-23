@@ -41,7 +41,7 @@ export function OtherPage({
         </div>
       </div>
       <div className={buttonContainer}>
-        <FollowButton followingId={profileData.memberId} />
+        <FollowButton />
       </div>
       <Tab type="primary">
         <TabItem
