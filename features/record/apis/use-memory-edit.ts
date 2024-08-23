@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { revalidateRecordDetail } from '../server-actions';
 import { MemoryPullResponse, SubmitRecordRequestProps } from './dto';
 
 async function memoryEdit(data: {
@@ -22,8 +23,11 @@ async function memoryEdit(data: {
   return res.json();
 }
 
-export function useMemoryEdit() {
+export function useMemoryEdit(memoryId: string) {
   return useMutation({
     mutationFn: memoryEdit,
+    onSuccess: () => {
+      revalidateRecordDetail(memoryId);
+    },
   });
 }

@@ -61,6 +61,8 @@ export default async function RecordDetail({ params }: RecordDetail) {
   const { data } = await fetchData<{ data: RecordDetailType }>(
     `/memory/${params.id}`,
     'GET',
+    undefined,
+    `recordDetail${params.id}`,
   );
 
   // TODO: isMyRecordDetail (editButton, cheerButton) 분기처리 필요
