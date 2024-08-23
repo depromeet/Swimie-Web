@@ -38,7 +38,7 @@ export function EquipmentSelectBox({
       onClick={handleEquipmentClick}
     >
       <div className={badgeStyles}>
-        <Image src={SwimToolImages[label]} alt={label} width={32} height={32} />
+        <Image src={SwimToolImages[label]} alt={label} width={40} height={40} />
       </div>
       <span className={labelStyles}>{label}</span>
     </div>
