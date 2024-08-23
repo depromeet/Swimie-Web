@@ -5,7 +5,7 @@ import { SearchPoolInitialResultResponse } from '@/features/record';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { memoryId: number; cursorId?: number } },
+  { params }: { params: { memoryId: number } },
 ) {
   const { memoryId } = params;
   const { searchParams } = new URL(request.url);
