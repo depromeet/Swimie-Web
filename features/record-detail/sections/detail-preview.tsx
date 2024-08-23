@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules';
 import placeholderImage from '@/public/images/fallbackImage.png';
+import { SwimToolName } from '@/public/images/swim-tools';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 import { getFormatTime } from '@/utils';
@@ -47,6 +48,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     type: 'string',
   });
 
+  const swimToolArr = (memoryDetail?.item?.split(',') ?? []) as SwimToolName[];
   return (
     <section className={containerStyle}>
       {/* NOTE: 상단 그래프 영역 */}
@@ -119,11 +121,11 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
       )}
 
       {/* NOTE: 수영 장비 영역 */}
-      {Boolean(memoryDetail?.item) && (
+      {Boolean(swimToolArr.length) && (
         <div className={toolsContainer}>
-          {memoryDetail?.item
-            .split(',')
-            .map((tool, index) => <SwimToolItem key={index} name={tool} />)}
+          {swimToolArr.map((tool, index) => (
+            <SwimToolItem key={index} name={tool} />
+          ))}
         </div>
       )}
     </section>
