@@ -22,16 +22,14 @@ export function BarItem({
   onClick,
 }: BarItemProps) {
   return (
-    <Link href={route}>
-      <div className={layoutStyles} onClick={() => onClick(index)}>
-        {
-          <Icon
-            className={iconStyles}
-            fill={isSelected ? '#37383C' : '#37383C47'}
-          />
-        }
-        <span className={css(labelStyles.raw({ isSelected }))}>{label}</span>
-      </div>
+    <Link href={route} className={layoutStyles} onClick={() => onClick(index)}>
+      {
+        <Icon
+          className={iconStyles}
+          fill={isSelected ? '#37383C' : '#37383C47'}
+        />
+      }
+      <span className={css(labelStyles.raw({ isSelected }))}>{label}</span>
     </Link>
   );
 }

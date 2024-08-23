@@ -17,7 +17,6 @@ export function GlobalNavigationBar() {
 
   const { barIndex, handlers } = useGlobalNavigationBar();
 
-  //Todo: 라우팅 처리
   return (
     <footer className={footerStyles}>
       {barItems.map((item, i) => (
