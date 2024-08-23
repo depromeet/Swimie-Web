@@ -55,5 +55,5 @@ export default function ProfileFollow({
 const containerStyle = flex({
   direction: 'column',
   gap: '12px',
-  p: '16px 20px',
+  p: '16px 20px calc(80px + env(safe-area-inset-bottom))',
 });

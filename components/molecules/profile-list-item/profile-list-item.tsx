@@ -1,4 +1,5 @@
 import { Button, Image } from '@/components/atoms';
+import ProfileDefaultImage from '@/public/images/profile-default.png';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -18,7 +19,7 @@ export const ProfileListItem = ({ isFollow }: FollowListItem) => {
     <div className={containerStyle}>
       <div className={profileImageStyle}>
         <Image
-          src={''}
+          src={ProfileDefaultImage}
           alt="profile image"
           width={40}
           height={40}
@@ -37,7 +38,12 @@ export const ProfileListItem = ({ isFollow }: FollowListItem) => {
           buttonType="assistive"
         />
       ) : (
-        <Button size="small" label="팔로우" variant="outlined" />
+        <Button
+          size="small"
+          label="팔로우"
+          variant="outlined"
+          buttonType="primary"
+        />
       )}
     </div>
   );
