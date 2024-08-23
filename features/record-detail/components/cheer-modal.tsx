@@ -11,10 +11,12 @@ import { CheerModalItem } from './cheer-modal-item';
 // TODO: data 연동 및 props 수정
 type CheerModal = {
   memoryId: number;
+  isMyMemory: boolean;
   cheerList?: string[];
 } & ModalProps;
 export const CheerModal = ({
   memoryId,
+  isMyMemory,
   isOpen,
   onClose,
   title,
@@ -58,7 +60,11 @@ export const CheerModal = ({
         rangeChanged={handleRangeChanged}
         className={contentWrapper}
         itemContent={(_, item) => (
-          <CheerModalItem {...item} key={item.reactionId} />
+          <CheerModalItem
+            key={item.reactionId}
+            isMyMemory={isMyMemory}
+            {...item}
+          />
         )}
         style={{
           width: '100%',
