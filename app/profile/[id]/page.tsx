@@ -9,8 +9,6 @@ import { OtherPage } from '@/features/profile/components/organisms/other-page';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export type ProfileType = 'statistics' | 'badge' | 'record';
-
 export type Mypage = {
   params: { id: number };
 };
