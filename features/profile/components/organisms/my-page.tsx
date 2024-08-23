@@ -20,40 +20,46 @@ export function MyProfile({
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
 
   return (
-    <section className={profileContainer}>
-      <div className={inforWrapper}>
-        <UserImageIcon />
-        <div>
-          <div className={nameStyles}>{profileData.nickname}</div>
-          <div className={introStyles}>{profileData.introduction}</div>
+    <div>
+      <section className={profileContainer}>
+        <div className={inforWrapper}>
+          <UserImageIcon />
+          <div>
+            <div className={nameStyles}>{profileData.nickname}</div>
+            <div className={introStyles}>{profileData.introduction}</div>
+          </div>
         </div>
-      </div>
-      <div className={friendStyles.container}>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로워</div>
-          <div className={friendStyles.count}>{profileData.followerCount}</div>
+        <div className={friendStyles.container}>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로워</div>
+            <div className={friendStyles.count}>
+              {profileData.followerCount}
+            </div>
+          </div>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로잉</div>
+            <div className={friendStyles.count}>
+              {profileData.followingCount}
+            </div>
+          </div>
         </div>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로잉</div>
-          <div className={friendStyles.count}>{profileData.followingCount}</div>
+        <div className={buttonContainer}>
+          <Button
+            size="small"
+            label="프로필 편집"
+            buttonType="assistive"
+            variant="outlined"
+            className={buttonStyle}
+          />
+          <Button
+            size="small"
+            label="프로필 공유"
+            buttonType="assistive"
+            variant="outlined"
+            className={buttonStyle}
+          />
         </div>
-      </div>
-      <div className={buttonContainer}>
-        <Button
-          size="small"
-          label="프로필 편집"
-          buttonType="assistive"
-          variant="outlined"
-          className={buttonStyle}
-        />
-        <Button
-          size="small"
-          label="프로필 공유"
-          buttonType="assistive"
-          variant="outlined"
-          className={buttonStyle}
-        />
-      </div>
+      </section>
       <Tab type="primary">
         <TabItem
           text="통계"
@@ -88,7 +94,7 @@ export function MyProfile({
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
 

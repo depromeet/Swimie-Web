@@ -22,27 +22,33 @@ export function OtherPage({
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
 
   return (
-    <section className={profileContainer}>
-      <div className={inforWrapper}>
-        <UserImageIcon />
-        <div>
-          <div className={nameStyles}>{profileData.nickname}</div>
-          <div className={introStyles}>{profileData.introduction}</div>
+    <div>
+      <section className={profileContainer}>
+        <div className={inforWrapper}>
+          <UserImageIcon />
+          <div>
+            <div className={nameStyles}>{profileData.nickname}</div>
+            <div className={introStyles}>{profileData.introduction}</div>
+          </div>
         </div>
-      </div>
-      <div className={friendStyles.container}>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로워</div>
-          <div className={friendStyles.count}>{profileData.followerCount}</div>
+        <div className={friendStyles.container}>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로워</div>
+            <div className={friendStyles.count}>
+              {profileData.followerCount}
+            </div>
+          </div>
+          <div className={friendStyles.item}>
+            <div className={friendStyles.type}>팔로잉</div>
+            <div className={friendStyles.count}>
+              {profileData.followingCount}
+            </div>
+          </div>
         </div>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로잉</div>
-          <div className={friendStyles.count}>{profileData.followingCount}</div>
+        <div className={buttonContainer}>
+          <FollowButton />
         </div>
-      </div>
-      <div className={buttonContainer}>
-        <FollowButton />
-      </div>
+      </section>
       <Tab type="primary">
         <TabItem
           text="기록"
@@ -89,7 +95,7 @@ export function OtherPage({
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
 
