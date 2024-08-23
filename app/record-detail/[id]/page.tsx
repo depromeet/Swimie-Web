@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import { fetchData } from '@/apis/fetch-data';
@@ -57,6 +58,30 @@ const DynamicCheerModalSection = dynamic(
 type RecordDetail = {
   params: { id: string };
 };
+
+export async function generateMetadata({
+  params,
+}: RecordDetail): Promise<Metadata> {
+  const { data } = await fetchData<{ data: RecordDetailType }>(
+    `/memory/${params.id}`,
+    'GET',
+    undefined,
+    `recordDetail${params.id}`,
+  );
+
+  const title = `🏊 ${data.member?.name}의 수영 기록`;
+  const description = '친구의 수영 기록을 확인해보세요!';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+  };
+}
+
 export default async function RecordDetail({ params }: RecordDetail) {
   const { data } = await fetchData<{ data: RecordDetailType }>(
     `/memory/${params.id}`,
