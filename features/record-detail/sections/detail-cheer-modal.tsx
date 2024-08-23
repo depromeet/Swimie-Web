@@ -14,12 +14,12 @@ export const DetailCheerModalSection = ({
   data: RecordDetailType;
 }) => {
   const { data: cheerPreviewData } = useCheerPreviewList(data.id);
+
   const {
     isOpen: isOpenModal,
     open: openModal,
     close: closeModal,
   } = useModal();
-
   const { sliderRef } = useDragScroll();
 
   const reactions = cheerPreviewData?.reactions || [];
@@ -49,6 +49,7 @@ export const DetailCheerModalSection = ({
       {/* NOTE: 응원 모달 */}
       <CheerModal
         memoryId={data.id}
+        isMyMemory={Boolean(data.isMyMemory)}
         isOpen={isOpenModal}
         onClose={closeModal}
         title="8월 16일의 응원"

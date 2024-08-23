@@ -8,6 +8,7 @@ type CheerModalItem = {
   reactionId: number;
   nickname: string;
   profileImageUrl: string;
+  isMyMemory: boolean;
 } & DetailCheerItem;
 
 export const CheerModalItem = ({
@@ -15,6 +16,7 @@ export const CheerModalItem = ({
   profileImageUrl,
   emoji,
   comment,
+  isMyMemory,
 }: CheerModalItem) => {
   return (
     <div className={containerStyle}>
@@ -35,7 +37,7 @@ export const CheerModalItem = ({
           <span>{emoji}</span>
           {comment && <span>{comment}</span>}
         </div>
-        <button className={removeButtonStyle}>삭제</button>
+        {isMyMemory && <button className={removeButtonStyle}>삭제</button>}
       </div>
     </div>
   );
