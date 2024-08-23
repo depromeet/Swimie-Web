@@ -60,6 +60,7 @@ export const CheerModal = ({
               onSuccess: () => {
                 void refetchCheerList();
                 void refetchCheerPreview();
+                closeDialog();
               },
             });
           },
