@@ -3,7 +3,12 @@
 import { useState } from 'react';
 
 import { SettingIcon } from '@/components/atoms';
-import { AlarmButton, HeaderBar, LogoButton } from '@/components/molecules';
+import {
+  AlarmButton,
+  GlobalNavigationBar,
+  HeaderBar,
+  LogoButton,
+} from '@/components/molecules';
 import {
   MainTab,
   TabItemInfo,
@@ -51,6 +56,7 @@ export default function Home() {
           {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
         </section>
       </main>
+      <GlobalNavigationBar />
     </>
   );
 }

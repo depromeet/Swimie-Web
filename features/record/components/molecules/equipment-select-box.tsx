@@ -1,9 +1,10 @@
-import { SwimIcon } from '@/components/atoms';
+import { Image } from '@/components/atoms';
+import { SwimToolImages, SwimToolName } from '@/public/images/swim-tools';
 import { css, cva, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 interface EquipmentSelectBoxProps {
-  label: string;
+  label: SwimToolName;
   index: number;
   isSelected: boolean;
   className?: string;
@@ -37,7 +38,7 @@ export function EquipmentSelectBox({
       onClick={handleEquipmentClick}
     >
       <div className={badgeStyles}>
-        <SwimIcon width={40} height={40} />
+        <Image src={SwimToolImages[label]} alt={label} width={40} height={40} />
       </div>
       <span className={labelStyles}>{label}</span>
     </div>

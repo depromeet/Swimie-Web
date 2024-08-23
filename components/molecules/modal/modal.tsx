@@ -8,7 +8,7 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  description: string;
+  description?: string;
   children?: ReactNode;
   button?: {
     text: string;

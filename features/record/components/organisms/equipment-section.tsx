@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { SwimToolName } from '@/public/images/swim-tools';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -20,7 +21,7 @@ export function EquipmentSection({
   title,
   defaultEquipment,
 }: EquipmentSectionProps) {
-  const equipmentList = ['숏핀', '롱핀', '패들', '스노쿨'];
+  const equipmentList: SwimToolName[] = ['숏핀', '롱핀', '패들', '스노쿨'];
   const { setValue } = useFormContext();
   const [equipmentSelectState, setEquipmentSelectState] = useState<boolean[]>(
     Array.from({ length: equipmentList.length }, () => false),
@@ -34,6 +35,7 @@ export function EquipmentSection({
     const copyEquipmentList = [...equipmentList];
     return copyEquipmentList.filter((_, i) => equipmentSelectState[i]);
   };
+
   useEffect(() => {
     if (getSelectedEquipmentsByString().length > 0)
       setValue('item', getSelectedEquipmentsByString().join(','));
@@ -44,9 +46,10 @@ export function EquipmentSection({
   useEffect(() => {
     if (defaultEquipment) {
       defaultEquipment.split(',').forEach((equipment) => {
+        const swimTool = equipment as SwimToolName;
         setEquipmentSelectState((prev) => [
           ...prev,
-          (prev[equipmentList.indexOf(equipment)] = true),
+          (prev[equipmentList.indexOf(swimTool)] = true),
         ]);
       });
     }

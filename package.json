@@ -31,7 +31,8 @@
     "react-hook-form": "^7.52.1",
     "react-image-file-resizer": "^0.4.8",
     "react-intersection-observer": "^9.13.0",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "react-virtuoso": "^4.10.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",

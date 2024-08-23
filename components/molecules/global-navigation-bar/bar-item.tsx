@@ -1,19 +1,36 @@
+import Link from 'next/link';
+import { FunctionComponent, SVGProps } from 'react';
+
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-interface BarItemProps {
+export interface BarItemProps {
   label: string;
+  icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   index: number;
-  selected: boolean;
+  route: string;
+  isSelected: boolean;
   onClick: (index: number) => void;
 }
 
-export function BarItem({ label, index, selected, onClick }: BarItemProps) {
+export function BarItem({
+  label,
+  icon: Icon,
+  index,
+  route,
+  isSelected,
+  onClick,
+}: BarItemProps) {
   return (
-    <div className={layoutStyles} onClick={() => onClick(index)}>
-      <div className={css(shapeStyles.raw({ selected }))} />
-      <span className={css(labelStyles.raw({ selected }))}>{label}</span>
-    </div>
+    <Link href={route} className={layoutStyles} onClick={() => onClick(index)}>
+      {
+        <Icon
+          className={iconStyles}
+          fill={isSelected ? '#37383C' : '#37383C47'}
+        />
+      }
+      <span className={css(labelStyles.raw({ isSelected }))}>{label}</span>
+    </Link>
   );
 }
 
@@ -22,23 +39,8 @@ const layoutStyles = flex({
   alignItems: 'center',
 });
 
-const shapeStyles = cva({
-  base: {
-    width: '24px',
-    height: '24px',
-    borderRadius: '5px',
-    marginBottom: '4px',
-  },
-  variants: {
-    selected: {
-      true: {
-        backgroundColor: 'text.neutral',
-      },
-      false: {
-        backgroundColor: 'fill.normal',
-      },
-    },
-  },
+const iconStyles = css({
+  marginBottom: '4px',
 });
 
 const labelStyles = cva({
@@ -47,7 +49,7 @@ const labelStyles = cva({
     fontWeight: 500,
   },
   variants: {
-    selected: {
+    isSelected: {
       true: {
         color: 'text.neutral',
       },
