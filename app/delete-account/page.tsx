@@ -7,7 +7,6 @@ import { BackButton, HeaderBar } from '@/components/molecules';
 import Step1 from '@/features/setting/components/organisms/step-1';
 import Step2 from '@/features/setting/components/organisms/step-2';
 import Step3 from '@/features/setting/components/organisms/step-3';
-import { flex } from '@/styled-system/patterns';
 
 export default function Page() {
   const router = useRouter();
@@ -50,13 +49,3 @@ export default function Page() {
     </div>
   );
 }
-
-export const titleStyles = flex({
-  padding: '20px 8px 20px 16px',
-  direction: 'column',
-  alignItems: 'flex-start',
-  alignSelf: 'stretch',
-  textStyle: 'heading2',
-  fontWeight: '600',
-  color: 'text.strong',
-});
