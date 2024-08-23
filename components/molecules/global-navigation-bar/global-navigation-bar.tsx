@@ -3,6 +3,7 @@
 import { MyIcon } from '@/components/atoms/icons/my-icon';
 import { NewsIcon } from '@/components/atoms/icons/news-icon';
 import { RecordIcon } from '@/components/atoms/icons/record-icon';
+import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { BarItem } from './bar-item';
@@ -20,17 +21,22 @@ export function GlobalNavigationBar() {
   );
 
   return (
-    <footer className={footerStyles}>
-      {barItems.map((item, i) => (
-        <BarItem
-          key={item.label}
-          {...item}
-          index={i}
-          isSelected={i === barIndex}
-          onClick={handlers.onChangeBarIndex}
-        />
-      ))}
-    </footer>
+    <>
+      <footer className={footerStyles}>
+        {barItems.map((item, i) => (
+          <BarItem
+            key={item.label}
+            {...item}
+            index={i}
+            isSelected={i === barIndex}
+            onClick={handlers.onChangeBarIndex}
+          />
+        ))}
+      </footer>
+      <div
+        className={css({ height: 'calc(env(safe-area-inset-bottom) + 70px)' })}
+      />
+    </>
   );
 }
 
