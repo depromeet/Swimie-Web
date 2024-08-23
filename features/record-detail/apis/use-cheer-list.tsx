@@ -29,13 +29,13 @@ export const useCheerList = (memoryId: number) => {
     queryFn: ({ pageParam }) => fetchCheerList(memoryId, pageParam as number),
     initialPageParam: undefined,
     getNextPageParam: (lastPage) =>
-      lastPage.data.hasNext ? lastPage.data.cursorId : undefined,
+      lastPage?.data?.hasNext ? lastPage?.data?.cursorId : undefined,
     enabled: !!memoryId,
   });
 
   const flattenData =
     query.data?.pages.flatMap(({ data }) => data?.reactions) ?? [];
-  const totalCount = query.data?.pages?.[0].data.totalCount;
+  const totalCount = query.data?.pages?.[0].data?.totalCount;
 
   return {
     ...query,
