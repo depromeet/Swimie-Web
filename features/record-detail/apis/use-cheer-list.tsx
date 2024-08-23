@@ -35,10 +35,11 @@ export const useCheerList = (memoryId: number) => {
 
   const flattenData =
     query.data?.pages.flatMap(({ data }) => data?.reactions) ?? [];
+  const totalCount = query.data?.pages?.[0].data.totalCount;
 
   return {
     ...query,
     flattenData,
-    totalCount: query.data?.pages?.[0].data.totalCount,
+    totalCount,
   };
 };
