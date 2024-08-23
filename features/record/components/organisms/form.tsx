@@ -103,7 +103,7 @@ export function Form() {
 
   const { mutateAsync: getImagePresignedUrl } = useGetImagePresignedUrl();
   const { mutateAsync: memory } = useMemory();
-  const { mutateAsync: memoryEdit } = useMemoryEdit(memoryId);
+  const { mutateAsync: memoryEdit } = useMemoryEdit(memoryId as string);
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
