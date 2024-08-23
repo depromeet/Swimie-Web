@@ -48,10 +48,10 @@ export const DetailCheerModalSection = ({
 
       {/* NOTE: 응원 모달 */}
       <CheerModal
+        memoryId={data.id}
         isOpen={isOpenModal}
         onClose={closeModal}
         title="8월 16일의 응원"
-        description="5"
       />
     </>
   );

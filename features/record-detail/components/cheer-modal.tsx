@@ -1,74 +1,77 @@
+'use client';
+
+import { Virtuoso } from 'react-virtuoso';
+
 import { Modal, ModalProps } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
+import { useCheerList } from '../apis';
 import { CheerModalItem } from './cheer-modal-item';
-
-const initialCheerList = [
-  {
-    reactionId: 32,
-    emoji: '🔥',
-    comment: '오늘도 힘내요!',
-    nickname: '이승은',
-    profileImageUrl: '',
-  },
-  {
-    reactionId: 31,
-    emoji: '🦭',
-    comment: '물개세요?',
-    nickname: '준영',
-    profileImageUrl: '',
-  },
-  {
-    reactionId: 30,
-    emoji: '🎯',
-    comment: '목표 달성!',
-    nickname: '최유영',
-    profileImageUrl: '',
-  },
-  {
-    reactionId: 29,
-    emoji: '👏🏼',
-    nickname: '신민철',
-    profileImageUrl: '',
-  },
-];
 
 // TODO: data 연동 및 props 수정
 type CheerModal = {
+  memoryId: number;
   cheerList?: string[];
 } & ModalProps;
 export const CheerModal = ({
+  memoryId,
   isOpen,
   onClose,
   title,
-  description,
 }: CheerModal) => {
+  const {
+    flattenData,
+    totalCount,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useCheerList(memoryId);
+
+  const fetchNextData = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      void fetchNextPage();
+    }
+  };
+
+  const handleRangeChanged = (range: { endIndex: number }) => {
+    const currentContentsLastIndex = flattenData.length - 1;
+    if (range.endIndex >= currentContentsLastIndex - 3) {
+      void fetchNextData();
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       title={title}
-      description={description}
+      description={String(totalCount ?? '')}
       button={{
         text: '닫기',
         onClick: onClose,
       }}
       isBodyFadeOut={true}
     >
-      <div className={contentWrapper}>
-        {initialCheerList.map((item) => (
+      <Virtuoso
+        data={flattenData}
+        overscan={300}
+        rangeChanged={handleRangeChanged}
+        className={contentWrapper}
+        itemContent={(_, item) => (
           <CheerModalItem {...item} key={item.reactionId} />
-        ))}
-      </div>
+        )}
+        style={{
+          width: '100%',
+          height: '332px',
+          overflowY: 'scroll',
+        }}
+      />
     </Modal>
   );
 };
 
 const contentWrapper = css({
-  flexGrow: 1,
-  height: 'full',
-  maxHeight: '332px',
-  overflowY: 'scroll',
+  pb: '40px',
 
   '&::-webkit-scrollbar': {
     display: 'none',

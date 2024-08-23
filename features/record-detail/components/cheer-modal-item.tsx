@@ -11,7 +11,6 @@ type CheerModalItem = {
 } & DetailCheerItem;
 
 export const CheerModalItem = ({
-  // reactionId,
   nickname,
   profileImageUrl,
   emoji,
@@ -22,7 +21,7 @@ export const CheerModalItem = ({
       <div className={profile.wrapperStyle}>
         <div className={profile.imageStyle}>
           <Image
-            src={profileImageUrl}
+            src={profileImageUrl ?? ''}
             width={16}
             height={16}
             alt="profile image"
