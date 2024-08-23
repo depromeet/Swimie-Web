@@ -23,7 +23,7 @@ async function memoryEdit(data: {
   return res.json();
 }
 
-export function useMemoryEdit(memoryId?: string) {
+export function useMemoryEdit(memoryId: string | null) {
   return useMutation({
     mutationFn: memoryEdit,
     onSuccess: () => {
