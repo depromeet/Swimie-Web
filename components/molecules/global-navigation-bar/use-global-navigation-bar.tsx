@@ -1,12 +1,14 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-//Todo: 내 유저 id를 해당 훅의 매개변수로 받아온 후, Map에 마이페이지 라우팅 추가
-export function useGlobalNavigationBar() {
+export function useGlobalNavigationBar(itemRoutes: string[]) {
   const pathname = usePathname();
   const barIndexWithRouteMap = new Map([
-    ['/', 0],
-    ['/news', 1],
+    [itemRoutes[0], 0],
+    [itemRoutes[1], 1],
+    [itemRoutes[2], 1],
   ]);
 
   const [barIndex, setBarIndex] = useState<number>(

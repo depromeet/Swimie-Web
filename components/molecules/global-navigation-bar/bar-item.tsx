@@ -4,7 +4,7 @@ import { FunctionComponent, SVGProps } from 'react';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-interface BarItemProps {
+export interface BarItemProps {
   label: string;
   icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   index: number;
