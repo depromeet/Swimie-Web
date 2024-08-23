@@ -56,8 +56,14 @@ export const CheerModal = ({
         confirm: {
           text: '삭제',
           onClick: () => {
+            // TODO: 서버 수정 후 onSuccess 로직 재구현 예정
             removeCheer(reactionId, {
               onSuccess: () => {
+                void refetchCheerList();
+                void refetchCheerPreview();
+                closeDialog();
+              },
+              onSettled() {
                 void refetchCheerList();
                 void refetchCheerPreview();
                 closeDialog();
