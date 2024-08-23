@@ -2,7 +2,7 @@
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { TimeLineCard } from '../molecules';
-import { formatDateToKorean } from '@/utils';
+import { formatDateToKorean, getFormatDate } from '@/utils';
 import { Fragment } from 'react';
 import { CardWrapper } from '../atoms';
 import { InfiniteScroller } from '@/components/molecules';
@@ -23,7 +23,10 @@ export const TimeLine = () => {
   const groupedContents = groupBySameYearAndMonth(contents);
   const isEmptyTimeLine = contents.length === 0;
   const lastGroupIndex = groupedContents.length - 1;
-  const lastContentIndex = groupedContents[lastGroupIndex].contents.length - 1;
+  const lastContentIndex =
+    groupedContents[lastGroupIndex] === undefined
+      ? 0
+      : groupedContents[lastGroupIndex].contents.length - 1;
 
   return (
     <>
@@ -66,7 +69,8 @@ export const TimeLine = () => {
 const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   const grouped: { [key: string]: Array<TimeLineContent> } = contents.reduce(
     (acc: { [key: string]: Array<TimeLineContent> }, item: TimeLineContent) => {
-      const key = item.recordAt;
+      const { year, month } = getFormatDate({ dateStr: item.recordAt });
+      const key = `${year}-${month}`;
 
       if (!acc[key]) acc[key] = [];
       acc[key].push(item);
@@ -84,7 +88,7 @@ const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   return result;
 };
 
-const fullspaceStyles = css({ width: 'full', height: 'full' });
+const fullspaceStyles = css({ pt: '55%', width: 'full', height: 'full' });
 
 const iconContainer = flex({
   direction: 'column',

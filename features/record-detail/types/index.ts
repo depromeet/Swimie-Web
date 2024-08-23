@@ -39,6 +39,8 @@ export type RecordDetailType = {
     imageName: string;
     url: string;
   }[];
+  prevId?: number;
+  nextId?: number;
   member?: DetailMember;
   pool?: DetailPool;
   memoryDetail?: DetailMemoryDetail;
@@ -47,9 +49,24 @@ export type RecordDetailType = {
   totalLap?: number;
   totalMeter?: number;
   diary?: string;
+  isMyMemory?: boolean;
 };
 
 export type DetailCheerItem = {
-  emoji?: string;
+  emoji: string;
   comment?: string;
 };
+
+export type DetailCheerItemSelected = {
+  isSelected?: boolean;
+} & DetailCheerItem;
+
+export type DetailCheerPreview = {
+  reactions: CheerPreview[];
+};
+
+export type CheerPreview = {
+  reactionId: number;
+  nickname: string;
+  profileImageUrl: string;
+} & DetailCheerItem;

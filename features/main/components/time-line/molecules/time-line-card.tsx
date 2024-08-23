@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
-import { SwimmerIcon } from '@/components/atoms';
+import { DividerIcon, Image, SwimmerIcon } from '@/components/atoms';
 import { TimeLineContent } from '@/features/main/types';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -60,6 +60,7 @@ const TimeLineCardBody = ({
   kcal,
   strokes,
   isAchieved,
+  imageUrl,
 }: TimeLineContent) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [currentWidth, setCurrentWidth] = useState<number>(0);
@@ -70,7 +71,7 @@ const TimeLineCardBody = ({
 
   return (
     <Link href={`/record-detail/${memoryId}`} className={cardWrapperStyles}>
-      <div className={flex()} ref={ref}>
+      <div className={cardInfoStyles} ref={ref}>
         <div className={titleStyles}>
           {type !== 'NORMAL' && totalDistance ? (
             <p>{formatMeters(totalDistance)}m</p>
@@ -82,9 +83,19 @@ const TimeLineCardBody = ({
           )}
           <div className={descriptionStyles}>
             {startTime && endTime && <p>{`${startTime} ~ ${endTime}`}</p>}
-            {kcal && <p>{kcal}kcal</p>}
+            {kcal && (
+              <>
+                <DividerIcon />
+                <p>{kcal}kcal</p>
+              </>
+            )}
           </div>
         </div>
+        {imageUrl && (
+          <div className={imageWrapperStyles}>
+            <Image src={imageUrl} alt="recorded image" fill />
+          </div>
+        )}
       </div>
       {strokes && totalDistance && isAchieved !== undefined && (
         <SwimRecordChart
@@ -116,6 +127,11 @@ const cardWrapperStyles = flex({
   borderRadius: '6px',
 });
 
+const cardInfoStyles = flex({
+  height: '100%',
+  justifyContent: 'space-between',
+});
+
 const titleStyles = flex({
   direction: 'column',
   '& > p': { textStyle: 'heading1', fontWeight: 'bold' },
@@ -130,9 +146,20 @@ const completeStyles = flex({
 
 const descriptionStyles = flex({
   gap: '14px',
+  alignItems: 'center',
   textStyle: 'label1.normal',
   fontWeight: 'medium',
   color: 'neutral.70',
+});
+
+const imageWrapperStyles = flex({
+  position: 'relative',
+  width: '48px',
+  height: '60px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  rounded: '2px',
+  overflow: 'hidden',
 });
 
 const diaryStyles = css({
@@ -146,11 +173,3 @@ const diaryStyles = css({
   fontWeight: 'medium',
   color: 'neutral.70',
 });
-
-/*
-text-overflow: ellipsis;
-  overflow: hidden;
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-*/
