@@ -1,4 +1,4 @@
-import { titleStyles } from '@/app/delete-account/page';
+import { flex } from '@/styled-system/patterns';
 
 import ListItem from '../atom/list-item';
 
@@ -18,3 +18,13 @@ export default function Step1({ onListItemClick }: Step1Props) {
     </div>
   );
 }
+
+const titleStyles = flex({
+  padding: '20px 8px 20px 16px',
+  direction: 'column',
+  alignItems: 'flex-start',
+  alignSelf: 'stretch',
+  textStyle: 'heading2',
+  fontWeight: '600',
+  color: 'text.strong',
+});

@@ -1,4 +1,3 @@
-import { titleStyles } from '@/app/delete-account/page';
 import { Button } from '@/components/atoms';
 import { TextArea } from '@/components/molecules';
 import { css } from '@/styled-system/css';
@@ -29,4 +28,14 @@ const textAreaContainerStyles = flex({
   direction: 'column',
   alignItems: 'flex-start',
   gap: '16px',
+});
+
+const titleStyles = flex({
+  padding: '20px 8px 20px 16px',
+  direction: 'column',
+  alignItems: 'flex-start',
+  alignSelf: 'stretch',
+  textStyle: 'heading2',
+  fontWeight: '600',
+  color: 'text.strong',
 });
