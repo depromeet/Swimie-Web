@@ -1,28 +1,32 @@
 'use client';
 
-import { useState } from 'react';
-
+import { MyIcon } from '@/components/atoms/icons/my-icon';
+import { NewsIcon } from '@/components/atoms/icons/news-icon';
+import { RecordIcon } from '@/components/atoms/icons/record-icon';
 import { flex } from '@/styled-system/patterns';
 
 import { BarItem } from './bar-item';
+import { useGlobalNavigationBar } from './use-global-navigation-bar';
 
 export function GlobalNavigationBar() {
-  const barItemLabels = ['기록', '마이', '소식'];
-  const [barIndex, setBarIndex] = useState<number>(0);
+  const barItems = [
+    { label: '기록', icon: RecordIcon, route: '/' },
+    { label: '소식', icon: NewsIcon, route: '/news' },
+    { label: '마이', icon: MyIcon, route: '/' },
+  ];
+
+  const { barIndex, handlers } = useGlobalNavigationBar();
 
   //Todo: 라우팅 처리
-  const handleClickBarItem = (index: number) => {
-    setBarIndex(index);
-  };
   return (
     <footer className={footerStyles}>
-      {barItemLabels.map((label, i) => (
+      {barItems.map((item, i) => (
         <BarItem
-          key={label}
-          label={label}
+          key={item.label}
+          {...item}
           index={i}
-          selected={i === barIndex}
-          onClick={handleClickBarItem}
+          isSelected={i === barIndex}
+          onClick={handlers.onChangeBarIndex}
         />
       ))}
     </footer>

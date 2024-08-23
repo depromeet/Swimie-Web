@@ -1,4 +1,4 @@
-import { HeaderBar } from '@/components/molecules';
+import { GlobalNavigationBar, HeaderBar } from '@/components/molecules';
 import { FollowingListLinkButton, NewsList } from '@/features/news';
 import { FindMemberButton } from '@/features/news/components/atoms/find-member-button';
 import { css } from '@/styled-system/css';
@@ -18,6 +18,8 @@ export default function NewsPage() {
       <section className={sectionStyle}>
         <NewsList />
       </section>
+
+      <GlobalNavigationBar />
     </>
   );
 }
