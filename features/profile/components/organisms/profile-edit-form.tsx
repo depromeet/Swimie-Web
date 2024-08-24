@@ -10,6 +10,9 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
 
+import { useGetImageProfilePresignedUrl, useImagePresignUrl } from '../../apis';
+import { useImageProfileUrlDone } from '../../apis/use-image-profile-url-done';
+
 interface ProfileEditFormProps {
   nickname?: string;
   introduce?: string;
@@ -24,7 +27,13 @@ export function ProfileEditForm() {
   });
 
   const [image, setImage] = useState<string>();
+  const [imageFile, setImageFile] = useState<File>();
   const fileInput = useRef<HTMLInputElement>(null);
+
+  const { mutateAsync: getImageProfilePresignedUrl } =
+    useGetImageProfilePresignedUrl();
+  const { mutateAsync: imagePresign } = useImagePresignUrl();
+  const { mutateAsync: imageProfileDone } = useImageProfileUrlDone();
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadImage = async () => {
@@ -38,6 +47,7 @@ export function ProfileEditForm() {
             if (reader.readyState === FileReader.DONE) {
               if (reader.result !== image) {
                 setImage(reader.result as string);
+                setImageFile(resizedImage);
               }
             }
           };
@@ -52,9 +62,24 @@ export function ProfileEditForm() {
     );
   };
 
+  const getBlobData = (file: File) => {
+    const blobData = new Blob([file]);
+    return blobData;
+  };
+
   // eslint-disable-next-line @typescript-eslint/require-await
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     console.log(data);
+    if (imageFile) {
+      const getProfileImagePresignedUrlRes = await getImageProfilePresignedUrl(
+        imageFile.name,
+      );
+      await imagePresign({
+        presignedUrl: getProfileImagePresignedUrlRes.data.presignedUrl,
+        file: getBlobData(imageFile),
+      });
+      await imageProfileDone(getProfileImagePresignedUrlRes.data.imageName);
+    }
   };
 
   const handleAddImageClick = () => {
@@ -80,11 +105,13 @@ export function ProfileEditForm() {
               className={css({ borderRadius: 'full' })}
             />
           ) : (
-            <UserImageIcon width={100} height={100} />
+            <>
+              <UserImageIcon width={100} height={100} />{' '}
+              <div className={layoutStyles.defaultImageIcon}>
+                <DefaultImageIcon />
+              </div>
+            </>
           )}
-          <div className={layoutStyles.defaultImageIcon}>
-            <DefaultImageIcon />
-          </div>
         </div>
         <input
           ref={fileInput}
