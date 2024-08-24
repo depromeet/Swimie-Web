@@ -78,6 +78,17 @@ export function TextField({
                   : inputFieldStyles.raw({ isWritten: false }),
               ),
               className,
+              inputType === 'number' &&
+                css({
+                  '&::-webkit-outer-spin-button': {
+                    WebkitAppearance: 'none',
+                    margin: 0,
+                  },
+                  '&::-webkit-inner-spin-button': {
+                    WebkitAppearance: 'none',
+                    margin: 0,
+                  },
+                }),
             )}
           />
         }
