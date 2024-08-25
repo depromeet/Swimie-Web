@@ -1,4 +1,4 @@
-export function DefaultImageIcon() {
+export function DefaultImageIcon(props?: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +6,7 @@ export function DefaultImageIcon() {
       height="16"
       viewBox="0 0 17 16"
       fill="none"
+      {...props}
     >
       <path
         fillRule="evenodd"
