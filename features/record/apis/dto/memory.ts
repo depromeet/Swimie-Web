@@ -1,7 +1,6 @@
-export interface MemoryResponse {
-  status: number;
-  code: string;
-  message: string;
+import { Response } from '@/apis';
+
+export interface MemoryResponse extends Response {
   data: {
     month: number;
     rank: number;
@@ -9,10 +8,7 @@ export interface MemoryResponse {
   };
 }
 
-export interface MemoryPullResponse {
-  status: number;
-  code: string;
-  message: string;
+export interface MemoryPullResponse extends Response {
   data: {
     id: number;
     member: {
