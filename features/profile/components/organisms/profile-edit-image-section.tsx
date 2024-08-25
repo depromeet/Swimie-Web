@@ -8,6 +8,8 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
 
+import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
+
 interface ProfileEditImageSectionProps {
   onChange: (file: File) => void;
 }
@@ -16,6 +18,8 @@ export function ProfileEditImageSection({
   onChange,
 }: ProfileEditImageSectionProps) {
   const [image, setImage] = useState<string>();
+  const [isProfileBottomSheetOpened, setIsProfileBottomSheetOpened] =
+    useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,38 +49,48 @@ export function ProfileEditImageSection({
     );
   };
 
-  const handleAddImageClick = () => {
-    if (fileInput.current) {
-      fileInput.current.click();
-    }
+  const handleOpenProfileBottomSheetClick = () => {
+    setIsProfileBottomSheetOpened(true);
   };
 
+  // const handleAddImageClick = () => {
+  //   if (fileInput.current) {
+  //     fileInput.current.click();
+  //   }
+  // };
+
   return (
-    <section className={layoutStyles.imageEdit}>
-      <div className={layoutStyles.imageEditIcon}>
-        {image ? (
-          <Image
-            src={image}
-            alt="프로필 사진"
-            fill
-            sizes="40vw"
-            className={css({ borderRadius: 'full' })}
-          />
-        ) : (
-          <UserImageIcon width={100} height={100} />
-        )}
-        <div className={layoutStyles.defaultImageIcon}>
-          <DefaultImageIcon onClick={handleAddImageClick} />
+    <>
+      <section className={layoutStyles.imageEdit}>
+        <div className={layoutStyles.imageEditIcon}>
+          {image ? (
+            <Image
+              src={image}
+              alt="프로필 사진"
+              fill
+              sizes="40vw"
+              className={css({ borderRadius: 'full' })}
+            />
+          ) : (
+            <UserImageIcon width={100} height={100} />
+          )}
+          <div className={layoutStyles.defaultImageIcon}>
+            <DefaultImageIcon onClick={handleOpenProfileBottomSheetClick} />
+          </div>
         </div>
-      </div>
-      <input
-        ref={fileInput}
-        type="file"
-        accept="image/*"
-        className={css({ display: 'none' })}
-        onChange={handleProfileImageUpload}
+        <input
+          ref={fileInput}
+          type="file"
+          accept="image/*"
+          className={css({ display: 'none' })}
+          onChange={handleProfileImageUpload}
+        />
+      </section>
+      <ProfileImageBottomSheet
+        isOpen={isProfileBottomSheetOpened}
+        onClose={() => setIsProfileBottomSheetOpened(false)}
       />
-    </section>
+    </>
   );
 }
 
