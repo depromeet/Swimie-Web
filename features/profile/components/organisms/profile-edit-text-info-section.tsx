@@ -19,7 +19,6 @@ export function ProfileEditTextInfoSection({
 }: ProfileEditTextInfoSectionProps) {
   const { register, control } = useFormContext();
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <>
       <FormTextField
         {...register('nickname')}
