@@ -1,6 +1,5 @@
-export interface ImageStatusResponse {
-  status: number;
-  code: string;
-  message: string;
+import { Response } from '@/apis';
+
+export interface ImageStatusResponse extends Response {
   data: object;
 }
