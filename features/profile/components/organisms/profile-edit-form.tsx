@@ -2,15 +2,13 @@
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
+import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getBlobData } from '@/utils';
 
-import {
-  useGetImageProfilePresignedUrl,
-  useImageProfilePresignUrl,
-} from '../../apis';
+import { useGetImageProfilePresignedUrl } from '../../apis';
 import { useImageProfileUrlDone } from '../../apis/use-image-profile-url-done';
 import { useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
@@ -31,7 +29,7 @@ export function ProfileEditForm() {
 
   const { mutateAsync: getImageProfilePresignedUrl } =
     useGetImageProfilePresignedUrl();
-  const { mutateAsync: imagePresign } = useImageProfilePresignUrl();
+  const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: imageProfileDone } = useImageProfileUrlDone();
 
   //Todo: 닉네임 & 소개 수정 api 연결
