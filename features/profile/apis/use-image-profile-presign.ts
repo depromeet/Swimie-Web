@@ -3,7 +3,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { NextResponse } from 'next/server';
 
-async function imagePresignUrl(data: { presignedUrl: string; file: Blob }) {
+async function imageProfilePresignUrl(data: {
+  presignedUrl: string;
+  file: Blob;
+}) {
   const res = await fetch(data.presignedUrl, {
     method: 'PUT',
     headers: {
@@ -17,8 +20,8 @@ async function imagePresignUrl(data: { presignedUrl: string; file: Blob }) {
   } else return NextResponse.json({ status: 404 });
 }
 
-export function useImagePresignUrl() {
+export function useImageProfilePresignUrl() {
   return useMutation({
-    mutationFn: imagePresignUrl,
+    mutationFn: imageProfilePresignUrl,
   });
 }

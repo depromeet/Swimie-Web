@@ -7,7 +7,10 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getBlobData } from '@/utils';
 
-import { useGetImageProfilePresignedUrl, useImagePresignUrl } from '../../apis';
+import {
+  useGetImageProfilePresignedUrl,
+  useImageProfilePresignUrl,
+} from '../../apis';
 import { useImageProfileUrlDone } from '../../apis/use-image-profile-url-done';
 import { useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
@@ -28,11 +31,12 @@ export function ProfileEditForm() {
 
   const { mutateAsync: getImageProfilePresignedUrl } =
     useGetImageProfilePresignedUrl();
-  const { mutateAsync: imagePresign } = useImagePresignUrl();
+  const { mutateAsync: imagePresign } = useImageProfilePresignUrl();
   const { mutateAsync: imageProfileDone } = useImageProfileUrlDone();
 
-  //Todo: 닉네임 & 소개 수정 처리
+  //Todo: 닉네임 & 소개 수정 api 연결
   //Todo: 에러 처리
+  //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     console.log(data);
     if (imageFile) {
@@ -48,7 +52,6 @@ export function ProfileEditForm() {
   };
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <FormProvider {...methods}>
       <form
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
