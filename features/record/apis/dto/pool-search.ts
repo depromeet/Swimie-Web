@@ -1,3 +1,5 @@
+import { Response } from '@/apis';
+
 export interface PoolProps {
   poolId: number;
   name: string;
@@ -5,20 +7,14 @@ export interface PoolProps {
   isFavorite: boolean;
 }
 
-export interface SearchPoolInitialResultResponse {
-  status: number;
-  code: string;
-  message: string;
+export interface SearchPoolInitialResultResponse extends Response {
   data: {
     favoritePools: PoolProps[];
     searchedPools: PoolProps[];
   };
 }
 
-export interface SearchPoolResultResponse {
-  status: number;
-  code: string;
-  message: string;
+export interface SearchPoolResultResponse extends Response {
   data: {
     poolInfos: PoolProps[];
     pageSize: number;
