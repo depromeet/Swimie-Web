@@ -75,7 +75,6 @@ export function ProfileEditForm() {
       await imageProfileDone(getProfileImagePresignedUrlRes.data.imageName);
     }
   };
-
   const handleAddImageClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
@@ -86,10 +85,7 @@ export function ProfileEditForm() {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={handleSubmit(onSubmit)} className={layoutStyles.form}>
       <section className={layoutStyles.imageEdit}>
-        <div
-          className={layoutStyles.imageEditIcon}
-          onClick={handleAddImageClick}
-        >
+        <div className={layoutStyles.imageEditIcon}>
           {image ? (
             <Image
               src={image}
@@ -99,13 +95,11 @@ export function ProfileEditForm() {
               className={css({ borderRadius: 'full' })}
             />
           ) : (
-            <>
-              <UserImageIcon width={100} height={100} />{' '}
-              <div className={layoutStyles.defaultImageIcon}>
-                <DefaultImageIcon />
-              </div>
-            </>
+            <UserImageIcon width={100} height={100} />
           )}
+          <div className={layoutStyles.defaultImageIcon}>
+            <DefaultImageIcon onClick={handleAddImageClick} />
+          </div>
         </div>
         <input
           ref={fileInput}
