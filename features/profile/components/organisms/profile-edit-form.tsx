@@ -8,8 +8,10 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getBlobData } from '@/utils';
 
-import { useGetImageProfilePresignedUrl } from '../../apis';
-import { useImageProfileUrlDone } from '../../apis/use-image-profile-url-done';
+import {
+  useGetProfileImagePresignedUrl,
+  useProfileImageUrlDone,
+} from '../../apis';
 import { useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
 import { ProfileEditTextInfoSection } from './profile-edit-text-info-section';
@@ -27,10 +29,10 @@ export function ProfileEditForm() {
 
   const { imageFile, handlers } = useProfileEditForm();
 
-  const { mutateAsync: getImageProfilePresignedUrl } =
-    useGetImageProfilePresignedUrl();
+  const { mutateAsync: getProfileImagePresignedUrl } =
+    useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
-  const { mutateAsync: imageProfileDone } = useImageProfileUrlDone();
+  const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
 
   //Todo: 닉네임 & 소개 수정 api 연결
   //Todo: 에러 처리
@@ -38,14 +40,12 @@ export function ProfileEditForm() {
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     console.log(data);
     if (imageFile) {
-      const getProfileImagePresignedUrlRes = await getImageProfilePresignedUrl(
-        imageFile.name,
-      );
+      const { data } = await getProfileImagePresignedUrl(imageFile.name);
       await imagePresign({
-        presignedUrl: getProfileImagePresignedUrlRes.data.presignedUrl,
+        presignedUrl: data.presignedUrl,
         file: getBlobData(imageFile),
       });
-      await imageProfileDone(getProfileImagePresignedUrlRes.data.imageName);
+      await profileImageUrlDone(data.imageName);
     }
   };
 

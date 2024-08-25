@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { ProfileImageUrlDoneResponse } from './dto';
 
-async function imageProfileUrlDone(
+async function profileImageUrlDone(
   imageName: string,
 ): Promise<ProfileImageUrlDoneResponse> {
   const res = await fetch('/api/image/profile/url', {
@@ -19,8 +19,8 @@ async function imageProfileUrlDone(
   return res.json();
 }
 
-export function useImageProfileUrlDone() {
+export function useProfileImageUrlDone() {
   return useMutation({
-    mutationFn: imageProfileUrlDone,
+    mutationFn: profileImageUrlDone,
   });
 }
