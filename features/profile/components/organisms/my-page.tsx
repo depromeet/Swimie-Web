@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import { ProfileProps } from '@/app/profile/[id]/page';
 import { Button } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
@@ -11,6 +10,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
 
+import { ProfileProps } from '../../types/profile';
 import ProfileContainer from './profile-container';
 
 export function MyProfile({

@@ -1,7 +1,8 @@
-import { ProfileProps } from '@/app/profile/[id]/page';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+import { ProfileProps } from '../../types/profile';
 
 export default function ProfileContainer({
   profileData,
@@ -47,7 +48,6 @@ const introStyles = css({
   textStyle: 'body2.normal',
   fontWeight: '500',
   color: 'text.alternative',
-  width: '254px',
 });
 
 const friendStyles = {
