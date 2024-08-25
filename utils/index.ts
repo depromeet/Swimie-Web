@@ -1,6 +1,5 @@
-export * from './blob-data';
 export * from './date';
+export * from './image';
 export * from './number';
-export * from './resize-image';
 export * from './time';
 export * from './visualization';
