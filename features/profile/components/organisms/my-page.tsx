@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 
-import { ProfileProps } from '@/app/profile/[id]/page';
 import { Button } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
-import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { Tab, TabItem } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
+
+import { ProfileProps } from '../../types/profile';
+import ProfileContainer from './profile-container';
 
 export function MyProfile({
   profileData,
@@ -20,40 +21,26 @@ export function MyProfile({
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
 
   return (
-    <section className={profileContainer}>
-      <div className={inforWrapper}>
-        <UserImageIcon />
-        <div>
-          <div className={nameStyles}>{profileData.nickname}</div>
-          <div className={introStyles}>{profileData.introduction}</div>
+    <div>
+      <section className={profileContainer}>
+        <ProfileContainer profileData={profileData} />
+        <div className={buttonContainer}>
+          <Button
+            size="small"
+            label="프로필 편집"
+            buttonType="assistive"
+            variant="outlined"
+            className={buttonStyle}
+          />
+          <Button
+            size="small"
+            label="프로필 공유"
+            buttonType="assistive"
+            variant="outlined"
+            className={buttonStyle}
+          />
         </div>
-      </div>
-      <div className={friendStyles.container}>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로워</div>
-          <div className={friendStyles.count}>{profileData.followerCount}</div>
-        </div>
-        <div className={friendStyles.item}>
-          <div className={friendStyles.type}>팔로잉</div>
-          <div className={friendStyles.count}>{profileData.followingCount}</div>
-        </div>
-      </div>
-      <div className={buttonContainer}>
-        <Button
-          size="small"
-          label="프로필 편집"
-          buttonType="assistive"
-          variant="outlined"
-          className={buttonStyle}
-        />
-        <Button
-          size="small"
-          label="프로필 공유"
-          buttonType="assistive"
-          variant="outlined"
-          className={buttonStyle}
-        />
-      </div>
+      </section>
       <Tab type="primary">
         <TabItem
           text="통계"
@@ -88,7 +75,7 @@ export function MyProfile({
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
 
@@ -98,48 +85,6 @@ const profileContainer = flex({
   gap: '20px',
   padding: '20px',
 });
-
-const inforWrapper = flex({
-  alignItems: 'flex-start',
-  gap: '21px',
-  alignSelf: 'stretch',
-});
-
-const nameStyles = css({
-  textStyle: 'heading3',
-  fontWeight: '600',
-  color: 'text.normal',
-});
-
-const introStyles = css({
-  textStyle: 'body2.normal',
-  fontWeight: '500',
-  color: 'text.alternative',
-  width: '254px',
-});
-
-const friendStyles = {
-  container: flex({
-    alignItems: 'center',
-    gap: '40px',
-    alignSelf: 'stretch',
-  }),
-  item: flex({
-    direction: 'column',
-    alignItems: 'flex-start',
-    gap: '2px',
-  }),
-  type: css({
-    textStyle: 'label2',
-    fontWeight: '500',
-    color: 'text.alternative',
-  }),
-  count: css({
-    textStyle: 'body2.normal',
-    fontWeight: '600',
-    color: 'text.normal',
-  }),
-};
 
 const buttonContainer = flex({
   width: '100%',
