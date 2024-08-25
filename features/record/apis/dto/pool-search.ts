@@ -1,3 +1,5 @@
+import { Response } from '@/apis';
+
 export interface PoolProps {
   poolId: number;
   name: string;
@@ -5,24 +7,14 @@ export interface PoolProps {
   isFavorite: boolean;
 }
 
-export interface SearchPoolInitialResultResponse {
-  status: number;
-  code: string;
-  message: string;
-  data: {
-    favoritePools: PoolProps[];
-    searchedPools: PoolProps[];
-  };
-}
+export type SearchPoolInitialResultResponse = Response<{
+  favoritePools: PoolProps[];
+  searchedPools: PoolProps[];
+}>;
 
-export interface SearchPoolResultResponse {
-  status: number;
-  code: string;
-  message: string;
-  data: {
-    poolInfos: PoolProps[];
-    pageSize: number;
-    cursorId: number;
-    hasNext: boolean;
-  };
-}
+export type SearchPoolResultResponse = Response<{
+  poolInfos: PoolProps[];
+  pageSize: number;
+  cursorId: number;
+  hasNext: boolean;
+}>;
