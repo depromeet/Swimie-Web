@@ -11,6 +11,7 @@ import {
   useWatch,
 } from 'react-hook-form';
 
+import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
@@ -22,7 +23,6 @@ import {
   RecordRequestProps,
   useGetImagePresignedUrl,
   useImageEdit,
-  useImagePresignUrl,
   useImageStatus,
   useMemory,
   useMemoryEdit,
