@@ -1,5 +1,3 @@
-export interface ProfileImageUrlDoneResponse {
-  status: number;
-  code: string;
-  message: string;
-}
+import { Response } from '@/apis';
+
+export interface ProfileImageUrlDoneResponse extends Response {}
