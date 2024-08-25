@@ -1,3 +1,4 @@
+export * from './blob-data';
 export * from './date';
 export * from './number';
 export * from './resize-image';

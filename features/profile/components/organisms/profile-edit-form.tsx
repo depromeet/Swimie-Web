@@ -8,7 +8,7 @@ import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { FormTextArea, FormTextField } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { resizeFile } from '@/utils';
+import { getBlobData, resizeFile } from '@/utils';
 
 import { useGetImageProfilePresignedUrl, useImagePresignUrl } from '../../apis';
 import { useImageProfileUrlDone } from '../../apis/use-image-profile-url-done';
@@ -18,8 +18,6 @@ interface ProfileEditFormProps {
   introduce?: string;
 }
 
-//Todo: 사진 선택 창 연결
-//Todo: api 연결
 //Todo: 한줄 소개 현재 글자 수 세는 UI 추가
 export function ProfileEditForm() {
   const { register, control, handleSubmit } = useForm<ProfileEditFormProps>({
@@ -62,12 +60,8 @@ export function ProfileEditForm() {
     );
   };
 
-  const getBlobData = (file: File) => {
-    const blobData = new Blob([file]);
-    return blobData;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/require-await
+  //Todo: 닉네임 & 소개 수정 처리
+  //Todo: 에러 처리
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     console.log(data);
     if (imageFile) {
