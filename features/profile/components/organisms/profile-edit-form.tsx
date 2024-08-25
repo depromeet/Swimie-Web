@@ -56,7 +56,11 @@ export function ProfileEditForm() {
         className={layoutStyles.form}
       >
         <ProfileEditImageSection onChange={handlers.onChangeImageFile} />
-        <ProfileEditTextInfoSection />
+        <ProfileEditTextInfoSection
+          nickNameLabel="닉네임"
+          nickNameSubText="14자까지 입력할 수 있어요"
+          introducePlaceholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
+        />
         <div className={buttonStyles.layout}>
           <Button
             buttonType="primary"
