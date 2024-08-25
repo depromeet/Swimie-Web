@@ -19,14 +19,13 @@ export function ProfileEditTextInfoSection({
 }: ProfileEditTextInfoSectionProps) {
   const { register, control } = useFormContext();
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <>
       <FormTextField
         {...register('nickname')}
         registerdFieldValue={
           useWatch({
             control,
-            name: 'nickname' as const,
+            name: 'nickname',
           }) as string
         }
         label={nickNameLabel}
