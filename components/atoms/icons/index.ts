@@ -18,6 +18,7 @@ export * from './logo-icon';
 export * from './persons-icon';
 export * from './search-icon';
 export * from './setting-icon';
+export * from './speech-bubble-icon';
 export * from './star-icon';
 export * from './star-icon-fill';
 export * from './success-check-icon';
