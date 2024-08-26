@@ -5,4 +5,5 @@ export * from './icons';
 export * from './image';
 export * from './loading';
 export * from './portal';
+export * from './toast';
 export * from './waves';
