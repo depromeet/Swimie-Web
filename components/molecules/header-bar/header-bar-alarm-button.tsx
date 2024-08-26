@@ -10,7 +10,7 @@ interface LogoButtonProps {
 
 export function AlarmButton({ className }: LogoButtonProps) {
   return (
-    <Link href="/alarm" className={className}>
+    <Link href="/notification" className={className}>
       <BellIcon />
     </Link>
   );

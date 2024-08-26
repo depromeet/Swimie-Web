@@ -12,6 +12,7 @@ type Dim = {
  *   BottomSheet - dim: 500 / container: 550
  *   Modal - dim: 700 / container: 750
  *   Dialog - dim: 800 / container: 850
+ *   Toast - container: 900
  */
 export const Dim = ({ onClick, zIndex = 800 }: Dim) => {
   return (
