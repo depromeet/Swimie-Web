@@ -1,5 +1,5 @@
 export type Response<T = unknown> = {
-  status: string;
+  status: number;
   code: string;
   message: string;
   data: T;
