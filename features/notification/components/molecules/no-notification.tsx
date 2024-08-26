@@ -7,7 +7,7 @@ interface NoAlarmProps {
   subText: string;
 }
 
-export function NoAlarm({ mainText, subText }: NoAlarmProps) {
+export function NoNotification({ mainText, subText }: NoAlarmProps) {
   return (
     <section className={layoutStyles.total}>
       <div className={layoutStyles.content}>
