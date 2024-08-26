@@ -6,15 +6,15 @@ export interface ListItemTextProps {
   subText?: string;
   distance?: string;
   onClick?: () => void;
-  clickProps?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export default function ListItem({
+export function ListItem({
   text,
   subText,
   distance,
   onClick,
-  clickProps,
+  children,
 }: ListItemTextProps) {
   return (
     <div className={listItemStyles} onClick={onClick}>
@@ -24,7 +24,7 @@ export default function ListItem({
       </div>
       <div className={listItemRightStyles}>
         <div className={listItemDistanceStyles}>{distance}</div>
-        <div>{clickProps}</div>
+        <div>{children}</div>
       </div>
     </div>
   );
