@@ -223,7 +223,7 @@ const layout = {
   button: css({
     w: 'full',
     position: 'absolute',
-    bottom: '15px',
+    bottom: 'calc(15px + env(safe-area-inset-bottom))',
     padding: '0 20px',
   }),
 };
