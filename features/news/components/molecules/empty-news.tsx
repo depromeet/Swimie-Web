@@ -28,7 +28,11 @@ const containerStyles = flex({
 
 const descriptionStyles = css({ textAlign: 'center' });
 
-const titleStyles = css({ textStyle: 'heading6', fontWeight: 'medium' });
+const titleStyles = css({
+  pb: '4px',
+  textStyle: 'heading6',
+  fontWeight: 'medium',
+});
 
 const subTitleStyles = css({
   textStyle: 'body2.normal',
