@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { DefaultImageIcon, Image } from '@/components/atoms';
-import { profileIndexType } from '@/public/images/default-profile';
+import { ProfileIndexType } from '@/public/images/default-profile';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -11,9 +11,9 @@ import { DefaultProfile } from '../atoms';
 import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
 
 interface ProfileEditImageSectionProps {
-  defaultProfileIndex: profileIndexType;
+  defaultProfileIndex: ProfileIndexType;
   onChangeFile: (file: File) => void;
-  onChangeDefaultProfileIndex: (index: profileIndexType) => void;
+  onChangeDefaultProfileIndex: (index: ProfileIndexType) => void;
 }
 
 export function ProfileEditImageSection({

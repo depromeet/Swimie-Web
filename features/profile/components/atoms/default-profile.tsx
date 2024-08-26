@@ -1,14 +1,14 @@
 import { Image } from '@/components/atoms';
 import {
   defaultProfileImages,
-  profileIndexType,
+  ProfileIndexType,
 } from '@/public/images/default-profile';
 import { css, cva, cx } from '@/styled-system/css';
 
 interface DefaultProfileProps {
   size?: 'big' | 'small';
-  profileIndex: profileIndexType;
-  onChangeDefaultProfileIndex?: (index: profileIndexType) => void;
+  profileIndex: ProfileIndexType;
+  onChangeDefaultProfileIndex?: (index: ProfileIndexType) => void;
 }
 
 export function DefaultProfile({

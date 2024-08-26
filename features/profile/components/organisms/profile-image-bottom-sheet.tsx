@@ -6,7 +6,7 @@ import { Button, Image } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
 import {
   defaultProfileImages,
-  profileIndexType,
+  ProfileIndexType,
 } from '@/public/images/default-profile';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -21,7 +21,7 @@ interface ProfileImageBottomSheetProps {
   onClose: () => void;
   onChangeFile: (file: File) => void;
   onChangeImage: (image: string) => void;
-  onChangeDefaultProfileIndex: (index: profileIndexType) => void;
+  onChangeDefaultProfileIndex: (index: ProfileIndexType) => void;
 }
 
 export function ProfileImageBottomSheet({
@@ -34,7 +34,7 @@ export function ProfileImageBottomSheet({
   const { image, file, fileInput, handlers } = useProfileImageBottomSheet();
 
   const [defaultProfileIndex, setDefaultProfileIndex] =
-    useState<profileIndexType>(0);
+    useState<ProfileIndexType>(0);
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadImage = async () => {
@@ -69,7 +69,7 @@ export function ProfileImageBottomSheet({
     }
   };
 
-  const handleSelectDefaultProfile = (index: profileIndexType) => {
+  const handleSelectDefaultProfile = (index: ProfileIndexType) => {
     setDefaultProfileIndex(index);
   };
 
@@ -106,7 +106,7 @@ export function ProfileImageBottomSheet({
         {Object.entries(defaultProfileImages).map(([iconIndex]) => (
           <DefaultProfile
             key={iconIndex}
-            profileIndex={Number(iconIndex) as profileIndexType}
+            profileIndex={Number(iconIndex) as ProfileIndexType}
             onChangeDefaultProfileIndex={handleSelectDefaultProfile}
           />
         ))}
