@@ -13,7 +13,7 @@ export interface DeleteAccountProps {
   data: object;
 }
 
-export default function Step3() {
+export function Step3() {
   const router = useRouter();
 
   const handleGoToSetting = () => {

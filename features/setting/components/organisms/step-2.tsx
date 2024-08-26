@@ -8,7 +8,7 @@ import { textAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export default function Step2() {
+export function Step2() {
   const router = useRouter();
   const [text, setText] = useState('');
   const setTextAtom = useSetAtom(textAtom);
