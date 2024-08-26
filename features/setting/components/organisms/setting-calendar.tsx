@@ -1,0 +1,245 @@
+import { Radio, RadioChangeEvent } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/atoms';
+import { css } from '@/styled-system/css';
+import { flex } from '@/styled-system/patterns';
+
+import ListItem from '../atom/list-item';
+import SettingDistanceIcon from '../atom/setting-distance-icon';
+
+type SettingCalendarProps = {
+  goal: number;
+  selectedDistance: number | null;
+  onDistanceChange: (distance: number) => void;
+};
+
+export default function SettingCalendar({
+  goal,
+  selectedDistance,
+  onDistanceChange,
+}: SettingCalendarProps) {
+  const router = useRouter();
+  const [calculatedGoal, setCalculatedGoal] = useState(goal * 0.8);
+
+  useEffect(() => {
+    if (selectedDistance !== null) {
+      setCalculatedGoal(selectedDistance * 0.8);
+    }
+  }, [selectedDistance]);
+
+  const handleDistanceChange = (e: RadioChangeEvent) => {
+    const selectedValue = Number(e.target.value);
+    onDistanceChange(selectedValue);
+  };
+
+  const dayKo = ['', '월', '화', '수', '목', '금', ''];
+  const dayNum = ['0', '1', '2', '3', '4', '5', '6'];
+
+  const getNumStyle = (num: string) => {
+    if (num === '0' || num === '6') {
+      return { opacity: '0' };
+    }
+    if (num === '1' || num === '5') {
+      return { opacity: '0.2' };
+    }
+    if (num === '2' || num === '4') {
+      return { opacity: '0.5' };
+    }
+
+    return { opacity: 'inherit' };
+  };
+
+  const handleChangeGoal = async () => {
+    if (selectedDistance === null) return;
+
+    try {
+      const response = await fetch('/api/goal', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ goal: selectedDistance }),
+      });
+
+      if (response.ok) {
+        router.push('/setting');
+      } else {
+        console.error('Failed to update goal');
+      }
+    } catch (error) {
+      console.error('Error updating goal:', error);
+    }
+  };
+
+  return (
+    <div className={pageContainer}>
+      <div className={contentContainer}>
+        <div className={distanceContainer}>
+          <div className={backgroundContainer}>
+            <div className={dayContainer}>
+              <div className={dayKoStyles}>
+                {dayKo.map((day, index) => (
+                  <div key={index} className={dayStyles(day)}>
+                    {day}
+                  </div>
+                ))}
+              </div>
+              <div className={numContainer}>
+                <div className={dayNumStyles}>
+                  {dayNum.map((num, index) => (
+                    <div
+                      className={numStyles}
+                      style={getNumStyle(num)}
+                      key={index}
+                    >
+                      {num}
+                    </div>
+                  ))}
+                </div>
+                <div className={imgContainer}>
+                  <SettingDistanceIcon />
+                </div>
+              </div>
+            </div>
+            <div>
+              하루에 <span className={goalStyles}>{calculatedGoal}m</span>{' '}
+              수영하면 이만큼 표시돼요
+            </div>
+          </div>
+          <Radio.Group
+            onChange={handleDistanceChange}
+            value={selectedDistance}
+            className={css({ width: '100%' })}
+          >
+            <ListItem text="1,000m" clickProps={<Radio value={1000} />} />
+            <ListItem text="3,000m" clickProps={<Radio value={3000} />} />
+            <ListItem text="5,000m" clickProps={<Radio value={5000} />} />
+          </Radio.Group>
+        </div>
+      </div>
+      {selectedDistance !== goal && (
+        <div className={buttonWrapper}>
+          <Button
+            label="저장하기"
+            buttonType="primary"
+            variant="solid"
+            size="large"
+            className={buttonContainer}
+            onClick={() => {
+              void handleChangeGoal();
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+const pageContainer = css({
+  display: 'flex',
+  flexDirection: 'column',
+  height: 'calc(100vh - 48px)',
+});
+
+const contentContainer = css({
+  flex: 1,
+  overflowY: 'auto',
+});
+
+const buttonWrapper = css({
+  position: 'sticky',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: 'white',
+  padding: '20px',
+});
+
+const buttonContainer = css({
+  width: '100%',
+});
+const distanceContainer = flex({
+  padding: '16px 20px',
+  direction: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const backgroundContainer = flex({
+  backgroundColor: 'background.gray',
+  borderRadius: '12px',
+  padding: '24px 0px',
+  direction: 'column',
+  alignItems: 'center',
+  gap: '20px',
+  alignSelf: 'stretch',
+});
+
+const dayContainer = flex({
+  direction: 'column',
+  alignItems: 'flex-start',
+  gap: '8px',
+  alignSelf: 'stretch',
+});
+
+const dayKoStyles = flex({
+  height: '30px',
+  alignItems: 'center',
+  gap: '3px',
+  alignSelf: 'stretch',
+});
+
+const dayNumStyles = flex({
+  height: '30px',
+  alignItems: 'center',
+  gap: '3px',
+  alignSelf: 'stretch',
+});
+
+const dayStyles = (day: string) =>
+  flex({
+    direction: 'column',
+    justifyContent: 'center',
+    flex: '1 0 0',
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    color: 'text.placeHolder',
+    textStyle: 'label2',
+    opacity:
+      day === '월' || day === '금'
+        ? '0.2'
+        : day === '화' || day === '목'
+          ? '0.5'
+          : '',
+  });
+
+const numContainer = flex({
+  direction: 'column',
+  alignItems: 'center',
+  gap: '5px',
+  flex: '1 0 0',
+  alignSelf: 'stretch',
+});
+
+const numStyles = flex({
+  direction: 'column',
+  justifyContent: 'center',
+  alignSelf: 'stretch',
+  textAlign: 'center',
+  color: 'text.placeHolder',
+  textStyle: 'label2',
+  margin: '0 auto',
+});
+
+const imgContainer = flex({
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  gap: '3px',
+  alignSelf: 'stretch',
+});
+
+const goalStyles = css({
+  color: 'primary.swim.총거리.default',
+});
