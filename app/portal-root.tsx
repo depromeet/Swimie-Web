@@ -10,10 +10,10 @@ export const PortalRoot = () => {
   return (
     <>
       <Portal>
-        <ToastDialog />
-      </Portal>
-      <Portal>
-        <Dialog {...dialogState} />
+        <>
+          <ToastDialog />
+          <Dialog {...dialogState} />
+        </>
       </Portal>
     </>
   );
