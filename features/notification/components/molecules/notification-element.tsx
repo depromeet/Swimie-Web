@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import { Button } from '@/components/atoms';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { css, cva } from '@/styled-system/css';
+import { convertTimeToElapsedTime } from '@/utils';
 
 import { NotificationElementProps } from '../../apis';
 import { CheerUpIcon } from '../atoms';
@@ -59,7 +60,9 @@ export const NotificationElement = forwardRef<
               <p className={textStyles.description}>{`"${content} "`}</p>
             </>
           )}
-          <span className={textStyles.time}>{createdAt}</span>
+          <span className={textStyles.time}>
+            {convertTimeToElapsedTime(createdAt)}
+          </span>
         </div>
         {type === 'FOLLOW' && (
           <Button
