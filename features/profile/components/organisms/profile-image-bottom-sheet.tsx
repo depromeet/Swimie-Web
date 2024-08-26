@@ -4,7 +4,10 @@ import { ChangeEvent, useRef, useState } from 'react';
 
 import { Button, Image } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
-import { defaultProfileIcons } from '@/public/images/default-profile';
+import {
+  defaultProfileImages,
+  profileIndexType,
+} from '@/public/images/default-profile';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
@@ -17,6 +20,7 @@ interface ProfileImageBottomSheetProps {
   onClose: () => void;
   onChangeFile: (file: File) => void;
   onChangeImage: (image: string) => void;
+  onChangeDefaultProfileIndex: (index: profileIndexType) => void;
 }
 
 export function ProfileImageBottomSheet({
@@ -24,10 +28,12 @@ export function ProfileImageBottomSheet({
   onClose,
   onChangeFile,
   onChangeImage,
+  onChangeDefaultProfileIndex,
 }: ProfileImageBottomSheetProps) {
   const [image, setImage] = useState<string>();
   const [file, setFile] = useState<File>();
-
+  const [defaultProfileIndex, setDefaultProfileIndex] =
+    useState<profileIndexType>(0);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,11 +69,16 @@ export function ProfileImageBottomSheet({
     }
   };
 
+  const handleSelectDefaultProfile = (index: profileIndexType) => {
+    setDefaultProfileIndex(index);
+  };
+
   const handleSelectButtonClick = () => {
     if (image && file) {
       onChangeImage(image);
       onChangeFile(file);
     }
+    onChangeDefaultProfileIndex(defaultProfileIndex);
     onClose();
   };
   return (
@@ -88,16 +99,16 @@ export function ProfileImageBottomSheet({
             />
           </div>
         ) : (
-          <DefaultProfile size="big" iconColor="파랑" />
+          <DefaultProfile size="big" profileIndex={defaultProfileIndex} />
         )}
       </div>
       <div className={layoutStyles.selectImage}>
-        {(
-          Object.keys(defaultProfileIcons) as Array<
-            keyof typeof defaultProfileIcons
-          >
-        ).map((iconColor) => (
-          <DefaultProfile key={iconColor} iconColor={iconColor} />
+        {Object.entries(defaultProfileImages).map(([iconIndex]) => (
+          <DefaultProfile
+            key={iconIndex}
+            profileIndex={Number(iconIndex) as profileIndexType}
+            onChangeDefaultProfileIndex={handleSelectDefaultProfile}
+          />
         ))}
         <OpenAlbumButton onClick={handleAddImageClick} />
         <input

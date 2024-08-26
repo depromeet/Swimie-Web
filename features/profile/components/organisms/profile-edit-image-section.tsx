@@ -3,18 +3,23 @@
 import { useState } from 'react';
 
 import { DefaultImageIcon, Image } from '@/components/atoms';
-import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
+import { profileIndexType } from '@/public/images/default-profile';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { DefaultProfile } from '../atoms';
 import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
 
 interface ProfileEditImageSectionProps {
+  defaultProfileIndex: profileIndexType;
   onChangeFile: (file: File) => void;
+  onChangeDefaultProfileIndex: (index: profileIndexType) => void;
 }
 
 export function ProfileEditImageSection({
+  defaultProfileIndex,
   onChangeFile,
+  onChangeDefaultProfileIndex,
 }: ProfileEditImageSectionProps) {
   const [image, setImage] = useState<string>();
   const [isProfileBottomSheetOpened, setIsProfileBottomSheetOpened] =
@@ -45,7 +50,7 @@ export function ProfileEditImageSection({
               className={css({ borderRadius: 'full' })}
             />
           ) : (
-            <UserImageIcon width={100} height={100} />
+            <DefaultProfile size="big" profileIndex={defaultProfileIndex} />
           )}
           <div className={layoutStyles.defaultImageIcon}>
             <DefaultImageIcon onClick={handleOpenProfileBottomSheet} />
@@ -57,6 +62,7 @@ export function ProfileEditImageSection({
         onClose={handleCloseProfileBottomSheet}
         onChangeFile={onChangeFile}
         onChangeImage={handleChangeImage}
+        onChangeDefaultProfileIndex={onChangeDefaultProfileIndex}
       />
     </>
   );

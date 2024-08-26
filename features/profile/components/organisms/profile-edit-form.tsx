@@ -27,7 +27,7 @@ export function ProfileEditForm() {
     defaultValues: {},
   });
 
-  const { imageFile, handlers } = useProfileEditForm();
+  const { imageFile, defaultProfileIndex, handlers } = useProfileEditForm();
 
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
@@ -58,7 +58,11 @@ export function ProfileEditForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className={layoutStyles.form}
       >
-        <ProfileEditImageSection onChangeFile={handlers.onChangeImageFile} />
+        <ProfileEditImageSection
+          defaultProfileIndex={defaultProfileIndex}
+          onChangeDefaultProfileIndex={handlers.onChangeDefaultProfileIndex}
+          onChangeFile={handlers.onChangeImageFile}
+        />
         <ProfileEditTextInfoSection
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"
