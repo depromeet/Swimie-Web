@@ -1,4 +1,3 @@
-import { NormalShapeIcon } from '@/components/atoms/icons/normal-shape-icon';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -7,6 +6,7 @@ export interface ListItemTextProps {
   subText?: string;
   distance?: string;
   onClick?: () => void;
+  clickProps?: React.ReactNode;
 }
 
 export default function ListItem({
@@ -14,6 +14,7 @@ export default function ListItem({
   subText,
   distance,
   onClick,
+  clickProps,
 }: ListItemTextProps) {
   return (
     <div className={listItemStyles} onClick={onClick}>
@@ -23,7 +24,7 @@ export default function ListItem({
       </div>
       <div className={listItemRightStyles}>
         <div className={listItemDistanceStyles}>{distance}</div>
-        <NormalShapeIcon />
+        <div>{clickProps}</div>
       </div>
     </div>
   );
@@ -35,13 +36,13 @@ const listItemStyles = flex({
   alignItems: 'center',
   alignSelf: 'stretch',
   backgroundColor: 'background.white',
-  cursor: 'pointer',
 });
 
 const listItemTextStyles = css({
   color: 'text.normal',
   textStyle: 'heading6',
   fontWeight: '500',
+  cursor: 'pointer',
 });
 
 const listItemSubTextStyles = css({
@@ -53,6 +54,7 @@ const listItemRightStyles = flex({
   justifyContent: 'flex-end',
   alignItems: 'center',
   gap: '8px',
+  cursor: 'pointer',
 });
 
 const listItemDistanceStyles = css({
