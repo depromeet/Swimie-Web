@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, MutableRefObject, useEffect, useState } from 'react';
 
 import { LoadingArea } from '../loading';
@@ -58,13 +60,11 @@ export const PullToRefresh = forwardRef<HTMLDivElement, PullToRereshProps>(
 
     return (
       <div>
-        <div>
-          {refreshing ? (
-            <LoadingArea width={30} height={30} paddingY="none" />
-          ) : (
-            ''
-          )}
-        </div>
+        {refreshing ? (
+          <LoadingArea width={30} height={30} paddingY="none" />
+        ) : (
+          ''
+        )}
       </div>
     );
   },

@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 
-import { PullToRefresh } from '@/components/atoms/pull-to-refresh';
+import { PullToRefresh } from '@/components/atoms';
 import { TimeLineCard, TimeLineContent } from '@/features/main';
 import { flex } from '@/styled-system/patterns';
 
