@@ -85,8 +85,8 @@ const nameStyles = cva({
     type: {
       자유형: { color: 'primary.swim.자유형.default' },
       배영: { color: 'primary.swim.배영.default' },
-      접영: { color: 'primary.swim.접영.default' },
       평영: { color: 'primary.swim.평영.default' },
+      접영: { color: 'primary.swim.접영.default' },
       킥판: { color: 'primary.swim.킥판.default' },
     },
   },
