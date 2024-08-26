@@ -2,13 +2,13 @@ import { Button } from '@/components/atoms';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { css, cva } from '@/styled-system/css';
 
-import { AlarmElementProps } from '../../type';
+import { NotificationElementProps } from '../../type';
 import { CheerUpIcon } from '../atoms';
 
 //Todo: 추후 알림 내용이 추가될 때 props가 너무 많아질 시, 합성 컴포넌트 도입 고려
 //Todo: 팔로우 api 연결
 //Todo: 응원 종류 constants로 한번에 관리(응원 보내기 기능에서도 사용)
-export function AlarmElement({
+export function NotificationElement({
   variant,
   userName,
   time,
@@ -16,7 +16,7 @@ export function AlarmElement({
   description,
   recordDate,
   isClicked,
-}: Omit<AlarmElementProps, 'id'>) {
+}: Omit<NotificationElementProps, 'id'>) {
   return (
     <li className={css(layoutStyles.total.raw({ isClicked }))}>
       {variant === 'follow' ? (

@@ -2,8 +2,11 @@ import dynamic from 'next/dynamic';
 
 import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
-import { AlarmElementProps, NoAlarm } from '@/features/alarm';
-import { AlarmList } from '@/features/alarm/components/organisms/alarm-list';
+import {
+  NoNotification,
+  NotificationElementProps,
+  NotificationList,
+} from '@/features/notification';
 const DynamicBackButton = dynamic(
   () => import('@/components/molecules').then(({ BackButton }) => BackButton),
   {
@@ -14,7 +17,7 @@ const DynamicBackButton = dynamic(
 
 //Todo: 알람 불러오는 Api 연결
 export default function AlarmPage() {
-  const dummyAlarms: AlarmElementProps[] = [
+  const dummyAlarms: NotificationElementProps[] = [
     {
       id: 0,
       variant: 'follow',
@@ -67,12 +70,12 @@ export default function AlarmPage() {
         <HeaderBar.Title>알림</HeaderBar.Title>
       </HeaderBar>
       {!dummyAlarms ? (
-        <NoAlarm
+        <NoNotification
           mainText="아직 받은 알림이 없어요"
           subText="공지, 활동 소식이 도착하면 알려드릴게요"
         />
       ) : (
-        <AlarmList alarms={dummyAlarms} />
+        <NotificationList alarms={dummyAlarms} />
       )}
     </>
   );
