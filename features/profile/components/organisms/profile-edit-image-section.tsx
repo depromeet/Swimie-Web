@@ -49,8 +49,12 @@ export function ProfileEditImageSection({
     );
   };
 
-  const handleOpenProfileBottomSheetClick = () => {
+  const handleOpenProfileBottomSheet = () => {
     setIsProfileBottomSheetOpened(true);
+  };
+
+  const handleCloseProfileBottomSheet = () => {
+    setIsProfileBottomSheetOpened(false);
   };
 
   // const handleAddImageClick = () => {
@@ -75,7 +79,7 @@ export function ProfileEditImageSection({
             <UserImageIcon width={100} height={100} />
           )}
           <div className={layoutStyles.defaultImageIcon}>
-            <DefaultImageIcon onClick={handleOpenProfileBottomSheetClick} />
+            <DefaultImageIcon onClick={handleOpenProfileBottomSheet} />
           </div>
         </div>
         <input
@@ -88,7 +92,7 @@ export function ProfileEditImageSection({
       </section>
       <ProfileImageBottomSheet
         isOpen={isProfileBottomSheetOpened}
-        onClose={() => setIsProfileBottomSheetOpened(false)}
+        onClose={handleCloseProfileBottomSheet}
       />
     </>
   );

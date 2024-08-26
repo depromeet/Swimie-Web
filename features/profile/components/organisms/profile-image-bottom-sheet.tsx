@@ -37,8 +37,8 @@ export function ProfileImageBottomSheet({
           Object.keys(defaultProfileIcons) as Array<
             keyof typeof defaultProfileIcons
           >
-        ).map((hatColor) => (
-          <DefaultProfile key={hatColor} hatColor={hatColor} />
+        ).map((iconColor) => (
+          <DefaultProfile key={iconColor} iconColor={iconColor} />
         ))}
         <OpenAlbumButton />
       </div>

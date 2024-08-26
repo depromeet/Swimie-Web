@@ -1,19 +1,19 @@
 import { Image } from '@/components/atoms';
 import {
   defaultProfileIcons,
-  hatColors,
+  iconColors,
 } from '@/public/images/default-profile';
 import { css, cva } from '@/styled-system/css';
 
 interface DefaultProfileProps {
-  hatColor: hatColors;
+  iconColor: iconColors;
 }
 
-export function DefaultProfile({ hatColor }: DefaultProfileProps) {
+export function DefaultProfile({ iconColor }: DefaultProfileProps) {
   return (
-    <div className={css(layoutStyles.raw({ hatColor }))}>
+    <div className={css(layoutStyles.raw({ iconColor }))}>
       <Image
-        src={defaultProfileIcons[hatColor]}
+        src={defaultProfileIcons[iconColor]}
         alt="디폴트 프로필"
         width={45.6}
         height={38.4}
@@ -33,7 +33,7 @@ const layoutStyles = cva({
     borderRadius: 'full',
   },
   variants: {
-    hatColor: {
+    iconColor: {
       파랑: { backgroundColor: '#F3DD6E' },
       주황: { backgroundColor: '#88D4B0' },
       초록: { backgroundColor: '#EC6344' },

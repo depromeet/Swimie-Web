@@ -5,9 +5,9 @@ import GreenHat from './green-hat.png';
 import OrangeHat from './orange-hat.png';
 import YellowHat from './yellow-hat.png';
 
-export type hatColors = '파랑' | '주황' | '초록' | '노랑';
+export type iconColors = '파랑' | '주황' | '초록' | '노랑';
 export const defaultProfileIcons: {
-  [key in hatColors]: StaticImageData;
+  [key in iconColors]: StaticImageData;
 } = {
   파랑: BlueHat,
   주황: OrangeHat,
