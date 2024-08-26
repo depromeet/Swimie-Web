@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Button, Image } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
@@ -12,6 +12,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
 
+import { useProfileImageBottomSheet } from '../../hooks';
 import { OpenAlbumButton } from '../atoms';
 import { DefaultProfile } from '../atoms/default-profile';
 
@@ -30,25 +31,24 @@ export function ProfileImageBottomSheet({
   onChangeImage,
   onChangeDefaultProfileIndex,
 }: ProfileImageBottomSheetProps) {
-  const [image, setImage] = useState<string>();
-  const [file, setFile] = useState<File>();
+  const { image, file, fileInput, handlers } = useProfileImageBottomSheet();
+
   const [defaultProfileIndex, setDefaultProfileIndex] =
     useState<profileIndexType>(0);
-  const fileInput = useRef<HTMLInputElement>(null);
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadImage = async () => {
       try {
         if (e.target.files) {
           const targetFile = e.target.files[0];
-          if (targetFile) setImage('');
+          if (targetFile) handlers.onChangeImage('');
           const resizedImage = await resizeFile(targetFile, 200, 200, 100);
           const reader = new FileReader();
           reader.onload = () => {
             if (reader.readyState === FileReader.DONE) {
               if (reader.result !== image) {
-                setImage(reader.result as string);
-                setFile(resizedImage);
+                handlers.onChangeImage(reader.result as string);
+                handlers.onChangeFile(resizedImage);
               }
             }
           };

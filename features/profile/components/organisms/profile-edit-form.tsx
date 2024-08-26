@@ -35,6 +35,7 @@ export function ProfileEditForm() {
   const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
 
   //Todo: 닉네임 & 소개 수정 api 연결
+  //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필)
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {

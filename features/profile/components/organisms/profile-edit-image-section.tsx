@@ -25,12 +25,8 @@ export function ProfileEditImageSection({
   const [isProfileBottomSheetOpened, setIsProfileBottomSheetOpened] =
     useState(false);
 
-  const handleOpenProfileBottomSheet = () => {
-    setIsProfileBottomSheetOpened(true);
-  };
-
-  const handleCloseProfileBottomSheet = () => {
-    setIsProfileBottomSheetOpened(false);
+  const handleProfileBottomSheet = (open: boolean) => {
+    setIsProfileBottomSheetOpened(open);
   };
 
   const handleChangeImage = (image: string) => {
@@ -53,13 +49,13 @@ export function ProfileEditImageSection({
             <DefaultProfile size="big" profileIndex={defaultProfileIndex} />
           )}
           <div className={layoutStyles.defaultImageIcon}>
-            <DefaultImageIcon onClick={handleOpenProfileBottomSheet} />
+            <DefaultImageIcon onClick={() => handleProfileBottomSheet(true)} />
           </div>
         </div>
       </section>
       <ProfileImageBottomSheet
         isOpen={isProfileBottomSheetOpened}
-        onClose={handleCloseProfileBottomSheet}
+        onClose={() => handleProfileBottomSheet(false)}
         onChangeFile={onChangeFile}
         onChangeImage={handleChangeImage}
         onChangeDefaultProfileIndex={onChangeDefaultProfileIndex}
