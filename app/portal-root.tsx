@@ -1,6 +1,6 @@
 'use client';
 
-import { Portal } from '@/components/atoms';
+import { Portal, ToastDialog } from '@/components/atoms';
 import { Dialog } from '@/components/molecules';
 import { useDialog } from '@/hooks/use-dialog';
 
@@ -9,7 +9,10 @@ export const PortalRoot = () => {
 
   return (
     <Portal>
-      <Dialog {...dialogState} />
+      <>
+        <ToastDialog />
+        <Dialog {...dialogState} />
+      </>
     </Portal>
   );
 };

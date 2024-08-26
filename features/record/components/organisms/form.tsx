@@ -139,10 +139,12 @@ export function Form() {
 
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
+    if (isLoading) return;
     //기록 수정 모드일 때
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
     const submitData = modifySubmitData(restData);
+
     handlers.onChangeIsLoading(true);
     if (isEditMode) {
       //이미지가 수정 되었을 때

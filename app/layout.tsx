@@ -2,16 +2,29 @@ import '../styles/global.css';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 
+import MetaTagImage from '@/public/images/meta-tag.png';
 import { css } from '@/styled-system/css';
 import { pretendard } from '@/styles/font';
 
-import { PortalRoot } from './portal-root';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
-  title: 'swimie',
-  description: '수영 기록 아카이빙 서비스',
+  title: 'Swimie',
+  description: '🏊 친구들의 응원과 함께하는 수영일기',
+  openGraph: {
+    title: 'Swimie',
+    description: '🏊 친구들의 응원과 함께하는 수영일기',
+    images: [
+      {
+        url: MetaTagImage.src,
+        width: 600,
+        height: 400,
+        alt: 'Swimie OG Image',
+      },
+    ],
+  },
 };
 
 const rootStyle = css({
@@ -21,6 +34,13 @@ const rootStyle = css({
   margin: '0 auto',
   overflow: 'scroll',
 });
+
+const DynamicPortalRoot = dynamic(
+  () => import('./portal-root').then(({ PortalRoot }) => PortalRoot),
+  {
+    ssr: false,
+  },
+);
 
 export default function RootLayout({
   children,
@@ -33,7 +53,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
           <div className={containerStyle}>{children}</div>
-          <PortalRoot />
+          <DynamicPortalRoot />
         </ReactQueryProvider>
       </body>
     </html>
