@@ -46,7 +46,7 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
       },
       {
         onSuccess: ({ status, code, message }) => {
-          if (status !== 200 || code === 'REACTION_4') {
+          if (status === 400 || code === 'REACTION_4') {
             alert(message);
             return;
           }
