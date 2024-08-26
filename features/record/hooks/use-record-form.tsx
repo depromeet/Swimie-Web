@@ -60,11 +60,6 @@ export function useRecordForm() {
     setIsLoading(loadingState);
   };
 
-  const getBlobData = (file: File) => {
-    const blobData = new Blob([file]);
-    return blobData;
-  };
-
   const modifySubmitData = (data: SubmitRecordRequestProps) => {
     const modifiedData = { ...data };
 
@@ -86,7 +81,6 @@ export function useRecordForm() {
 
   return {
     isLoading,
-    getBlobData,
     modifySubmitData,
     handlers: {
       openPoolSearchPageModal,
