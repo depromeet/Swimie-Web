@@ -45,10 +45,9 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
         memoryId: data.id,
       },
       {
-        onSuccess: ({ status, code }) => {
-          if (status === 400 || code === 'REACTION_2') {
-            // TODO: api 에러 예외처리
-            alert('자신의 게시물 || 3개의 응원 등록 예외처리');
+        onSuccess: ({ status, code, message }) => {
+          if (status !== 200 || code === 'REACTION_4') {
+            alert(message);
             return;
           }
 

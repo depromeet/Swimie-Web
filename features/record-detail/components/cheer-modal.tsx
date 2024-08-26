@@ -9,7 +9,6 @@ import { css } from '@/styled-system/css';
 import { useCheerList, useCheerPreviewList, useCheerRemove } from '../apis';
 import { CheerModalItem } from './cheer-modal-item';
 
-// TODO: data 연동 및 props 수정
 type CheerModal = {
   memoryId: number;
   isMyMemory: boolean;

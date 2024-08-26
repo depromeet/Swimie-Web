@@ -90,7 +90,6 @@ export default async function RecordDetail({ params }: RecordDetail) {
     `recordDetail${params.id}`,
   );
 
-  // TODO: isMyRecordDetail (editButton, cheerButton) 분기처리 필요
   if (!data) return null;
   return (
     <>

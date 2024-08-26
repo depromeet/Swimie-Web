@@ -9,7 +9,6 @@ type CheerItem = {
   size?: 'small' | 'medium';
 } & DetailCheerItem;
 
-// TODO: 로직 구현에 맞춰 props 수정
 export const CheerItem = ({
   isSelected,
   onClick,
