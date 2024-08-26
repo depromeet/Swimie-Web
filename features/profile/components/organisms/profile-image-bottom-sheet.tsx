@@ -13,16 +13,9 @@ import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
 
 import { useProfileImageBottomSheet } from '../../hooks';
+import { ProfileImageBottomSheetProps } from '../../type';
 import { OpenAlbumButton } from '../atoms';
 import { DefaultProfile } from '../atoms/default-profile';
-
-interface ProfileImageBottomSheetProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onChangeFile: (file: File) => void;
-  onChangeImage: (image: string) => void;
-  onChangeDefaultProfileIndex: (index: ProfileIndexType) => void;
-}
 
 export function ProfileImageBottomSheet({
   isOpen,

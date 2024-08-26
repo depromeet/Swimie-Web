@@ -3,18 +3,13 @@
 import { useState } from 'react';
 
 import { DefaultImageIcon, Image } from '@/components/atoms';
-import { ProfileIndexType } from '@/public/images/default-profile';
+import { useBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { ProfileEditImageSectionProps } from '../../type';
 import { DefaultProfile } from '../atoms';
 import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
-
-interface ProfileEditImageSectionProps {
-  defaultProfileIndex: ProfileIndexType;
-  onChangeFile: (file: File) => void;
-  onChangeDefaultProfileIndex: (index: ProfileIndexType) => void;
-}
 
 export function ProfileEditImageSection({
   defaultProfileIndex,
@@ -22,12 +17,7 @@ export function ProfileEditImageSection({
   onChangeDefaultProfileIndex,
 }: ProfileEditImageSectionProps) {
   const [image, setImage] = useState<string>();
-  const [isProfileBottomSheetOpened, setIsProfileBottomSheetOpened] =
-    useState(false);
-
-  const handleProfileBottomSheet = (open: boolean) => {
-    setIsProfileBottomSheetOpened(open);
-  };
+  const { isOpen, open, close } = useBottomSheet();
 
   const handleChangeImage = (image: string) => {
     setImage(image);
@@ -49,13 +39,13 @@ export function ProfileEditImageSection({
             <DefaultProfile size="big" profileIndex={defaultProfileIndex} />
           )}
           <div className={layoutStyles.defaultImageIcon}>
-            <DefaultImageIcon onClick={() => handleProfileBottomSheet(true)} />
+            <DefaultImageIcon onClick={open} />
           </div>
         </div>
       </section>
       <ProfileImageBottomSheet
-        isOpen={isProfileBottomSheetOpened}
-        onClose={() => handleProfileBottomSheet(false)}
+        isOpen={isOpen}
+        onClose={close}
         onChangeFile={onChangeFile}
         onChangeImage={handleChangeImage}
         onChangeDefaultProfileIndex={onChangeDefaultProfileIndex}
