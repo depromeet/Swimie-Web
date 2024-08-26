@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { LoadingArea } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
+import { NormalShapeIcon } from '@/components/atoms/icons/normal-shape-icon';
 import { BackButton, Dialog, HeaderBar } from '@/components/molecules';
 import ListItem from '@/features/setting/components/atom/list-item';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+import { MemberProps } from '../api/member/route';
 
 export interface LogoutProps {
   status: number;
@@ -21,8 +24,41 @@ export default function Page() {
   const router = useRouter();
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
+  const { data, isLoading, error } = useQuery<MemberProps>({
+    queryKey: ['data'],
+    queryFn: async () => {
+      const response = await fetch(`/api/member`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile data');
+      }
+      return (await response.json()) as MemberProps;
+    },
+  });
+
+  const handleGoToLogout = async () => {
+    try {
+      const response = await fetch(`/api/logout`);
+      if (!response.ok) {
+        throw new Error('Failed to logout');
+      }
+      await response.json();
+      router.push('/login');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleGoToDeleteAccount = () => {
+    router.push('/delete-account?step=1');
+  };
+
+  // TODO: 관련 페이지 작업 필요
   const handleGoToSetting = () => {
-    console.log('라우팅 경로 지정 필요');
+    // console.log('라우팅 경로 지정 필요');
+  };
+
+  const handleGoToChangeDistance = () => {
+    router.push('/change-distance');
   };
 
   const openLogoutModal = () => {
@@ -33,43 +69,57 @@ export default function Page() {
     setIsLogoutDialogOpen(false);
   };
 
-  const handleGoToLogout = async () => {
-    const response = await fetch(`/api/logout`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch profile data');
-    }
-    const data = (await response.json()) as LogoutProps;
-    router.push('/login');
-
-    return data;
-  };
-
-  const handleGoToDeleteAccount = () => {
-    router.push('/delete-account?step=1');
-  };
+  if (isLoading) return <LoadingArea />;
+  if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
     <div>
       <HeaderBar>
         <HeaderBar.LeftContent>
-          <BackButton />
+          <BackButton onClickBack={() => router.push('/')} />
         </HeaderBar.LeftContent>
         <HeaderBar.Title>설정</HeaderBar.Title>
       </HeaderBar>
       <ListItem
         text="기록 시각화 기준 거리"
         subText="달력 한 칸에 표시되는 최대 수영 거리"
-        distance="1,000m"
+        distance={`${data?.data.goal.toLocaleString()}m`}
+        onClick={handleGoToChangeDistance}
+        clickProps={<NormalShapeIcon />}
       />
       <Divider variant="thick" />
-      <ListItem text="서비스 이용 약관" onClick={handleGoToSetting} />
-      <ListItem text="개인정보 처리방침" onClick={handleGoToSetting} />
-      <ListItem text="오픈소스 라이선스" onClick={handleGoToSetting} />
+      <ListItem
+        text="서비스 이용 약관"
+        onClick={handleGoToSetting}
+        clickProps={<NormalShapeIcon />}
+      />
+      <ListItem
+        text="개인정보 처리방침"
+        onClick={handleGoToSetting}
+        clickProps={<NormalShapeIcon />}
+      />
+      <ListItem
+        text="오픈소스 라이선스"
+        onClick={handleGoToSetting}
+        clickProps={<NormalShapeIcon />}
+      />
       <Divider variant="thick" />
-      <ListItem text="로그아웃" onClick={openLogoutModal} />
-      <ListItem text="탈퇴하기" onClick={handleGoToDeleteAccount} />
+      <ListItem
+        text="로그아웃"
+        onClick={openLogoutModal}
+        clickProps={<NormalShapeIcon />}
+      />
+      <ListItem
+        text="탈퇴하기"
+        onClick={handleGoToDeleteAccount}
+        clickProps={<NormalShapeIcon />}
+      />
       <Divider variant="thick" />
-      <ListItem text="스위미팀에게 문의하기" onClick={handleGoToSetting} />
+      <ListItem
+        text="스위미팀에게 문의하기"
+        onClick={handleGoToSetting}
+        clickProps={<NormalShapeIcon />}
+      />
       <div className={dividerStyles}>
         <div className={dividerTextStyles}>앱 버전 1.1</div>
       </div>
@@ -82,7 +132,9 @@ export default function Page() {
           buttons={{
             confirm: {
               text: '네',
-              onClick: handleGoToLogout,
+              onClick: () => {
+                void handleGoToLogout();
+              },
             },
             cancel: {
               text: '아니오',
