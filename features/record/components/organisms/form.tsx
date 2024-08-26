@@ -144,6 +144,7 @@ export function Form() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
     const submitData = modifySubmitData(restData);
+    if (isLoading) return;
     handlers.onChangeIsLoading(true);
     if (isEditMode) {
       //이미지가 수정 되었을 때
