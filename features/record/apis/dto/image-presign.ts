@@ -6,6 +6,4 @@ interface PresignedImageProps {
   presignedUrl: string;
 }
 
-export interface ImagePresignedResponse extends Response {
-  data: PresignedImageProps[];
-}
+export type ImagePresignedResponse = Response<PresignedImageProps[]>;

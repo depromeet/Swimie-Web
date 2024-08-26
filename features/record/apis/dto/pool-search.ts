@@ -7,18 +7,14 @@ export interface PoolProps {
   isFavorite: boolean;
 }
 
-export interface SearchPoolInitialResultResponse extends Response {
-  data: {
-    favoritePools: PoolProps[];
-    searchedPools: PoolProps[];
-  };
-}
+export type SearchPoolInitialResultResponse = Response<{
+  favoritePools: PoolProps[];
+  searchedPools: PoolProps[];
+}>;
 
-export interface SearchPoolResultResponse extends Response {
-  data: {
-    poolInfos: PoolProps[];
-    pageSize: number;
-    cursorId: number;
-    hasNext: boolean;
-  };
-}
+export type SearchPoolResultResponse = Response<{
+  poolInfos: PoolProps[];
+  pageSize: number;
+  cursorId: number;
+  hasNext: boolean;
+}>;
