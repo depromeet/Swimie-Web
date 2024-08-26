@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 
-import { useBottomSheet } from '@/hooks';
+import { useBottomSheet, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { useCheer, useCheerPreviewList } from '../apis';
+import { useCheer, useCheerEligibility, useCheerPreviewList } from '../apis';
 import { CheerBottomSheet, CheerProgress } from '../components';
 import { initialCheerList } from '../data';
 import { DetailCheerItemSelected, RecordDetailType } from '../types';
@@ -13,16 +13,30 @@ import { DetailCheerItemSelected, RecordDetailType } from '../types';
 export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
   const { mutate: mutateCheer } = useCheer();
   const { refetch: refetchCheer } = useCheerPreviewList(data.id);
+  const { data: eligibilityData } = useCheerEligibility(
+    data.id,
+    data.isMyMemory,
+  );
 
   const [cheerList, setCheerList] = useState(initialCheerList);
   const [selectedCheerItem, setSelectedCheerItem] =
     useState<DetailCheerItemSelected>();
 
+  const { toast } = useToast();
   const {
     isOpen: isOpenBottomSheet,
     open: openBottomSheet,
     close: closeBottomSheet,
   } = useBottomSheet();
+
+  const handleClickFab = () => {
+    if (!eligibilityData?.isRegistrable) {
+      toast('하나의 기록에 3번까지 응원을 보낼 수 있어요', { type: 'warning' });
+      return;
+    }
+
+    openBottomSheet();
+  };
 
   const handleClickCheerItem = (index: number) => {
     setCheerList((prev) =>
@@ -70,7 +84,7 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
     <>
       {/* NOTE: 응원 FAB Button */}
       {!isMyMemory && (
-        <button className={cheerButtonWrapperStyle} onClick={openBottomSheet}>
+        <button className={cheerButtonWrapperStyle} onClick={handleClickFab}>
           {data.member?.name}님에게 응원 보내기 👏
         </button>
       )}
