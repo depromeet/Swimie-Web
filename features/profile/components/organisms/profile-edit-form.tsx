@@ -58,7 +58,7 @@ export function ProfileEditForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className={layoutStyles.form}
       >
-        <ProfileEditImageSection onChange={handlers.onChangeImageFile} />
+        <ProfileEditImageSection onChangeFile={handlers.onChangeImageFile} />
         <ProfileEditTextInfoSection
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"
