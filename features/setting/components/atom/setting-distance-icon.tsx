@@ -1,4 +1,4 @@
-export default function SettingDistanceIcon() {
+export function SettingDistanceIcon() {
   return (
     <svg
       width="45"

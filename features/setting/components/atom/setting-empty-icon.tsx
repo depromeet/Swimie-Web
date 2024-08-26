@@ -1,4 +1,4 @@
-export default function SettingEmptyIcon() {
+export function SettingEmptyIcon() {
   return (
     <svg
       width="45"

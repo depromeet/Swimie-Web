@@ -3,8 +3,8 @@
 import { useState } from 'react';
 
 import { ProfileProps } from '@/app/profile/[id]/page';
+import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
-import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { Tab, TabItem } from '@/components/molecules';
 import { Calendar } from '@/features/main';

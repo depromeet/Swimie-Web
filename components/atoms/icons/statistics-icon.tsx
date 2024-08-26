@@ -1,4 +1,4 @@
-const StatisticsIcon = () => {
+export function StatisticsIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,5 +21,4 @@ const StatisticsIcon = () => {
       />
     </svg>
   );
-};
-export default StatisticsIcon;
+}

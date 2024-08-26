@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import { ProfileProps } from '@/app/profile/[id]/page';
 import { Button } from '@/components/atoms';
+import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
-import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { Tab, TabItem } from '@/components/molecules';
 import { css } from '@/styled-system/css';

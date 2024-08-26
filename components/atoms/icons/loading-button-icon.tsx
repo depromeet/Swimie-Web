@@ -4,7 +4,7 @@ const spinAnimation = css({
   animation: 'spin 1s linear infinite',
 });
 
-export const LoadingButtonIcon = () => {
+export function LoadingButtonIcon() {
   return (
     <svg
       width="21"
@@ -40,4 +40,4 @@ export const LoadingButtonIcon = () => {
       </g>
     </svg>
   );
-};
+}
