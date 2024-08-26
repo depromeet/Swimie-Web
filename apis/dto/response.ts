@@ -1,6 +1,6 @@
 export type Response<T = unknown> = {
-  data: T;
-  result: string;
+  status: string;
   code: string;
   message: string;
+  data: T;
 };
