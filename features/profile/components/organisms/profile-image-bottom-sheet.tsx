@@ -88,7 +88,7 @@ export function ProfileImageBottomSheet({
             />
           </div>
         ) : (
-          <DefaultProfile iconColor="파랑" />
+          <DefaultProfile size="big" iconColor="파랑" />
         )}
       </div>
       <div className={layoutStyles.selectImage}>
