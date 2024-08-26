@@ -39,8 +39,8 @@ export default function Step3() {
     // }
   };
 
-  const atome = useAtomValue(textAtom);
-  console.log(atome);
+  const textValueatom = useAtomValue(textAtom);
+  console.log('탈퇴 사유:', textValueatom);
 
   return (
     <div className={containerStyles}>
