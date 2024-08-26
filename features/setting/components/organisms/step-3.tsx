@@ -1,6 +1,8 @@
+import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/atoms';
+import { textAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -20,6 +22,7 @@ export default function Step3() {
 
   const handleGoToDeleteAccount = () => {
     console.log('진행중입니다.');
+    // TODO: 백엔드 api 수정중
     // try {
     //   const response = await fetch(`/api/delete`, {
     //     method: 'DELETE',
@@ -35,6 +38,9 @@ export default function Step3() {
     //   console.error('Error deleting account:', error);
     // }
   };
+
+  const atome = useAtomValue(textAtom);
+  console.log(atome);
 
   return (
     <div className={containerStyles}>
