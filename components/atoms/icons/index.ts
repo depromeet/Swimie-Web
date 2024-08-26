@@ -1,3 +1,4 @@
+export * from './album-icon';
 export * from './bell-icon';
 export * from './camera-icon';
 export * from './check-icon';

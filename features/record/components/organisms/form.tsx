@@ -11,18 +11,18 @@ import {
   useWatch,
 } from 'react-hook-form';
 
+import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { formatDateToKorean, getToday } from '@/utils';
+import { formatDateToKorean, getBlobData, getToday } from '@/utils';
 
 import {
   RecordRequestProps,
   useGetImagePresignedUrl,
   useImageEdit,
-  useImagePresignUrl,
   useImageStatus,
   useMemory,
   useMemoryEdit,
@@ -108,8 +108,7 @@ export function Form() {
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
 
-  const { isLoading, getBlobData, modifySubmitData, handlers } =
-    useRecordForm();
+  const { isLoading, modifySubmitData, handlers } = useRecordForm();
 
   const startTime = useWatch({
     control: methods.control,
