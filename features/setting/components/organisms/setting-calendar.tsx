@@ -1,13 +1,15 @@
+'use client';
+
 import { Radio, RadioChangeEvent } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import ListItem from '../atom/list-item';
-import SettingDistanceIcon from '../atom/setting-distance-icon';
+import { ListItem } from '../atom';
+import { SettingDistanceIcon } from '../atom';
 
 type SettingCalendarProps = {
   goal: number;
@@ -15,7 +17,9 @@ type SettingCalendarProps = {
   onDistanceChange: (distance: number) => void;
 };
 
-export default function SettingCalendar({
+type DayType = '월' | '화' | '수' | '목' | '금' | 'empty';
+
+export function SettingCalendar({
   goal,
   selectedDistance,
   onDistanceChange,
@@ -34,7 +38,7 @@ export default function SettingCalendar({
     onDistanceChange(selectedValue);
   };
 
-  const dayKo = ['', '월', '화', '수', '목', '금', ''];
+  const dayKo: DayType[] = ['empty', '월', '화', '수', '목', '금', 'empty'];
   const dayNum = ['0', '1', '2', '3', '4', '5', '6'];
 
   const getNumStyle = (num: string) => {
@@ -81,8 +85,8 @@ export default function SettingCalendar({
             <div className={dayContainer}>
               <div className={dayKoStyles}>
                 {dayKo.map((day, index) => (
-                  <div key={index} className={dayStyles(day)}>
-                    {day}
+                  <div key={index} className={dayStyles({ day })}>
+                    {day === 'empty' ? '' : day}
                   </div>
                 ))}
               </div>
@@ -104,7 +108,7 @@ export default function SettingCalendar({
               </div>
             </div>
             <div>
-              하루에 <span className={goalStyles}>{calculatedGoal}m</span>{' '}
+              하루에 <span className={goalStyles}>{calculatedGoal}m </span>
               수영하면 이만큼 표시돼요
             </div>
           </div>
@@ -113,9 +117,15 @@ export default function SettingCalendar({
             value={selectedDistance}
             className={css({ width: '100%' })}
           >
-            <ListItem text="1,000m" clickProps={<Radio value={1000} />} />
-            <ListItem text="3,000m" clickProps={<Radio value={3000} />} />
-            <ListItem text="5,000m" clickProps={<Radio value={5000} />} />
+            <ListItem text="1,000m">
+              <Radio value={1000} />
+            </ListItem>
+            <ListItem text="3,000m">
+              <Radio value={3000} />
+            </ListItem>
+            <ListItem text="5,000m">
+              <Radio value={5000} />
+            </ListItem>
           </Radio.Group>
         </div>
       </div>
@@ -137,8 +147,7 @@ export default function SettingCalendar({
   );
 }
 
-const pageContainer = css({
-  display: 'flex',
+const pageContainer = flex({
   flexDirection: 'column',
   height: 'calc(100vh - 48px)',
 });
@@ -160,6 +169,7 @@ const buttonWrapper = css({
 const buttonContainer = css({
   width: '100%',
 });
+
 const distanceContainer = flex({
   padding: '16px 20px',
   direction: 'column',
@@ -198,22 +208,31 @@ const dayNumStyles = flex({
   alignSelf: 'stretch',
 });
 
-const dayStyles = (day: string) =>
-  flex({
-    direction: 'column',
+const dayStyles = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     flex: '1 0 0',
     alignSelf: 'stretch',
     textAlign: 'center',
     color: 'text.placeHolder',
     textStyle: 'label2',
-    opacity:
-      day === '월' || day === '금'
-        ? '0.2'
-        : day === '화' || day === '목'
-          ? '0.5'
-          : '',
-  });
+  },
+  variants: {
+    day: {
+      월: { opacity: '0.2' },
+      금: { opacity: '0.2' },
+      수: { opacity: 'inherit' },
+      화: { opacity: '0.5' },
+      목: { opacity: '0.5' },
+      empty: { opacity: 'inherit' },
+    },
+  },
+  defaultVariants: {
+    day: 'empty',
+  },
+});
 
 const numContainer = flex({
   direction: 'column',
