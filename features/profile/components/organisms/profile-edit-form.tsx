@@ -40,14 +40,12 @@ export function ProfileEditForm() {
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     console.log(data);
     if (imageFile) {
-      const getProfileImagePresignedUrlRes = await getProfileImagePresignedUrl(
-        imageFile.name,
-      );
+      const { data } = await getProfileImagePresignedUrl(imageFile.name);
       await imagePresign({
-        presignedUrl: getProfileImagePresignedUrlRes.data.presignedUrl,
+        presignedUrl: data.presignedUrl,
         file: getBlobData(imageFile),
       });
-      await profileImageUrlDone(getProfileImagePresignedUrlRes.data.imageName);
+      await profileImageUrlDone(data.imageName);
     }
   };
 
