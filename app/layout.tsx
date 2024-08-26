@@ -2,12 +2,12 @@ import '../styles/global.css';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 
 import MetaTagImage from '@/public/images/meta-tag.png';
 import { css } from '@/styled-system/css';
 import { pretendard } from '@/styles/font';
 
-import { PortalRoot } from './portal-root';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
@@ -35,6 +35,13 @@ const rootStyle = css({
   overflow: 'scroll',
 });
 
+const DynamicPortalRoot = dynamic(
+  () => import('./portal-root').then(({ PortalRoot }) => PortalRoot),
+  {
+    ssr: false,
+  },
+);
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,7 +53,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
           <div className={containerStyle}>{children}</div>
-          <PortalRoot />
+          <DynamicPortalRoot />
         </ReactQueryProvider>
       </body>
     </html>
