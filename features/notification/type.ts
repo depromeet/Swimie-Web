@@ -1,4 +1,4 @@
-export interface AlarmElementProps {
+export interface NotificationElementProps {
   id: number;
   variant: 'follow' | 'cheer';
   userName: string;

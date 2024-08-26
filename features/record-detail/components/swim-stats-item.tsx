@@ -27,7 +27,6 @@ const containerStyle = flex({
   w: 'full',
 });
 
-// TODO: swim type에 따른 색상 변경
 const text = {
   stroke: cva({
     base: { textStyle: 'label1.normal', fontWeight: 'medium' },

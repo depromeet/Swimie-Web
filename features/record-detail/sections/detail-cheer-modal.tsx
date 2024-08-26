@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useDragScroll, useModal } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -19,8 +21,19 @@ export const DetailCheerModalSection = ({
     open: openModal,
     close: closeModal,
   } = useModal();
-
   const { sliderRef } = useDragScroll();
+
+  const [selectedCheerItemIdx, setSelectedCheerItemIdx] = useState(0);
+
+  const handleClickCheerItem = (index: number) => {
+    setSelectedCheerItemIdx(index);
+    openModal();
+  };
+
+  const handleClickCloseModal = () => {
+    setSelectedCheerItemIdx(0);
+    closeModal();
+  };
 
   const reactions = cheerPreviewData?.reactions || [];
   return (
@@ -29,11 +42,11 @@ export const DetailCheerModalSection = ({
       {reactions && Boolean(reactions.length) && (
         <div className={slider.containerStyle} ref={sliderRef}>
           <div className={slider.wrapperStyle}>
-            {reactions.map((item) => (
+            {reactions.map((item, index) => (
               <CheerItem
                 {...item}
                 key={item.reactionId}
-                onClick={openModal}
+                onClick={() => handleClickCheerItem(index)}
                 size="small"
               />
             ))}
@@ -48,10 +61,12 @@ export const DetailCheerModalSection = ({
 
       {/* NOTE: 응원 모달 */}
       <CheerModal
+        memoryId={data.id}
+        isMyMemory={Boolean(data.isMyMemory)}
+        initialItemIndex={selectedCheerItemIdx}
         isOpen={isOpenModal}
-        onClose={closeModal}
+        onClose={handleClickCloseModal}
         title="8월 16일의 응원"
-        description="5"
       />
     </>
   );

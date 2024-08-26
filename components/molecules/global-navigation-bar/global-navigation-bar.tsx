@@ -1,31 +1,42 @@
 'use client';
 
-import { useState } from 'react';
-
+import { MyIcon } from '@/components/atoms/icons/my-icon';
+import { NewsIcon } from '@/components/atoms/icons/news-icon';
+import { RecordIcon } from '@/components/atoms/icons/record-icon';
+import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { BarItem } from './bar-item';
+import { useGlobalNavigationBar } from './use-global-navigation-bar';
 
 export function GlobalNavigationBar() {
-  const barItemLabels = ['기록', '마이', '소식'];
-  const [barIndex, setBarIndex] = useState<number>(0);
+  //Todo: 내 userId api로 받아온 후, 마이페이지 route 추가
+  const barItems = [
+    { label: '기록', icon: RecordIcon, route: '/' },
+    { label: '소식', icon: NewsIcon, route: '/news' },
+    { label: '마이', icon: MyIcon, route: '/profile/2' },
+  ];
+  const { barIndex, handlers } = useGlobalNavigationBar(
+    barItems.map((item) => item.route),
+  );
 
-  //Todo: 라우팅 처리
-  const handleClickBarItem = (index: number) => {
-    setBarIndex(index);
-  };
   return (
-    <footer className={footerStyles}>
-      {barItemLabels.map((label, i) => (
-        <BarItem
-          key={label}
-          label={label}
-          index={i}
-          selected={i === barIndex}
-          onClick={handleClickBarItem}
-        />
-      ))}
-    </footer>
+    <>
+      <footer className={footerStyles}>
+        {barItems.map((item, i) => (
+          <BarItem
+            key={item.label}
+            {...item}
+            index={i}
+            isSelected={i === barIndex}
+            onClick={handlers.onChangeBarIndex}
+          />
+        ))}
+      </footer>
+      <div
+        className={css({ height: 'calc(env(safe-area-inset-bottom) + 70px)' })}
+      />
+    </>
   );
 }
 

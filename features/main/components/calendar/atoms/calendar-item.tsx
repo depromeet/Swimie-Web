@@ -76,7 +76,7 @@ const ItemLayout = ({
 
 const itemContainerStyles = flex({
   width: 'full',
-  height: 'full',
+  height: 'fit-content',
   flexDir: 'column',
   alignItems: 'center',
 

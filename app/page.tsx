@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 
-import { BellIcon, SettingIcon } from '@/components/atoms';
-import { HeaderBar, LogoButton } from '@/components/molecules';
+import { SettingIcon } from '@/components/atoms';
+import {
+  AlarmButton,
+  GlobalNavigationBar,
+  HeaderBar,
+  LogoButton,
+} from '@/components/molecules';
 import {
   MainTab,
   TabItemInfo,
@@ -40,7 +45,7 @@ export default function Home() {
         </HeaderBar.LeftContent>
         <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
-            { component: <BellIcon />, key: 'bell' },
+            { component: <AlarmButton />, key: 'bell' },
             { component: <SettingIcon />, key: 'setting' },
           ]}
         </HeaderBar.RightContent>
@@ -51,6 +56,7 @@ export default function Home() {
           {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
         </section>
       </main>
+      <GlobalNavigationBar />
     </>
   );
 }
