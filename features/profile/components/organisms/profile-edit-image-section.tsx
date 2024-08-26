@@ -19,7 +19,7 @@ export function ProfileEditImageSection({
   const [image, setImage] = useState<string>();
   const { isOpen, open, close } = useBottomSheet();
 
-  const handleChangeImage = (image: string) => {
+  const handleChangeImage = (image?: string) => {
     setImage(image);
   };
 

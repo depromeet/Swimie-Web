@@ -8,17 +8,23 @@ import { css, cva, cx } from '@/styled-system/css';
 interface DefaultProfileProps {
   size?: 'big' | 'small';
   profileIndex: ProfileIndexType;
+  isProfileImageSet?: boolean;
   onChangeDefaultProfileIndex?: (index: ProfileIndexType) => void;
+  resetImageInfo?: () => void;
 }
 
 export function DefaultProfile({
   size = 'small',
   profileIndex,
+  isProfileImageSet,
   onChangeDefaultProfileIndex,
+  resetImageInfo,
 }: DefaultProfileProps) {
   const handleDefaultProfileClick = () => {
+    if (isProfileImageSet) resetImageInfo?.();
     onChangeDefaultProfileIndex?.(profileIndex);
   };
+
   return (
     <div
       className={cx(

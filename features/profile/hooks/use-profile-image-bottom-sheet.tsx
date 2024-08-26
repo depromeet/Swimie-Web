@@ -8,6 +8,8 @@ export function useProfileImageBottomSheet() {
 
   const fileInput = useRef<HTMLInputElement>(null);
 
+  const isProfileImageSet = Boolean(image && file);
+
   const onChangeImage = (image: string) => {
     setImage(image);
   };
@@ -16,10 +18,17 @@ export function useProfileImageBottomSheet() {
     setFile(file);
   };
 
+  const resetImageInfo = () => {
+    setImage(undefined);
+    setFile(undefined);
+  };
+
   return {
     image,
     file,
+    isProfileImageSet,
     fileInput,
+    resetImageInfo,
     handlers: {
       onChangeImage,
       onChangeFile,

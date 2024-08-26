@@ -28,7 +28,6 @@ export function ProfileEditForm() {
   });
 
   const { imageFile, defaultProfileIndex, handlers } = useProfileEditForm();
-
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();

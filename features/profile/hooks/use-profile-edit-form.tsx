@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 
-import { profileIndexType } from '@/public/images/default-profile';
+import { ProfileIndexType } from '@/public/images/default-profile';
 
 export function useProfileEditForm() {
   const [imageFile, setImageFile] = useState<File>();
   const [defaultProfileIndex, setDefaultProfileIndex] =
-    useState<profileIndexType>(0);
+    useState<ProfileIndexType>(0);
 
-  const onChangeImageFile = (file: File) => {
+  const onChangeImageFile = (file?: File) => {
     setImageFile(file);
   };
 
-  const onChangeDefaultProfileIndex = (index: profileIndexType) => {
+  const onChangeDefaultProfileIndex = (index: ProfileIndexType) => {
     setDefaultProfileIndex(index);
   };
 

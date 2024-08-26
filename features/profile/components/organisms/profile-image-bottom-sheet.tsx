@@ -24,7 +24,14 @@ export function ProfileImageBottomSheet({
   onChangeImage,
   onChangeDefaultProfileIndex,
 }: ProfileImageBottomSheetProps) {
-  const { image, file, fileInput, handlers } = useProfileImageBottomSheet();
+  const {
+    image,
+    file,
+    isProfileImageSet,
+    fileInput,
+    resetImageInfo,
+    handlers,
+  } = useProfileImageBottomSheet();
 
   const [defaultProfileIndex, setDefaultProfileIndex] =
     useState<ProfileIndexType>(0);
@@ -67,10 +74,9 @@ export function ProfileImageBottomSheet({
   };
 
   const handleSelectButtonClick = () => {
-    if (image && file) {
-      onChangeImage(image);
-      onChangeFile(file);
-    } else onChangeDefaultProfileIndex(defaultProfileIndex);
+    onChangeImage(image);
+    onChangeFile(file);
+    onChangeDefaultProfileIndex(defaultProfileIndex);
     onClose();
   };
   return (
@@ -99,7 +105,9 @@ export function ProfileImageBottomSheet({
           <DefaultProfile
             key={iconIndex}
             profileIndex={Number(iconIndex) as ProfileIndexType}
+            isProfileImageSet={isProfileImageSet}
             onChangeDefaultProfileIndex={handleSelectDefaultProfile}
+            resetImageInfo={resetImageInfo}
           />
         ))}
         <OpenAlbumButton onClick={handleAddImageClick} />
