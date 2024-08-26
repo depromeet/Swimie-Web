@@ -4,10 +4,11 @@ import { NextResponse } from 'next/server';
 import { fetchData } from '@/apis/fetch-data';
 
 export async function GET() {
+  const cookieStore = cookies();
   try {
     const data = await fetchData(`/logout`, 'GET');
-    cookies().delete('accessToken');
-    cookies().delete('refreshToken');
+    cookieStore.delete('accessToken');
+    cookieStore.delete('refreshToken');
 
     return NextResponse.json(data);
   } catch (error) {
