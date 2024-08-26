@@ -1,6 +1,9 @@
 import { Button, Image } from '@/components/atoms';
 import { BottomSheet } from '@/components/molecules';
-import { defaultProfileIcons } from '@/public/images/default-profile';
+import {
+  defaultProfileImages,
+  ProfileIndexType,
+} from '@/public/images/default-profile';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -25,7 +28,7 @@ export function ProfileImageBottomSheet({
       <div className={layoutStyles.selectedImage}>
         <div className={selectedImageStyles}>
           <Image
-            src={defaultProfileIcons['파랑']}
+            src={defaultProfileImages[0]}
             alt="선택 프로필"
             width={76}
             height={64}
@@ -33,12 +36,11 @@ export function ProfileImageBottomSheet({
         </div>
       </div>
       <div className={layoutStyles.selectImage}>
-        {(
-          Object.keys(defaultProfileIcons) as Array<
-            keyof typeof defaultProfileIcons
-          >
-        ).map((hatColor) => (
-          <DefaultProfile key={hatColor} hatColor={hatColor} />
+        {Object.entries(defaultProfileImages).map(([profileIndex]) => (
+          <DefaultProfile
+            key={profileIndex}
+            profileIndex={Number(profileIndex) as ProfileIndexType}
+          />
         ))}
         <OpenAlbumButton />
       </div>

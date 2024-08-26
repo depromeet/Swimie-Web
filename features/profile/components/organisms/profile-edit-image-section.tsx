@@ -4,6 +4,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 
 import { DefaultImageIcon, Image } from '@/components/atoms';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
+import { useBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
@@ -18,8 +19,7 @@ export function ProfileEditImageSection({
   onChange,
 }: ProfileEditImageSectionProps) {
   const [image, setImage] = useState<string>();
-  const [isProfileBottomSheetOpened, setIsProfileBottomSheetOpened] =
-    useState(false);
+  const { isOpen, open, close } = useBottomSheet();
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +48,6 @@ export function ProfileEditImageSection({
       console.error('이미지 업로드 중 오류가 발생하였습니다', error),
     );
   };
-
-  const handleOpenProfileBottomSheetClick = () => {
-    setIsProfileBottomSheetOpened(true);
-  };
-
   // const handleAddImageClick = () => {
   //   if (fileInput.current) {
   //     fileInput.current.click();
@@ -75,7 +70,7 @@ export function ProfileEditImageSection({
             <UserImageIcon width={100} height={100} />
           )}
           <div className={layoutStyles.defaultImageIcon}>
-            <DefaultImageIcon onClick={handleOpenProfileBottomSheetClick} />
+            <DefaultImageIcon onClick={open} />
           </div>
         </div>
         <input
@@ -86,10 +81,7 @@ export function ProfileEditImageSection({
           onChange={handleProfileImageUpload}
         />
       </section>
-      <ProfileImageBottomSheet
-        isOpen={isProfileBottomSheetOpened}
-        onClose={() => setIsProfileBottomSheetOpened(false)}
-      />
+      <ProfileImageBottomSheet isOpen={isOpen} onClose={close} />
     </>
   );
 }
