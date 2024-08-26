@@ -8,13 +8,11 @@ export const PortalRoot = () => {
   const { dialogState } = useDialog();
 
   return (
-    <>
-      <Portal>
-        <>
-          <ToastDialog />
-          <Dialog {...dialogState} />
-        </>
-      </Portal>
-    </>
+    <Portal>
+      <>
+        <ToastDialog />
+        <Dialog {...dialogState} />
+      </>
+    </Portal>
   );
 };
