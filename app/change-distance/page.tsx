@@ -33,7 +33,7 @@ export default function Page() {
     if (data) {
       setSelectedDistance(data.data.goal);
     }
-  }, [data?.data.goal]);
+  }, [data]);
 
   if (!data) return <LoadingArea />;
   if (error) return <div>An error occurred: {error.message}</div>;
