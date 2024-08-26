@@ -3,20 +3,42 @@ import {
   defaultProfileImages,
   ProfileIndexType,
 } from '@/public/images/default-profile';
-import { css, cva } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 
 interface DefaultProfileProps {
+  size?: 'big' | 'small';
   profileIndex: ProfileIndexType;
+  isProfileImageSet?: boolean;
+  onChangeDefaultProfileIndex?: (index: ProfileIndexType) => void;
+  resetImageInfo?: () => void;
 }
 
-export function DefaultProfile({ profileIndex }: DefaultProfileProps) {
+export function DefaultProfile({
+  size = 'small',
+  profileIndex,
+  isProfileImageSet,
+  onChangeDefaultProfileIndex,
+  resetImageInfo,
+}: DefaultProfileProps) {
+  const handleDefaultProfileClick = () => {
+    if (isProfileImageSet) resetImageInfo?.();
+    onChangeDefaultProfileIndex?.(profileIndex);
+  };
+
   return (
-    <div className={css(layoutStyles.raw({ profileIndex }))}>
+    <div
+      className={cx(
+        css(layoutStyles.raw({ profileIndex })),
+        css(layoutStyles.raw({ size })),
+      )}
+      onClick={handleDefaultProfileClick}
+    >
       <Image
+        key={profileIndex}
         src={defaultProfileImages[profileIndex]}
         alt="디폴트 프로필"
-        width={45.6}
-        height={38.4}
+        width={size === 'big' ? 76 : 45.6}
+        height={size === 'big' ? 64 : 38.4}
       />
     </div>
   );
@@ -28,8 +50,6 @@ const layoutStyles = cva({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '60px',
-    height: '60px',
     borderRadius: 'full',
   },
   variants: {
@@ -38,6 +58,10 @@ const layoutStyles = cva({
       1: { backgroundColor: '#88D4B0' },
       2: { backgroundColor: '#EC6344' },
       3: { backgroundColor: '#3B87F4' },
+    },
+    size: {
+      big: { width: '100px', height: '100px' },
+      small: { width: '60px', height: '60px' },
     },
   },
 });

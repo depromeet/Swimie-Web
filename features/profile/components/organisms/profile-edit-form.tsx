@@ -27,14 +27,14 @@ export function ProfileEditForm() {
     defaultValues: {},
   });
 
-  const { imageFile, handlers } = useProfileEditForm();
-
+  const { imageFile, defaultProfileIndex, handlers } = useProfileEditForm();
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
 
   //Todo: 닉네임 & 소개 수정 api 연결
+  //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필)
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
@@ -58,7 +58,11 @@ export function ProfileEditForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className={layoutStyles.form}
       >
-        <ProfileEditImageSection onChange={handlers.onChangeImageFile} />
+        <ProfileEditImageSection
+          defaultProfileIndex={defaultProfileIndex}
+          onChangeDefaultProfileIndex={handlers.onChangeDefaultProfileIndex}
+          onChangeFile={handlers.onChangeImageFile}
+        />
         <ProfileEditTextInfoSection
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"
