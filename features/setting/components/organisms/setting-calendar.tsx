@@ -8,8 +8,7 @@ import { Button } from '@/components/atoms';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { ListItem } from '../atom';
-import { SettingDistanceIcon } from '../atom';
+import { ListItem, SettingDistanceIcon } from '../atom';
 
 type SettingCalendarProps = {
   goal: number;

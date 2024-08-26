@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { Button } from '@/components/atoms';
 import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
-import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
-
 import { Tab, TabItem } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';

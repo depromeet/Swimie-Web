@@ -1,5 +1,5 @@
-export * from './apple-logo-icon';
 export * from './album-icon';
+export * from './apple-logo-icon';
 export * from './badge-icon';
 export * from './bell-icon';
 export * from './camera-icon';
@@ -34,3 +34,4 @@ export * from './toast';
 export * from './triangle-arrow-icon';
 export * from './triangle-arrow-icon-reverse';
 export * from './types';
+export * from './user-image-icon';

@@ -1,4 +1,4 @@
-import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
+import { UserImageIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
