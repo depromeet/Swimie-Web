@@ -59,8 +59,9 @@ const Toast = ({
 };
 
 const containerStyle = css({
-  position: 'relative',
+  position: 'fixed',
   backgroundColor: 'transparent',
+  zIndex: 900,
 });
 
 const toastWrapperStyle = flex({
@@ -71,7 +72,6 @@ const toastWrapperStyle = flex({
   left: '50%',
   transform: 'translateX(-50%)',
   marginBottom: 'calc(35px + env(safe-area-inset-bottom))',
-  zIndex: 200,
 });
 
 const toastStyle = flex({
