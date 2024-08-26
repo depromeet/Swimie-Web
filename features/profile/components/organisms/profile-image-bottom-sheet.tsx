@@ -77,8 +77,7 @@ export function ProfileImageBottomSheet({
     if (image && file) {
       onChangeImage(image);
       onChangeFile(file);
-    }
-    onChangeDefaultProfileIndex(defaultProfileIndex);
+    } else onChangeDefaultProfileIndex(defaultProfileIndex);
     onClose();
   };
   return (
