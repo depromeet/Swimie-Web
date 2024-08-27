@@ -51,9 +51,7 @@ const profileContainerStyles = flex({
 const characterImageStyles = css({
   minWidth: '70px',
   minHeight: '75px',
-  margin: '0 10px',
-  marginTop: '14px',
-  marginBottom: '-1px',
+  margin: '14px 10px -1px 10px',
 });
 
 const userInfoStyles = flex({
