@@ -13,7 +13,7 @@ const DynamicBackButton = dynamic(
 );
 
 //Todo: 알람 불러오는 Api 연결
-export default function AlarmPage() {
+export default function NotificationPage() {
   return (
     <>
       <HeaderBar>
