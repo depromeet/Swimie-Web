@@ -90,11 +90,11 @@ export const semanticColors = {
         sub: { value: '#CDEAFF' },
       },
       배영: {
-        default: { value: '#58E06E' },
+        default: { value: '#FFCD1D' },
         sub: { value: '#AFF3BA' },
       },
       평영: {
-        default: { value: '#FFCD1D' },
+        default: { value: '#58E06E' },
         sub: { value: '#FFECAB' },
       },
       접영: {

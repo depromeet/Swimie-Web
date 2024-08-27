@@ -1,4 +1,4 @@
-const StatisticsIcon = () => {
+export function StatisticsIcon() {
   return (
     <svg
       width="80"
@@ -87,5 +87,4 @@ const StatisticsIcon = () => {
       </defs>
     </svg>
   );
-};
-export default StatisticsIcon;
+}

@@ -1,4 +1,4 @@
-const BadgeIcon = () => {
+export function BadgeIcon() {
   return (
     <svg
       width="81"
@@ -36,5 +36,5 @@ const BadgeIcon = () => {
       </defs>
     </svg>
   );
-};
+}
 export default BadgeIcon;

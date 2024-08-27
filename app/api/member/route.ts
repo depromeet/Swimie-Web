@@ -15,13 +15,7 @@ export interface MemberProps {
 }
 
 export async function GET() {
-  try {
-    const data = await fetchData<MemberProps>('/member', 'GET');
+  const data = await fetchData<MemberProps>('/member', 'GET');
 
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error fetching member data:', error);
-
-    return NextResponse.error();
-  }
+  return NextResponse.json(data);
 }

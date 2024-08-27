@@ -61,7 +61,7 @@ export const FollowingListLinkButton = () => {
   }
 
   nodeList.push(
-    <div className={cx(containerStyles, borderStyles)}>
+    <div key="follower-count" className={cx(containerStyles, borderStyles)}>
       <PersonsIcon width={12} height={12} />
       <p className={countStyles}>{followingCount.toString()}</p>
     </div>,

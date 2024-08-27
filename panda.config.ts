@@ -61,6 +61,10 @@ export default defineConfig({
           '50%': { backgroundColor: '#ebebeb' },
           '100%': { backgroundColor: '#70737C14' },
         },
+        fadeUp: {
+          '0%': { opacity: 0, transform: 'translateY(10px)' },
+          '100%': { opacity: 100, transform: 'translateY(0px)' },
+        },
       },
     },
   },

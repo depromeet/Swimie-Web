@@ -22,7 +22,7 @@ export const UserCalendarProfile = () => {
           className={characterImageStyles}
           width={70}
           height={75}
-          src="/images/swimie-character.svg"
+          src="/images/swimie-character.png"
           alt="swimie character"
           priority
         />
@@ -41,14 +41,18 @@ export const UserCalendarProfile = () => {
 };
 
 const profileContainerStyles = flex({
-  padding: '14px 11px',
+  padding: '0px 14px',
   gap: '4px',
   alignItems: 'center',
   borderRadius: '6px',
   backgroundColor: 'primary.swim.총거리.default',
 });
 
-const characterImageStyles = css({ margin: '0 10px' });
+const characterImageStyles = css({
+  minWidth: '70px',
+  minHeight: '75px',
+  margin: '14px 10px -1px 10px',
+});
 
 const userInfoStyles = flex({
   height: 'full',
