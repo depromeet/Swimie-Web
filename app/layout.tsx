@@ -1,7 +1,7 @@
 import '../styles/global.css';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import dynamic from 'next/dynamic';
 
 import MetaTagImage from '@/public/images/meta-tag.png';
@@ -25,6 +25,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  width: 'device-width',
+  viewportFit: 'cover',
+  userScalable: false,
 };
 
 const rootStyle = css({
