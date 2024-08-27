@@ -9,8 +9,8 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { NewsItem } from '../../types';
-import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 import { FindMemberButton, FollowingListLinkButton } from '../atoms';
+import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 
 export const NewsList = () => {
   const ptrRef = useRef(null);
