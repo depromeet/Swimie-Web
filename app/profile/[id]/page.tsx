@@ -29,7 +29,7 @@ export default function Profile({ params }: Mypage) {
     queryFn: () => fetchProfileData(params.id).then((data) => data.data),
     enabled: !!params.id,
   });
-
+  console.log(profileData);
   if (error) {
     return <div>Error loading profile data</div>;
   }

@@ -1,9 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
+import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getBlobData } from '@/utils';
@@ -24,9 +26,12 @@ interface ProfileEditFormProps {
 
 //Todo: 한줄 소개 현재 글자 수 세는 UI 추가
 export function ProfileEditForm() {
+  const router = useRouter();
+
   const methods = useForm<ProfileEditFormProps>({
     defaultValues: {},
   });
+  const { toast } = useToast();
 
   const { imageFile, defaultProfileIndex, modifyData, handlers } =
     useProfileEditForm();
@@ -36,13 +41,22 @@ export function ProfileEditForm() {
   const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
   const { mutateAsync: profileTextEdit } = useProfileTextEdit();
 
-  const handleProfileImageEditSuccess = (hasTextEditData: boolean) => {
-    if (!hasTextEditData) handlers.onChangeIsLoading(false);
+  const handleProfileImageEditSuccess = (
+    hasTextEditData: boolean,
+    memberId: number,
+  ) => {
+    if (!hasTextEditData) {
+      handlers.onChangeIsLoading(false);
+      toast('프로필이 수정되었어요.');
+      router.push(`/profile/${memberId}`);
+    }
   };
 
   //Todo: 성공 처리 구체화
-  const handleProfileTextEditSuccess = () => {
+  const handleProfileTextEditSuccess = (memberId: number) => {
     handlers.onChangeIsLoading(false);
+    toast('프로필이 수정되었어요.');
+    router.push(`/profile/${memberId}`);
   };
 
   //Todo: 에러 처리 구체화
@@ -52,9 +66,11 @@ export function ProfileEditForm() {
     return;
   };
 
-  //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필)
+  //Todo: 토스트 추가
+  //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필 + 닉네임 & 자기소개 필드 있을 시)
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
+  //Todo: 이전 프로필 정보 화면에 반영
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     const hasTextEditData = Boolean(data.nickname || data.introduction);
     if (imageFile) {
@@ -65,12 +81,16 @@ export function ProfileEditForm() {
       });
       const profileImageUrlDoneRes = await profileImageUrlDone(data.imageName);
       if (profileImageUrlDoneRes.status === 200)
-        handleProfileImageEditSuccess(hasTextEditData);
+        handleProfileImageEditSuccess(
+          hasTextEditData,
+          profileImageUrlDoneRes.data.memberId,
+        );
       else handleProfileEditError();
     }
     if (hasTextEditData) {
       const profileTextEditRes = await profileTextEdit(modifyData(data));
-      if (profileTextEditRes.status === 200) handleProfileTextEditSuccess();
+      if (profileTextEditRes.status === 200)
+        handleProfileTextEditSuccess(profileTextEditRes.data.memberId);
       else handleProfileEditError();
     }
   };

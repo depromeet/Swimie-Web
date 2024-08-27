@@ -34,7 +34,7 @@ export function ProfileEditTextInfoSection({
         wrapperClassName={css({ marginBottom: '24px' })}
       />
       <FormTextArea
-        {...register('introduce')}
+        {...register('introduction')}
         placeholder={introducePlaceholder}
       />
     </>

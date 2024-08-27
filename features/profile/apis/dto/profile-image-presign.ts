@@ -5,6 +5,4 @@ interface PresignedImageProps {
   presignedUrl: string;
 }
 
-export interface ProfileImagePresignedResponse extends Response {
-  data: PresignedImageProps;
-}
+export type ProfileImagePresignedResponse = Response<PresignedImageProps>;

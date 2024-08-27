@@ -1,3 +1,7 @@
 import { Response } from '@/apis';
 
-export interface ProfileImageUrlDoneResponse extends Response {}
+export type ProfileImageUrlDoneResponse = Response<{
+  introduction: string;
+  memberId: number;
+  nickname: string;
+}>;
