@@ -102,8 +102,9 @@ const bodyStyle = cva({
   base: {
     position: 'relative',
     marginTop: '-1px',
-    width: 'full',
-    height: 'full',
+    width: '100%',
+    height: 'max-content',
+    maxHeight: '332px',
     backgroundColor: 'white',
     overflow: 'hidden',
   },

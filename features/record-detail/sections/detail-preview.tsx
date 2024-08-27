@@ -152,7 +152,7 @@ const goalText = css({
   bottom: '8px',
   textStyle: 'label2.normal',
   fontWeight: 'medium',
-  color: 'line.solid.neutral',
+  color: 'white',
 });
 
 const graphArea = {

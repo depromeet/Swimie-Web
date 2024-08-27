@@ -2,18 +2,22 @@
 
 import { useAtomValue } from 'jotai';
 
-import { Image } from '@/components/atoms';
+import { Image, LoadingArea } from '@/components/atoms';
+import { useCurrentMemberInfo } from '@/hooks';
 import { calendarSwimCountAtom } from '@/store';
-import { AuthInfoAtom } from '@/store/auth';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { Calendar } from '../molecules';
 
 export const UserCalendarProfile = () => {
-  const { nickname } = useAtomValue(AuthInfoAtom);
+  const { data, isLoading } = useCurrentMemberInfo();
   const totalSwimCount = useAtomValue(calendarSwimCountAtom);
   const isEmptyCount = totalSwimCount === 0;
+
+  if (isLoading || !data) return <LoadingArea width={30} height={30} />;
+
+  const { nickname } = data.data;
 
   return (
     <>
@@ -35,6 +39,7 @@ export const UserCalendarProfile = () => {
           </p>
         </div>
       </div>
+
       <Calendar />
     </>
   );

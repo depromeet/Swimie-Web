@@ -90,9 +90,14 @@ export function DistancePageModal({
   };
 
   const handleDoneButtonClick = () => {
-    if (secondaryTabIndex === 0 && assistiveTabIndex === 0)
-      setValue('totalDistance', totalMeter + 'm');
-    else setValue('totalDistance', totalStrokeDistance + 'm');
+    if (secondaryTabIndex === 0 && isAssistiveIndexZero) {
+      setValue('totalDistance', totalMeter ? totalMeter + 'm' : undefined);
+    } else {
+      setValue(
+        'totalDistance',
+        totalStrokeDistance ? totalStrokeDistance + 'm' : undefined,
+      );
+    }
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
         if (totalMeter) {
@@ -130,6 +135,7 @@ export function DistancePageModal({
     }
     handlers.onClosePageModal();
   };
+
   return (
     <PageModal
       isOpen={pageModalState.isOpen}
@@ -223,7 +229,7 @@ const layout = {
   button: css({
     w: 'full',
     position: 'absolute',
-    bottom: '15px',
+    bottom: 'calc(15px + env(safe-area-inset-bottom))',
     padding: '0 20px',
   }),
 };
