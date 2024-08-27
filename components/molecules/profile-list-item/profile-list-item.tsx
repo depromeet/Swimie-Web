@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Button, Image } from '@/components/atoms';
 import { ProfileFollowContent } from '@/features/follow';
 import { css } from '@/styled-system/css';
@@ -9,6 +11,7 @@ type FollowListItem = {
   onClickFollow?: () => void;
 } & ProfileFollowContent;
 export const ProfileListItem = ({
+  memberId,
   name,
   introduction,
   profileImageUrl,
@@ -16,28 +19,37 @@ export const ProfileListItem = ({
 }: FollowListItem) => {
   return (
     <div className={containerStyle}>
-      <div className={profileImageStyle}>
-        <Image
-          src={profileImageUrl}
-          alt="profile image"
-          width={40}
-          height={40}
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
-      <div className={text.wrapperStyle}>
-        <h1 className={text.nicknameStyle}>{name}</h1>
-        <p className={text.summaryStyle}>{introduction}</p>
-      </div>
+      <Link href={`/profile/${memberId}`} className={linkStyle}>
+        <div className={profileImageStyle}>
+          <Image
+            src={profileImageUrl}
+            alt="profile image"
+            width={40}
+            height={40}
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+        <div className={text.wrapperStyle}>
+          <h1 className={text.nicknameStyle}>{name}</h1>
+          <p className={text.summaryStyle}>{introduction}</p>
+        </div>
+      </Link>
+
       {isFollow ? (
         <Button
           size="small"
           label="팔로잉"
           variant="outlined"
           buttonType="assistive"
+          className={followButtonStyle}
         />
       ) : (
-        <Button size="small" label="팔로우" variant="outlined" />
+        <Button
+          size="small"
+          label="팔로우"
+          variant="outlined"
+          className={followButtonStyle}
+        />
       )}
     </div>
   );
@@ -56,6 +68,16 @@ const profileImageStyle = flex({
   align: 'stretch',
   rounded: 'full',
   overflow: 'hidden',
+});
+
+const linkStyle = flex({
+  gap: '16px',
+  align: 'center',
+  width: '100%',
+});
+
+const followButtonStyle = css({
+  flexShrink: 0,
 });
 
 const text = {
