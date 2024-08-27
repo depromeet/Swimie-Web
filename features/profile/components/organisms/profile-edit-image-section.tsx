@@ -7,7 +7,7 @@ import { useBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { ProfileEditImageSectionProps } from '../../type';
+import { ProfileEditImageSectionProps } from '../../types';
 import { DefaultProfile } from '../atoms';
 import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
 
