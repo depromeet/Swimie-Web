@@ -3,7 +3,7 @@
 import { useAtomValue } from 'jotai';
 
 import { Image, LoadingArea } from '@/components/atoms';
-import { useCurrentMemberInfo } from '@/hooks/use-current-member-info';
+import { useCurrentMemberInfo } from '@/hooks';
 import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
