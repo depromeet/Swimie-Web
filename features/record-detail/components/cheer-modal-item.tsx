@@ -61,6 +61,7 @@ const profile = {
   wrapperStyle: flex({
     alignItems: 'center',
     gap: '6px',
+    width: 'fit-content',
   }),
 
   imageStyle: css({
