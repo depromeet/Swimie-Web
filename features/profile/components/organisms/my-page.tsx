@@ -11,8 +11,7 @@ import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
 
 import { ProfileProps } from '../../types/profile';
-import ProfileContainer from './profile-container';
-
+import { ProfileContainer } from './profile-container';
 export function MyProfile({
   profileData,
 }: {

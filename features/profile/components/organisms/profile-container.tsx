@@ -4,7 +4,7 @@ import { flex } from '@/styled-system/patterns';
 
 import { ProfileProps } from '../../types/profile';
 
-export default function ProfileContainer({
+export function ProfileContainer({
   profileData,
 }: {
   profileData: ProfileProps['data'];

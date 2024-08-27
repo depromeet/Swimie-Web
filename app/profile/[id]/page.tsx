@@ -3,8 +3,13 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { LoadingArea, SettingIcon } from '@/components/atoms';
-import { GlobalNavigationBar, HeaderBar } from '@/components/molecules';
-import { ProfileProps } from '@/features/profile';
+import {
+  BackButton,
+  GlobalNavigationBar,
+  HeaderBar,
+} from '@/components/molecules';
+import { useProfileData } from '@/features/profile';
+import { fetchFollowingData } from '@/features/profile/apis/fetch-following-data';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
 import { css } from '@/styled-system/css';
@@ -14,45 +19,71 @@ export type Mypage = {
   params: { id: number };
 };
 
-const fetchProfileData = async (id: number) => {
-  const response = await fetch(`/api/profile/${id}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch profile data');
-  }
-  const data = (await response.json()) as ProfileProps;
-  return data;
-};
-
 export default function Profile({ params }: Mypage) {
-  const { data: profileData, error } = useQuery<ProfileProps['data']>({
-    queryKey: ['profileData', params.id],
-    queryFn: () => fetchProfileData(params.id).then((data) => data.data),
-    enabled: !!params.id,
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    error: profileError,
+  } = useProfileData(params.id);
+
+  const isMyProfile = profileData?.isMyProfile;
+
+  const {
+    data: followingData,
+    isLoading: isFollowingLoading,
+    error: followingError,
+  } = useQuery({
+    queryKey: ['followingStatus', params.id],
+    queryFn: () =>
+      fetchFollowingData(params.id).then((data) => {
+        console.log(data);
+        return data.data;
+      }),
+
+    enabled: isMyProfile !== undefined && !isMyProfile,
   });
 
-  if (error) {
-    return <div>Error loading profile data</div>;
+  if (profileError) {
+    return <div>멤버가 존재하지 않아요.</div>;
+  }
+  if (isProfileLoading || isFollowingLoading) {
+    return <LoadingArea />;
   }
 
   if (!profileData) {
-    return (
-      <div>
-        <LoadingArea />
-      </div>
-    );
+    return <div>Profile data is not available.</div>;
+  }
+  if (followingError) {
+    return <div>Error fetching following data.</div>;
   }
 
   return (
     <article className={containerStyle}>
-      <HeaderBar>
-        <HeaderBar.RightContent className={css({ right: '20px' })}>
-          {[{ component: <SettingIcon />, key: 'setting' }]}
-        </HeaderBar.RightContent>
-      </HeaderBar>
-      {profileData?.isMyProfile ? (
-        <MyProfile profileData={profileData} />
+      {isMyProfile ? (
+        <>
+          <HeaderBar>
+            <HeaderBar.RightContent
+              className={css({ right: '20px' })}
+            ></HeaderBar.RightContent>
+            <HeaderBar.RightContent className={css({ right: '20px' })}>
+              {[{ component: <SettingIcon />, key: 'setting' }]}
+            </HeaderBar.RightContent>
+          </HeaderBar>
+          <MyProfile profileData={profileData} />
+        </>
       ) : (
-        <OtherPage profileData={profileData} />
+        <>
+          <HeaderBar>
+            <HeaderBar.LeftContent>
+              <BackButton />
+            </HeaderBar.LeftContent>
+            <BackButton />
+          </HeaderBar>
+          <OtherPage
+            profileData={profileData}
+            followingInitialValue={followingData?.isFollowing || false}
+          />
+        </>
       )}
       <GlobalNavigationBar />
     </article>
