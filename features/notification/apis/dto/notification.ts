@@ -7,3 +7,5 @@ export type NotificationResponse = Response<{
   cursorCreatedAt: string;
   hasNext: boolean;
 }>;
+
+export type NotificationReadResponse = Response<object>;

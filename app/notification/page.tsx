@@ -22,6 +22,7 @@ export default function NotificationPage() {
         </HeaderBar.LeftContent>
         <HeaderBar.Title>알림</HeaderBar.Title>
       </HeaderBar>
+      {/* Todo: 로딩 UI */}
       <Suspense>
         <NotificationList />
       </Suspense>
