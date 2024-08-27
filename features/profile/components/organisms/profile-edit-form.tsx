@@ -67,7 +67,7 @@ export function ProfileEditForm() {
   };
 
   //Todo: 토스트 추가
-  //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필 + 닉네임 & 자기소개 필드 있을 시)
+  //Todo: 기본 프로필 api 처리
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   //Todo: 이전 프로필 정보 화면에 반영
