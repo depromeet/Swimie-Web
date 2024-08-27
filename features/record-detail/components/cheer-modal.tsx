@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Virtuoso } from 'react-virtuoso';
 
 import { Modal, ModalProps } from '@/components/molecules';
@@ -22,6 +23,7 @@ export const CheerModal = ({
   onClose,
   title,
 }: CheerModal) => {
+  const router = useRouter();
   const { dialog, close: closeDialog } = useDialog();
   const { mutate: removeCheer } = useCheerRemove();
   const { refetch: refetchCheerPreview } = useCheerPreviewList(memoryId);
@@ -75,6 +77,11 @@ export const CheerModal = ({
     });
   };
 
+  const handleClickProfile = (memberId: number) => {
+    router.push(`/profile/${memberId}`);
+    onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -98,6 +105,7 @@ export const CheerModal = ({
             key={item.reactionId}
             isMyMemory={isMyMemory}
             onClickRemove={() => handleClickRemoveCheer(item.reactionId)}
+            onClickProfile={() => handleClickProfile(item.memberId)}
             {...item}
           />
         )}

@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -9,20 +7,21 @@ import { CheerPreview } from '../types';
 type CheerModalItem = {
   isMyMemory: boolean;
   onClickRemove?: () => void;
+  onClickProfile?: () => void;
 } & CheerPreview;
 
 export const CheerModalItem = ({
   nickname,
   profileImageUrl,
-  memberId,
   emoji,
   comment,
   isMyMemory,
   onClickRemove,
+  onClickProfile,
 }: CheerModalItem) => {
   return (
     <div className={containerStyle}>
-      <Link className={profile.wrapperStyle} href={`/profile/${memberId}`}>
+      <button className={profile.wrapperStyle} onClick={onClickProfile}>
         <div className={profile.imageStyle}>
           <Image
             src={profileImageUrl ?? ''}
@@ -33,7 +32,7 @@ export const CheerModalItem = ({
           />
         </div>
         <h3 className={profile.nickNameStyle}>{nickname}</h3>
-      </Link>
+      </button>
       <div className={contentWrapperStyle}>
         <div className={commentStyle}>
           <span>{emoji}</span>
