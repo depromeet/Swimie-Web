@@ -45,7 +45,7 @@ const layoutStyles = css({
   bottom: 0,
   width: '100vw',
   maxWidth: 'maxWidth',
-  height: '100vh',
+  height: '100dvh',
   backgroundColor: 'white',
   zIndex: 1000,
   overflow: 'auto',

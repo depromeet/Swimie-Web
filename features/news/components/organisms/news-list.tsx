@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 
 import { PullToRefresh } from '@/components/atoms';
@@ -8,12 +9,11 @@ import { TimeLineCard, TimeLineContent } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { NewsContent } from '../../types';
-import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
-import { FindMemberButton, FollowingListLinkButton } from '../atoms';
 import { useNewsData } from '../../hooks';
-import { useQueryClient } from '@tanstack/react-query';
-  
+import { NewsContent } from '../../types';
+import { FindMemberButton, FollowingListLinkButton } from '../atoms';
+import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
+
 export const NewsList = () => {
   const ptrRef = useRef(null);
   const queryClient = useQueryClient();
@@ -21,13 +21,13 @@ export const NewsList = () => {
 
   if (!newsData) return null;
 
-  let contents = newsData.pages.flatMap(({ data }) => data.content);
+  const contents = newsData.pages.flatMap(({ data }) => data.content);
   const isEmpty = contents.length === 0;
   const lastItemIndex = contents.length - 1;
 
   const handlePullToRefresh = () => {
-    queryClient.invalidateQueries({ queryKey: ['newsData'] });
-    queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
+    void queryClient.invalidateQueries({ queryKey: ['newsData'] });
+    void queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
   };
 
   return isEmpty ? (
