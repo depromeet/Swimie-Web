@@ -13,16 +13,23 @@ import { NewsContent } from '../../types';
 import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 import { FindMemberButton, FollowingListLinkButton } from '../atoms';
 import { useNewsData } from '../../hooks';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const NewsList = () => {
   const ptrRef = useRef(null);
+  const queryClient = useQueryClient();
   const { data: newsData, fetchNextPage, hasNextPage } = useNewsData();
 
   if (!newsData) return null;
 
-  const contents = newsData.pages.flatMap(({ data }) => data.content);
+  let contents = newsData.pages.flatMap(({ data }) => data.content);
   const isEmpty = contents.length === 0;
   const lastItemIndex = contents.length - 1;
+
+  const handlePullToRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ['newsData'] });
+    queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
+  };
 
   return isEmpty ? (
     <section className={emptySectionStyle}>
@@ -40,10 +47,7 @@ export const NewsList = () => {
       </HeaderBar>
 
       <div className={sectionStyle} ref={ptrRef}>
-        <PullToRefresh
-          ref={ptrRef}
-          onRefresh={() => console.log('refreshing')}
-        />
+        <PullToRefresh ref={ptrRef} onRefresh={handlePullToRefresh} />
         <InfiniteScroller
           isLastPage={!hasNextPage}
           onIntersect={() => fetchNextPage()}
