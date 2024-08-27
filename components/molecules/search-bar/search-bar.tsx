@@ -59,7 +59,12 @@ const layoutStyles = flex({
 
 const inputStyles = css({
   width: '100%',
-  marginLeft: '3px',
-  paddingLeft: '2px',
+  marginLeft: '8px',
   outline: 'none',
+  '&::placeholder': {
+    paddingLeft: '2px',
+  },
+  '&:focus': {
+    caretColor: 'primary.swim.총거리.default',
+  },
 });
