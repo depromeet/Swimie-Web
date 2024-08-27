@@ -1,4 +1,3 @@
-/* eslint-disable */
 'use client';
 
 import { useRef } from 'react';
@@ -9,10 +8,10 @@ import { TimeLineCard, TimeLineContent } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { NewsContent } from '../../types';
-import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
-import { FindMemberButton, FollowingListLinkButton } from '../atoms';
 import { useNewsData } from '../../hooks';
+import { NewsContent } from '../../types';
+import { FindMemberButton, FollowingListLinkButton } from '../atoms';
+import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 
 export const NewsList = () => {
   const ptrRef = useRef(null);
@@ -46,7 +45,7 @@ export const NewsList = () => {
         />
         <InfiniteScroller
           isLastPage={!hasNextPage}
-          onIntersect={() => fetchNextPage()}
+          onIntersect={() => void fetchNextPage()}
         >
           <ol className={listStyles}>
             {contents.map((content, index) => {
