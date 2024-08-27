@@ -13,7 +13,7 @@ import { flex } from '@/styled-system/patterns';
 import { resizeFile } from '@/utils';
 
 import { useProfileImageBottomSheet } from '../../hooks';
-import { ProfileImageBottomSheetProps } from '../../type';
+import { ProfileImageBottomSheetProps } from '../../types';
 import { OpenAlbumButton } from '../atoms';
 import { DefaultProfile } from '../atoms/default-profile';
 
