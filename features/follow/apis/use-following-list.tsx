@@ -29,7 +29,7 @@ export const useFollowingList = (memberId: number) => {
   });
 
   const flattenData =
-    query.data?.pages.flatMap(({ data }) => data?.contents) ?? [];
+    query.data?.pages.flatMap(({ data }) => data?.contents ?? []) ?? [];
 
   return {
     ...query,
