@@ -15,6 +15,7 @@ const PoolSearchResultElement = lazy(() =>
   })),
 );
 
+import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
   import('./pool-search-result-list').then((module) => ({
@@ -39,7 +40,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     data?.data.searchedPools.length === 0;
 
   const handlePoolSearchTextChange = debounce((text: string) => {
-    setPoolSearchText(text);
+    setPoolSearchText(removeSpecialSymbols(text));
   }, 300);
 
   return (
