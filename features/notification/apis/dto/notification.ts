@@ -8,6 +8,7 @@ export interface NotificationElementProps {
   memberId?: number;
   content?: string;
   createdAt: string;
+  recordCreatedAt?: string;
   hasRead: boolean;
 }
 

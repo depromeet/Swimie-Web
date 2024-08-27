@@ -3,7 +3,10 @@ import React, { forwardRef } from 'react';
 import { Button } from '@/components/atoms';
 import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
 import { css, cva } from '@/styled-system/css';
-import { convertTimeToElapsedTime } from '@/utils';
+import {
+  convertTimeToElapsedTime,
+  formatDateToKoreanExceptYear,
+} from '@/utils';
 
 import { NotificationElementProps } from '../../apis';
 import { CheerUpIcon } from '../atoms';
@@ -24,6 +27,7 @@ export const NotificationElement = forwardRef<
       memberId,
       content,
       createdAt,
+      recordCreatedAt,
       hasRead,
     },
     ref,
@@ -53,7 +57,7 @@ export const NotificationElement = forwardRef<
           {type === 'CHEER' && (
             <>
               <p>
-                {createdAt} 기록에{' '}
+                {formatDateToKoreanExceptYear(recordCreatedAt as string)} 기록에{' '}
                 <span className={textStyles.userName}>{nickname}</span>님이
                 응원을 남겼어요.
               </p>
