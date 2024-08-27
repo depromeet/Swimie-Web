@@ -1,7 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
-import { forwardRef, Fragment, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { StarIcon, StarIconFill } from '@/components/atoms';
@@ -10,6 +10,7 @@ import { flex } from '@/styled-system/patterns';
 
 import { useToggleFavorite } from '../../apis/use-toggle-favorite';
 import { isPoolSearchPageModalOpen } from '../../store';
+import { highlightText } from '../../utils';
 
 interface PoolSearchListElementProps {
   poolId: number;
@@ -56,22 +57,6 @@ export const PoolSearchResultElement = forwardRef<
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFavorite]);
-
-    const highlightText = (text: string, searchText: string | undefined) => {
-      if (!searchText) return text;
-
-      const parts = text.split(new RegExp(`(${searchText})`, 'gi'));
-
-      return parts.map((part, index) =>
-        part.toLowerCase() === searchText.toLowerCase() ? (
-          <span key={index} className={highlightedTextStyles}>
-            {part}
-          </span>
-        ) : (
-          <Fragment key={index}>{part}</Fragment>
-        ),
-      );
-    };
 
     return (
       <li
@@ -125,9 +110,5 @@ const textStyles = {
     textOverflow: 'ellipsis',
   }),
 };
-
-const highlightedTextStyles = css({
-  color: 'primary.swim.총거리.default',
-});
 
 PoolSearchResultElement.displayName = 'PoolSearchResultElement';
