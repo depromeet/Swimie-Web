@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms';
@@ -25,13 +26,15 @@ export function MyProfile({
       <section className={profileContainer}>
         <ProfileContainer profileData={profileData} />
         <div className={buttonContainer}>
-          <Button
-            size="small"
-            label="프로필 편집"
-            buttonType="assistive"
-            variant="outlined"
-            className={buttonStyle}
-          />
+          <Link href="/profile/edit" className={css({ w: 'full' })}>
+            <Button
+              size="small"
+              label="프로필 편집"
+              buttonType="assistive"
+              variant="outlined"
+              className={buttonStyle}
+            />
+          </Link>
           <Button
             size="small"
             label="프로필 공유"
@@ -94,7 +97,7 @@ const buttonContainer = flex({
 });
 
 const buttonStyle = css({
-  flexGrow: 1,
+  w: 'full',
 });
 
 const tabContainer = flex({
