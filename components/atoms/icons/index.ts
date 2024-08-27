@@ -31,6 +31,7 @@ export * from './statistics-icon';
 export * from './success-check-icon';
 export * from './swim-icon';
 export * from './swimmer-icon';
+export * from './text-delete-icon';
 export * from './toast';
 export * from './triangle-arrow-icon';
 export * from './triangle-arrow-icon-reverse';
