@@ -11,6 +11,7 @@ import { getBlobData } from '@/utils';
 import {
   useGetProfileImagePresignedUrl,
   useProfileImageUrlDone,
+  useProfileTextEdit,
 } from '../../apis';
 import { useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
@@ -18,7 +19,7 @@ import { ProfileEditTextInfoSection } from './profile-edit-text-info-section';
 
 interface ProfileEditFormProps {
   nickname?: string;
-  introduce?: string;
+  introduction?: string;
 }
 
 //Todo: 한줄 소개 현재 글자 수 세는 UI 추가
@@ -27,25 +28,50 @@ export function ProfileEditForm() {
     defaultValues: {},
   });
 
-  const { imageFile, defaultProfileIndex, handlers } = useProfileEditForm();
+  const { imageFile, defaultProfileIndex, modifyData, handlers } =
+    useProfileEditForm();
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
   const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
+  const { mutateAsync: profileTextEdit } = useProfileTextEdit();
 
-  //Todo: 닉네임 & 소개 수정 api 연결
+  const handleProfileImageEditSuccess = (hasTextEditData: boolean) => {
+    if (!hasTextEditData) handlers.onChangeIsLoading(false);
+  };
+
+  //Todo: 성공 처리 구체화
+  const handleProfileTextEditSuccess = () => {
+    handlers.onChangeIsLoading(false);
+  };
+
+  //Todo: 에러 처리 구체화
+  const handleProfileEditError = () => {
+    alert('프로필 수정 중 오류가 발생하였습니다.');
+    handlers.onChangeIsLoading(false);
+    return;
+  };
+
   //Todo: 각 상황에 맞는 이미지 api 연결(디폴트 캐릭터 프로필 & 직접 선택 프로필)
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
-    console.log(data);
+    const hasTextEditData = Boolean(data.nickname || data.introduction);
     if (imageFile) {
       const { data } = await getProfileImagePresignedUrl(imageFile.name);
       await imagePresign({
         presignedUrl: data.presignedUrl,
         file: getBlobData(imageFile),
       });
-      await profileImageUrlDone(data.imageName);
+      const profileImageUrlDoneRes = await profileImageUrlDone(data.imageName);
+      if (profileImageUrlDoneRes.status === 200)
+        handleProfileImageEditSuccess(hasTextEditData);
+      else handleProfileEditError();
+    }
+    if (hasTextEditData) {
+      const profileTextEditRes = await profileTextEdit(modifyData(data));
+      if (profileTextEditRes.status === 200) handleProfileTextEditSuccess();
+      else handleProfileEditError();
     }
   };
 
