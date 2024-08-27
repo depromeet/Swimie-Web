@@ -1,18 +1,13 @@
 import { Button, Image } from '@/components/atoms';
+import { ProfileFollowContent } from '@/features/follow';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 type FollowListItem = {
-  // TODO: Profile type 수정 (required)
-  profile?: {
-    id: string;
-    nickname: string;
-    summary: string;
-  };
   isFollow: boolean;
   onClick?: () => void;
   onClickFollow?: () => void;
-};
+} & ProfileFollowContent;
 export const ProfileListItem = ({ isFollow }: FollowListItem) => {
   return (
     <div className={containerStyle}>
