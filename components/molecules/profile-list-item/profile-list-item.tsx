@@ -8,12 +8,17 @@ type FollowListItem = {
   onClick?: () => void;
   onClickFollow?: () => void;
 } & ProfileFollowContent;
-export const ProfileListItem = ({ isFollow }: FollowListItem) => {
+export const ProfileListItem = ({
+  name,
+  introduction,
+  profileImageUrl,
+  isFollow,
+}: FollowListItem) => {
   return (
     <div className={containerStyle}>
       <div className={profileImageStyle}>
         <Image
-          src={''}
+          src={profileImageUrl}
           alt="profile image"
           width={40}
           height={40}
@@ -21,8 +26,8 @@ export const ProfileListItem = ({ isFollow }: FollowListItem) => {
         />
       </div>
       <div className={text.wrapperStyle}>
-        <h1 className={text.nicknameStyle}>수영왕 정지영</h1>
-        <p className={text.summaryStyle}>맞팔/좋아요/좋아요반사</p>
+        <h1 className={text.nicknameStyle}>{name}</h1>
+        <p className={text.summaryStyle}>{introduction}</p>
       </div>
       {isFollow ? (
         <Button
@@ -48,7 +53,7 @@ const containerStyle = flex({
 const profileImageStyle = flex({
   width: '40px',
   height: '40px',
-  align: 'center',
+  align: 'stretch',
   rounded: 'full',
   overflow: 'hidden',
 });
