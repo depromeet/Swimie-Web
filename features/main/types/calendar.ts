@@ -12,8 +12,10 @@ export interface Strokes {
 }
 
 export interface MemberInfo {
-  name?: string;
+  id: number;
+  nickname?: string;
   goal: number;
+  profileImageUrl?: string;
 }
 
 export interface Memory {
