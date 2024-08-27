@@ -30,6 +30,7 @@ export function PoolSearchResultList({
           <PoolSearchResultElement
             key={result.poolId}
             {...result}
+            poolSearchText={poolSearchText}
             assignRef={i === getByFarPoolData.length - 1}
             ref={ref}
             className={resultStyles.element}
