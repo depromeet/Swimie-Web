@@ -14,11 +14,9 @@ export const getCurrentMemberInfo = async () => {
 };
 
 export const useCurrentMemberInfo = () => {
-  const { data } = useQuery<MemberResponse>({
+  return useQuery<MemberResponse>({
     queryKey: ['currentMember'],
     queryFn: () => getCurrentMemberInfo(),
     placeholderData: keepPreviousData,
   });
-  const memberInfo = data?.data;
-  return memberInfo;
 };
