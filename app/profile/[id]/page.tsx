@@ -6,7 +6,7 @@ import {
   GlobalNavigationBar,
   HeaderBar,
 } from '@/components/molecules';
-import { SettingButton } from '@/components/molecules/header-bar/header-bar-setting-button';
+import { SettingButton } from '@/components/molecules';
 import { useProfileData } from '@/features/profile';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
