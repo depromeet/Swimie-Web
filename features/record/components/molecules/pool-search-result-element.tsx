@@ -10,9 +10,11 @@ import { flex } from '@/styled-system/patterns';
 
 import { useToggleFavorite } from '../../apis/use-toggle-favorite';
 import { isPoolSearchPageModalOpen } from '../../store';
+import { highlightText } from '../../utils';
 
 interface PoolSearchListElementProps {
   poolId: number;
+  poolSearchText?: string;
   name: string;
   address: string;
   isFavorite: boolean;
@@ -23,49 +25,62 @@ interface PoolSearchListElementProps {
 export const PoolSearchResultElement = forwardRef<
   HTMLLIElement,
   PoolSearchListElementProps
->(({ poolId, name, address, isFavorite, className, assignRef }, ref) => {
-  const [favorite, setFavorite] = useState(isFavorite);
+>(
+  (
+    { poolId, poolSearchText, name, address, isFavorite, className, assignRef },
+    ref,
+  ) => {
+    const [favorite, setFavorite] = useState(isFavorite);
 
-  const { setValue } = useFormContext();
-  const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
+    const { setValue } = useFormContext();
+    const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
 
-  const { mutate: toggleFavorite, isPending } = useToggleFavorite();
+    const { mutate: toggleFavorite, isPending } = useToggleFavorite();
 
-  const handleElementClick = (name: string, poolId: number) => {
-    setValue('poolId', poolId);
-    setValue('poolName', name);
-    setIsPoolSearchPageModalOpen({ isOpen: false, jumpDirection: 'backward' });
-  };
+    const handleElementClick = (name: string, poolId: number) => {
+      setValue('poolId', poolId);
+      setValue('poolName', name);
+      setIsPoolSearchPageModalOpen({
+        isOpen: false,
+        jumpDirection: 'backward',
+      });
+    };
 
-  const handleStarIconClick = () => {
-    toggleFavorite(poolId);
-    if (!isPending) setFavorite((prev) => !prev);
-  };
+    const handleStarIconClick = () => {
+      toggleFavorite(poolId);
+      if (!isPending) setFavorite((prev) => !prev);
+    };
 
-  useEffect(() => {
-    if (favorite !== isFavorite) {
-      setFavorite(isFavorite);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFavorite]);
+    useEffect(() => {
+      if (favorite !== isFavorite) {
+        setFavorite(isFavorite);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isFavorite]);
 
-  return (
-    <li ref={assignRef ? ref : undefined} className={cx(listStyles, className)}>
-      <div
-        className={textStyles.layout}
-        onClick={() => handleElementClick(name, poolId)}
+    return (
+      <li
+        ref={assignRef ? ref : undefined}
+        className={cx(listStyles, className)}
       >
-        <span className={textStyles.name}>{name}</span>
-        <span className={textStyles.address}>{address}</span>
-      </div>
-      {favorite ? (
-        <StarIconFill onClick={handleStarIconClick} />
-      ) : (
-        <StarIcon onClick={handleStarIconClick} />
-      )}
-    </li>
-  );
-});
+        <div
+          className={textStyles.layout}
+          onClick={() => handleElementClick(name, poolId)}
+        >
+          <span className={textStyles.name}>
+            {highlightText(name, poolSearchText)}
+          </span>
+          <span className={textStyles.address}>{address}</span>
+        </div>
+        {favorite ? (
+          <StarIconFill onClick={handleStarIconClick} />
+        ) : (
+          <StarIcon onClick={handleStarIconClick} />
+        )}
+      </li>
+    );
+  },
+);
 
 const listStyles = flex({
   justifyContent: 'space-between',
