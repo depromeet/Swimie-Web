@@ -61,6 +61,7 @@ const profile = {
     alignItems: 'center',
     gap: '6px',
     width: 'fit-content',
+    cursor: 'pointer',
   }),
 
   imageStyle: css({
@@ -93,4 +94,5 @@ const removeButtonStyle = css({
   textStyle: 'label1.normal',
   fontWeight: 'regular',
   color: 'text.alternative',
+  cursor: 'pointer',
 });
