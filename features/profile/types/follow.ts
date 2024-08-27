@@ -1,8 +1,3 @@
-export interface FollowingProps {
-  status: number;
-  code: string;
-  message: string;
-  data: {
-    isFollowing: boolean;
-  };
-}
+import { Response } from '@/apis';
+
+export type FollowingProps = Response<{ isFollowing: boolean }>;

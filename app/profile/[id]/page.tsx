@@ -1,7 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-
 import { LoadingArea, SettingIcon } from '@/components/atoms';
 import {
   BackButton,
@@ -9,9 +7,9 @@ import {
   HeaderBar,
 } from '@/components/molecules';
 import { useProfileData } from '@/features/profile';
-import { fetchFollowingData } from '@/features/profile/apis/fetch-following-data';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
+import { useFollowingData } from '@/features/profile/hooks/use-following-data';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -32,16 +30,7 @@ export default function Profile({ params }: Mypage) {
     data: followingData,
     isLoading: isFollowingLoading,
     error: followingError,
-  } = useQuery({
-    queryKey: ['followingStatus', params.id],
-    queryFn: () =>
-      fetchFollowingData(params.id).then((data) => {
-        console.log(data);
-        return data.data;
-      }),
-
-    enabled: isMyProfile !== undefined && !isMyProfile,
-  });
+  } = useFollowingData(params.id, isMyProfile);
 
   if (profileError) {
     return <div>멤버가 존재하지 않아요.</div>;
