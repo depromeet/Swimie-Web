@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { SearchIcon } from '@/components/atoms';
+import { SearchIcon, TextDeleteIcon } from '@/components/atoms';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -35,6 +35,11 @@ export function SearchBar({
     onChange?.(newText);
   };
 
+  const handleDeleteTextClick = () => {
+    setSearchText('');
+    onChange?.('');
+  };
+
   return (
     <div className={cx(layoutStyles, className)}>
       <SearchIcon />
@@ -44,15 +49,22 @@ export function SearchBar({
         placeholder={placeholder}
         onChange={handleInputChange}
       />
+      {searchText && (
+        <TextDeleteIcon
+          onClick={handleDeleteTextClick}
+          className={css({ position: 'absolute', right: '16px' })}
+        />
+      )}
     </div>
   );
 }
 
 const layoutStyles = flex({
+  position: 'relative',
   alignItems: 'center',
   width: '100%',
   height: '44px',
-  padding: '10px 16px',
+  padding: '10px 44px 10px 16px',
   backgroundColor: 'fill.normal',
   borderRadius: '12px',
 });
