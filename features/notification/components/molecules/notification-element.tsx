@@ -9,6 +9,7 @@ import {
   formatDateToKoreanExceptYear,
 } from '@/utils';
 
+import { useReadNotification } from '../../apis/use-read-notification';
 import { NotificationElementProps } from '../../types';
 import { CheerUpIcon } from '../atoms';
 
@@ -36,13 +37,19 @@ export const NotificationElement = forwardRef<
   ) => {
     //사용하지 않는 변수 오류 방지 위해 임시로 작성
     console.log(notificationId, profileImageUrl);
+    const { mutate: readNotification } = useReadNotification();
+
     const route =
       type === 'FOLLOW' || type === 'FRIEND'
         ? `/profile/${memberId}`
         : `record-detail/${memoryId}`;
 
+    const handleListElementClick = () => {
+      readNotification({ notificationId, type });
+    };
+
     return (
-      <Link href={route}>
+      <Link href={route} onClick={handleListElementClick}>
         <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
           {type === 'FOLLOW' || type === 'FRIEND' ? (
             <UserImageIcon width={40} height={40} />
