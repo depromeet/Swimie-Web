@@ -2,7 +2,7 @@ import { useAtomValue } from 'jotai';
 
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules/record-mark';
-import { StrokeInfo } from '@/features/main';
+import { StrokeInfo, useGoal } from '@/features/main';
 import { calendarViewImageAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -25,6 +25,7 @@ export const ItemContent = ({
   imageUrl,
 }: ItemContentProps) => {
   const isViewImage = useAtomValue(calendarViewImageAtom);
+  const goal = useGoal();
 
   if (isViewImage && imageUrl)
     return (
@@ -48,6 +49,7 @@ export const ItemContent = ({
       totalDistance={totalDistance}
       isAchieved={isAchieved}
       strokes={strokes}
+      goal={goal}
     />
   );
 };
