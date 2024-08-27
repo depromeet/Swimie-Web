@@ -6,9 +6,10 @@ import { LoadingArea } from '@/components/atoms';
 import { NormalShapeIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { BackButton, HeaderBar } from '@/components/molecules';
-import { useLogout, useMemberData } from '@/features/setting/apis';
+import { useLogout } from '@/features/setting/apis';
 import { ListItem } from '@/features/setting/components';
 import { useLogoutDialogHandler } from '@/features/setting/hooks/use-logout-dialog-handler';
+import { useCurrentMemberInfo } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -16,7 +17,7 @@ export default function Page() {
   const logout = useLogout();
   const router = useRouter();
 
-  const { data, isLoading, error } = useMemberData();
+  const { data, isLoading, error } = useCurrentMemberInfo();
   const { openLogoutModal } = useLogoutDialogHandler(logout);
 
   if (isLoading) {

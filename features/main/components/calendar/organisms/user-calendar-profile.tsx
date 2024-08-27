@@ -11,34 +11,35 @@ import { flex } from '@/styled-system/patterns';
 import { Calendar } from '../molecules';
 
 export const UserCalendarProfile = () => {
-  const memberInfo = useCurrentMemberInfo();
+  const { data, isLoading } = useCurrentMemberInfo();
   const totalSwimCount = useAtomValue(calendarSwimCountAtom);
   const isEmptyCount = totalSwimCount === 0;
 
+  if (isLoading || !data) return <LoadingArea width={30} height={30} />;
+
+  const { nickname } = data.data;
+
   return (
     <>
-      {memberInfo ? (
-        <div className={profileContainerStyles}>
-          <Image
-            className={characterImageStyles}
-            width={70}
-            height={75}
-            src="/images/swimie-character.png"
-            alt="swimie character"
-            priority
-          />
-          <div className={userInfoStyles}>
-            <p className={nicknameStyles}>{memberInfo.nickname}님,</p>
-            <p className={descriptionStyles}>
-              {isEmptyCount
-                ? '이번달 수영 기록을 해볼까요?'
-                : `이번달 수영을 ${totalSwimCount}번 다녀왔어요!`}
-            </p>
-          </div>
+      <div className={profileContainerStyles}>
+        <Image
+          className={characterImageStyles}
+          width={70}
+          height={75}
+          src="/images/swimie-character.png"
+          alt="swimie character"
+          priority
+        />
+        <div className={userInfoStyles}>
+          <p className={nicknameStyles}>{nickname}님,</p>
+          <p className={descriptionStyles}>
+            {isEmptyCount
+              ? '이번달 수영 기록을 해볼까요?'
+              : `이번달 수영을 ${totalSwimCount}번 다녀왔어요!`}
+          </p>
         </div>
-      ) : (
-        <LoadingArea width={30} height={30} paddingY="none" />
-      )}
+      </div>
+
       <Calendar />
     </>
   );
