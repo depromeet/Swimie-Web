@@ -60,6 +60,14 @@ export const formatDateToKorean = (
   return `${+year.slice(-maxLength)}년 ${+month}월${date ? ` ${+date}일` : ''} `;
 };
 
+export const formatDateToKoreanExceptYear = (
+  dateStr: string,
+  separator = '-',
+) => {
+  const [, month, date] = dateStr.split(separator);
+  return `${+month}월${date ? ` ${+date}일` : ''} `;
+};
+
 export const formatDateToDash = (dateStr: string) => {
   const [year, month, date] = dateStr.split(' ');
 

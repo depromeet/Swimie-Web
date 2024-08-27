@@ -11,14 +11,18 @@ import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
 
 import { ProfileProps } from '../../types/profile';
-import FollowButton from '../atoms/follow-button';
-import ProfileContainer from './profile-container';
+import { FollowButton } from '../atoms';
+import { ProfileContainer } from './profile-container';
+
+type OtherPageProps = {
+  profileData: ProfileProps['data'];
+  followingInitialValue: boolean;
+};
 
 export function OtherPage({
   profileData,
-}: {
-  profileData: ProfileProps['data'];
-}) {
+  followingInitialValue,
+}: OtherPageProps) {
   const [selectedTab, setSelectedTab] = useState<ProfileType>('record');
 
   return (
@@ -26,7 +30,10 @@ export function OtherPage({
       <section className={profileContainer}>
         <ProfileContainer profileData={profileData} />
         <div className={buttonContainer}>
-          <FollowButton />
+          <FollowButton
+            followingInitialValue={followingInitialValue}
+            followingId={profileData.memberId}
+          />
         </div>
       </section>
       <Tab type="primary">

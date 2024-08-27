@@ -1,7 +1,7 @@
 name: PR Built Test
 on:
   pull_request:
-    types: [opened, edited, reopened, ready_for_review]
+    types: [opened, synchronize, edited, reopened, ready_for_review]
 
 jobs:
   Build-Test:
@@ -21,13 +21,16 @@ jobs:
         uses: actions/cache@v3
         with:
           path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}-build
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}-build
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
+
+      - name: Generate CSS
+        run: pnpm panda cssgen
 
       - name: Build project
         run: pnpm build

@@ -1,18 +1,29 @@
+'use client';
+
 import { css } from '@/styled-system/css';
 
-import { NotificationElementProps } from '../../type';
-import { NotificationElement } from '../molecules';
+import useGetNotification from '../../apis/use-get-notification';
+import { NoNotification, NotificationElement } from '../molecules';
 
-interface NotificationListProps {
-  alarms: NotificationElementProps[];
-}
-
-export function NotificationList({ alarms }: NotificationListProps) {
+export function NotificationList() {
+  const { ref, isLoading, getByFarNotificationData } = useGetNotification();
   return (
     <ul className={layoutStyles}>
-      {alarms.map((alarm) => (
-        <NotificationElement key={alarm.id} {...alarm} />
-      ))}
+      {!isLoading && getByFarNotificationData.length === 0 && (
+        <NoNotification
+          mainText="아직 받은 알림이 없어요"
+          subText="공지, 활동 소식이 도착하면 알려드릴게요"
+        />
+      )}
+      {!isLoading &&
+        getByFarNotificationData.length > 0 &&
+        getByFarNotificationData.map((notification) => (
+          <NotificationElement
+            ref={ref}
+            key={notification.notificationId}
+            {...notification}
+          />
+        ))}
     </ul>
   );
 }

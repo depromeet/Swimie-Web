@@ -1,4 +1,3 @@
-/* eslint-disable */
 'use client';
 
 import { useRef } from 'react';
@@ -14,7 +13,7 @@ import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 import { FindMemberButton, FollowingListLinkButton } from '../atoms';
 import { useNewsData } from '../../hooks';
 import { useQueryClient } from '@tanstack/react-query';
-
+  
 export const NewsList = () => {
   const ptrRef = useRef(null);
   const queryClient = useQueryClient();
@@ -50,7 +49,7 @@ export const NewsList = () => {
         <PullToRefresh ref={ptrRef} onRefresh={handlePullToRefresh} />
         <InfiniteScroller
           isLastPage={!hasNextPage}
-          onIntersect={() => fetchNextPage()}
+          onIntersect={() => void fetchNextPage()}
         >
           <ol className={listStyles}>
             {contents.map((content, index) => {
