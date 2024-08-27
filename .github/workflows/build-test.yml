@@ -1,7 +1,7 @@
 name: PR Built Test
 on:
   pull_request:
-    types: [opened, edited, reopened, ready_for_review]
+    types: [opened, synchronize, edited, reopened, ready_for_review]
 
 jobs:
   Build-Test:
@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
+
+      - name: Generate CSS
+        run: pnpm panda cssgen
 
       - name: Build project
         run: pnpm build
