@@ -65,6 +65,8 @@ export function TextField({
         {
           <input
             type={inputType}
+            inputMode={inputType === 'number' ? 'decimal' : undefined}
+            pattern={inputType === 'number' ? '[0-9]*' : undefined}
             value={value}
             placeholder={placeholder}
             maxLength={maxLength}
@@ -77,6 +79,7 @@ export function TextField({
                   ? inputFieldStyles.raw({ isWritten: true })
                   : inputFieldStyles.raw({ isWritten: false }),
               ),
+              inputType === 'number' && deleteArrowStyle,
               className,
             )}
           />
@@ -89,3 +92,10 @@ export function TextField({
     </TextFieldWrapper>
   );
 }
+
+const deleteArrowStyle = css({
+  '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+    WebkitAppearance: 'none',
+    margin: 0,
+  },
+});

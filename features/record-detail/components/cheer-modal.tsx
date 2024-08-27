@@ -9,7 +9,6 @@ import { css } from '@/styled-system/css';
 import { useCheerList, useCheerPreviewList, useCheerRemove } from '../apis';
 import { CheerModalItem } from './cheer-modal-item';
 
-// TODO: data 연동 및 props 수정
 type CheerModal = {
   memoryId: number;
   isMyMemory: boolean;
@@ -56,17 +55,14 @@ export const CheerModal = ({
         confirm: {
           text: '삭제',
           onClick: () => {
-            // TODO: 서버 수정 후 onSuccess 로직 재구현 예정
             removeCheer(reactionId, {
               onSuccess: () => {
                 void refetchCheerList();
                 void refetchCheerPreview();
                 closeDialog();
               },
-              onSettled() {
-                void refetchCheerList();
-                void refetchCheerPreview();
-                closeDialog();
+              onError: () => {
+                console.log('api error');
               },
             });
           },

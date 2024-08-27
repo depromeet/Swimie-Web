@@ -2,18 +2,22 @@
 
 import { useAtomValue } from 'jotai';
 
-import { Image } from '@/components/atoms';
+import { Image, LoadingArea } from '@/components/atoms';
+import { useCurrentMemberInfo } from '@/hooks';
 import { calendarSwimCountAtom } from '@/store';
-import { AuthInfoAtom } from '@/store/auth';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { Calendar } from '../molecules';
 
 export const UserCalendarProfile = () => {
-  const { nickname } = useAtomValue(AuthInfoAtom);
+  const { data, isLoading } = useCurrentMemberInfo();
   const totalSwimCount = useAtomValue(calendarSwimCountAtom);
   const isEmptyCount = totalSwimCount === 0;
+
+  if (isLoading || !data) return <LoadingArea width={30} height={30} />;
+
+  const { nickname } = data.data;
 
   return (
     <>
@@ -22,7 +26,7 @@ export const UserCalendarProfile = () => {
           className={characterImageStyles}
           width={70}
           height={75}
-          src="/images/swimie-character.svg"
+          src="/images/swimie-character.png"
           alt="swimie character"
           priority
         />
@@ -35,20 +39,25 @@ export const UserCalendarProfile = () => {
           </p>
         </div>
       </div>
+
       <Calendar />
     </>
   );
 };
 
 const profileContainerStyles = flex({
-  padding: '14px 11px',
+  padding: '0px 14px',
   gap: '4px',
   alignItems: 'center',
   borderRadius: '6px',
   backgroundColor: 'primary.swim.총거리.default',
 });
 
-const characterImageStyles = css({ margin: '0 10px' });
+const characterImageStyles = css({
+  minWidth: '70px',
+  minHeight: '75px',
+  margin: '14px 10px -1px 10px',
+});
 
 const userInfoStyles = flex({
   height: 'full',

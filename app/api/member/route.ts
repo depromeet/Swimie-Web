@@ -1,27 +1,17 @@
 import { NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
+import { MemberInfo } from '@/features/main';
 
-export interface MemberProps {
+export interface MemberResponse {
   status: number;
   code: string;
   message: string;
-  data: {
-    id: number;
-    nickname: string;
-    goal: number;
-    profileImageUrl: string;
-  };
+  data: MemberInfo;
 }
 
 export async function GET() {
-  try {
-    const data = await fetchData<MemberProps>('/member', 'GET');
+  const data = await fetchData<MemberResponse>('/member', 'GET');
 
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error fetching member data:', error);
-
-    return NextResponse.error();
-  }
+  return NextResponse.json(data);
 }

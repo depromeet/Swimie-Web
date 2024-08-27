@@ -67,7 +67,6 @@ const HeaderContainerStyles = flex({
 });
 
 const DateButtonContainerStyles = flex({
-  gap: '10px',
   alignItems: 'center',
 });
 
