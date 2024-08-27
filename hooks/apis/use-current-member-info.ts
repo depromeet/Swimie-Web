@@ -18,5 +18,6 @@ export const useCurrentMemberInfo = () => {
     queryKey: ['currentMember'],
     queryFn: () => getCurrentMemberInfo(),
     placeholderData: keepPreviousData,
+    staleTime: Infinity,
   });
 };
