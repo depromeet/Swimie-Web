@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 
+import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
-import StatisticsIcon from '@/components/atoms/icons/statistics-icon';
 import { Tab, TabItem } from '@/components/molecules';
 import { Calendar } from '@/features/main';
 import { css } from '@/styled-system/css';
