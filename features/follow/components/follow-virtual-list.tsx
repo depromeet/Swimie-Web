@@ -23,7 +23,7 @@ export const FollowVirtualList = ({
   return (
     <Virtuoso
       data={data}
-      overscan={300}
+      overscan={500}
       useWindowScroll
       rangeChanged={handleRangeChanged}
       itemContent={(_, item) => <ProfileListItem isFollow={true} {...item} />}
