@@ -75,6 +75,8 @@ export const CheerModal = ({
     });
   };
 
+  console.log(flattenData);
+
   return (
     <Modal
       isOpen={isOpen}

@@ -69,4 +69,5 @@ export type CheerPreview = {
   reactionId: number;
   nickname: string;
   profileImageUrl: string;
+  memberId: number;
 } & DetailCheerItem;

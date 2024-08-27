@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -12,6 +14,7 @@ type CheerModalItem = {
 export const CheerModalItem = ({
   nickname,
   profileImageUrl,
+  memberId,
   emoji,
   comment,
   isMyMemory,
@@ -19,7 +22,7 @@ export const CheerModalItem = ({
 }: CheerModalItem) => {
   return (
     <div className={containerStyle}>
-      <div className={profile.wrapperStyle}>
+      <Link className={profile.wrapperStyle} href={`/profile/${memberId}`}>
         <div className={profile.imageStyle}>
           <Image
             src={profileImageUrl ?? ''}
@@ -30,7 +33,7 @@ export const CheerModalItem = ({
           />
         </div>
         <h3 className={profile.nickNameStyle}>{nickname}</h3>
-      </div>
+      </Link>
       <div className={contentWrapperStyle}>
         <div className={commentStyle}>
           <span>{emoji}</span>
