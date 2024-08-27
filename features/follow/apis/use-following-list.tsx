@@ -1,6 +1,6 @@
 'use client';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 
 import { ProfileFollow } from '../types';
 
@@ -26,6 +26,7 @@ export const useFollowingList = (memberId: number) => {
     getNextPageParam: (lastPage) =>
       lastPage?.data?.hasNext ? lastPage?.data?.cursorId : undefined,
     enabled: !!memberId,
+    placeholderData: keepPreviousData,
   });
 
   const flattenData =
