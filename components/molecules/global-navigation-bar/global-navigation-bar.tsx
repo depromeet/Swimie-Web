@@ -3,6 +3,7 @@
 import { MyIcon } from '@/components/atoms/icons/my-icon';
 import { NewsIcon } from '@/components/atoms/icons/news-icon';
 import { RecordIcon } from '@/components/atoms/icons/record-icon';
+import { useCurrentMemberInfo } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -11,10 +12,12 @@ import { useGlobalNavigationBar } from './use-global-navigation-bar';
 
 export function GlobalNavigationBar() {
   //Todo: 내 userId api로 받아온 후, 마이페이지 route 추가
+  const { data } = useCurrentMemberInfo();
+
   const barItems = [
     { label: '기록', icon: RecordIcon, route: '/' },
     { label: '소식', icon: NewsIcon, route: '/news' },
-    { label: '마이', icon: MyIcon, route: '/profile/2' },
+    { label: '마이', icon: MyIcon, route: `/profile/${data?.data.id}` },
   ];
   const { barIndex, handlers } = useGlobalNavigationBar(
     barItems.map((item) => item.route),
