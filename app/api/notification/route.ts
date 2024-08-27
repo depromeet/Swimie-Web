@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
-import { NotificationResponse } from '@/features/notification';
+import { NotificationElementProps } from '@/features/notification';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const data = await fetchData<NotificationResponse>(
-    `/notification?cursorId=${searchParams.get('cursorId')}`,
+  const cursorCreatedAt = searchParams.get('cursorCreatedAt');
+  const cursorCreatedAtQuery = cursorCreatedAt
+    ? `?cursorCreatedAt=${cursorCreatedAt}`
+    : '';
+  const data = await fetchData<NotificationElementProps[]>(
+    `/notification${cursorCreatedAtQuery}`,
     'GET',
   );
 

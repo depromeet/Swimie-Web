@@ -6,8 +6,11 @@ import { useInView } from 'react-intersection-observer';
 
 import { NotificationElementProps, NotificationResponse } from './dto';
 
-async function getNotification(cursorId: unknown) {
-  const res = await fetch(`/api/notification?cursorId=${cursorId as string}`, {
+async function getNotification(cursorCreatedAt: unknown) {
+  const cursorCreatedAtQuery = cursorCreatedAt
+    ? `?cursorCreatedAt=${cursorCreatedAt as string}`
+    : '';
+  const res = await fetch(`/api/notification${cursorCreatedAtQuery}`, {
     headers: {
       'Content-Type': 'application/json',
     },

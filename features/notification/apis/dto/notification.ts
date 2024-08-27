@@ -1,3 +1,5 @@
+import { Response } from '@/apis';
+
 export interface NotificationElementProps {
   type: 'CHEER' | 'FOLLOW' | 'FRIEND';
   notificationId: number;
@@ -9,13 +11,8 @@ export interface NotificationElementProps {
   hasRead: boolean;
 }
 
-export interface NotificationResponse {
-  status: number;
-  code: string;
-  message: string;
-  data: {
-    notifications: NotificationElementProps[];
-    cursorCreatedAt: string;
-    hasNext: boolean;
-  };
-}
+export type NotificationResponse = Response<{
+  notifications: NotificationElementProps[];
+  cursorCreatedAt: string;
+  hasNext: boolean;
+}>;
