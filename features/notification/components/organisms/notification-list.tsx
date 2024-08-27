@@ -7,7 +7,6 @@ import { NoNotification, NotificationElement } from '../molecules';
 
 export function NotificationList() {
   const { ref, isLoading, getByFarNotificationData } = useGetNotification();
-  console.log(getByFarNotificationData);
   return (
     <ul className={layoutStyles}>
       {!isLoading && getByFarNotificationData.length === 0 && (

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { forwardRef } from 'react';
 
 import { Button } from '@/components/atoms';
@@ -8,12 +9,12 @@ import {
   formatDateToKoreanExceptYear,
 } from '@/utils';
 
-import { NotificationElementProps } from '../../apis';
+import { NotificationElementProps } from '../../types';
 import { CheerUpIcon } from '../atoms';
 
 //Todo: 추후 알림 내용이 추가될 때 props가 너무 많아질 시, 합성 컴포넌트 도입 고려
 //Todo: 팔로우 api 연결
-//Todo: 응원 종류 constants로 한번에 관리(응원 보내기 기능에서도 사용)
+//Todo: 클릭 api 처리
 export const NotificationElement = forwardRef<
   HTMLLIElement,
   NotificationElementProps
@@ -24,6 +25,7 @@ export const NotificationElement = forwardRef<
       notificationId,
       nickname,
       profileImageUrl,
+      memoryId,
       memberId,
       content,
       createdAt,
@@ -32,52 +34,61 @@ export const NotificationElement = forwardRef<
     },
     ref,
   ) => {
-    console.log(notificationId, profileImageUrl, memberId);
+    //사용하지 않는 변수 오류 방지 위해 임시로 작성
+    console.log(notificationId, profileImageUrl);
+    const route =
+      type === 'FOLLOW' || type === 'FRIEND'
+        ? `/profile/${memberId}`
+        : `record-detail/${memoryId}`;
+
     return (
-      <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
-        {type === 'FOLLOW' || type === 'FRIEND' ? (
-          <UserImageIcon width={40} height={40} />
-        ) : (
-          <CheerUpIcon />
-        )}
-        <div className={css(layoutStyles.text.raw({ type }))}>
-          {type === 'FRIEND' && (
-            <p className={textStyles.main}>
-              <span className={textStyles.userName}>{nickname}</span>님과 친구가
-              되었어요!
-            </p>
+      <Link href={route}>
+        <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
+          {type === 'FOLLOW' || type === 'FRIEND' ? (
+            <UserImageIcon width={40} height={40} />
+          ) : (
+            <CheerUpIcon />
           )}
-          {type === 'FOLLOW' && (
-            <p className={textStyles.main}>
-              <span className={textStyles.userName}>{nickname}</span>님을
-              아시나요? <span className={textStyles.userName}>{nickname}</span>
-              님이 나를 팔로우했어요.
-            </p>
-          )}
-          {type === 'CHEER' && (
-            <>
-              <p>
-                {formatDateToKoreanExceptYear(recordCreatedAt as string)} 기록에{' '}
-                <span className={textStyles.userName}>{nickname}</span>님이
-                응원을 남겼어요.
+          <div className={css(layoutStyles.text.raw({ type }))}>
+            {type === 'FRIEND' && (
+              <p className={textStyles.main}>
+                <span className={textStyles.userName}>{nickname}</span>님과
+                친구가 되었어요!
               </p>
-              <p className={textStyles.description}>{`"${content} "`}</p>
-            </>
+            )}
+            {type === 'FOLLOW' && (
+              <p className={textStyles.main}>
+                <span className={textStyles.userName}>{nickname}</span>님을
+                아시나요?{' '}
+                <span className={textStyles.userName}>{nickname}</span>
+                님이 나를 팔로우했어요.
+              </p>
+            )}
+            {type === 'CHEER' && (
+              <>
+                <p>
+                  {formatDateToKoreanExceptYear(recordCreatedAt as string)}{' '}
+                  기록에 <span className={textStyles.userName}>{nickname}</span>
+                  님이 응원을 남겼어요.
+                </p>
+                <p className={textStyles.description}>{`"${content} "`}</p>
+              </>
+            )}
+            <span className={textStyles.time}>
+              {convertTimeToElapsedTime(createdAt)}
+            </span>
+          </div>
+          {type === 'FOLLOW' && (
+            <Button
+              label="팔로우"
+              size="small"
+              variant="outlined"
+              buttonType="primary"
+              className={layoutStyles.button}
+            />
           )}
-          <span className={textStyles.time}>
-            {convertTimeToElapsedTime(createdAt)}
-          </span>
-        </div>
-        {type === 'FOLLOW' && (
-          <Button
-            label="팔로우"
-            size="small"
-            variant="outlined"
-            buttonType="primary"
-            className={layoutStyles.button}
-          />
-        )}
-      </li>
+        </li>
+      </Link>
     );
   },
 );

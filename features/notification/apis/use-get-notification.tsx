@@ -4,7 +4,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { NotificationElementProps, NotificationResponse } from './dto';
+import { NotificationElementProps } from '../types';
+import { NotificationResponse } from './dto';
 
 async function getNotification(cursorCreatedAt: unknown) {
   const cursorCreatedAtQuery = cursorCreatedAt
