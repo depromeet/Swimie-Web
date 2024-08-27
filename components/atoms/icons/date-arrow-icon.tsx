@@ -1,8 +1,8 @@
 export const DateLeftArrowIcon = (props?: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="5"
-      height="8"
+      width="10"
+      height="15"
       viewBox="0 0 5 8"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +20,8 @@ export const DateLeftArrowIcon = (props?: React.SVGProps<SVGSVGElement>) => {
 export const DateRightArrowIcon = (props?: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="5"
-      height="8"
+      width="10"
+      height="15"
       viewBox="0 0 5 8"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
