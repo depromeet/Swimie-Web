@@ -12,6 +12,7 @@ import {
 import { EditButton } from '@/features/record-detail/components';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
 const DynamicBackButton = dynamic(
   () => import('@/components/molecules').then(({ BackButton }) => BackButton),
   {

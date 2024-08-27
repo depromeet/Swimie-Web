@@ -1,9 +1,13 @@
 import dynamic from 'next/dynamic';
 
+import { Response } from '@/apis';
+import { fetchData } from '@/apis/fetch-data';
 import { LeftArrowIcon } from '@/components/atoms';
-import { HeaderBar, ProfileListItem } from '@/components/molecules';
+import { HeaderBar } from '@/components/molecules';
 import { type FollowTab } from '@/features/follow';
+import { MemberInfo } from '@/features/main/types';
 import { flex } from '@/styled-system/patterns';
+
 const DynamicBackButton = dynamic(
   () => import('@/components/molecules').then(({ BackButton }) => BackButton),
   {
@@ -22,31 +26,53 @@ const DynamicTabSection = dynamic(
   },
 );
 
-export default function ProfileFollow({
+const DynamicFollowingSection = dynamic(
+  () =>
+    import('@/features/follow').then(
+      ({ FollowingSection }) => FollowingSection,
+    ),
+  {
+    ssr: false,
+  },
+);
+
+const DynamicFollowerSection = dynamic(
+  () =>
+    import('@/features/follow').then(({ FollowerSection }) => FollowerSection),
+  {
+    ssr: false,
+  },
+);
+
+export default async function ProfileFollow({
+  params,
   searchParams,
 }: {
+  params: { id: string };
   searchParams: { tab: FollowTab };
 }) {
   const { tab = 'follow' } = searchParams;
+  const { data } = await fetchData<Response<MemberInfo>>(
+    `/member/${params.id}`,
+    'GET',
+  );
 
+  if (!data) return null;
   return (
     <>
       <HeaderBar>
         <HeaderBar.LeftContent>
           <DynamicBackButton />
         </HeaderBar.LeftContent>
-        <HeaderBar.Title>수영왕 정지영</HeaderBar.Title>
+        <HeaderBar.Title>{data.nickname}</HeaderBar.Title>
       </HeaderBar>
       <DynamicTabSection tab={tab} />
       <article className={containerStyle}>
-        <ProfileListItem isFollow={false} />
-        <ProfileListItem isFollow={false} />
-        <ProfileListItem isFollow={false} />
-        <ProfileListItem isFollow={true} />
-        <ProfileListItem isFollow={true} />
-        <ProfileListItem isFollow={false} />
-        <ProfileListItem isFollow={false} />
-        <ProfileListItem isFollow={false} />
+        {tab === 'follow' ? (
+          <DynamicFollowerSection id={Number(params.id)} />
+        ) : (
+          <DynamicFollowingSection id={Number(params.id)} />
+        )}
       </article>
     </>
   );
