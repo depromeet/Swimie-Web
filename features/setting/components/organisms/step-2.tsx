@@ -1,24 +1,28 @@
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms';
 import { TextArea } from '@/components/molecules';
-import { textAtom } from '@/store';
+import { withdrawalReasonAtom, withdrawalTextAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export function Step2() {
   const router = useRouter();
   const [text, setText] = useState('');
-  const setTextAtom = useSetAtom(textAtom);
+  const setWithdrawalText = useSetAtom(withdrawalTextAtom);
+
+  const [reason, setReason] = useAtom(withdrawalReasonAtom);
+
+  console.log(reason, setReason);
 
   const handleTextChange = (newText: string) => {
     setText(newText);
   };
 
   const handleGoToStep3 = () => {
-    setTextAtom(text);
+    setWithdrawalText(text);
     router.push('/delete-account?step=3');
   };
 
