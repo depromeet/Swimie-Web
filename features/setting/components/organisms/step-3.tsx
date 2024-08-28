@@ -18,6 +18,7 @@ export function Step3() {
   const setWithdrawalText = useAtomValue(withdrawalTextAtom);
   const setWithdrawalReason = useAtomValue(withdrawalReasonAtom);
 
+  // TODO: 탈퇴 api 구현중
   console.log(
     '탈퇴 사유:',
     setWithdrawalText,
@@ -33,6 +34,7 @@ export function Step3() {
     const response = await fetch(`/api/delete`, {
       method: 'DELETE',
     });
+    // TODO: 탈퇴 api 구현중
     console.log(await response.json());
   };
 

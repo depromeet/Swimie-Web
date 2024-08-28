@@ -88,7 +88,7 @@ export default function Page() {
 const containerStyles = css({
   display: 'flex',
   flexDirection: 'column',
-  minHeight: '100vh',
+  minHeight: '100dvh',
 });
 
 const versionContainerStyles = css({

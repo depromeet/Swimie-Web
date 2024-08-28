@@ -15,6 +15,7 @@ export function Step2() {
 
   const [reason, setReason] = useAtom(withdrawalReasonAtom);
 
+  // TODO: 탈퇴 api 구현중
   console.log(reason, setReason);
 
   const handleTextChange = (newText: string) => {
