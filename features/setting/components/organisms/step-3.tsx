@@ -2,7 +2,7 @@ import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/atoms';
-import { textAtom } from '@/store';
+import { withdrawalReasonAtom, withdrawalTextAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -15,32 +15,28 @@ export interface DeleteAccountProps {
 
 export function Step3() {
   const router = useRouter();
+  const setWithdrawalText = useAtomValue(withdrawalTextAtom);
+  const setWithdrawalReason = useAtomValue(withdrawalReasonAtom);
+
+  // TODO: 탈퇴 api 구현중
+  console.log(
+    '탈퇴 사유:',
+    setWithdrawalText,
+    '탈퇴 이유:',
+    setWithdrawalReason,
+  );
 
   const handleGoToSetting = () => {
     router.push('/setting');
   };
 
-  const handleGoToDeleteAccount = () => {
-    console.log('진행중입니다.');
-    // TODO: 백엔드 api 수정중
-    // try {
-    //   const response = await fetch(`/api/delete`, {
-    //     method: 'DELETE',
-    //   });
-    //   console.log(await response.json());
-    //   if (!response.ok) {
-    //     throw new Error('Failed to fetch profile data');
-    //   }
-    //   const data = (await response.json()) as DeleteAccountProps;
-
-    //   console.log(data);
-    // } catch (error) {
-    //   console.error('Error deleting account:', error);
-    // }
+  const handleGoToDeleteAccount = async () => {
+    const response = await fetch(`/api/delete`, {
+      method: 'DELETE',
+    });
+    // TODO: 탈퇴 api 구현중
+    console.log(await response.json());
   };
-
-  const textValueatom = useAtomValue(textAtom);
-  console.log('탈퇴 사유:', textValueatom);
 
   return (
     <div className={containerStyles}>
@@ -66,7 +62,7 @@ export function Step3() {
           variant="solid"
           size="large"
           className={css({ backgroundColor: 'status.negative', width: '100%' })}
-          onClick={handleGoToDeleteAccount}
+          onClick={void handleGoToDeleteAccount}
         />
       </div>
     </div>
