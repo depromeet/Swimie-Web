@@ -1,11 +1,12 @@
 'use client';
 
-import { LoadingArea, SettingIcon } from '@/components/atoms';
+import { LoadingArea } from '@/components/atoms';
 import {
   BackButton,
   GlobalNavigationBar,
   HeaderBar,
 } from '@/components/molecules';
+import { SettingButton } from '@/components/molecules';
 import { useProfileData } from '@/features/profile';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
@@ -51,11 +52,8 @@ export default function Profile({ params }: Mypage) {
       {isMyProfile ? (
         <>
           <HeaderBar>
-            <HeaderBar.RightContent
-              className={css({ right: '20px' })}
-            ></HeaderBar.RightContent>
             <HeaderBar.RightContent className={css({ right: '20px' })}>
-              {[{ component: <SettingIcon />, key: 'setting' }]}
+              {[{ component: <SettingButton />, key: 'setting' }]}
             </HeaderBar.RightContent>
           </HeaderBar>
           <MyProfile profileData={profileData} />

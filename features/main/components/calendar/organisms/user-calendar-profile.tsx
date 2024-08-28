@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai';
 
 import { Image, LoadingArea } from '@/components/atoms';
 import { useCurrentMemberInfo } from '@/hooks';
+import SwimieCharacterImage from '@/public/images/swimie-character.png';
 import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -23,10 +24,9 @@ export const UserCalendarProfile = () => {
     <>
       <div className={profileContainerStyles}>
         <Image
-          className={characterImageStyles}
-          width={70}
-          height={75}
-          src="/images/swimie-character.png"
+          width={91}
+          height={88}
+          src={SwimieCharacterImage}
           alt="swimie character"
           priority
         />
@@ -46,17 +46,11 @@ export const UserCalendarProfile = () => {
 };
 
 const profileContainerStyles = flex({
-  padding: '0px 14px',
-  gap: '4px',
+  padding: '0px 15px',
+  gap: '10px',
   alignItems: 'center',
   borderRadius: '6px',
   backgroundColor: 'primary.swim.총거리.default',
-});
-
-const characterImageStyles = css({
-  minWidth: '70px',
-  minHeight: '75px',
-  margin: '14px 10px -1px 10px',
 });
 
 const userInfoStyles = flex({

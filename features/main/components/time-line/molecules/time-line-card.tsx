@@ -93,7 +93,12 @@ const TimeLineCardBody = ({
         </div>
         {imageUrl && (
           <div className={imageWrapperStyles}>
-            <Image src={imageUrl} alt="recorded image" fill />
+            <Image
+              src={imageUrl}
+              alt="recorded image"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
           </div>
         )}
       </div>
