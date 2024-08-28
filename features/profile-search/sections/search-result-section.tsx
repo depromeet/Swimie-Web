@@ -30,6 +30,7 @@ export const SearchResultSection = ({ keyword }: { keyword: string }) => {
         data={flattenData}
         fetchNextData={fetchNextData}
         isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
       />
     </div>
   );

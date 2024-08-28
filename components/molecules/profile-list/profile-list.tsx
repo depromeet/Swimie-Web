@@ -13,13 +13,13 @@ type ProfileList = {
   data: MemberProfile[];
   fetchNextData: () => void;
   isLoading?: boolean;
-  isFetchingNextData?: boolean;
+  isFetchingNextPage?: boolean;
 };
 export const ProfileList = ({
   data,
   fetchNextData,
   isLoading,
-  isFetchingNextData,
+  isFetchingNextPage,
 }: ProfileList) => {
   const handleRangeChanged = (range: { endIndex: number }) => {
     const currentContentsLastIndex = data.length - 1;
@@ -43,7 +43,8 @@ export const ProfileList = ({
         height: '100%',
       }}
       components={{
-        Footer: () => (isFetchingNextData ? <LoadingArea /> : <></>),
+        Footer: () =>
+          isFetchingNextPage ? <LoadingArea width={30} height={30} /> : <></>,
       }}
     />
   );
