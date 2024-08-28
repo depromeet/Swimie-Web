@@ -90,6 +90,8 @@ export function ProfileEditForm() {
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
+    if (isLoading) return;
+
     const hasTextEditData = Boolean(
       data.nickname?.trim() !== profileData?.nickname.trim() ||
         data?.introduction?.trim() !== profileData?.introduction,
@@ -105,6 +107,8 @@ export function ProfileEditForm() {
         image &&
         isNaN(parseInt(profileData?.profileImageUrl)) &&
         !isNaN(parseInt(image)));
+
+    handlers.onChangeIsLoading(true);
     //사용자가 직접 선택한 사진이 있을 때
     if (imageFile) {
       const { data: presignedData } = await getProfileImagePresignedUrl(
