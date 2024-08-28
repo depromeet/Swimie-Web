@@ -23,5 +23,11 @@ export const FollowerSection = ({ id }: { id: number }) => {
   if (!flattenData.length && !isLoading) {
     return <EmptyFollowList type="follower" />;
   }
-  return <ProfileList data={flattenData} fetchNextData={fetchNextData} />;
+  return (
+    <ProfileList
+      data={flattenData}
+      fetchNextData={fetchNextData}
+      isLoading={isLoading}
+    />
+  );
 };
