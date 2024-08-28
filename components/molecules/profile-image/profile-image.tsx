@@ -1,7 +1,7 @@
 'use client';
 
 import { ImageProps } from 'next/image';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import {
   defaultProfileImages,
