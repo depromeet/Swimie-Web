@@ -58,7 +58,7 @@ export default defineConfig({
         },
         skeleton: {
           '0%': { backgroundColor: '#70737C14' },
-          '50%': { backgroundColor: '#ebebeb' },
+          '50%': { backgroundColor: '#70737C08' },
           '100%': { backgroundColor: '#70737C14' },
         },
         fadeUp: {

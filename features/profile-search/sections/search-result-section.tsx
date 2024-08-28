@@ -26,7 +26,11 @@ export const SearchResultSection = ({ keyword }: { keyword: string }) => {
     return <EmptySearchResult keyword={keyword} />;
   return (
     <div className={containerStyle}>
-      <ProfileList data={flattenData} fetchNextData={fetchNextData} />
+      <ProfileList
+        data={flattenData}
+        fetchNextData={fetchNextData}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
