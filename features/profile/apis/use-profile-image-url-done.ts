@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ProfileImageUrlDoneResponse } from './dto';
 
@@ -19,8 +19,18 @@ async function profileImageUrlDone(
   return res.json();
 }
 
-export function useProfileImageUrlDone() {
+export function useProfileImageUrlDone(id?: number) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: profileImageUrlDone,
+    onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: ['currentMember'],
+      });
+      await queryClient.refetchQueries({
+        queryKey: ['profileData', String(id)],
+      });
+    },
   });
 }
