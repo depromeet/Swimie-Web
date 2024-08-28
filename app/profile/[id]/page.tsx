@@ -31,7 +31,7 @@ export default function Profile({ params }: Mypage) {
     data: followingData,
     isLoading: isFollowingLoading,
     error: followingError,
-  } = useFollowingData(params.id, isMyProfile);
+  } = useFollowingData(Number(params.id), isMyProfile);
 
   if (profileError) {
     return <div>멤버가 존재하지 않아요.</div>;
@@ -68,7 +68,7 @@ export default function Profile({ params }: Mypage) {
           </HeaderBar>
           <OtherPage
             profileData={profileData}
-            followingInitialValue={followingData?.isFollowing || false}
+            followingInitialValue={followingData?.isFollowing[0] || false}
           />
         </>
       )}

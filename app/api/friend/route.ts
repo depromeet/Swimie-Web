@@ -12,3 +12,13 @@ export async function PUT(request: NextRequest) {
 
   return NextResponse.json(data);
 }
+
+export async function POST(request: NextRequest) {
+  const { friends } = (await request.json()) as { friends: number };
+
+  const data = await fetchData(`/friend`, 'POST', {
+    friends: [Number(friends)],
+  });
+
+  return NextResponse.json(data);
+}

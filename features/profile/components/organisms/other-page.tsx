@@ -61,7 +61,7 @@ export function OtherPage({
       </Tab>
       {selectedTab === 'record' && (
         <div className={recordContainer}>
-          <Calendar />
+          <Calendar targetId={profileData.memberId} />
         </div>
       )}
       {selectedTab === 'statistics' && (
