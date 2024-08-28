@@ -1,4 +1,5 @@
 import { Response } from '@/apis';
+import { ProfileFollowContent } from '@/features/follow';
 import { TimeLineContent } from '@/features/main';
 
 import { NewsItemWrapperProps } from '../components';
@@ -11,3 +12,10 @@ export type NewsResponse = Response<{
   cursorId: number;
   hasNext: boolean;
 }>;
+
+export interface FolowingSummaryData {
+  followings: Array<ProfileFollowContent>;
+  followingCount: number;
+}
+
+export type FollowingSummaryResponse = Response<FolowingSummaryData>;
