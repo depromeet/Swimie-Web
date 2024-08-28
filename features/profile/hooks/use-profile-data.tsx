@@ -4,13 +4,14 @@ import { ProfileProps } from '@/features/profile';
 
 import { fetchProfileData } from '../apis/fetch-profile-data';
 
-export const useProfileData = (id: number) => {
+export const useProfileData = (id?: number) => {
   return useQuery<ProfileProps['data']>({
-    queryKey: ['profileData', id],
+    queryKey: ['profileData', String(id)],
     queryFn: () =>
-      fetchProfileData(id).then((data) => {
+      fetchProfileData(Number(id)).then((data) => {
         return data.data;
       }),
     enabled: !!id,
+    staleTime: Infinity,
   });
 };

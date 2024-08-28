@@ -1,7 +1,7 @@
 import { Response } from '@/apis';
 
-export type ProfileImageUrlDoneResponse = Response<{
-  introduction: string;
+export type ProfileTextEditResponse = Response<{
   memberId: number;
   nickname: string;
+  introduction: string;
 }>;
