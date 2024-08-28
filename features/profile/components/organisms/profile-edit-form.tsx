@@ -51,7 +51,7 @@ export function ProfileEditForm() {
     if (!hasTextEditData) {
       handlers.onChangeIsLoading(false);
       toast('프로필이 수정되었어요.');
-      router.push(`/profile/${currrentMemberData?.data.id}`);
+      router.back();
     }
   };
 
@@ -59,7 +59,7 @@ export function ProfileEditForm() {
   const handleProfileTextEditSuccess = () => {
     handlers.onChangeIsLoading(false);
     toast('프로필이 수정되었어요.');
-    router.push(`/profile/${currrentMemberData?.data.id}`);
+    router.back();
   };
 
   //Todo: 에러 처리 구체화
@@ -97,6 +97,7 @@ export function ProfileEditForm() {
         data?.introduction?.trim() !== profileData?.introduction,
     );
 
+    //Todo: 코드 개선
     const checkDefaultProfileEditted =
       (profileData?.profileImageUrl &&
         image &&
