@@ -5,6 +5,7 @@ export * from './header-bar';
 export * from './infinite-scroller';
 export * from './modal';
 export * from './page-modal';
+export * from './profile-image';
 export * from './profile-list';
 export * from './record-mark';
 export * from './search-bar';
