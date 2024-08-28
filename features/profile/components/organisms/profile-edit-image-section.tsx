@@ -20,9 +20,7 @@ import { ProfileImageBottomSheet } from './profile-image-bottom-sheet';
  * @param onChangeImage 사용자가 선택한 사진 Image or 디폴트 프로필 index를 관리하는 함수
  */
 export function ProfileEditImageSection({
-  //사용자가 선택한 기본 프로필 or 사진
   image,
-  //api로 받아온 현재 프로필
   currentProfileImage,
   onChangeFile,
   onChangeImage,
