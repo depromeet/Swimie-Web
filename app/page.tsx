@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-import { SettingIcon } from '@/components/atoms';
 import {
   AlarmButton,
   GlobalNavigationBar,
   HeaderBar,
   LogoButton,
 } from '@/components/molecules';
+import { SettingButton } from '@/components/molecules/header-bar/header-bar-setting-button';
 import {
   MainTab,
   TabItemInfo,
@@ -46,7 +46,7 @@ export default function Home() {
         <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
             { component: <AlarmButton />, key: 'bell' },
-            { component: <SettingIcon />, key: 'setting' },
+            { component: <SettingButton />, key: 'setting' },
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>

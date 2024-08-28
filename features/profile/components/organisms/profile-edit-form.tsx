@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
-import { useToast } from '@/hooks';
+import { useCurrentMemberInfo, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getBlobData } from '@/utils';
@@ -15,7 +15,7 @@ import {
   useProfileImageUrlDone,
   useProfileTextEdit,
 } from '../../apis';
-import { useProfileEditForm } from '../../hooks';
+import { useProfileData, useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
 import { ProfileEditTextInfoSection } from './profile-edit-text-info-section';
 
@@ -35,6 +35,10 @@ export function ProfileEditForm() {
 
   const { imageFile, defaultProfileIndex, modifyData, handlers } =
     useProfileEditForm();
+
+  const { data: currrentMemberData } = useCurrentMemberInfo();
+  const { data: profileData } = useProfileData(currrentMemberData?.data.id);
+  console.log(profileData);
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
@@ -71,7 +75,8 @@ export function ProfileEditForm() {
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
   //Todo: 이전 프로필 정보 화면에 반영
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
-    const hasTextEditData = Boolean(data.nickname || data.introduction);
+    const hasTextEditData = Boolean(data.introduction);
+    //사용자가 직접 선택한 사진이 있을 때
     if (imageFile) {
       const { data } = await getProfileImagePresignedUrl(imageFile.name);
       await imagePresign({
@@ -86,6 +91,7 @@ export function ProfileEditForm() {
         );
       else handleProfileEditError();
     }
+    //닉네임 or 자기소개를 수정할 때
     if (hasTextEditData) {
       const profileTextEditRes = await profileTextEdit(modifyData(data));
       if (profileTextEditRes.status === 200)
@@ -109,7 +115,9 @@ export function ProfileEditForm() {
         <ProfileEditTextInfoSection
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"
-          introducePlaceholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
+          introductionPlaceholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
+          currentNickname={profileData?.nickname}
+          currentIntroduction={profileData?.introduction}
         />
         <div className={buttonStyles.layout}>
           <Button

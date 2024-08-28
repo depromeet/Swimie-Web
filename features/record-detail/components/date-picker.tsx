@@ -22,13 +22,13 @@ export const DatePicker = ({
   return (
     <div className={containerStyle}>
       {onClickPrevious && (
-        <button onClick={onClickPrevious}>
+        <button onClick={onClickPrevious} className={buttonStyle}>
           <DateLeftArrowIcon />
         </button>
       )}
       <p className={textStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
       {onClickNext && (
-        <button onClick={onClickNext}>
+        <button onClick={onClickNext} className={buttonStyle}>
           <DateRightArrowIcon />
         </button>
       )}
@@ -37,12 +37,20 @@ export const DatePicker = ({
 };
 
 const containerStyle = flex({
-  gap: '4px',
+  gap: '5px',
   align: 'center',
 });
 
 const textStyle = css({
-  textStyle: 'label1.normal',
+  textStyle: 'body2.normal',
   fontWeight: 'medium',
   color: 'text.alternative',
+});
+
+const buttonStyle = flex({
+  width: '20px',
+  height: '20px',
+  justify: 'center',
+  align: 'center',
+  cursor: 'pointer',
 });

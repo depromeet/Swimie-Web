@@ -48,7 +48,7 @@ export default function Page() {
     <div>
       <HeaderBar>
         <HeaderBar.LeftContent>
-          <BackButton onClickBack={() => router.push('/')} />
+          <BackButton onClickBack={() => router.back()} />
         </HeaderBar.LeftContent>
         <HeaderBar.Title>설정</HeaderBar.Title>
       </HeaderBar>

@@ -1,13 +1,14 @@
-/* eslint-disable */
+import { Fragment } from 'react';
+
+import { SwimmerIcon } from '@/components/atoms';
+import { InfiniteScroller } from '@/components/molecules';
+import { TimeLineContent, useTimeLineData } from '@/features/main';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { TimeLineCard } from '../molecules';
 import { formatDateToKorean, getFormatDate } from '@/utils';
-import { Fragment } from 'react';
+
 import { CardWrapper } from '../atoms';
-import { InfiniteScroller } from '@/components/molecules';
-import { SwimmerIcon } from '@/components/atoms';
-import { TimeLineContent, useTimeLineData } from '@/features/main';
+import { TimeLineCard } from '../molecules';
 
 interface GroupedTimelineContents {
   date: string;
@@ -38,7 +39,7 @@ export const TimeLine = () => {
       ) : (
         <InfiniteScroller
           isLastPage={!hasNextPage}
-          onIntersect={() => fetchNextPage()}
+          onIntersect={() => void fetchNextPage()}
         >
           <ol className={listStyles}>
             {groupedContents.map(({ date, contents }, groupIndex) => (

@@ -7,6 +7,7 @@ import { CheerPreview } from '../types';
 type CheerModalItem = {
   isMyMemory: boolean;
   onClickRemove?: () => void;
+  onClickProfile?: () => void;
 } & CheerPreview;
 
 export const CheerModalItem = ({
@@ -16,10 +17,11 @@ export const CheerModalItem = ({
   comment,
   isMyMemory,
   onClickRemove,
+  onClickProfile,
 }: CheerModalItem) => {
   return (
     <div className={containerStyle}>
-      <div className={profile.wrapperStyle}>
+      <button className={profile.wrapperStyle} onClick={onClickProfile}>
         <div className={profile.imageStyle}>
           <Image
             src={profileImageUrl ?? ''}
@@ -30,7 +32,7 @@ export const CheerModalItem = ({
           />
         </div>
         <h3 className={profile.nickNameStyle}>{nickname}</h3>
-      </div>
+      </button>
       <div className={contentWrapperStyle}>
         <div className={commentStyle}>
           <span>{emoji}</span>
@@ -58,9 +60,12 @@ const profile = {
   wrapperStyle: flex({
     alignItems: 'center',
     gap: '6px',
+    width: 'fit-content',
+    cursor: 'pointer',
   }),
 
-  imageStyle: css({
+  imageStyle: flex({
+    justify: 'center',
     rounded: 'full',
     w: '16px',
     h: '16px',
@@ -90,4 +95,5 @@ const removeButtonStyle = css({
   textStyle: 'label1.normal',
   fontWeight: 'regular',
   color: 'text.alternative',
+  cursor: 'pointer',
 });

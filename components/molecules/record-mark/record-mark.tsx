@@ -14,10 +14,8 @@ interface RecordMarkProps {
   totalDistance?: number;
   strokes?: Array<StrokeInfo>;
   renderType?: 'calendar' | 'detail';
+  goal: number | undefined;
 }
-
-// TODO: 로그인 이후 저장된 유저의 목표 거리로 수정 필요
-const goal = 1000;
 
 export const RecordMark = ({
   type,
@@ -25,6 +23,7 @@ export const RecordMark = ({
   totalDistance,
   strokes,
   renderType = 'calendar',
+  goal,
 }: RecordMarkProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [contentSize, setContentSize] = useState<{
@@ -36,7 +35,7 @@ export const RecordMark = ({
   });
 
   const waves: Array<{ color: string; waveHeight: number }> = [];
-  if (strokes) {
+  if (strokes && goal) {
     strokes.forEach(({ name, meter }) => {
       const color = getSwimColor(name);
       waves.push({ color, waveHeight: meter / goal });
@@ -68,7 +67,7 @@ export const RecordMark = ({
           />
         ) : (
           <div className={layoutStyles({ renderType })}>
-            {totalDistance && (
+            {totalDistance && goal && (
               <Waves
                 width={contentSize.width}
                 height={contentSize.height}

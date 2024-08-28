@@ -62,7 +62,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
 
         {/* 파도 svg */}
         <div className={wavesStyle}>
-          {strokes?.length ? (
+          {strokes?.length && member?.goal ? (
             <RecordMark
               isAchieved={Boolean(
                 member?.goal && totalMeter && totalMeter > member?.goal,
@@ -71,6 +71,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
               totalDistance={totalMeter}
               type={type}
               renderType="detail"
+              goal={member.goal}
             />
           ) : (
             <Image
@@ -152,7 +153,7 @@ const goalText = css({
   bottom: '8px',
   textStyle: 'label2.normal',
   fontWeight: 'medium',
-  color: 'line.solid.neutral',
+  color: 'white',
 });
 
 const graphArea = {

@@ -1,43 +1,55 @@
+import Link from 'next/link';
+
 import { Button, Image } from '@/components/atoms';
+import { ProfileFollowContent } from '@/features/follow';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 type FollowListItem = {
-  // TODO: Profile type 수정 (required)
-  profile?: {
-    id: string;
-    nickname: string;
-    summary: string;
-  };
   isFollow: boolean;
   onClick?: () => void;
   onClickFollow?: () => void;
-};
-export const ProfileListItem = ({ isFollow }: FollowListItem) => {
+} & ProfileFollowContent;
+export const ProfileListItem = ({
+  memberId,
+  name,
+  introduction,
+  profileImageUrl,
+  isFollow,
+}: FollowListItem) => {
   return (
     <div className={containerStyle}>
-      <div className={profileImageStyle}>
-        <Image
-          src={''}
-          alt="profile image"
-          width={40}
-          height={40}
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
-      <div className={text.wrapperStyle}>
-        <h1 className={text.nicknameStyle}>수영왕 정지영</h1>
-        <p className={text.summaryStyle}>맞팔/좋아요/좋아요반사</p>
-      </div>
+      <Link href={`/profile/${memberId}`} className={linkStyle}>
+        <div className={profileImageStyle}>
+          <Image
+            src={profileImageUrl}
+            alt="profile image"
+            width={40}
+            height={40}
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+        <div className={text.wrapperStyle}>
+          <h1 className={text.nicknameStyle}>{name}</h1>
+          <p className={text.summaryStyle}>{introduction}</p>
+        </div>
+      </Link>
+
       {isFollow ? (
         <Button
           size="small"
           label="팔로잉"
           variant="outlined"
           buttonType="assistive"
+          className={followButtonStyle}
         />
       ) : (
-        <Button size="small" label="팔로우" variant="outlined" />
+        <Button
+          size="small"
+          label="팔로우"
+          variant="outlined"
+          className={followButtonStyle}
+        />
       )}
     </div>
   );
@@ -53,9 +65,19 @@ const containerStyle = flex({
 const profileImageStyle = flex({
   width: '40px',
   height: '40px',
-  align: 'center',
+  align: 'stretch',
   rounded: 'full',
   overflow: 'hidden',
+});
+
+const linkStyle = flex({
+  gap: '16px',
+  align: 'center',
+  width: '100%',
+});
+
+const followButtonStyle = css({
+  flexShrink: 0,
 });
 
 const text = {
