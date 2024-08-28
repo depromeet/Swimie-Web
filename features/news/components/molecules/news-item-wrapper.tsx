@@ -11,7 +11,7 @@ export interface NewsItemWrapperProps {
   memberId: number;
   isRecentNews: boolean;
   profileUrl?: string;
-  memberNickName: string;
+  memberNickname: string;
   recordAt: string;
   createdAt: string;
   isLast?: boolean;
@@ -20,7 +20,7 @@ export interface NewsItemWrapperProps {
 export const NewsItemWrapper = ({
   isRecentNews,
   profileUrl,
-  memberNickName,
+  memberNickname,
   recordAt,
   createdAt,
   isLast,
@@ -40,7 +40,7 @@ export const NewsItemWrapper = ({
         </div>
         <div>
           <p className={descriptionStyles}>
-            <span className={nameStyle}>{memberNickName}</span>님이{' '}
+            <span className={nameStyle}>{memberNickname}</span>님이{' '}
             {`${month}월 ${day}일`}의 수영을 기록했어요.
           </p>
           <p className={postTimeStyles}>
