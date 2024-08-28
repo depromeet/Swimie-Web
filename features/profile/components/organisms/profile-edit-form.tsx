@@ -33,7 +33,7 @@ export function ProfileEditForm() {
   });
   const { toast } = useToast();
 
-  const { image, imageFile, handlers } = useProfileEditForm();
+  const { isLoading, image, imageFile, handlers } = useProfileEditForm();
 
   const { data: currrentMemberData } = useCurrentMemberInfo();
   const { data: profileData } = useProfileData(currrentMemberData?.data.id);
@@ -164,6 +164,7 @@ export function ProfileEditForm() {
         />
         <div className={buttonStyles.layout}>
           <Button
+            isLoading={isLoading}
             buttonType="primary"
             variant="solid"
             label="저장하기"
