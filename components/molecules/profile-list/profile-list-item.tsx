@@ -1,18 +1,18 @@
 import Link from 'next/link';
 
 import { Button, Image } from '@/components/atoms';
-import { ProfileFollowContent } from '@/features/follow';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { MemberProfile } from '@/types';
 
 type FollowListItem = {
   isFollow: boolean;
   onClick?: () => void;
   onClickFollow?: () => void;
-} & ProfileFollowContent;
+} & MemberProfile;
 export const ProfileListItem = ({
   memberId,
-  name,
+  nickname,
   introduction,
   profileImageUrl,
   isFollow,
@@ -22,7 +22,7 @@ export const ProfileListItem = ({
       <Link href={`/profile/${memberId}`} className={linkStyle}>
         <div className={profileImageStyle}>
           <Image
-            src={profileImageUrl}
+            src={profileImageUrl ?? ''}
             alt="profile image"
             width={40}
             height={40}
@@ -30,8 +30,8 @@ export const ProfileListItem = ({
           />
         </div>
         <div className={text.wrapperStyle}>
-          <h1 className={text.nicknameStyle}>{name}</h1>
-          <p className={text.summaryStyle}>{introduction}</p>
+          <h1 className={text.nicknameStyle}>{nickname}</h1>
+          {introduction && <p className={text.summaryStyle}>{introduction}</p>}
         </div>
       </Link>
 

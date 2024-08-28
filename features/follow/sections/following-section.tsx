@@ -1,7 +1,8 @@
 'use client';
 
+import { ProfileList } from '@/components/molecules';
+
 import { useFollowingList } from '../apis';
-import { FollowVirtualList } from '../components';
 
 export const FollowingSection = ({ id }: { id: number }) => {
   const { flattenData, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -13,5 +14,5 @@ export const FollowingSection = ({ id }: { id: number }) => {
     }
   };
 
-  return <FollowVirtualList data={flattenData} fetchNextData={fetchNextData} />;
+  return <ProfileList data={flattenData} fetchNextData={fetchNextData} />;
 };
