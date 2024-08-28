@@ -3,10 +3,16 @@
 import { ProfileList } from '@/components/molecules';
 
 import { useFollowerList } from '../apis';
+import { EmptyFollowList } from '../components';
 
 export const FollowerSection = ({ id }: { id: number }) => {
-  const { flattenData, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFollowerList(id);
+  const {
+    flattenData,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useFollowerList(id);
 
   const fetchNextData = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -14,5 +20,8 @@ export const FollowerSection = ({ id }: { id: number }) => {
     }
   };
 
+  if (!flattenData.length && !isFetching) {
+    return <EmptyFollowList type="follower" />;
+  }
   return <ProfileList data={flattenData} fetchNextData={fetchNextData} />;
 };
