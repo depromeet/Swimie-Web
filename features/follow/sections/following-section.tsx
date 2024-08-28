@@ -28,6 +28,7 @@ export const FollowingSection = ({ id }: { id: number }) => {
       data={flattenData}
       fetchNextData={fetchNextData}
       isLoading={isLoading}
+      isFetchingNextPage={isFetchingNextPage}
     />
   );
 };
