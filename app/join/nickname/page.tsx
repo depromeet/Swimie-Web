@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client';
 
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
@@ -28,7 +28,7 @@ export interface NicknameResponse {
 
 export default function JoinPage() {
   const router = useRouter();
-  const authInfo = useAtomValue(AuthInfoAtom);
+  const [authInfo, setAuthInfo] = useAtom(AuthInfoAtom);
 
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -62,6 +62,7 @@ export default function JoinPage() {
       const responseData = (await response.json()) as NicknameResponse;
 
       if (responseData.status === 200) {
+        setAuthInfo((prev) => ({ ...prev, nickname: trimmedNickname }));
         router.push('/join/gender');
       } else {
         console.error('Unexpected response status:', responseData.status);
@@ -73,9 +74,11 @@ export default function JoinPage() {
 
   return (
     <div>
-      <HeaderBar.LeftContent>
-        <BackButton />
-      </HeaderBar.LeftContent>
+      <HeaderBar>
+        <HeaderBar.LeftContent>
+          <BackButton />
+        </HeaderBar.LeftContent>
+      </HeaderBar>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={flex({
