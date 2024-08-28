@@ -16,7 +16,7 @@ export const FollowTabSection = ({ tab }: FollowTabSection) => {
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.set('tab', tab);
 
-    router.push(currentUrl.toString());
+    router.replace(currentUrl.toString());
   };
 
   return (
