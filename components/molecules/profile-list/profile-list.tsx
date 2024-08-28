@@ -1,18 +1,17 @@
+'use client';
+
 import React from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
-import { ProfileListItem } from '@/components/molecules';
+import { MemberProfile } from '@/types';
 
-import { ProfileFollowContent } from '../types';
+import { ProfileListItem } from './profile-list-item';
 
-type FollowVirtualList = {
-  data: ProfileFollowContent[];
+type ProfileList = {
+  data: MemberProfile[];
   fetchNextData: () => void;
 };
-export const FollowVirtualList = ({
-  data,
-  fetchNextData,
-}: FollowVirtualList) => {
+export const ProfileList = ({ data, fetchNextData }: ProfileList) => {
   const handleRangeChanged = (range: { endIndex: number }) => {
     const currentContentsLastIndex = data.length - 1;
     if (range.endIndex >= currentContentsLastIndex - 3) {
