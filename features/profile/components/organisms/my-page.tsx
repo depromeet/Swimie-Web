@@ -18,6 +18,7 @@ export function MyProfile({
 }: {
   profileData: ProfileProps['data'];
 }) {
+  console.log(profileData);
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
 
   return (
