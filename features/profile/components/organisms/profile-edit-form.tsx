@@ -165,8 +165,8 @@ export function ProfileEditForm() {
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"
           introductionPlaceholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
-          currentNickname={profileData.nickname.trim()}
-          currentIntroduction={profileData.introduction.trim()}
+          currentNickname={profileData?.nickname.trim()}
+          currentIntroduction={profileData?.introduction.trim()}
         />
         <div className={buttonStyles.layout}>
           <Button
