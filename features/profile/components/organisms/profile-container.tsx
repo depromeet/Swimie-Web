@@ -1,10 +1,8 @@
-import { Image } from '@/components/atoms';
-import { ProfileIndexType } from '@/public/images/default-profile';
+import { ProfileImage } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { ProfileProps } from '../../types/profile';
-import { DefaultProfile } from '../atoms';
 
 export function ProfileContainer({
   profileData,
@@ -14,24 +12,15 @@ export function ProfileContainer({
   return (
     <>
       <div className={inforWrapper}>
-        {isNaN(parseInt(profileData.profileImageUrl)) ? (
-          <Image
-            alt="프로필 사진"
+        <div className={imageLayoutStyles}>
+          <ProfileImage
+            alt="profile image"
             src={profileData.profileImageUrl}
-            width={60}
-            height={60}
-            className={css({
-              borderRadius: 'full',
-              objectFit: 'cover',
-            })}
+            fill
+            sizes="10vw"
+            className={css({ borderRadius: 'full', objectFit: 'cover' })}
           />
-        ) : (
-          <DefaultProfile
-            defaultprofileIndex={
-              parseInt(profileData.profileImageUrl) as ProfileIndexType
-            }
-          />
-        )}
+        </div>
         <div>
           <div className={nameStyles}>{profileData.nickname}</div>
           <div className={introStyles}>{profileData.introduction}</div>
@@ -50,6 +39,12 @@ export function ProfileContainer({
     </>
   );
 }
+
+const imageLayoutStyles = css({
+  width: '60px',
+  height: '60px',
+  position: 'relative',
+});
 
 const inforWrapper = flex({
   alignItems: 'flex-start',

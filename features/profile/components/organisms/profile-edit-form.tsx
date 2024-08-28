@@ -87,15 +87,24 @@ export function ProfileEditForm() {
     return modifiedData;
   };
 
-  //Todo: 기본 프로필 api 처리
   //Todo: 에러 처리
   //Todo: 헤더의 저장버튼 클릭 시에도 수정 로직 수행
-  //Todo: 이전 프로필 정보 화면에 반영
   const onSubmit: SubmitHandler<ProfileEditFormProps> = async (data) => {
     const hasTextEditData = Boolean(
       data.nickname?.trim() !== profileData?.nickname.trim() ||
         data?.introduction?.trim() !== profileData?.introduction,
     );
+
+    const checkDefaultProfileEditted =
+      (profileData?.profileImageUrl &&
+        image &&
+        !isNaN(parseInt(profileData?.profileImageUrl)) &&
+        !isNaN(parseInt(image)) &&
+        parseInt(profileData?.profileImageUrl) !== parseInt(image)) ||
+      (profileData?.profileImageUrl &&
+        image &&
+        isNaN(parseInt(profileData?.profileImageUrl)) &&
+        !isNaN(parseInt(image)));
     //사용자가 직접 선택한 사진이 있을 때
     if (imageFile) {
       const { data: presignedData } = await getProfileImagePresignedUrl(
@@ -113,17 +122,7 @@ export function ProfileEditForm() {
       else handleProfileEditError();
     }
     //디폴트 프로필로 수정했을 때
-    else if (
-      (profileData?.profileImageUrl &&
-        image &&
-        !isNaN(parseInt(profileData?.profileImageUrl)) &&
-        !isNaN(parseInt(image)) &&
-        parseInt(profileData?.profileImageUrl) !== parseInt(image)) ||
-      (profileData?.profileImageUrl &&
-        image &&
-        isNaN(parseInt(profileData?.profileImageUrl)) &&
-        !isNaN(parseInt(image)))
-    ) {
+    else if (checkDefaultProfileEditted) {
       const profileImageUrlDoneRes = await profileImageUrlDone(image);
       if (profileImageUrlDoneRes.status === 200)
         handleProfileImageEditSuccess(hasTextEditData);

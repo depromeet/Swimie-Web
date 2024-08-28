@@ -73,6 +73,15 @@ export function ProfileImageBottomSheet({
     >
       <div className={layoutStyles.selectedImage}>
         <div className={imageStyes.selected}>
+          {!image && currentProfileImage && (
+            <ProfileImage
+              src={currentProfileImage}
+              alt="프로필 이미지"
+              fill
+              sizes="40vw"
+              className={css({ borderRadius: 'full', objectFit: 'cover' })}
+            />
+          )}
           {image && isNaN(parseInt(image)) && (
             <ProfileImage
               src={image}
@@ -86,15 +95,6 @@ export function ProfileImageBottomSheet({
             <DefaultProfile
               size="big"
               defaultprofileIndex={Number(image) as ProfileIndexType}
-            />
-          )}
-          {!image && currentProfileImage && (
-            <ProfileImage
-              src={currentProfileImage}
-              alt="프로필 이미지"
-              fill
-              sizes="40vw"
-              className={css({ borderRadius: 'full', objectFit: 'cover' })}
             />
           )}
         </div>
