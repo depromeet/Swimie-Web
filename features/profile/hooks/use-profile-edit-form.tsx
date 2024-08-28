@@ -22,24 +22,10 @@ export function useProfileEditForm() {
     setDefaultProfileIndex(index);
   };
 
-  const modifyData = (data: { nickname?: string; introduction?: string }) => {
-    const filteredData = Object.entries(data)
-      .filter(([, value]) => value !== '')
-      .reduce(
-        (acc, [key, value]) => {
-          return { ...acc, [key]: value };
-        },
-        {} as Partial<{ nickname?: string; introduction?: string }>,
-      );
-
-    return filteredData;
-  };
-
   return {
     isLoading,
     imageFile,
     defaultProfileIndex,
-    modifyData,
     handlers: {
       onChangeIsLoading,
       onChangeImageFile,

@@ -23,7 +23,6 @@ export function ProfileEditTextInfoSection({
   currentIntroduction,
 }: ProfileEditTextInfoSectionProps) {
   const { register, control, setValue } = useFormContext();
-
   useEffect(() => {
     if (currentNickname) setValue('nickname', currentNickname);
     if (currentIntroduction) setValue('introduction', currentIntroduction);
