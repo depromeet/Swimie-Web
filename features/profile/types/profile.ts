@@ -8,5 +8,6 @@ export interface ProfileProps {
     followerCount: number;
     followingCount: number;
     introduction: string;
+    profileImageUrl: string;
   };
 }

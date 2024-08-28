@@ -33,34 +33,33 @@ export function ProfileEditForm() {
   });
   const { toast } = useToast();
 
-  const { imageFile, defaultProfileIndex, handlers } = useProfileEditForm();
+  const { image, imageFile, handlers } = useProfileEditForm();
 
   const { data: currrentMemberData } = useCurrentMemberInfo();
   const { data: profileData } = useProfileData(currrentMemberData?.data.id);
   const { mutateAsync: getProfileImagePresignedUrl } =
     useGetProfileImagePresignedUrl();
   const { mutateAsync: imagePresign } = useImagePresignUrl();
-  const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone();
+  const { mutateAsync: profileImageUrlDone } = useProfileImageUrlDone(
+    currrentMemberData?.data.id,
+  );
   const { mutateAsync: profileTextEdit } = useProfileTextEdit(
     currrentMemberData?.data.id,
   );
 
-  const handleProfileImageEditSuccess = (
-    hasTextEditData: boolean,
-    memberId: number,
-  ) => {
+  const handleProfileImageEditSuccess = (hasTextEditData: boolean) => {
     if (!hasTextEditData) {
       handlers.onChangeIsLoading(false);
       toast('프로필이 수정되었어요.');
-      router.push(`/profile/${memberId}`);
+      router.push(`/profile/${currrentMemberData?.data.id}`);
     }
   };
 
   //Todo: 성공 처리 구체화
-  const handleProfileTextEditSuccess = (memberId: number) => {
+  const handleProfileTextEditSuccess = () => {
     handlers.onChangeIsLoading(false);
     toast('프로필이 수정되었어요.');
-    router.push(`/profile/${memberId}`);
+    router.push(`/profile/${currrentMemberData?.data.id}`);
   };
 
   //Todo: 에러 처리 구체화
@@ -99,29 +98,46 @@ export function ProfileEditForm() {
     );
     //사용자가 직접 선택한 사진이 있을 때
     if (imageFile) {
-      const { data } = await getProfileImagePresignedUrl(imageFile.name);
+      const { data: presignedData } = await getProfileImagePresignedUrl(
+        imageFile.name,
+      );
       await imagePresign({
-        presignedUrl: data.presignedUrl,
+        presignedUrl: presignedData.presignedUrl,
         file: getBlobData(imageFile),
       });
-      const profileImageUrlDoneRes = await profileImageUrlDone(data.imageName);
+      const profileImageUrlDoneRes = await profileImageUrlDone(
+        presignedData.imageName,
+      );
       if (profileImageUrlDoneRes.status === 200)
-        handleProfileImageEditSuccess(
-          hasTextEditData,
-          profileImageUrlDoneRes.data.memberId,
-        );
+        handleProfileImageEditSuccess(hasTextEditData);
       else handleProfileEditError();
     }
-    //닉네임 or 자기소개를 수정할 때
+    //디폴트 프로필로 수정했을 때
+    else if (
+      (profileData?.profileImageUrl &&
+        image &&
+        !isNaN(parseInt(profileData?.profileImageUrl)) &&
+        !isNaN(parseInt(image)) &&
+        parseInt(profileData?.profileImageUrl) !== parseInt(image)) ||
+      (profileData?.profileImageUrl &&
+        image &&
+        isNaN(parseInt(profileData?.profileImageUrl)) &&
+        !isNaN(parseInt(image)))
+    ) {
+      const profileImageUrlDoneRes = await profileImageUrlDone(image);
+      if (profileImageUrlDoneRes.status === 200)
+        handleProfileImageEditSuccess(hasTextEditData);
+      else handleProfileEditError();
+    }
     if (hasTextEditData) {
+      //닉네임 or 자기소개를 수정할 때
       //닉네임이 비었을 때
       if (data.nickname === '') handleProfileNicknameBlank();
       else {
         const profileTextEditRes = await profileTextEdit(
           extractModifiedData(data),
         );
-        if (profileTextEditRes.status === 200)
-          handleProfileTextEditSuccess(profileTextEditRes.data.memberId);
+        if (profileTextEditRes.status === 200) handleProfileTextEditSuccess();
         else handleProfileEditError();
       }
     }
@@ -129,16 +145,17 @@ export function ProfileEditForm() {
 
   return (
     <FormProvider {...methods}>
+      <ProfileEditImageSection
+        image={image}
+        currentProfileImage={profileData?.profileImageUrl}
+        onChangeImage={handlers.onChangeImage}
+        onChangeFile={handlers.onChangeImageFile}
+      />
       <form
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={methods.handleSubmit(onSubmit)}
         className={layoutStyles.form}
       >
-        <ProfileEditImageSection
-          defaultProfileIndex={defaultProfileIndex}
-          onChangeDefaultProfileIndex={handlers.onChangeDefaultProfileIndex}
-          onChangeFile={handlers.onChangeImageFile}
-        />
         <ProfileEditTextInfoSection
           nickNameLabel="닉네임"
           nickNameSubText="14자까지 입력할 수 있어요"

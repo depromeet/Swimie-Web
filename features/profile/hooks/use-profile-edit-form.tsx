@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 
-import { ProfileIndexType } from '@/public/images/default-profile';
-
 export function useProfileEditForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState<string>();
   const [imageFile, setImageFile] = useState<File>();
-  const [defaultProfileIndex, setDefaultProfileIndex] =
-    useState<ProfileIndexType>(0);
+
+  const onChangeImage = (image: string) => {
+    setImage(image);
+  };
 
   const onChangeImageFile = (file?: File) => {
     setImageFile(file);
@@ -18,18 +19,14 @@ export function useProfileEditForm() {
     setIsLoading(isLoading);
   };
 
-  const onChangeDefaultProfileIndex = (index: ProfileIndexType) => {
-    setDefaultProfileIndex(index);
-  };
-
   return {
     isLoading,
+    image,
     imageFile,
-    defaultProfileIndex,
     handlers: {
       onChangeIsLoading,
+      onChangeImage,
       onChangeImageFile,
-      onChangeDefaultProfileIndex,
     },
   };
 }

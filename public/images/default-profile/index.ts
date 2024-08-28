@@ -5,12 +5,12 @@ import GreenHat from './green-hat.png';
 import OrangeHat from './orange-hat.png';
 import YellowHat from './yellow-hat.png';
 
-export type ProfileIndexType = 0 | 1 | 2 | 3;
+export type ProfileIndexType = 1 | 2 | 3 | 4;
 export const defaultProfileImages: {
   [key in ProfileIndexType]: StaticImageData;
 } = {
-  0: BlueHat,
-  1: OrangeHat,
-  2: GreenHat,
-  3: YellowHat,
+  1: BlueHat,
+  2: OrangeHat,
+  3: GreenHat,
+  4: YellowHat,
 } as const;
