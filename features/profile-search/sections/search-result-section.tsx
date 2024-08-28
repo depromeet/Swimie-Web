@@ -12,7 +12,7 @@ export const SearchResultSection = ({ keyword }: { keyword: string }) => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
+    isLoading,
   } = useProfileSearch(keyword);
 
   const fetchNextData = () => {
@@ -22,7 +22,7 @@ export const SearchResultSection = ({ keyword }: { keyword: string }) => {
   };
 
   if (!keyword.length) return <EmptyKeyword />;
-  if (flattenData.length === 0 && !isFetching)
+  if (flattenData.length === 0 && !isLoading)
     return <EmptySearchResult keyword={keyword} />;
   return (
     <div className={containerStyle}>

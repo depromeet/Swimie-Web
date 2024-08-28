@@ -11,7 +11,7 @@ export const FollowerSection = ({ id }: { id: number }) => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
+    isLoading,
   } = useFollowerList(id);
 
   const fetchNextData = () => {
@@ -20,7 +20,7 @@ export const FollowerSection = ({ id }: { id: number }) => {
     }
   };
 
-  if (!flattenData.length && !isFetching) {
+  if (!flattenData.length && !isLoading) {
     return <EmptyFollowList type="follower" />;
   }
   return <ProfileList data={flattenData} fetchNextData={fetchNextData} />;
