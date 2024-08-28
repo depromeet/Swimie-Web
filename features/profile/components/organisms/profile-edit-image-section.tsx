@@ -30,9 +30,9 @@ export function ProfileEditImageSection({
     <>
       <section className={layoutStyles.imageEdit}>
         <div className={layoutStyles.imageEditIcon}>
-          {!image && currentProfileImage && (
+          {!image && (
             <ProfileImage
-              src={currentProfileImage}
+              src={currentProfileImage ? currentProfileImage : '1'}
               alt="프로필 이미지"
               fill
               sizes="40vw"
