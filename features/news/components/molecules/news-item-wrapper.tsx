@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 
 import { DefaultProfileIcon, Image } from '@/components/atoms';
@@ -18,6 +19,7 @@ export interface NewsItemWrapperProps {
 }
 
 export const NewsItemWrapper = ({
+  memberId,
   isRecentNews,
   profileUrl,
   memberNickname,
@@ -30,14 +32,17 @@ export const NewsItemWrapper = ({
   return (
     <li className={cx(containerStyles, isLast ? emptyStyle : lastItemStyles)}>
       <div className={userInfoStyles}>
-        <div className={userProfileImageWrapperStyles}>
+        <Link
+          href={`/profile/${memberId}`}
+          className={userProfileImageWrapperStyles}
+        >
           {isRecentNews && <div className={newMarkStyles} />}
           {profileUrl ? (
             <Image src={profileUrl} alt="user profile image" />
           ) : (
             <DefaultProfileIcon width={40} height={40} />
           )}
-        </div>
+        </Link>
         <div>
           <p className={descriptionStyles}>
             <span className={nameStyle}>{memberNickname}</span>님이{' '}
