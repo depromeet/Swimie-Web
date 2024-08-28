@@ -33,7 +33,7 @@ export default function Page() {
     if (data.data.goal !== selectedDistance) {
       openSaveModal();
     } else {
-      router.push('/setting');
+      router.replace('/setting');
     }
   };
 
