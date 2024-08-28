@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/atoms';
-import LoginSuccessCharacter from '@/public/images/login-success-character.png';
+import LoginSuccessCharacter from '@/public/images/login/login-success-character.png';
 import { AuthInfoAtom } from '@/store/auth';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
