@@ -51,7 +51,7 @@ export default async function ProfileFollow({
   params: { id: string };
   searchParams: { tab: FollowTab };
 }) {
-  const { tab = 'follow' } = searchParams;
+  const { tab = 'follower' } = searchParams;
   const { data } = await fetchData<Response<MemberInfo>>(
     `/member/${params.id}`,
     'GET',
@@ -68,7 +68,7 @@ export default async function ProfileFollow({
       </HeaderBar>
       <DynamicTabSection tab={tab} />
       <article className={containerStyle}>
-        {tab === 'follow' ? (
+        {tab === 'follower' ? (
           <DynamicFollowerSection id={Number(params.id)} />
         ) : (
           <DynamicFollowingSection id={Number(params.id)} />

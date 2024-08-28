@@ -23,8 +23,8 @@ export const FollowTabSection = ({ tab }: FollowTabSection) => {
     <Tab>
       <TabItem
         text="팔로워"
-        selected={tab === 'follow'}
-        onClick={() => handleClickTab('follow')}
+        selected={tab === 'follower'}
+        onClick={() => handleClickTab('follower')}
       />
       <TabItem
         text="팔로잉"

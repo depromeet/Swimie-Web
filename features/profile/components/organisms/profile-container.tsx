@@ -1,4 +1,6 @@
 import { ProfileImage } from '@/components/molecules';
+import Link from 'next/link';
+
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -27,14 +29,20 @@ export function ProfileContainer({
         </div>
       </div>
       <div className={friendStyles.container}>
-        <div className={friendStyles.item}>
+        <Link
+          className={friendStyles.item}
+          href={`${profileData.memberId}/follow?tab=follower`}
+        >
           <div className={friendStyles.type}>팔로워</div>
           <div className={friendStyles.count}>{profileData.followerCount}</div>
-        </div>
-        <div className={friendStyles.item}>
+        </Link>
+        <Link
+          className={friendStyles.item}
+          href={`${profileData.memberId}/follow?tab=following`}
+        >
           <div className={friendStyles.type}>팔로잉</div>
           <div className={friendStyles.count}>{profileData.followingCount}</div>
-        </div>
+        </Link>
       </div>
     </>
   );
