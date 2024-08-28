@@ -64,7 +64,8 @@ const profile = {
     cursor: 'pointer',
   }),
 
-  imageStyle: css({
+  imageStyle: flex({
+    justify: 'center',
     rounded: 'full',
     w: '16px',
     h: '16px',

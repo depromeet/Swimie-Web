@@ -85,7 +85,7 @@ export function PhotoSection({ title, defaultImage }: PhotoSectionProps) {
             alt="오늘의 사진"
             fill
             sizes="100vw"
-            className={css({ borderRadius: '10px' })}
+            className={css({ borderRadius: '10px', objectFit: 'cover' })}
           />
           <DeletePhotoIcon
             className={css({
