@@ -15,9 +15,9 @@ import { flex } from '@/styled-system/patterns';
 import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
 
-export const Calendar = () => {
+export const Calendar = ({ targetId }: { targetId: number }) => {
   const setSwimCount = useSetAtom(calendarSwimCountAtom);
-  const { data, isFetching } = useCalendarData();
+  const { data, isFetching } = useCalendarData(targetId);
   const [squares, startPoint, endPoint, isDateToday] =
     useCalendarRendaringData();
   let memoryIndex = 0;
