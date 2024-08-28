@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
-import { Button, Image } from '@/components/atoms';
+import { Button } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { MemberProfile } from '@/types';
+
+import { ProfileImage } from '../profile-image';
 
 type FollowListItem = {
   isFollow: boolean;
@@ -21,7 +23,7 @@ export const ProfileListItem = ({
     <div className={containerStyle}>
       <Link href={`/profile/${memberId}`} className={linkStyle}>
         <div className={profileImageStyle}>
-          <Image
+          <ProfileImage
             src={profileImageUrl ?? ''}
             alt="profile image"
             width={40}
