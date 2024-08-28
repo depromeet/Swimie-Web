@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { DefaultProfileIcon, Image, PersonsIcon } from '@/components/atoms';
+import { DefaultProfileIcon, PersonsIcon } from '@/components/atoms';
+import { ProfileImage } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -30,11 +31,14 @@ export const FollowingListLinkButton = () => {
         )}
       >
         {profileImageUrl ? (
-          <Image
+          <ProfileImage
             src={profileImageUrl}
             alt="following profiles"
-            width={24}
-            height={24}
+            width={28}
+            height={28}
+            style={{
+              objectFit: 'cover',
+            }}
           />
         ) : (
           <DefaultProfileIcon width={24} height={24} />
@@ -81,7 +85,11 @@ const borderStyles = css({
 const baseProfileStyle = flex({
   position: 'absolute',
   top: '2px',
+  width: '28px',
+  height: '28px',
   backgroundColor: 'white',
+  align: 'stretch',
+  rounded: 'full',
   overflow: 'hidden',
 });
 
