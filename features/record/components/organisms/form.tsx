@@ -40,7 +40,7 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: form.tsx 파일 내부 리팩토링
+//Todo: 코드 개선
 //Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
 export function Form() {
