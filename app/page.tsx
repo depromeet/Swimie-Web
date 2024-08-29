@@ -3,10 +3,10 @@
 import { useState } from 'react';
 
 import {
-  AlarmButton,
   GlobalNavigationBar,
   HeaderBar,
   LogoButton,
+  NotificationButton,
 } from '@/components/molecules';
 import { SettingButton } from '@/components/molecules/header-bar/header-bar-setting-button';
 import {
@@ -45,7 +45,7 @@ export default function Home() {
         </HeaderBar.LeftContent>
         <HeaderBar.RightContent className={css({ right: '20px' })}>
           {[
-            { component: <AlarmButton />, key: 'bell' },
+            { component: <NotificationButton />, key: 'bell' },
             { component: <SettingButton />, key: 'setting' },
           ]}
         </HeaderBar.RightContent>
