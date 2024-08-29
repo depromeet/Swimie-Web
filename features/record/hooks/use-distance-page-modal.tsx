@@ -10,7 +10,7 @@ import { StrokeProps } from '../types';
 
 type tabIndex = 0 | 1;
 
-//Todo: 상태들 리팩토링 & 각 로직들 리팩토링
+//Todo: 코드 개선
 export function useDistancePageModal<T>(
   lane: number,
   defaultStrokes?: StrokeProps[],
@@ -74,15 +74,22 @@ export function useDistancePageModal<T>(
         setTotalLaps(String(defaultTotalLap));
       } else {
         if (
-          defaultStrokes.every((stroke) => stroke.laps) &&
+          defaultStrokes.every((stroke) => Boolean(stroke.laps)) &&
           !formSubInfo.isDistanceLapModified
         )
           setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
         defaultStrokes.forEach((strokes) => {
-          setStrokes((prev) => [
-            ...prev,
-            (prev[strokeOptions.indexOf(strokes.name)] = strokes),
-          ]);
+          const index = strokeOptions.indexOf(strokes.name);
+          setStrokes((prev) => {
+            const updatedStrokes = [...prev];
+            updatedStrokes[index] = {
+              ...updatedStrokes[index],
+              laps: strokes.laps,
+              meter: strokes.meter,
+            };
+
+            return updatedStrokes;
+          });
         });
       }
       setTotalStrokeDistance(defaultTotalMeter as number);

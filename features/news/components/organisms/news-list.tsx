@@ -75,6 +75,7 @@ const getPropsObjects = (content: NewsContent) => {
   const {
     memberId,
     memberNickname,
+    profileImageUrl,
     createdAt,
     isRecentNews,
     memoryId,
@@ -93,6 +94,7 @@ const getPropsObjects = (content: NewsContent) => {
   const wrapperProps: NewsItemWrapperProps = {
     memberId,
     memberNickname,
+    profileImageUrl,
     createdAt,
     isRecentNews,
     recordAt,

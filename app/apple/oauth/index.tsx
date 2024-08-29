@@ -5,22 +5,35 @@ import { useEffect } from 'react';
 
 import { LoadingArea } from '@/components/atoms';
 import { flex } from '@/styled-system/patterns';
+import { LoginResponse } from '@/types/authType';
 
 const Page = () => {
   const router = useRouter();
 
+  // TODO: 확인용 console log
   useEffect(() => {
     const postFormData = async () => {
       try {
-        const response = await fetch('/api/apple/oauth', {
-          method: 'POST',
-          body: new URLSearchParams(window.location.search),
+        const query = new URLSearchParams(window.location.search);
+        const formData = new FormData();
+        query.forEach((value, key) => {
+          formData.append(key, value);
         });
 
+        console.log(query);
+
+        const response = await fetch('/api/apple/oauth', {
+          method: 'POST',
+          body: formData,
+        });
+
+        console.log(response);
+
         if (response.ok) {
-          const data = (await response.json()) as object;
+          const data = (await response.json()) as LoginResponse;
           console.log('Success:', data);
-          // router.push('/join/nickname');
+
+          router.push('/join/nickname');
         } else {
           console.error('Failed to authenticate with Apple');
         }

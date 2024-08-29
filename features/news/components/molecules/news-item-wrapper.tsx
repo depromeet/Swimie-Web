@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import { DefaultProfileIcon, Image } from '@/components/atoms';
+import { DefaultProfileIcon } from '@/components/atoms';
+import { ProfileImage } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { convertTimeToElapsedTime, getFormatDate } from '@/utils';
@@ -10,7 +11,7 @@ import { CheerUpButton } from '../atoms';
 export interface NewsItemWrapperProps {
   memberId: number;
   isRecentNews: boolean;
-  profileUrl?: string;
+  profileImageUrl?: string;
   memberNickname: string;
   recordAt: string;
   createdAt: string;
@@ -19,7 +20,7 @@ export interface NewsItemWrapperProps {
 
 export const NewsItemWrapper = ({
   isRecentNews,
-  profileUrl,
+  profileImageUrl,
   memberNickname,
   recordAt,
   createdAt,
@@ -32,8 +33,16 @@ export const NewsItemWrapper = ({
       <div className={userInfoStyles}>
         <div className={userProfileImageWrapperStyles}>
           {isRecentNews && <div className={newMarkStyles} />}
-          {profileUrl ? (
-            <Image src={profileUrl} alt="user profile image" />
+          {profileImageUrl ? (
+            <ProfileImage
+              src={profileImageUrl}
+              alt="user profile image"
+              width={40}
+              height={40}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
           ) : (
             <DefaultProfileIcon width={40} height={40} />
           )}
@@ -69,7 +78,13 @@ const userInfoStyles = flex({
   alignItems: 'center',
 });
 
-const userProfileImageWrapperStyles = css({ width: '40px', height: '40px' });
+const userProfileImageWrapperStyles = flex({
+  width: '40px',
+  height: '40px',
+  align: 'stretch',
+  rounded: 'full',
+  overflow: 'hidden',
+});
 
 const newMarkStyles = css({
   position: 'absolute',

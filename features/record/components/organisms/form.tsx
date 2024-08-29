@@ -148,7 +148,7 @@ export function Form() {
 
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
-    if (isLoading) return;
+    if (isLoading || !startTime || !endTime) return;
     //기록 수정 모드일 때
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
@@ -304,7 +304,11 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal defaultStrokes={data?.data.strokes} />
+      <DistancePageModal
+        defaultStrokes={data?.data.strokes}
+        defaultTotalLap={data?.data.totalLap}
+        defaultTotalMeter={data?.data.totalMeter}
+      />
       <TimeBottomSheet />
     </FormProvider>
   );
