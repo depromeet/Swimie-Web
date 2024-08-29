@@ -108,8 +108,6 @@ export function Form() {
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
 
-  const { isLoading, modifySubmitData, handlers } = useRecordForm();
-
   const startTime = useWatch({
     control: methods.control,
     name: 'startTime',
@@ -118,6 +116,17 @@ export function Form() {
     control: methods.control,
     name: 'endTime',
   });
+  const strokes = useWatch({
+    control: methods.control,
+    name: 'strokes',
+  });
+  const lane = useWatch({
+    control: methods.control,
+    name: 'lane',
+  });
+
+  const { isLoading, modifySubmitData, modifyStrokesData, handlers } =
+    useRecordForm(lane);
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
@@ -258,6 +267,7 @@ export function Form() {
             fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
+            subText={modifyStrokesData(strokes)}
             onClick={() => handlers.openDistancePageModal()}
           />
           <div className={buttonStyles.layout}>

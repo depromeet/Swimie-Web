@@ -12,8 +12,9 @@ import {
   isPoolSearchPageModalOpen,
   timeBottomSheetState,
 } from '../store';
+import { StrokeProps } from '../types';
 
-export function useRecordForm() {
+export function useRecordForm(lane: number) {
   const [isLoading, setIsLoading] = useState(false);
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -79,9 +80,31 @@ export function useRecordForm() {
     return modifiedData;
   };
 
+  const modifyStrokesData = (strokes: StrokeProps[]) => {
+    if (
+      (strokes.length === 1 && strokes[0].name === '총거리') ||
+      (strokes.length === 1 && strokes[0].name === '총바퀴')
+    )
+      return undefined;
+    else {
+      if (strokes.every((stroke) => stroke.meter))
+        return strokes
+          .map((stroke) => `${stroke.name} ${stroke.meter.toLocaleString()}m`)
+          .join(' · ');
+      else
+        return strokes
+          .map(
+            (stroke) =>
+              `${stroke.name} ${(stroke.laps * 2 * lane).toLocaleString()}m`,
+          )
+          .join(' · ');
+    }
+  };
+
   return {
     isLoading,
     modifySubmitData,
+    modifyStrokesData,
     handlers: {
       openPoolSearchPageModal,
       openDistancePageModal,
