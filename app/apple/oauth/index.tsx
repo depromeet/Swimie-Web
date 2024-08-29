@@ -1,56 +1,38 @@
 'use client';
 
-import { useSetAtom } from 'jotai';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { LoadingArea } from '@/components/atoms';
-import { AuthInfoAtom } from '@/store/auth';
 import { flex } from '@/styled-system/patterns';
-import { AuthResponse } from '@/types/authType';
 
 const Page = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const setAuth = useSetAtom(AuthInfoAtom);
 
   useEffect(() => {
-    const APPLE_CODE = searchParams.get('code');
-    console.log(APPLE_CODE);
-
-    const postCode = async () => {
-      if (!APPLE_CODE) {
-        console.error('코드가 유효하지 않습니다.');
-        return;
-      }
+    const postFormData = async () => {
       try {
-        const response = await fetch(`/api/apple/oauth?code=${APPLE_CODE}`, {
+        const response = await fetch('/api/apple/oauth', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code: APPLE_CODE }),
+          body: new URLSearchParams(window.location.search),
         });
 
-        if (response.status === 200) {
-          const data = (await response.json()) as AuthResponse;
-
-          setAuth({
-            isLogined: true,
-            nickname: data.data.data.nickname,
-            userId: data.data.data.userId,
-          });
-          router.push('/join/nickname');
+        if (response.ok) {
+          const data = (await response.json()) as object;
+          console.log('Success:', data);
+          // router.push('/join/nickname');
+        } else {
+          console.error('Failed to authenticate with Apple');
         }
       } catch (error) {
         console.error('Error:', error);
       }
     };
 
-    postCode().catch((error) => {
+    postFormData().catch((error) => {
       console.error('Error:', error);
     });
-  }, [router, searchParams, setAuth]);
+  }, [router]);
 
   return (
     <div className={LoadingWrapper}>
