@@ -1,6 +1,5 @@
-export interface DeleteAccountProps {
-  status: number;
-  code: string;
-  message: string;
+import { Response } from '@/apis';
+
+export type DeleteAccountResponse = Response<{
   data: object;
-}
+}>;

@@ -10,7 +10,7 @@ import { flex } from '@/styled-system/patterns';
 import { useLogout } from '../../apis';
 import { useDeleteAccount } from '../../apis/use-delete-account';
 import { usePostWithdrawal } from '../../apis/use-post-withdrawal';
-import { DeleteAccountProps, WithdrawalRequestData } from '../../types';
+import { DeleteAccountResponse, WithdrawalRequestData } from '../../types';
 
 export function Step3() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function Step3() {
   const withdrawalReason = useAtomValue(withdrawalReasonAtom);
 
   const withdrawalMutation = useMutation<
-    DeleteAccountProps,
+    DeleteAccountResponse,
     Error,
     WithdrawalRequestData
   >({
@@ -36,7 +36,7 @@ export function Step3() {
     },
   });
 
-  const deleteAccountMutation = useMutation<DeleteAccountProps, Error>({
+  const deleteAccountMutation = useMutation<DeleteAccountResponse, Error>({
     mutationFn: useDeleteAccount,
     onSuccess: (data) => {
       if (data.status === 200) {
