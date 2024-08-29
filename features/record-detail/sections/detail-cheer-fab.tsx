@@ -1,34 +1,30 @@
 'use client';
 
-import { useState } from 'react';
-
-import { CheerBottomSheet } from '@/components/molecules';
-import { useBottomSheet, useToast } from '@/hooks';
+import { CheerBottomSheet, CheerProgress } from '@/components/molecules';
+import { useCheerBottomSheet, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { useCheer, useCheerEligibility, useCheerPreviewList } from '../apis';
-import { CheerProgress } from '../components';
-import { initialCheerList } from '../data';
-import { DetailCheerItemSelected, RecordDetailType } from '../types';
+import { useCheerEligibility, useCheerPreviewList } from '../apis';
+import { RecordDetailType } from '../types';
 
 export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
-  const { mutate: mutateCheer } = useCheer();
+  const { toast } = useToast();
+
   const { refetch: refetchCheer } = useCheerPreviewList(data.id);
   const { data: eligibilityData } = useCheerEligibility(
     data.id,
     data.isMyMemory,
   );
-
-  const [cheerList, setCheerList] = useState(initialCheerList);
-  const [selectedCheerItem, setSelectedCheerItem] =
-    useState<DetailCheerItemSelected>();
-
-  const { toast } = useToast();
   const {
-    isOpen: isOpenBottomSheet,
-    open: openBottomSheet,
-    close: closeBottomSheet,
-  } = useBottomSheet();
+    cheerList,
+    selectedCheerItem,
+    handleClickCheerItem,
+    handleClickSendCheer,
+    handleChangeSelectedItem,
+    isOpenBottomSheet,
+    closeBottomSheet,
+    openBottomSheet,
+  } = useCheerBottomSheet({ memoryId: data.id, onRefetch: refetchCheer });
 
   const handleClickFab = () => {
     if (!eligibilityData?.isRegistrable) {
@@ -38,47 +34,6 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
 
     openBottomSheet();
   };
-
-  const handleClickCheerItem = (index: number) => {
-    setCheerList((prev) =>
-      prev.map((item, idx) =>
-        idx === index
-          ? { ...item, isSelected: !item.isSelected }
-          : { ...item, isSelected: false },
-      ),
-    );
-  };
-
-  const handleClickSendCheer = () => {
-    const selectedCheerItem = cheerList.find(({ isSelected }) => isSelected);
-    if (!selectedCheerItem) return;
-
-    mutateCheer(
-      {
-        emoji: selectedCheerItem.emoji,
-        comment: selectedCheerItem.comment,
-        memoryId: data.id,
-      },
-      {
-        onSuccess: ({ status, code, message }) => {
-          if (status === 400 || code === 'REACTION_4') {
-            alert(message);
-            return;
-          }
-
-          void refetchCheer();
-          setSelectedCheerItem(selectedCheerItem);
-          closeBottomSheet();
-        },
-      },
-    );
-  };
-
-  const handleChangeSelectedItem = (isOpen: boolean) => {
-    if (isOpen) return;
-    setSelectedCheerItem(undefined);
-  };
-
   const { isMyMemory } = data;
 
   return (
