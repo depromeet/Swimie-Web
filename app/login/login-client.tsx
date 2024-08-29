@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { AppleLogoIcon } from '@/components/atoms/icons/apple-logo-icon';
 import { GoogleLogoIcon } from '@/components/atoms/icons/google-logo-icon';
 import { KakaoLogoIcon } from '@/components/atoms/icons/kakao-logo-icon';
-import LogoSplash from '@/features/login/components/organisms/logoSplash';
+import { LogoSplash } from '@/features/login';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
 import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
 import { css } from '@/styled-system/css';

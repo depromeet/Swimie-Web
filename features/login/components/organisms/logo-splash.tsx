@@ -6,7 +6,7 @@ import Image from 'next/image';
 import SwimieLogo from '@/public/images/login/swimie-logo.png';
 import { flex } from '@/styled-system/patterns';
 
-export default function LogoSplash() {
+export function LogoSplash() {
   return (
     <div className={pageStyles}>
       <div>
