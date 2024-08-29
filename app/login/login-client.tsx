@@ -23,7 +23,7 @@ export default function LoginClient() {
   };
 
   const appleLogin = () => {
-    window.location.href = ` https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
+    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
   const [isSplashCompleted, setIsSplashCompleted] = useState(false);
@@ -108,6 +108,7 @@ const loginPage = flex({
   alignItems: 'center',
   height: '100dvh',
   gap: '10px',
+  position: 'relative',
 });
 
 const logo = flex({
@@ -133,7 +134,9 @@ const titleStyles = css({
   paddingTop: '12px',
 });
 
-const loginButtons = flex({
+const loginButtons = css({
+  position: 'absolute',
+  bottom: '50px',
   width: '100%',
   margin: '0 auto',
   direction: 'column',
@@ -157,9 +160,6 @@ const buttonStyles = {
   height: '48px',
   flexShrink: 0,
   borderRadius: '10px',
-
-  // padding: '12px 28px',
-  // cursor: 'pointer',
 };
 
 const kakaoLoginButton = css({
