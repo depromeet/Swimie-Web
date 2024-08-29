@@ -91,12 +91,18 @@ export function DistancePageModal({
 
   const handleDoneButtonClick = () => {
     if (secondaryTabIndex === 0 && isAssistiveIndexZero) {
-      setValue('totalDistance', totalMeter ? totalMeter + 'm' : undefined);
+      setValue(
+        'totalDistance',
+        totalMeter ? Number(totalMeter).toLocaleString() + 'm' : undefined,
+      );
     } else {
       setValue(
         'totalDistance',
-        totalStrokeDistance ? totalStrokeDistance + 'm' : undefined,
+        totalStrokeDistance
+          ? totalStrokeDistance.toLocaleString() + 'm'
+          : undefined,
       );
+      console.log(String(totalStrokeDistance).toLocaleString());
     }
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
