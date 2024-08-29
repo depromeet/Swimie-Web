@@ -6,24 +6,31 @@ import { AuthInfoAtom } from '@/store/auth';
 
 import { CalendarResponse } from '../types';
 
-export const getCalendarData = async (year: number, month: number) => {
-  const res = await fetch(`/api/memory/calendar?year=${year}&month=${month}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
+export const getCalendarData = async (
+  year: number,
+  month: number,
+  targetId?: number,
+) => {
+  const res = await fetch(
+    `/api/memory/calendar?year=${year}&month=${month}&targetId=${targetId || ''}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  });
+  );
 
   return res.json();
 };
 
-export const useCalendarData = () => {
+export const useCalendarData = (targetId?: number) => {
   const { year, month } = useAtomValue(calendarDateAtom);
   const { nickname } = useAtomValue(AuthInfoAtom);
 
   return useQuery<CalendarResponse>({
-    queryKey: ['calendarData', year, month, nickname],
-    queryFn: () => getCalendarData(year, month),
+    queryKey: ['calendarData', year, month, nickname, targetId],
+    queryFn: () => getCalendarData(year, month, targetId),
     placeholderData: keepPreviousData,
   });
 };
