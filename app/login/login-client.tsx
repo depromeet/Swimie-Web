@@ -23,7 +23,7 @@ export default function LoginClient() {
   };
 
   const appleLogin = () => {
-    window.location.href = ` https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
+    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
   const [isSplashCompleted, setIsSplashCompleted] = useState(false);
@@ -147,12 +147,6 @@ const loginButtons = flex({
   alignItems: 'flex-start',
   gap: '8px',
   alignSelf: 'stretch',
-
-  // width: '100%',
-  // margin: '0 auto',
-  // direction: 'column',
-  // gap: '8px',
-  // padding: '0 20px',
 });
 
 const buttonContent = flex({
