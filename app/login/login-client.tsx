@@ -63,7 +63,7 @@ export default function LoginClient() {
               </div>
               <div className={characterContainer}>
                 <Image
-                  width={375}
+                  width={600}
                   height={383.245}
                   alt="swimie character"
                   src={LoginMainCharacter}
@@ -147,6 +147,7 @@ const loginButtons = flex({
   alignItems: 'flex-start',
   gap: '8px',
   alignSelf: 'stretch',
+  margin: '0 auto',
 });
 
 const buttonContent = flex({
