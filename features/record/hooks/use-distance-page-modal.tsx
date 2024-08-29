@@ -193,7 +193,7 @@ export function useDistancePageModal<T>(
   const buttonLabel =
     secondaryTabIndex === 0 && assistiveTabIndex === 0
       ? '완료'
-      : `${totalStrokeDistance ? totalStrokeDistance + 'm' : ''} 수영 완료`;
+      : `${totalStrokeDistance ? Number(totalStrokeDistance).toLocaleString() + 'm' : ''} 수영 완료`;
 
   return {
     pageModalRef,
