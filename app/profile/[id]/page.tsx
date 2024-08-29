@@ -10,6 +10,7 @@ import { SettingButton } from '@/components/molecules';
 import { useProfileData } from '@/features/profile';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
+import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -23,6 +24,9 @@ export default function Profile({ params }: Mypage) {
     isLoading: isProfileLoading,
     error: profileError,
   } = useProfileData(params.id);
+
+  const { useSyncFollowingListState } = useMemberFollowingState();
+  useSyncFollowingListState([Number(params.id)]);
 
   const isMyProfile = profileData?.isMyProfile;
 
@@ -56,7 +60,7 @@ export default function Profile({ params }: Mypage) {
             </HeaderBar.LeftContent>
             <BackButton />
           </HeaderBar>
-          <OtherPage profileData={profileData} followingInitialValue={false} />
+          <OtherPage profileData={profileData} />
         </>
       )}
       <GlobalNavigationBar />
