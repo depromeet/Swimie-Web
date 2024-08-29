@@ -16,12 +16,9 @@ export const FollowingListLinkButton = () => {
   if (!followingSummaryData) return null;
 
   const { followings, followingCount } = followingSummaryData.data;
-  const hasFollowings = followingCount > 0;
   const indexOffset = MAX_NUMBER_OF_PROFILES - followings.length;
-  let nodeList: Array<ReactNode> = [];
-
-  if (hasFollowings) {
-    nodeList = followings.map(({ memberId, profileImageUrl }, index) => (
+  const nodeList: Array<ReactNode> = [
+    ...followings.map(({ memberId, profileImageUrl }, index) => (
       <div
         key={memberId}
         className={cx(
@@ -44,8 +41,8 @@ export const FollowingListLinkButton = () => {
           <DefaultProfileIcon width={24} height={24} />
         )}
       </div>
-    ));
-  }
+    )),
+  ];
 
   nodeList.push(
     <div key="follower-count" className={cx(containerStyles, borderStyles)}>
