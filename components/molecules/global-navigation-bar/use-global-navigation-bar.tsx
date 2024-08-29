@@ -3,7 +3,10 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export function useGlobalNavigationBar(itemRoutes: string[]) {
+export function useGlobalNavigationBar(
+  itemRoutes: string[],
+  isDataFetched: boolean,
+) {
   const pathname = usePathname();
   const barIndexWithRouteMap = new Map([
     [itemRoutes[0], 0],
@@ -12,13 +15,14 @@ export function useGlobalNavigationBar(itemRoutes: string[]) {
   ]);
 
   const [barIndex, setBarIndex] = useState<number>(
-    barIndexWithRouteMap.get(pathname) ?? 0,
+    barIndexWithRouteMap.get(pathname) ?? -1,
   );
 
   useEffect(() => {
-    setBarIndex(barIndexWithRouteMap.get(pathname) ?? 0);
+    if (isDataFetched && barIndex === -1)
+      setBarIndex(barIndexWithRouteMap.get(pathname) ?? -1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [pathname, isDataFetched]);
 
   const onChangeBarIndex = (index: number) => {
     setBarIndex(index);
