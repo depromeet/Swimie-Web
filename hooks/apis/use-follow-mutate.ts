@@ -2,10 +2,6 @@
 
 import { useMutation } from '@tanstack/react-query';
 
-export type RemoveCheer = {
-  reactionId: number;
-};
-
 const fetchFollow = async (followingId: number) => {
   const res = await fetch(`/api/friend`, {
     method: 'PUT',
