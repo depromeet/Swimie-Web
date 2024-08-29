@@ -1,5 +1,6 @@
 export * from './apis';
 export * from './use-bottom-sheet';
+export * from './use-cheer-bottom-sheet';
 export * from './use-dialog';
 export * from './use-drag-scroll';
 export * from './use-intersection-observer';
