@@ -80,7 +80,7 @@ export function ProfileEditForm() {
     if (data.nickname?.trim() === profileData?.nickname.trim()) {
       delete modifiedData.nickname;
     }
-    if (data.introduction?.trim() === profileData?.introduction.trim()) {
+    if (data.introduction?.trim() === profileData?.introduction?.trim()) {
       delete modifiedData.introduction;
     }
 
