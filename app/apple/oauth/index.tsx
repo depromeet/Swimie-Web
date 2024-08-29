@@ -10,6 +10,7 @@ import { LoginResponse } from '@/types/authType';
 const Page = () => {
   const router = useRouter();
 
+  // TODO: 확인용 console log
   useEffect(() => {
     const postFormData = async () => {
       try {
