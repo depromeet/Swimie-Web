@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 
+import { CheerItem } from '@/components/molecules';
 import { useDragScroll, useModal } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { useCheerPreviewList } from '../apis';
-import { CheerItem, CheerModal } from '../components';
+import { CheerModal } from '../components';
 import { RecordDetailType } from '../types';
 
 export const DetailCheerModalSection = ({
