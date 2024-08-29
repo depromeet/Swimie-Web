@@ -18,7 +18,7 @@ import { CalendarHeader } from './calendar-header';
 export const Calendar = () => {
   const setSwimCount = useSetAtom(calendarSwimCountAtom);
   const { data, isFetching } = useCalendarData();
-  const [squares, startPoint, endPoint, isDateToday] =
+  const [squares, startPoint, endPoint, isDateToday, isDateFuture] =
     useCalendarRendaringData();
   let memoryIndex = 0;
 
@@ -54,6 +54,7 @@ export const Calendar = () => {
                 key={squareNumber}
                 date={date}
                 isToday={isDateToday(date)}
+                isFuture={isDateFuture(date)}
                 memory={currentMemory}
               />
             ) : (

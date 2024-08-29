@@ -17,19 +17,29 @@ interface ItemLayoutProps {
 interface CalendarItemProps extends ItemLayoutProps {
   memory: Memory | undefined;
   totalDistance?: number;
+  isFuture: boolean;
 }
 
-export const CalendarItem = ({ date, isToday, memory }: CalendarItemProps) => {
+export const CalendarItem = ({
+  date,
+  isToday,
+  isFuture,
+  memory,
+}: CalendarItemProps) => {
   const { year, month } = useAtomValue(calendarDateAtom);
   const targetDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
 
   if (!memory)
     return (
       <ItemLayout date={date} isToday={isToday}>
-        <Link
-          href={`/record?date=${targetDate}`}
-          className={linkContainerStyles}
-        />
+        {isFuture ? (
+          <div className={linkContainerStyles} />
+        ) : (
+          <Link
+            href={`/record?date=${targetDate}`}
+            className={linkContainerStyles}
+          />
+        )}
       </ItemLayout>
     );
 
