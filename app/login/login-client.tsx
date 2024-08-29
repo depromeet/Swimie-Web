@@ -49,15 +49,17 @@ export default function LoginClient() {
               delay: 0.5,
             }}
           >
-            <div className={logo}>
-              <Image
-                width={149}
-                height={34}
-                alt="swimie logo"
-                src={SwimieLetterLogo}
-              />
-              <div className={titleStyles}>
-                친구들의 응원과 함께하는 수영일기
+            <div className={logoStyles}>
+              <div className={logoContainer}>
+                <Image
+                  width={149}
+                  height={34}
+                  alt="swimie logo"
+                  src={SwimieLetterLogo}
+                />
+                <div className={titleStyles}>
+                  친구들의 응원과 함께하는 수영일기
+                </div>
               </div>
               <div className={characterContainer}>
                 <Image
@@ -70,28 +72,28 @@ export default function LoginClient() {
                   })}
                 />
               </div>
+              <div className={loginButtons}>
+                <button className={kakaoLoginButton} onClick={kakaoLogin}>
+                  <div className={buttonContent}>
+                    <KakaoLogoIcon />
+                    <span>카카오로 로그인</span>
+                  </div>
+                </button>
+                <button className={googleLoginButton} onClick={googleLogin}>
+                  <div className={buttonContent}>
+                    <GoogleLogoIcon />
+                    <span>Google로 로그인</span>
+                  </div>
+                </button>
+                <button className={appleLoginButton} onClick={appleLogin}>
+                  <div className={buttonContent}>
+                    <AppleLogoIcon />
+                    <span>Apple ID로 로그인</span>
+                  </div>
+                </button>
+              </div>
             </div>
             {/* TODO: Button 리팩토링 예정 */}
-            <div className={loginButtons}>
-              <button className={kakaoLoginButton} onClick={kakaoLogin}>
-                <div className={buttonContent}>
-                  <KakaoLogoIcon />
-                  <span>카카오로 로그인</span>
-                </div>
-              </button>
-              <button className={googleLoginButton} onClick={googleLogin}>
-                <div className={buttonContent}>
-                  <GoogleLogoIcon />
-                  <span>Google로 로그인</span>
-                </div>
-              </button>
-              <button className={appleLoginButton} onClick={appleLogin}>
-                <div className={buttonContent}>
-                  <AppleLogoIcon />
-                  <span>Apple ID로 로그인</span>
-                </div>
-              </button>
-            </div>
           </motion.div>
         </div>
       ) : (
@@ -107,14 +109,21 @@ const loginPage = flex({
   justifyContent: 'center',
   alignItems: 'center',
   height: '100dvh',
-  gap: '10px',
+  gap: '50px',
 });
 
-const logo = flex({
-  height: '65vh',
+const logoStyles = flex({
   justifyContent: 'center',
   alignItems: 'center',
   direction: 'column',
+  gap: '12px',
+});
+
+const logoContainer = flex({
+  direction: 'column',
+  alignItems: 'center',
+  gap: '12px',
+  alignSelf: 'stretch',
 });
 
 const characterContainer = flex({
@@ -130,15 +139,20 @@ const titleStyles = css({
   textStyle: 'heading6',
   fontWeight: '500',
   textAlign: 'center',
-  paddingTop: '12px',
 });
 
 const loginButtons = flex({
-  width: '100%',
-  margin: '0 auto',
+  padding: '0px 20px',
   direction: 'column',
-  gap: '5px',
-  padding: '0 20px',
+  alignItems: 'flex-start',
+  gap: '8px',
+  alignSelf: 'stretch',
+
+  // width: '100%',
+  // margin: '0 auto',
+  // direction: 'column',
+  // gap: '8px',
+  // padding: '0 20px',
 });
 
 const buttonContent = flex({
@@ -157,9 +171,7 @@ const buttonStyles = {
   height: '48px',
   flexShrink: 0,
   borderRadius: '10px',
-
-  // padding: '12px 28px',
-  // cursor: 'pointer',
+  cursor: 'pointer',
 };
 
 const kakaoLoginButton = css({
