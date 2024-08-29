@@ -90,54 +90,48 @@ export function DistancePageModal({
   };
 
   const handleDoneButtonClick = () => {
-    if (secondaryTabIndex === 0 && isAssistiveIndexZero) {
+    if (secondaryTabIndex === 0 && isAssistiveIndexZero)
       setValue(
         'totalDistance',
         totalMeter ? Number(totalMeter).toLocaleString() + 'm' : undefined,
       );
-    } else {
+    else
       setValue(
         'totalDistance',
         totalStrokeDistance
           ? totalStrokeDistance.toLocaleString() + 'm'
           : undefined,
       );
-      console.log(String(totalStrokeDistance).toLocaleString());
-    }
+
     if (secondaryTabIndex === 0) {
       if (isAssistiveIndexZero) {
-        if (totalMeter) {
+        if (totalMeter)
           setValue('strokes', [
             { name: '총거리', meter: Number(totalMeter), laps: 0 },
           ]);
-        } else {
-          setValue('strokes', []);
-        }
+        else setValue('strokes', []);
       } else if (isAssistiveIndexOne) {
-        if (totalLaps) {
+        if (totalLaps)
           setValue('strokes', [
             { name: '총바퀴', meter: 0, laps: Number(totalLaps) },
           ]);
-        } else {
-          setValue('strokes', []);
-        }
+        else setValue('strokes', []);
       }
     } else {
-      if (isAssistiveIndexZero) {
+      if (isAssistiveIndexZero)
         setValue(
           'strokes',
           strokes.filter((stroke) => {
             return stroke.meter;
           }),
         );
-      } else if (isAssistiveIndexOne) {
+      else if (isAssistiveIndexOne)
         setValue(
           'strokes',
           strokes.filter((stroke) => {
             return stroke.laps;
           }),
         );
-      }
     }
     handlers.onClosePageModal();
   };
