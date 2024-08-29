@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 
+import { CheerBottomSheet } from '@/components/molecules';
 import { useBottomSheet, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 
 import { useCheer, useCheerEligibility, useCheerPreviewList } from '../apis';
-import { CheerBottomSheet, CheerProgress } from '../components';
+import { CheerProgress } from '../components';
 import { initialCheerList } from '../data';
 import { DetailCheerItemSelected, RecordDetailType } from '../types';
 
