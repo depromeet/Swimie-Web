@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { BellIcon } from '@/components/atoms';
-import { useCountNotification } from '@/features/notification/apis/use-count-notification';
+import { useCountNotification } from '@/features/notification';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
