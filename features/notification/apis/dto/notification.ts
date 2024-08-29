@@ -9,3 +9,5 @@ export type NotificationResponse = Response<{
 }>;
 
 export type NotificationReadResponse = Response<object>;
+
+export type NotificationCountResponse = Response<{ totalCount: number }>;

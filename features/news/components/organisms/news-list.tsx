@@ -74,7 +74,8 @@ export const NewsList = () => {
 const getPropsObjects = (content: NewsContent) => {
   const {
     memberId,
-    memberNickname,
+    nickname,
+    profileImageUrl,
     createdAt,
     isRecentNews,
     memoryId,
@@ -92,7 +93,8 @@ const getPropsObjects = (content: NewsContent) => {
 
   const wrapperProps: NewsItemWrapperProps = {
     memberId,
-    memberNickname,
+    nickname,
+    profileImageUrl,
     createdAt,
     isRecentNews,
     recordAt,

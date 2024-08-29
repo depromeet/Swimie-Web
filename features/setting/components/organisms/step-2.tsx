@@ -1,10 +1,10 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms';
 import { TextArea } from '@/components/molecules';
-import { withdrawalReasonAtom, withdrawalTextAtom } from '@/store';
+import { withdrawalTextAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -12,11 +12,6 @@ export function Step2() {
   const router = useRouter();
   const [text, setText] = useState('');
   const setWithdrawalText = useSetAtom(withdrawalTextAtom);
-
-  const [reason, setReason] = useAtom(withdrawalReasonAtom);
-
-  // TODO: 탈퇴 api 구현중
-  console.log(reason, setReason);
 
   const handleTextChange = (newText: string) => {
     setText(newText);

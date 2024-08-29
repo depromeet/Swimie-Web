@@ -40,7 +40,7 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-//Todo: form.tsx 파일 내부 리팩토링
+//Todo: 코드 개선
 //Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
 export function Form() {
@@ -89,7 +89,7 @@ export function Form() {
           : undefined,
         strokes: prevData.strokes ? prevData.strokes : undefined,
         totalDistance: prevData.totalMeter
-          ? prevData.totalMeter + 'm'
+          ? prevData.totalMeter.toLocaleString() + 'm'
           : undefined,
       });
       setFormSubInfo({
@@ -108,8 +108,6 @@ export function Form() {
   const { mutateAsync: imageStatus } = useImageStatus();
   const { mutateAsync: imageEdit } = useImageEdit();
 
-  const { isLoading, modifySubmitData, handlers } = useRecordForm();
-
   const startTime = useWatch({
     control: methods.control,
     name: 'startTime',
@@ -118,6 +116,17 @@ export function Form() {
     control: methods.control,
     name: 'endTime',
   });
+  const strokes = useWatch({
+    control: methods.control,
+    name: 'strokes',
+  });
+  const lane = useWatch({
+    control: methods.control,
+    name: 'lane',
+  });
+
+  const { isLoading, modifySubmitData, modifyStrokesData, handlers } =
+    useRecordForm(lane);
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
@@ -139,7 +148,7 @@ export function Form() {
 
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
-    if (isLoading) return;
+    if (isLoading || !startTime || !endTime) return;
     //기록 수정 모드일 때
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
@@ -258,6 +267,7 @@ export function Form() {
             fieldName="totalDistance"
             placeholder="거리입력(선택)"
             label="수영 거리"
+            subText={modifyStrokesData(strokes)}
             onClick={() => handlers.openDistancePageModal()}
           />
           <div className={buttonStyles.layout}>
@@ -294,7 +304,11 @@ export function Form() {
       </form>
       <LaneLengthBottomSheet title="레인 길이를 선택해주세요" />
       <PoolSearchPageModal title="어디서 수영했나요?" />
-      <DistancePageModal defaultStrokes={data?.data.strokes} />
+      <DistancePageModal
+        defaultStrokes={data?.data.strokes}
+        defaultTotalLap={data?.data.totalLap}
+        defaultTotalMeter={data?.data.totalMeter}
+      />
       <TimeBottomSheet />
     </FormProvider>
   );
