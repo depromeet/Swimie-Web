@@ -19,6 +19,7 @@ export function usePullEditMemory(memoryId: number) {
     queryKey: ['usePullEditMemory', memoryId],
     queryFn: () => pullEditMemory(memoryId),
     retry: 1,
+    gcTime: 0,
     enabled: !!memoryId,
   });
 }
