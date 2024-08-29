@@ -16,13 +16,9 @@ import { ProfileContainer } from './profile-container';
 
 type OtherPageProps = {
   profileData: ProfileProps['data'];
-  followingInitialValue: boolean;
 };
 
-export function OtherPage({
-  profileData,
-  followingInitialValue,
-}: OtherPageProps) {
+export function OtherPage({ profileData }: OtherPageProps) {
   const [selectedTab, setSelectedTab] = useState<ProfileType>('record');
 
   return (
@@ -30,10 +26,7 @@ export function OtherPage({
       <section className={profileContainer}>
         <ProfileContainer profileData={profileData} />
         <div className={buttonContainer}>
-          <FollowButton
-            followingInitialValue={followingInitialValue}
-            followingId={profileData.memberId}
-          />
+          <FollowButton followingId={profileData.memberId} />
         </div>
       </section>
       <Tab type="primary">
