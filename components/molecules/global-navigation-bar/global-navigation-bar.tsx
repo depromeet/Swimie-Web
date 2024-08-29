@@ -21,6 +21,7 @@ export function GlobalNavigationBar() {
   ];
   const { barIndex, handlers } = useGlobalNavigationBar(
     barItems.map((item) => item.route),
+    Boolean(data),
   );
 
   return (
