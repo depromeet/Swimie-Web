@@ -1,6 +1,9 @@
 'use client';
 
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
+
+import { useMemberFollowingState } from '@/hooks';
 
 import { ProfileFollow } from '../types';
 
@@ -31,6 +34,18 @@ export const useFollowingList = (memberId: number) => {
 
   const flattenData =
     query.data?.pages.flatMap(({ data }) => data?.contents ?? []) ?? [];
+
+  const lastPageCount = query.data?.pages.length ?? 0;
+  const lastMemberIdList = useMemo(
+    () =>
+      query.data?.pages[lastPageCount - 1].data?.contents?.flatMap(
+        ({ memberId }) => memberId,
+      ) ?? [],
+    [lastPageCount, query.data?.pages],
+  );
+
+  const { useSyncFollowingListState } = useMemberFollowingState();
+  useSyncFollowingListState(lastMemberIdList);
 
   return {
     ...query,
