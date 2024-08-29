@@ -25,7 +25,7 @@ export default function RecordSuccessPage({
           </p>
         ) : (
           <p className={textStyles.paragraph}>
-            {searchParams.month}월 달{' '}
+            {searchParams.month}월{' '}
             <span className={textStyles.sub}>{searchParams.rank}번째</span>{' '}
             기록이에요.
           </p>
