@@ -22,7 +22,7 @@ export function useGlobalNavigationBar(
     if (isDataFetched && barIndex === -1)
       setBarIndex(barIndexWithRouteMap.get(pathname) ?? -1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, isDataFetched]);
+  }, [isDataFetched]);
 
   const onChangeBarIndex = (index: number) => {
     setBarIndex(index);
