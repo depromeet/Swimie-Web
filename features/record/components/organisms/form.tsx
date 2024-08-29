@@ -89,7 +89,7 @@ export function Form() {
           : undefined,
         strokes: prevData.strokes ? prevData.strokes : undefined,
         totalDistance: prevData.totalMeter
-          ? prevData.totalMeter + 'm'
+          ? prevData.totalMeter.toLocaleString() + 'm'
           : undefined,
       });
       setFormSubInfo({
