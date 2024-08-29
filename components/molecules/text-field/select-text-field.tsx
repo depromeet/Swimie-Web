@@ -52,19 +52,19 @@ export function SelectTextField({
       className={wrapperClassName}
     >
       <div className={cx(inputWrapperStyles)}>
-        {
-          <input
-            {...field}
-            readOnly
-            placeholder={placeholder}
-            className={cx(
-              css(inputStyles),
-              css({ cursor: 'pointer' }),
-              className,
-            )}
-            onClick={onClick}
-          />
-        }
+        <input
+          {...field}
+          readOnly
+          placeholder={placeholder}
+          className={cx(
+            css(inputStyles),
+            css({
+              cursor: 'pointer',
+            }),
+            className,
+          )}
+          onClick={onClick}
+        />
 
         {/* span태그 컴포넌트로 공통 생성 시 수정 */}
         <span className={cx(absoluteStyles, absoluteClassName)}>
