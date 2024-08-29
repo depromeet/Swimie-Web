@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { LoadingArea } from '@/components/atoms';
+import { useCurrentMemberInfo } from '@/hooks';
 import { MemberProfile } from '@/types';
 
 import { ProfileListItem } from './profile-list-item';
@@ -21,11 +21,19 @@ export const ProfileList = ({
   isLoading,
   isFetchingNextPage,
 }: ProfileList) => {
+  const { data: myData } = useCurrentMemberInfo();
+
   const handleRangeChanged = (range: { endIndex: number }) => {
     const currentContentsLastIndex = data.length - 1;
     if (range.endIndex >= currentContentsLastIndex - 3) {
       void fetchNextData();
     }
+  };
+
+  const getIsMyProfile = (memberId: number) => {
+    if (!myData?.data) return false;
+    const myMemberId = myData?.data.id;
+    return myMemberId === memberId;
   };
 
   if (isLoading) {
@@ -37,7 +45,12 @@ export const ProfileList = ({
       overscan={500}
       useWindowScroll
       rangeChanged={handleRangeChanged}
-      itemContent={(_, item) => <ProfileListItem isFollow={true} {...item} />}
+      itemContent={(_, item) => (
+        <ProfileListItem
+          {...item}
+          isMyProfile={getIsMyProfile(item.memberId)}
+        />
+      )}
       style={{
         width: '100%',
         height: '100%',
