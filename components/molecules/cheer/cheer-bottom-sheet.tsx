@@ -1,8 +1,8 @@
 import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
+import { DetailCheerItemSelected } from '@/features/record-detail';
 import { flex, grid } from '@/styled-system/patterns';
 
-import { DetailCheerItemSelected } from '../types';
 import { CheerItem } from './cheer-item';
 
 type CheerBottomSheet = {
