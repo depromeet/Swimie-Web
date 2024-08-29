@@ -3,35 +3,47 @@ import { NextRequest, NextResponse } from 'next/server';
 import { LoginResponse } from '@/types/authType';
 
 export interface AppleLoginUser {
-  name: {
+  name?: {
     firstName: string;
     lastName: string;
   };
-  email: string;
+  email?: string;
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const formData = await request.formData();
 
-    const userData = formData.get('user') as string;
+    // NOTE: userData는 옵셔널 값
+    const userData = formData.get('user') as string | null;
     const code = formData.get('code');
     const idToken = formData.get('id_token');
 
-    if (!code || !idToken || !userData) {
+    if (!code || !idToken) {
       return NextResponse.json(
-        { error: 'code, id_token, 또는 user 데이터가 누락되었습니다.' },
+        { error: 'code 또는 id_token이 누락되었습니다.' },
         { status: 400 },
       );
     }
 
-    const user = JSON.parse(userData) as AppleLoginUser;
+    let user: AppleLoginUser | undefined;
 
-    const bodyData = {
-      user,
+    if (userData) {
+      user = JSON.parse(userData) as AppleLoginUser;
+    }
+
+    const bodyData: {
+      user?: AppleLoginUser;
+      code: FormDataEntryValue;
+      id_token: FormDataEntryValue;
+    } = {
       code,
       id_token: idToken,
     };
+
+    if (user) {
+      bodyData.user = user;
+    }
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/login/apple`,
