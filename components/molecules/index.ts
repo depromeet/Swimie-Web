@@ -1,4 +1,5 @@
 export * from './bottom-sheet';
+export * from './cheer';
 export * from './dialog';
 export * from './global-navigation-bar';
 export * from './header-bar';

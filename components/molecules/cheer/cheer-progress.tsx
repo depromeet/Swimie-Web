@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import { DetailCheerItem } from '@/features/record-detail';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-import { DetailCheerItem } from '../types';
 
 type CheerProgress = {
   isOpen: boolean;
