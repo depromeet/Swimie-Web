@@ -11,7 +11,7 @@ import { CheerUpButton } from '../atoms';
 export interface NewsItemWrapperProps {
   memberId: number;
   isRecentNews: boolean;
-  memberProfileUrl?: string;
+  profileImageUrl?: string;
   memberNickname: string;
   recordAt: string;
   createdAt: string;
@@ -20,7 +20,7 @@ export interface NewsItemWrapperProps {
 
 export const NewsItemWrapper = ({
   isRecentNews,
-  memberProfileUrl,
+  profileImageUrl,
   memberNickname,
   recordAt,
   createdAt,
@@ -33,9 +33,9 @@ export const NewsItemWrapper = ({
       <div className={userInfoStyles}>
         <div className={userProfileImageWrapperStyles}>
           {isRecentNews && <div className={newMarkStyles} />}
-          {memberProfileUrl ? (
+          {profileImageUrl ? (
             <ProfileImage
-              src={memberProfileUrl}
+              src={profileImageUrl}
               alt="user profile image"
               width={40}
               height={40}
