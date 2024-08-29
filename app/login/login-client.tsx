@@ -1,8 +1,15 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
 import { AppleLogoIcon } from '@/components/atoms/icons/apple-logo-icon';
 import { GoogleLogoIcon } from '@/components/atoms/icons/google-logo-icon';
 import { KakaoLogoIcon } from '@/components/atoms/icons/kakao-logo-icon';
+import LogoSplash from '@/features/login/components/organisms/logoSplash';
+import LoginMainCharacter from '@/public/images/login/login-main-character.png';
+import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -19,58 +26,125 @@ export default function LoginClient() {
     window.location.href = ` https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
+  const [isSplashCompleted, setIsSplashCompleted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSplashCompleted(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className={loginPage}>
-      <div className={logo}>Swimie</div>
-      <div className={loginButtons}>
-        <button className={kakaoLoginButton} onClick={kakaoLogin}>
-          <div className={buttonContent}>
-            <KakaoLogoIcon />
-            <span>카카오로 로그인</span>
-          </div>
-        </button>
-        <button className={googleLoginButton} onClick={googleLogin}>
-          <div className={buttonContent}>
-            <GoogleLogoIcon />
-            <span>Google로 로그인</span>
-          </div>
-        </button>
-        <button className={appleLoginButton} onClick={appleLogin}>
-          <div className={buttonContent}>
-            <AppleLogoIcon />
-            <span>Apple ID로 로그인</span>
-          </div>
-        </button>
-      </div>
+    <div>
+      {isSplashCompleted ? (
+        <div className={loginPage}>
+          <motion.div
+            initial={{ y: 0, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              ease: 'easeOut',
+              duration: 0.3,
+              delay: 0.5,
+            }}
+          >
+            <div className={logo}>
+              <Image
+                width={149}
+                height={34}
+                alt="swimie logo"
+                src={SwimieLetterLogo}
+              />
+              <div className={titleStyles}>
+                친구들의 응원과 함께하는 수영일기
+              </div>
+              <div className={characterContainer}>
+                <Image
+                  width={375}
+                  height={383.245}
+                  alt="swimie character"
+                  src={LoginMainCharacter}
+                  className={css({
+                    position: 'relative',
+                  })}
+                />
+              </div>
+            </div>
+            {/* TODO: Button 리팩토링 예정 */}
+            <div className={loginButtons}>
+              <button className={kakaoLoginButton} onClick={kakaoLogin}>
+                <div className={buttonContent}>
+                  <KakaoLogoIcon />
+                  <span>카카오로 로그인</span>
+                </div>
+              </button>
+              <button className={googleLoginButton} onClick={googleLogin}>
+                <div className={buttonContent}>
+                  <GoogleLogoIcon />
+                  <span>Google로 로그인</span>
+                </div>
+              </button>
+              <button className={appleLoginButton} onClick={appleLogin}>
+                <div className={buttonContent}>
+                  <AppleLogoIcon />
+                  <span>Apple ID로 로그인</span>
+                </div>
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      ) : (
+        <LogoSplash />
+      )}
     </div>
   );
 }
+
 const loginPage = flex({
+  background: 'linear-gradient(180deg, #3B87F4 0%, #347FEA 100%)',
   direction: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100vh',
+  height: '100dvh',
   gap: '10px',
 });
 
 const logo = flex({
   height: '65vh',
-  width: '335px',
   justifyContent: 'center',
   alignItems: 'center',
-  fontWeight: '700',
-  fontSize: '24px',
+  direction: 'column',
+});
+
+const characterContainer = flex({
+  position: 'relative',
+  width: '100%',
+  height: 'auto',
+  direction: 'column',
+  alignItems: 'center',
+});
+
+const titleStyles = css({
+  color: 'background.white',
+  textStyle: 'heading6',
+  fontWeight: '500',
+  textAlign: 'center',
+  paddingTop: '12px',
 });
 
 const loginButtons = flex({
+  width: '100%',
+  margin: '0 auto',
   direction: 'column',
   gap: '5px',
+  padding: '0 20px',
 });
 
 const buttonContent = flex({
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '10px',
+  gap: '6px',
 });
 
 const buttonTextStyles = {
@@ -81,9 +155,11 @@ const buttonTextStyles = {
 const buttonStyles = {
   width: '335px',
   height: '48px',
+  flexShrink: 0,
   borderRadius: '10px',
-  padding: '12px 28px',
-  cursor: 'pointer',
+
+  // padding: '12px 28px',
+  // cursor: 'pointer',
 };
 
 const kakaoLoginButton = css({
