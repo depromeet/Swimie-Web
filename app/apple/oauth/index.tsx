@@ -4,8 +4,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { LoadingArea } from '@/components/atoms';
-import { flex } from '@/styled-system/patterns';
+import { LoginLoading, LoginScreen } from '@/features/login';
 
 const Page = () => {
   const router = useRouter();
@@ -44,20 +43,11 @@ const Page = () => {
   }, [router]);
 
   return (
-    <div className={LoadingWrapper}>
-      <LoadingArea width={100} height={100} />
-      <div>Apple로 로그인중입니다.</div>
-    </div>
+    <>
+      <LoginLoading />
+      <LoginScreen isAnimate={false} />
+    </>
   );
 };
-
-const LoadingWrapper = flex({
-  direction: 'column',
-  justifyContent: 'center',
-  alignContent: 'center',
-  height: '100vh',
-  textAlign: 'center',
-  fontWeight: 'bold',
-});
 
 export default Page;
