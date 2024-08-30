@@ -18,6 +18,8 @@ interface ClientConfig {
   state?: string;
   nonce?: string;
   usePopup?: boolean;
+  responseType?: string;
+  responseMode?: string;
 }
 
 interface Authorization {

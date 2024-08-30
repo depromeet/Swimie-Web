@@ -48,7 +48,9 @@ export default function LoginClient() {
       redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
       state: 'swimie',
       nonce: nonce,
-      usePopup: true,
+      usePopup: false,
+      responseType: 'code id_token',
+      responseMode: 'form_post',
     });
 
     try {

@@ -1,6 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextRequest, NextResponse } from 'next/server';
-
-import { LoginResponse } from '@/types/authType';
 
 export interface AppleLoginUser {
   name?: {
@@ -14,10 +13,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const formData = await request.formData();
 
-    // NOTE: userData는 옵셔널 값
-    const userData = formData.get('user') as string | null;
     const code = formData.get('code');
     const idToken = formData.get('id_token');
+    const userData = formData.get('user');
 
     if (!code || !idToken) {
       return NextResponse.json(
@@ -26,24 +24,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    let user: AppleLoginUser | undefined;
-
-    if (userData) {
-      user = JSON.parse(userData) as AppleLoginUser;
-    }
-
-    const bodyData: {
-      user?: AppleLoginUser;
-      code: FormDataEntryValue;
-      id_token: FormDataEntryValue;
-    } = {
-      code,
-      id_token: idToken,
+    const bodyData = {
+      code: code.toString(),
+      id_token: idToken.toString(),
+      user: userData ? JSON.parse(userData.toString()) : undefined,
     };
-
-    if (user) {
-      bodyData.user = user;
-    }
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/login/apple`,
@@ -51,7 +36,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Origin: `${process.env.NEXT_PUBLIC_LOGIN_URL}`,
         },
         body: JSON.stringify(bodyData),
       },
@@ -64,9 +48,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const data = (await res.json()) as LoginResponse;
+    const data = await res.json();
 
-    return NextResponse.json({ data }, { status: res.status });
+    return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
