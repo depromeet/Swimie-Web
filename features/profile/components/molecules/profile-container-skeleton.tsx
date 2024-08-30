@@ -62,7 +62,7 @@ const imgSteyles = css({
   height: '60px',
   flexShrink: '0',
   borderRadius: '999px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const introductionContainerStyles = flex({
@@ -76,14 +76,14 @@ const nameStyles = css({
   width: '80px',
   height: '30px',
   borderRadius: '4px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const introStyles = css({
   width: '200px',
   height: '22px',
   borderRadius: '4px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const followerFollowingContainerStyles = flex({
@@ -103,14 +103,14 @@ const followerFollowingStyles = css({
   width: '35px',
   height: '18px',
   borderRadius: '4px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const followerFollowingButton = css({
   height: '32px',
   alignSelf: 'stretch',
   borderRadius: '4px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const tabContainserStyles = flex({
@@ -132,7 +132,7 @@ const tabStyles = css({
   width: '30px',
   height: '24px',
   borderRadius: '4px',
-  backgroundColor: 'fill.normal',
+  animation: 'skeleton 1.5s infinite',
 });
 
 const contentContainer = flex({
@@ -153,5 +153,5 @@ const contentTextStyles = css({
 const contentImgStyles = css({
   width: '60px',
   height: '60px',
-  backgroundColor: 'fill.strong',
+  animation: 'skeleton 1.5s infinite',
 });
