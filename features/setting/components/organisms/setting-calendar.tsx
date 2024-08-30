@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Radio, RadioChangeEvent } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -23,6 +24,7 @@ export function SettingCalendar({
   selectedDistance,
   onDistanceChange,
 }: SettingCalendarProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [calculatedGoal, setCalculatedGoal] = useState(goal * 0.8);
 
@@ -67,6 +69,7 @@ export function SettingCalendar({
       });
 
       if (response.ok) {
+        void queryClient.refetchQueries({ queryKey: ['currentMember'] });
         router.push('/setting');
       } else {
         console.error('Failed to update goal');
