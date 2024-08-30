@@ -3,16 +3,13 @@ import React, { forwardRef } from 'react';
 
 import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
-// import { useMemberFollowingState } from '@/hooks';
+import { useMemberFollowingState } from '@/hooks';
 import { css, cva } from '@/styled-system/css';
 import { convertTimeToElapsedTime } from '@/utils';
 
 import { useReadNotification } from '../../apis/use-read-notification';
 import { FollowNotificationProps } from '../../types';
 
-//Todo: 추후 알림 내용이 추가될 때 props가 너무 많아질 시, 합성 컴포넌트 도입 고려
-//Todo: 팔로우 api 연결
-//Todo: 클릭 api 처리
 export const FollowNotification = forwardRef<
   HTMLLIElement,
   FollowNotificationProps
@@ -24,30 +21,31 @@ export const FollowNotification = forwardRef<
       nickname,
       profileImageUrl,
       memberId,
-      isFollow,
       createdAt,
       hasRead,
     },
     ref,
   ) => {
-    // const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
-    // const { isFollowing } = useMemberIsFollowing(memberId);
+    const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
+    const { isFollowing } = useMemberIsFollowing(memberId);
     const { mutate: readNotification } = useReadNotification();
 
     const handleListElementClick = () => {
       readNotification({ notificationId, type });
     };
 
+    const handleFollowButtonClick = () => {
+      void toggleFollow(memberId);
+    };
+
     return (
-      <Link href={`/profile/${memberId}`} onClick={handleListElementClick}>
-        <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
-          <div
-            className={css({
-              position: 'relative',
-              width: '40px',
-              height: '40px',
-            })}
-          >
+      <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
+        <Link
+          href={`/profile/${memberId}`}
+          onClick={handleListElementClick}
+          className={css({ display: 'flex' })}
+        >
+          <div className={layoutStyles.profileImage}>
             <ProfileImage
               alt="프로필 사진"
               src={profileImageUrl ?? ''}
@@ -75,26 +73,31 @@ export const FollowNotification = forwardRef<
               {convertTimeToElapsedTime(createdAt)}
             </span>
           </div>
-          {type === 'FOLLOW' &&
-            (isFollow ? (
+        </Link>
+
+        {type === 'FOLLOW' &&
+          (isFollowing ? (
+            <div>
               <Button
                 size="small"
                 label="팔로잉"
                 variant="outlined"
-                buttonType="primary"
+                buttonType="assistive"
                 className={layoutStyles.button}
+                onClick={handleFollowButtonClick}
               />
-            ) : (
-              <Button
-                size="small"
-                label="팔로우"
-                variant="outlined"
-                buttonType="primary"
-                className={layoutStyles.button}
-              />
-            ))}
-        </li>
-      </Link>
+            </div>
+          ) : (
+            <Button
+              size="small"
+              label="팔로우"
+              variant="outlined"
+              buttonType="primary"
+              className={layoutStyles.button}
+              onClick={handleFollowButtonClick}
+            />
+          ))}
+      </li>
     );
   },
 );
@@ -103,7 +106,7 @@ FollowNotification.displayName = 'FollowNotification';
 
 const layoutStyles = {
   total: cva({
-    base: { display: 'flex', position: 'relative', padding: '16px 20px' },
+    base: { position: 'relative', padding: '16px 20px' },
     variants: {
       hasRead: {
         true: {},
@@ -115,8 +118,6 @@ const layoutStyles = {
   }),
   text: cva({
     base: {
-      direction: 'column',
-      justifyContent: 'space-between',
       marginLeft: '16px',
       gap: '4px',
       wordBreak: 'keep-all',
@@ -135,6 +136,7 @@ const layoutStyles = {
   }),
   button: css({
     position: 'absolute',
+    top: '16px',
     right: '20px',
     backgroundColor: 'transparent',
     '&::before': {
@@ -147,6 +149,11 @@ const layoutStyles = {
       backgroundColor: '#3B87F4',
       opacity: 0.05,
     },
+  }),
+  profileImage: css({
+    position: 'relative',
+    width: '40px',
+    height: '40px',
   }),
 };
 
