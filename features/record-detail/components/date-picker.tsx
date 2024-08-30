@@ -1,5 +1,5 @@
 import { DateLeftArrowIcon, DateRightArrowIcon } from '@/components/atoms';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { getFormatDate } from '@/utils';
 
@@ -21,17 +21,26 @@ export const DatePicker = ({
 
   return (
     <div className={containerStyle}>
-      {onClickPrevious && (
-        <button onClick={onClickPrevious} className={buttonStyle}>
-          <DateLeftArrowIcon />
-        </button>
-      )}
+      <button
+        onClick={onClickPrevious}
+        className={buttonStyle({
+          isDisabled: !onClickPrevious,
+        })}
+        disabled={!onClickPrevious}
+      >
+        <DateLeftArrowIcon fill={!onClickPrevious ? '#37383c50' : ''} />
+      </button>
+
       <p className={textStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
-      {onClickNext && (
-        <button onClick={onClickNext} className={buttonStyle}>
-          <DateRightArrowIcon />
-        </button>
-      )}
+      <button
+        onClick={onClickNext}
+        className={buttonStyle({
+          isDisabled: !onClickNext,
+        })}
+        disabled={!onClickNext}
+      >
+        <DateRightArrowIcon fill={!onClickNext ? '#37383c50' : ''} />
+      </button>
     </div>
   );
 };
@@ -47,10 +56,19 @@ const textStyle = css({
   color: 'text.alternative',
 });
 
-const buttonStyle = flex({
-  width: '20px',
-  height: '20px',
-  justify: 'center',
-  align: 'center',
-  cursor: 'pointer',
+const buttonStyle = cva({
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '20px',
+    height: '20px',
+  },
+  variants: {
+    isDisabled: {
+      false: {
+        cursor: 'pointer',
+      },
+    },
+  },
 });
