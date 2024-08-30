@@ -1,5 +1,6 @@
 'use client';
 
+import { LoadingArea } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
 import { useGetNotification } from '../../apis';
@@ -8,7 +9,8 @@ import { CheerNotification } from '../molecules/cheer-notification';
 import { NotificationListSkeleton } from './notification-list-skeleton';
 
 export function NotificationList() {
-  const { ref, isLoading, getByFarNotificationData } = useGetNotification();
+  const { ref, isLoading, isFetchingNextPage, getByFarNotificationData } =
+    useGetNotification();
 
   if (isLoading) return <NotificationListSkeleton />;
   return (
@@ -38,6 +40,7 @@ export function NotificationList() {
             />
           ),
         )}
+      {isFetchingNextPage && <LoadingArea width={30} height={30} />}
     </ol>
   );
 }

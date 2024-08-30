@@ -31,7 +31,7 @@ export function useGetNotification() {
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.cursorCreatedAt : undefined,
     });
-  const { hasNextPage, fetchNextPage } = queryInfo;
+  const { hasNextPage, fetchNextPage, isFetchingNextPage } = queryInfo;
 
   const { ref, inView } = useInView({
     rootMargin: '100px 0px 0px 0px',
@@ -65,5 +65,5 @@ export function useGetNotification() {
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState(lastMemberIdList);
 
-  return { ref, isLoading, getByFarNotificationData };
+  return { ref, isLoading, isFetchingNextPage, getByFarNotificationData };
 }
