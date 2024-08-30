@@ -18,16 +18,18 @@ export function NotificationList() {
       )}
       {!isLoading &&
         getByFarNotificationData.length > 0 &&
-        getByFarNotificationData.map((notification) =>
+        getByFarNotificationData.map((notification, i) =>
           'memoryId' in notification ? (
             <CheerNotification
               ref={ref}
+              assignRef={i === getByFarNotificationData.length - 1}
               key={notification.notificationId}
               {...notification}
             />
           ) : (
             <FollowNotification
               ref={ref}
+              assignRef={i === getByFarNotificationData.length - 1}
               key={notification.notificationId}
               {...notification}
             />
