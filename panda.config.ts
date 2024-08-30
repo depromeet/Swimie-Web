@@ -65,6 +65,10 @@ export default defineConfig({
           '0%': { opacity: 0, transform: 'translateY(10px)' },
           '100%': { opacity: 100, transform: 'translateY(0px)' },
         },
+        cheerFadeIn: {
+          '0%': { opacity: 0, transform: 'translateX(-10px)' },
+          '100%': { opacity: '100%', transform: 'translateX(0px)' },
+        },
       },
     },
   },

@@ -49,6 +49,7 @@ export const DetailCheerModalSection = ({
                 key={item.reactionId}
                 onClick={() => handleClickCheerItem(index)}
                 size="small"
+                isAnimate={true}
               />
             ))}
             {reactions.length > 10 && (
