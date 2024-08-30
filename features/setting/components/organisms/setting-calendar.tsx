@@ -1,3 +1,5 @@
+'use client';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { Radio, RadioChangeEvent } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -81,6 +83,7 @@ export function SettingCalendar({
     }
   };
 
+  // TODO: 추후 캘린더와 라디오 태그 분리 예정
   return (
     <div className={pageContainer}>
       <div className={contentContainer}>
