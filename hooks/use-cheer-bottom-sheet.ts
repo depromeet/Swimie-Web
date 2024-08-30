@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { DetailCheerItemSelected } from '@/features/record-detail';
-import { useCheer, useCheerEligibility } from '@/hooks';
+import { useCheer, useCheerEligibility, usePreventBodyScroll } from '@/hooks';
 
 import { useToast } from './use-toast';
 
@@ -55,17 +55,18 @@ export const useCheerBottomSheet = ({
   onSuccessCheer,
   isIncludeVerification,
 }: UseCheerBottomSheet) => {
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [cheerList, setCheerList] = useState(initialCheerList);
+  const [selectedCheerItem, setSelectedCheerItem] =
+    useState<DetailCheerItemSelected>();
+
   const { mutate: mutateCheer } = useCheer();
   const { data: eligibilityData, refetch: refetchCheerEligibility } =
     useCheerEligibility(
       memoryId,
       isIncludeVerification && isIncludeVerification?.isMyMemory,
     );
-
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [cheerList, setCheerList] = useState(initialCheerList);
-  const [selectedCheerItem, setSelectedCheerItem] =
-    useState<DetailCheerItemSelected>();
+  usePreventBodyScroll({ isOpen: isOpenBottomSheet });
 
   const { toast } = useToast();
 
