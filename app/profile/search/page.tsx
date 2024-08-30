@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 
 import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
+import { css } from '@/styled-system/css';
 
 const DynamicBackButton = dynamic(
   () => import('@/components/molecules').then(({ BackButton }) => BackButton),
@@ -46,10 +47,14 @@ export default function ProfileSearch({
         </HeaderBar.LeftContent>
         <HeaderBar.Title>친구 찾기</HeaderBar.Title>
       </HeaderBar>
-      <article>
+      <article className={containerStyle}>
         <DynamicSearchBarSection keyword={keyword} />
         <DynamicSearchResultSection keyword={keyword} />
       </article>
     </>
   );
 }
+
+const containerStyle = css({
+  pb: 'calc(70px + env(safe-area-inset-bottom))',
+});
