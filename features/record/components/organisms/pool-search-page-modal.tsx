@@ -15,6 +15,8 @@ const PoolSearchResultElement = lazy(() =>
   })),
 );
 
+import { usePreventRouterBack } from '@/hooks';
+
 import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
@@ -42,6 +44,11 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(removeSpecialSymbols(text));
   }, 300);
+
+  usePreventRouterBack({
+    isDirty: pageModalState.isOpen,
+    alterAction: handlers.onClosePageModal,
+  });
 
   return (
     <PageModal

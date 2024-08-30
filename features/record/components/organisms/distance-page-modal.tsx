@@ -12,6 +12,7 @@ import {
   TabItem,
   TextField,
 } from '@/components/molecules';
+import { usePreventRouterBack } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -135,6 +136,11 @@ export function DistancePageModal({
     }
     handlers.onClosePageModal();
   };
+
+  usePreventRouterBack({
+    isDirty: pageModalState.isOpen,
+    alterAction: handlers.onClosePageModal,
+  });
 
   return (
     <PageModal
