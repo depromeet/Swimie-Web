@@ -25,8 +25,8 @@ export const CheerModalItem = ({
         <div className={profile.imageStyle}>
           <ProfileImage
             src={profileImageUrl ?? ''}
-            width={16}
-            height={16}
+            fill
+            sizes="5vw"
             alt="profile image"
             style={{ objectFit: 'cover' }}
           />
@@ -65,6 +65,7 @@ const profile = {
   }),
 
   imageStyle: flex({
+    position: 'relative',
     justify: 'center',
     rounded: 'full',
     w: '16px',
