@@ -139,4 +139,5 @@ const profileImageStyles = css({
   position: 'relative',
   width: '40px',
   height: '40px',
+  flexShrink: 0,
 });

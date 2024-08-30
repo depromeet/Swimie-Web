@@ -23,10 +23,10 @@ export const layoutStyles = {
     variants: {
       type: {
         FOLLOW: {
-          width: '60%',
+          marginRight: '82px',
         },
         FRIEND: {
-          width: '60%',
+          marginRight: '82px',
         },
         CHEER: {},
       },
