@@ -92,9 +92,6 @@ export function Form() {
           ? prevData.totalMeter.toLocaleString() + 'm'
           : undefined,
       });
-      setFormSubInfo({
-        imageFiles: [],
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -133,6 +130,10 @@ export function Form() {
     router.replace(
       `/record/success?editMode=true&memoryId=${Number(memoryId)}`,
     );
+    setFormSubInfo({
+      imageFiles: [],
+      isDistanceLapModified: false,
+    });
   };
 
   const handleRecordMakeSuccess = (memoryRes: {
@@ -144,6 +145,10 @@ export function Form() {
     router.replace(
       `/record/success?rank=${memoryRes.rank}&memoryId=${memoryRes.memoryId}&month=${memoryRes.month}`,
     );
+    setFormSubInfo({
+      imageFiles: [],
+      isDistanceLapModified: false,
+    });
   };
 
   //Todo: 기록 에러 발생 시 처리
