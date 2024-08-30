@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'querystring';
 
+import { setAuthCookies } from '@/apis/server-cookie';
+import { LoginResponse } from '@/types/authType';
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.text();
@@ -42,8 +45,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const data = await res.json();
+    const data = (await res.json()) as LoginResponse;
     console.log(data);
+
+    setAuthCookies(data.data);
 
     return NextResponse.redirect(new URL('/', request.url));
   } catch (error) {
