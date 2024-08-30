@@ -10,15 +10,17 @@ import { CheerUpButton } from '../atoms';
 
 export interface NewsItemWrapperProps {
   memberId: number;
-  isRecentNews: boolean;
   profileImageUrl?: string;
   nickname: string;
+  memoryId: number;
   recordAt: string;
   createdAt: string;
+  isRecentNews: boolean;
   isLast?: boolean;
 }
 
 export const NewsItemWrapper = ({
+  memoryId,
   isRecentNews,
   profileImageUrl,
   nickname,
@@ -58,7 +60,7 @@ export const NewsItemWrapper = ({
         </div>
       </div>
       {children}
-      <CheerUpButton />
+      <CheerUpButton memoryId={memoryId} nickname={nickname} />
     </li>
   );
 };

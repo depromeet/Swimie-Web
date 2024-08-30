@@ -1,13 +1,54 @@
 import { Button } from '@/components/atoms';
+import { CheerBottomSheet, CheerProgress } from '@/components/molecules';
+import { useCheerBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-export const CheerUpButton = () => {
+interface CheerUpButtonProps {
+  memoryId: number;
+  nickname: string;
+}
+
+export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
+  const {
+    cheerList,
+    selectedCheerItem,
+    handleClickCheerItem,
+    handleClickSendCheer,
+    handleChangeSelectedItem,
+    isOpenBottomSheet,
+    handleClickCloseBottomSheet,
+    handleClickOpenBottomSheet,
+  } = useCheerBottomSheet({
+    memoryId,
+  });
+
   return (
-    <Button
-      label={'응원 보내기 👏'}
-      buttonType="primary"
-      className={buttonStyles}
-    />
+    <>
+      <Button
+        label={'응원 보내기 👏'}
+        buttonType="primary"
+        className={buttonStyles}
+        onClick={handleClickOpenBottomSheet}
+      />
+
+      {/* NOTE: 응원 Progress 모달 */}
+      <CheerProgress
+        isOpen={Boolean(selectedCheerItem)}
+        onChangeOpen={handleChangeSelectedItem}
+        authorName={nickname}
+        cheerItem={selectedCheerItem}
+      />
+
+      {/* NOTE: 응원 바텀시트 */}
+      <CheerBottomSheet
+        header={{ title: '응원 보내기' }}
+        isOpen={isOpenBottomSheet}
+        onClose={handleClickCloseBottomSheet}
+        cheerList={cheerList}
+        onClickCheerItem={handleClickCheerItem}
+        onClickSendCheer={handleClickSendCheer}
+      />
+    </>
   );
 };
 
