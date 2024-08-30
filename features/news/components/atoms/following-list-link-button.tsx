@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 
 import { DefaultProfileIcon, PersonsIcon } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
+import { useCurrentMemberInfo } from '@/hooks';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -12,9 +13,11 @@ const MAX_NUMBER_OF_PROFILES = 3;
 
 export const FollowingListLinkButton = () => {
   const { data: followingSummaryData } = useFollowingSummary();
+  const { data: currentMemberInfoData } = useCurrentMemberInfo();
 
-  if (!followingSummaryData) return null;
+  if (!followingSummaryData || !currentMemberInfoData) return null;
 
+  const { id: currentMemberId } = currentMemberInfoData.data;
   const { followings, followingCount } = followingSummaryData.data;
   const indexOffset = MAX_NUMBER_OF_PROFILES - followings.length;
   const nodeList: Array<ReactNode> = [
@@ -52,7 +55,10 @@ export const FollowingListLinkButton = () => {
   );
 
   return (
-    <Link href="/" className={linkStyles}>
+    <Link
+      href={`/profile/${currentMemberId}/follow?tab=following`}
+      className={linkStyles}
+    >
       {nodeList.map((node) => node)}
     </Link>
   );
