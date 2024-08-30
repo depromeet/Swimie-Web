@@ -1,14 +1,21 @@
 export type NotificationType = 'CHEER' | 'FOLLOW' | 'FRIEND';
 
-export interface NotificationElementProps {
+interface NotificationProps {
   type: NotificationType;
   notificationId: number;
   nickname: string;
-  profileImageUrl?: string;
-  memberId?: number;
-  memoryId?: number;
-  content?: string;
-  createdAt: string;
-  recordCreatedAt?: string;
   hasRead: boolean;
+  createdAt: string;
+}
+
+export interface CheerNotificationProps extends NotificationProps {
+  memoryId: number;
+  content: string;
+  recordCreatedAt: string;
+}
+
+export interface FollowNotificationProps extends NotificationProps {
+  profileImageUrl: string;
+  memberId: number;
+  isFollow: boolean;
 }

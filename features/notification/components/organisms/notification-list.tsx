@@ -3,7 +3,8 @@
 import { css } from '@/styled-system/css';
 
 import useGetNotification from '../../apis/use-get-notification';
-import { NoNotification, NotificationElement } from '../molecules';
+import { FollowNotification, NoNotification } from '../molecules';
+import { CheerNotification } from '../molecules/cheer-notification';
 
 export function NotificationList() {
   const { ref, isLoading, getByFarNotificationData } = useGetNotification();
@@ -17,13 +18,21 @@ export function NotificationList() {
       )}
       {!isLoading &&
         getByFarNotificationData.length > 0 &&
-        getByFarNotificationData.map((notification) => (
-          <NotificationElement
-            ref={ref}
-            key={notification.notificationId}
-            {...notification}
-          />
-        ))}
+        getByFarNotificationData.map((notification) =>
+          'memoryId' in notification ? (
+            <CheerNotification
+              ref={ref}
+              key={notification.notificationId}
+              {...notification}
+            />
+          ) : (
+            <FollowNotification
+              ref={ref}
+              key={notification.notificationId}
+              {...notification}
+            />
+          ),
+        )}
     </ul>
   );
 }
