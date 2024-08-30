@@ -260,7 +260,10 @@ export function Form() {
             placeholder="(선택)"
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
-            onClick={() => handlers.openPoolSearchPageModal()}
+            onClick={() => {
+              window.history.pushState(null, '', '#pool-page-modal');
+              handlers.openPoolSearchPageModal();
+            }}
           />
           <SelectTextField
             fieldName="laneMeter"
@@ -273,7 +276,10 @@ export function Form() {
             placeholder="거리입력(선택)"
             label="수영 거리"
             subText={modifyStrokesData(strokes)}
-            onClick={() => handlers.openDistancePageModal()}
+            onClick={() => {
+              window.history.pushState(null, '', '#distance-page-modal');
+              handlers.openDistancePageModal();
+            }}
           />
           <div className={buttonStyles.layout}>
             <Button

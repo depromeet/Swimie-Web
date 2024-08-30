@@ -12,7 +12,6 @@ import {
   TabItem,
   TextField,
 } from '@/components/molecules';
-import { usePreventRouterBack } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -87,6 +86,9 @@ export function DistancePageModal({
   ];
 
   const handleBackArrowClick = () => {
+    const currentUrl = new URL(window.location.href);
+    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
+    window.history.replaceState(null, '', newUrl);
     handlers.onClosePageModal();
   };
 
@@ -135,12 +137,10 @@ export function DistancePageModal({
         );
     }
     handlers.onClosePageModal();
+    const currentUrl = new URL(window.location.href);
+    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
+    window.history.replaceState(null, '', newUrl);
   };
-
-  usePreventRouterBack({
-    isDirty: pageModalState.isOpen,
-    alterAction: handlers.onClosePageModal,
-  });
 
   return (
     <PageModal
