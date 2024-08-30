@@ -59,7 +59,10 @@ export const useCheerBottomSheet = ({
 }: UseCheerBottomSheet) => {
   const { mutate: mutateCheer } = useCheer();
   const { data: eligibilityData, refetch: refetchCheerEligibility } =
-    useCheerEligibility(memoryId, isIncludeVerification?.isMyMemory);
+    useCheerEligibility(
+      memoryId,
+      isIncludeVerification && isIncludeVerification?.isMyMemory,
+    );
 
   const [cheerList, setCheerList] = useState(initialCheerList);
   const [selectedCheerItem, setSelectedCheerItem] =
