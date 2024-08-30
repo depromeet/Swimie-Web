@@ -10,8 +10,8 @@ import { flex } from '@/styled-system/patterns';
 export function NotificationButton() {
   return (
     <Link href="/notification" className={linkLayoutStyles}>
-      <BellIcon />
       <NotificationCount />
+      <BellIcon />
     </Link>
   );
 }
