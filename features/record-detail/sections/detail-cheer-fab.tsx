@@ -4,11 +4,17 @@ import { CheerBottomSheet, CheerProgress } from '@/components/molecules';
 import { useCheerBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { useCheerPreviewList } from '../apis';
+import { useCheerList, useCheerPreviewList } from '../apis';
 import { RecordDetailType } from '../types';
 
 export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
   const { refetch: refetchCheer } = useCheerPreviewList(data.id);
+  const { refetch: refetchCheerList } = useCheerList(data.id);
+
+  const handleSuccessCheer = () => {
+    void refetchCheer();
+    void refetchCheerList();
+  };
 
   const {
     cheerList,
@@ -17,16 +23,15 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
     handleClickSendCheer,
     handleChangeSelectedItem,
     isOpenBottomSheet,
-    closeBottomSheet,
+    handleClickCloseBottomSheet,
     handleClickOpenBottomSheet,
   } = useCheerBottomSheet({
     memoryId: data.id,
-    onRefetch: refetchCheer,
+    onSuccessCheer: handleSuccessCheer,
     isIncludeVerification: { isMyMemory: data.isMyMemory },
   });
 
   const { isMyMemory } = data;
-
   return (
     <>
       {/* NOTE: 응원 FAB Button */}
@@ -51,7 +56,7 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
         isOpen={isOpenBottomSheet}
-        onClose={closeBottomSheet}
+        onClose={handleClickCloseBottomSheet}
         cheerList={cheerList}
         onClickCheerItem={handleClickCheerItem}
         onClickSendCheer={handleClickSendCheer}

@@ -1,12 +1,10 @@
 'use client';
 
-import { RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { DetailCheerItemSelected } from '@/features/record-detail';
 import { useCheer, useCheerEligibility } from '@/hooks';
 
-import { useBottomSheet } from './use-bottom-sheet';
 import { useToast } from './use-toast';
 
 const initialCheerList = [
@@ -47,14 +45,14 @@ const initialCheerList = [
 
 type UseCheerBottomSheet = {
   memoryId: number;
-  onRefetch?: (options?: RefetchOptions) => Promise<unknown>;
+  onSuccessCheer?: () => void;
   isIncludeVerification?: {
     isMyMemory?: boolean;
   };
 };
 export const useCheerBottomSheet = ({
   memoryId,
-  onRefetch,
+  onSuccessCheer,
   isIncludeVerification,
 }: UseCheerBottomSheet) => {
   const { mutate: mutateCheer } = useCheer();
@@ -64,16 +62,16 @@ export const useCheerBottomSheet = ({
       isIncludeVerification && isIncludeVerification?.isMyMemory,
     );
 
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [cheerList, setCheerList] = useState(initialCheerList);
   const [selectedCheerItem, setSelectedCheerItem] =
     useState<DetailCheerItemSelected>();
 
   const { toast } = useToast();
-  const {
-    isOpen: isOpenBottomSheet,
-    open: openBottomSheet,
-    close: closeBottomSheet,
-  } = useBottomSheet();
+
+  const handleClickCloseBottomSheet = () => {
+    setIsOpenBottomSheet(false);
+  };
 
   const handleClickOpenBottomSheet = () => {
     const isRequireVerification =
@@ -84,7 +82,7 @@ export const useCheerBottomSheet = ({
       return;
     }
 
-    openBottomSheet();
+    setIsOpenBottomSheet(true);
   };
 
   const handleClickCheerItem = (index: number) => {
@@ -115,9 +113,9 @@ export const useCheerBottomSheet = ({
           }
 
           setSelectedCheerItem(selectedCheerItem);
-          closeBottomSheet();
+          handleClickCloseBottomSheet();
           void refetchCheerEligibility();
-          void onRefetch?.();
+          onSuccessCheer?.();
         },
       },
     );
@@ -135,7 +133,7 @@ export const useCheerBottomSheet = ({
     handleClickSendCheer,
     handleChangeSelectedItem,
     handleClickOpenBottomSheet,
+    handleClickCloseBottomSheet,
     isOpenBottomSheet,
-    closeBottomSheet,
   };
 };
