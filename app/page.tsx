@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import {
   GlobalNavigationBar,
@@ -8,34 +8,43 @@ import {
   LogoButton,
   NotificationButton,
 } from '@/components/molecules';
-import { SettingButton } from '@/components/molecules/header-bar/header-bar-setting-button';
-import {
-  MainTab,
-  TabItemInfo,
-  TimeLine,
-  UserCalendarProfile,
-} from '@/features/main';
+import { SettingButton } from '@/components/molecules';
+import { MainTabType, TimeLineSkeleton } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-const SELECT_CALENDAR_VIEW = 0;
-const SELECT_TIMELINE_VIEW = 1;
+const DynamicTabSection = dynamic(
+  () => import('@/features/main').then(({ MainTab }) => MainTab),
+  {
+    ssr: false,
+  },
+);
 
-export default function Home() {
-  const [selected, setSelected] = useState<number>(SELECT_CALENDAR_VIEW);
-  const tabInfos: Array<TabItemInfo> = [
-    {
-      text: '캘린더',
-      selected: selected === SELECT_CALENDAR_VIEW,
-      onClick: () => setSelected(SELECT_CALENDAR_VIEW),
-    },
-    {
-      text: '타임라인',
-      selected: selected === SELECT_TIMELINE_VIEW,
-      onClick: () => setSelected(SELECT_TIMELINE_VIEW),
-    },
-  ];
-  const isSelectedCalendarView = selected === SELECT_CALENDAR_VIEW;
+const DynamicTimeLine = dynamic(
+  () => import('@/features/main').then(({ TimeLine }) => TimeLine),
+  {
+    ssr: false,
+    loading: () => <TimeLineSkeleton />,
+  },
+);
+
+// TODO: Calendar loading skeleton 변경
+const DynamicUserCalendarProfile = dynamic(
+  () =>
+    import('@/features/main').then(
+      ({ UserCalendarProfile }) => UserCalendarProfile,
+    ),
+  {
+    ssr: false,
+  },
+);
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { tab: MainTabType };
+}) {
+  const { tab = 'calendar' } = searchParams;
 
   return (
     <>
@@ -50,10 +59,14 @@ export default function Home() {
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>
-      <MainTab tabInfos={tabInfos} />
+      <DynamicTabSection tab={tab} />
       <main className={styles}>
         <section className={contentStyles}>
-          {isSelectedCalendarView ? <UserCalendarProfile /> : <TimeLine />}
+          {tab === 'calendar' ? (
+            <DynamicUserCalendarProfile />
+          ) : (
+            <DynamicTimeLine />
+          )}
         </section>
       </main>
       <GlobalNavigationBar />
