@@ -1,12 +1,21 @@
-import { LoadingSpinner } from '@/components/atoms';
+import dynamic from 'next/dynamic';
+
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+const DynamicLoadingSpinner = dynamic(
+  () =>
+    import('@/components/atoms').then(({ LoadingSpinner }) => LoadingSpinner),
+  {
+    ssr: false,
+  },
+);
 
 export const LoginLoading = () => {
   return (
     <>
       <div className={containerStyle}>
-        <LoadingSpinner />
+        <DynamicLoadingSpinner />
       </div>
       <div className={dimStyle} />
     </>
