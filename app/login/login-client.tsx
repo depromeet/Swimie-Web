@@ -97,11 +97,10 @@ export default function LoginClient() {
               <div className={characterContainer}>
                 <Image
                   width={600}
-                  height={383.245}
                   alt="swimie character"
                   src={LoginMainCharacter}
                   className={css({
-                    position: 'relative',
+                    objectFit: 'cover',
                   })}
                 />
               </div>
@@ -148,6 +147,7 @@ const loginPage = flex({
   alignItems: 'center',
   height: '100dvh',
   gap: '50px',
+  overflow: 'hidden',
 });
 
 const logoStyles = flex({
@@ -166,10 +166,11 @@ const logoContainer = flex({
 
 const characterContainer = flex({
   position: 'relative',
-  width: '100%',
+  width: 'max-content',
   height: 'auto',
   direction: 'column',
   alignItems: 'center',
+  overflow: 'hidden',
 });
 
 const titleStyles = css({
