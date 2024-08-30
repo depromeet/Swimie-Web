@@ -1,8 +1,10 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
+
+import { useMemberFollowingState } from '@/hooks';
 
 import { CheerNotificationProps, FollowNotificationProps } from '../types';
 import { NotificationResponse } from './dto';
@@ -48,6 +50,20 @@ export default function useGetNotification() {
     | CheerNotificationProps
     | FollowNotificationProps
   )[] = rawNotificationData;
+
+  const lastPageCount = data?.pages.length ?? 0;
+  const lastMemberIdList = useMemo(
+    () =>
+      data?.pages[lastPageCount - 1].data?.notifications
+        ?.flatMap((notification) =>
+          'memberId' in notification ? notification.memberId : null,
+        )
+        ?.filter((id) => id !== null) ?? [],
+    [lastPageCount, data?.pages],
+  );
+
+  const { useSyncFollowingListState } = useMemberFollowingState();
+  useSyncFollowingListState(lastMemberIdList);
 
   return { ref, isLoading, getByFarNotificationData };
 }
