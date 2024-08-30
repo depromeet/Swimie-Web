@@ -22,7 +22,7 @@ async function getNotification(cursorCreatedAt: unknown) {
   return res.json();
 }
 
-export default function useGetNotification() {
+export function useGetNotification() {
   const { data, isLoading, ...queryInfo } =
     useInfiniteQuery<NotificationResponse>({
       queryKey: ['useGetNotification'],
