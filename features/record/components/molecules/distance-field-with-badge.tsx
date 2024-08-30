@@ -3,6 +3,7 @@
 import { TextField } from '@/components/molecules';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+import { StrokeName } from '@/types';
 
 import { SwimBadge } from '../atoms';
 import { StrokeDistanceFieldsProps } from '../organisms/stroke-distance-fields';
@@ -10,7 +11,7 @@ import { StrokeDistanceFieldsProps } from '../organisms/stroke-distance-fields';
 export interface DistanceFieldWithBadgeProps
   extends Omit<StrokeDistanceFieldsProps, 'strokes'> {
   index: number;
-  label: string;
+  label: StrokeName;
   value: number;
   className?: string;
 }
@@ -39,7 +40,7 @@ export function DistanceFieldWithBadge({
   return (
     <div className={cx(layoutStyles.field, className)}>
       <div className={layoutStyles.badge}>
-        <SwimBadge />
+        <SwimBadge type={label} />
         <span className={labelStyles}>{label}</span>
       </div>
       <TextField
