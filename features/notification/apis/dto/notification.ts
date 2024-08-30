@@ -1,9 +1,9 @@
 import { Response } from '@/apis';
 
-import { NotificationElementProps } from '../../types';
+import { CheerNotificationProps, FollowNotificationProps } from '../../types';
 
 export type NotificationResponse = Response<{
-  notifications: NotificationElementProps[];
+  notifications: (CheerNotificationProps | FollowNotificationProps)[];
   cursorCreatedAt: string;
   hasNext: boolean;
 }>;

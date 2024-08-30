@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { NotificationElementProps } from '../types';
+import { CheerNotificationProps, FollowNotificationProps } from '../types';
 import { NotificationResponse } from './dto';
 
 async function getNotification(cursorCreatedAt: unknown) {
@@ -44,8 +44,10 @@ export default function useGetNotification() {
 
   const rawNotificationData =
     data?.pages.map((page) => page.data.notifications).flat() || [];
-  const getByFarNotificationData: NotificationElementProps[] =
-    rawNotificationData;
+  const getByFarNotificationData: (
+    | CheerNotificationProps
+    | FollowNotificationProps
+  )[] = rawNotificationData;
 
   return { ref, isLoading, getByFarNotificationData };
 }
