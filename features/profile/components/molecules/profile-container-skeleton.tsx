@@ -37,7 +37,8 @@ export function ProfileContainerSkeleton() {
         </div>
       </div>
       <div className={contentContainer}>
-        <div className={contentTextStyles}>기록을 불러오고 있어요</div>
+        {/* NOTE: 임시 주석 */}
+        {/* <div className={contentTextStyles}>기록을 불러오고 있어요</div> */}
         <div className={contentImgStyles} />
       </div>
     </>
@@ -143,12 +144,12 @@ const contentContainer = flex({
   width: '100%',
 });
 
-const contentTextStyles = css({
-  alignSelf: 'stretch',
-  textAlign: 'center',
-  color: 'text.normal',
-  textStyle: 'body2.normal',
-});
+// const contentTextStyles = css({
+//   alignSelf: 'stretch',
+//   textAlign: 'center',
+//   color: 'text.normal',
+//   textStyle: 'body2.normal',
+// });
 
 const contentImgStyles = css({
   width: '60px',
