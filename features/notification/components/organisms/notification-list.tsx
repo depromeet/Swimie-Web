@@ -2,12 +2,15 @@
 
 import { css } from '@/styled-system/css';
 
-import useGetNotification from '../../apis/use-get-notification';
+import { useGetNotification } from '../../apis';
 import { FollowNotification, NoNotification } from '../molecules';
 import { CheerNotification } from '../molecules/cheer-notification';
+import { NotificationListSkeleton } from './notification-list-skeleton';
 
 export function NotificationList() {
   const { ref, isLoading, getByFarNotificationData } = useGetNotification();
+
+  if (isLoading) return <NotificationListSkeleton />;
   return (
     <ol className={layoutStyles}>
       {!isLoading && getByFarNotificationData.length === 0 && (
