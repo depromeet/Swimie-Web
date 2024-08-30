@@ -9,7 +9,7 @@ import { CheerNotification } from '../molecules/cheer-notification';
 export function NotificationList() {
   const { ref, isLoading, getByFarNotificationData } = useGetNotification();
   return (
-    <ul className={layoutStyles}>
+    <ol className={layoutStyles}>
       {!isLoading && getByFarNotificationData.length === 0 && (
         <NoNotification
           mainText="아직 받은 알림이 없어요"
@@ -33,7 +33,7 @@ export function NotificationList() {
             />
           ),
         )}
-    </ul>
+    </ol>
   );
 }
 
