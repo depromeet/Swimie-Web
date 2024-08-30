@@ -19,6 +19,7 @@ export function SubInfoTextFields() {
             name: 'heartRate',
           }) as number
         }
+        maxLength={3}
         inputType="number"
         label="심박수"
         unit="BPM"
