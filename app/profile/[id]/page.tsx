@@ -1,13 +1,12 @@
 'use client';
 
-import { LoadingArea } from '@/components/atoms';
 import {
   BackButton,
   GlobalNavigationBar,
   HeaderBar,
 } from '@/components/molecules';
 import { SettingButton } from '@/components/molecules';
-import { useProfileData } from '@/features/profile';
+import { ProfileContainerSkeleton, useProfileData } from '@/features/profile';
 import { MyProfile } from '@/features/profile/components/organisms/my-page';
 import { OtherPage } from '@/features/profile/components/organisms/other-page';
 import { useMemberFollowingState } from '@/hooks';
@@ -28,40 +27,57 @@ export default function Profile({ params }: Mypage) {
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState([Number(params.id)]);
 
-  const isMyProfile = profileData?.isMyProfile;
-
-  if (profileError) {
-    return <div>멤버가 존재하지 않아요.</div>;
-  }
   if (isProfileLoading) {
-    return <LoadingArea />;
+    return (
+      <article className={containerStyle}>
+        <HeaderBar>
+          <HeaderBar.LeftContent>
+            <BackButton />
+          </HeaderBar.LeftContent>
+        </HeaderBar>
+        <ProfileContainerSkeleton />
+        <GlobalNavigationBar />
+      </article>
+    );
   }
 
-  if (!profileData) {
-    return <div>Profile data is not available.</div>;
+  // TODO: 404 page
+  if (profileError || !profileData) {
+    return (
+      <article className={containerStyle}>
+        <HeaderBar>
+          <HeaderBar.LeftContent>
+            <BackButton />
+          </HeaderBar.LeftContent>
+        </HeaderBar>
+        <div className={css({ padding: '20px', textAlign: 'center' })}>
+          멤버가 존재하지 않아요.
+        </div>
+        <GlobalNavigationBar />
+      </article>
+    );
   }
+
+  const isMyProfile = profileData.isMyProfile;
 
   return (
     <article className={containerStyle}>
-      {isMyProfile ? (
-        <>
-          <HeaderBar>
-            <HeaderBar.RightContent className={css({ right: '20px' })}>
-              {[{ component: <SettingButton />, key: 'setting' }]}
-            </HeaderBar.RightContent>
-          </HeaderBar>
-          <MyProfile profileData={profileData} />
-        </>
-      ) : (
-        <>
-          <HeaderBar>
-            <HeaderBar.LeftContent>
-              <BackButton />
-            </HeaderBar.LeftContent>
+      <HeaderBar>
+        {isMyProfile ? (
+          <HeaderBar.RightContent className={css({ right: '20px' })}>
+            {[{ component: <SettingButton />, key: 'setting' }]}
+          </HeaderBar.RightContent>
+        ) : (
+          <HeaderBar.LeftContent>
             <BackButton />
-          </HeaderBar>
-          <OtherPage profileData={profileData} />
-        </>
+          </HeaderBar.LeftContent>
+        )}
+      </HeaderBar>
+
+      {isMyProfile ? (
+        <MyProfile profileData={profileData} />
+      ) : (
+        <OtherPage profileData={profileData} />
       )}
       <GlobalNavigationBar />
     </article>
