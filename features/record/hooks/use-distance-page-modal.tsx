@@ -3,6 +3,8 @@
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
+import { StrokeName } from '@/types';
+
 import { laneOptions, strokeOptions } from '../constants';
 import { isDistancePageModalOpen } from '../store';
 import { formSubInfoState } from '../store/form-sub-info';
@@ -79,7 +81,7 @@ export function useDistancePageModal<T>(
         )
           setFormSubInfo((prev) => ({ ...prev, isDistanceLapModified: true }));
         defaultStrokes.forEach((strokes) => {
-          const index = strokeOptions.indexOf(strokes.name);
+          const index = strokeOptions.indexOf(strokes.name as StrokeName);
           setStrokes((prev) => {
             const updatedStrokes = [...prev];
             updatedStrokes[index] = {
