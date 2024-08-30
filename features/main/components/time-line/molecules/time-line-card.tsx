@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
