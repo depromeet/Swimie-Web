@@ -1,4 +1,5 @@
-import { BellIcon } from '@/components/atoms';
+import { Image } from '@/components/atoms';
+import NotificationImage from '@/public/images/notification.png';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -11,7 +12,12 @@ export function NoNotification({ mainText, subText }: NoAlarmProps) {
   return (
     <section className={layoutStyles.total}>
       <div className={layoutStyles.content}>
-        <BellIcon width={80} height={80} />
+        <Image
+          src={NotificationImage}
+          width={96}
+          height={96}
+          alt="empty notification"
+        />
         <h3 className={textStyles.main}>{mainText}</h3>
         <p className={textStyles.sub}>{subText}</p>
       </div>
