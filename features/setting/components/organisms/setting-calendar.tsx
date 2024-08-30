@@ -39,6 +39,10 @@ export function SettingCalendar({
     onDistanceChange(selectedValue);
   };
 
+  const handleListItemClick = (value: number) => {
+    onDistanceChange(value);
+  };
+
   const dayKo: DayType[] = ['empty', '월', '화', '수', '목', '금', 'empty'];
   const dayNum = ['0', '1', '2', '3', '4', '5', '6'];
 
@@ -79,6 +83,7 @@ export function SettingCalendar({
     }
   };
 
+  // TODO: 추후 캘린더와 라디오 태그 분리 예정
   return (
     <div className={pageContainer}>
       <div className={contentContainer}>
@@ -110,26 +115,29 @@ export function SettingCalendar({
               </div>
             </div>
             <div>
-              하루에 <span className={goalStyles}>{calculatedGoal}m </span>
+              하루에{' '}
+              <span className={goalStyles}>
+                {calculatedGoal.toLocaleString()}m{' '}
+              </span>
               수영하면 이만큼 표시돼요
             </div>
           </div>
-          <Radio.Group
-            onChange={handleDistanceChange}
-            value={selectedDistance}
-            className={css({ width: '100%' })}
-          >
-            <ListItem text="1,000m">
-              <Radio value={1000} />
-            </ListItem>
-            <ListItem text="3,000m">
-              <Radio value={3000} />
-            </ListItem>
-            <ListItem text="5,000m">
-              <Radio value={5000} />
-            </ListItem>
-          </Radio.Group>
         </div>
+        <Radio.Group
+          onChange={handleDistanceChange}
+          value={selectedDistance}
+          className={listItemWrapperStyles}
+        >
+          <ListItem text="1,000m" onClick={() => handleListItemClick(1000)}>
+            <Radio value={1000} />
+          </ListItem>
+          <ListItem text="3,000m" onClick={() => handleListItemClick(3000)}>
+            <Radio value={3000} />
+          </ListItem>
+          <ListItem text="5,000m" onClick={() => handleListItemClick(5000)}>
+            <Radio value={5000} />
+          </ListItem>
+        </Radio.Group>
       </div>
       {selectedDistance !== goal && (
         <div className={buttonWrapper}>
@@ -236,6 +244,14 @@ const dayStyles = cva({
   },
 });
 
+const listItemWrapperStyles = flex({
+  padding: '16px 0px',
+  direction: 'column',
+  alignItems: 'flex-start',
+  width: '100%',
+  cursor: 'pointer',
+});
+
 const numContainer = flex({
   direction: 'column',
   alignItems: 'center',
@@ -263,4 +279,5 @@ const imgContainer = flex({
 
 const goalStyles = css({
   color: 'primary.swim.총거리.default',
+  fontWeight: '500',
 });
