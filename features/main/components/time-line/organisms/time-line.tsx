@@ -41,7 +41,7 @@ export const TimeLine = () => {
   if (isLoading) return <TimeLineSkeleton />;
   return (
     <>
-      {!isEmptyTimeLine ? (
+      {isEmptyTimeLine ? (
         <div className={cx(fullspaceStyles, iconContainer)}>
           <Image
             src={EmptyTimeLineCharacterImage}
@@ -104,7 +104,7 @@ const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   return result;
 };
 
-const fullspaceStyles = css({ pt: '55%', width: 'full', height: 'full' });
+const fullspaceStyles = css({ pt: '40%', width: 'full', height: 'full' });
 
 const iconContainer = flex({
   direction: 'column',
