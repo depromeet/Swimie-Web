@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { forwardRef } from 'react';
 
 import { Button } from '@/components/atoms';
-import { UserImageIcon } from '@/components/atoms/icons/user-image-icon';
+import { ProfileImage } from '@/components/molecules';
 import { css, cva } from '@/styled-system/css';
 import {
   convertTimeToElapsedTime,
@@ -36,7 +36,7 @@ export const NotificationElement = forwardRef<
     ref,
   ) => {
     //사용하지 않는 변수 오류 방지 위해 임시로 작성
-    console.log(notificationId, profileImageUrl);
+    console.log(notificationId);
     const { mutate: readNotification } = useReadNotification();
 
     const route =
@@ -52,7 +52,21 @@ export const NotificationElement = forwardRef<
       <Link href={route} onClick={handleListElementClick}>
         <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
           {type === 'FOLLOW' || type === 'FRIEND' ? (
-            <UserImageIcon width={40} height={40} />
+            <div
+              className={css({
+                position: 'relative',
+                width: '40px',
+                height: '40px',
+              })}
+            >
+              <ProfileImage
+                alt="프로필 사진"
+                src={profileImageUrl ?? ''}
+                fill
+                sizes="20vw"
+                className={css({ borderRadius: 'full', objectFit: 'cover' })}
+              />
+            </div>
           ) : (
             <CheerUpIcon />
           )}
