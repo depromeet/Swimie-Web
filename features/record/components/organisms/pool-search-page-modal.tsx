@@ -15,6 +15,8 @@ const PoolSearchResultElement = lazy(() =>
   })),
 );
 
+import { useRouter } from 'next/navigation';
+
 import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
@@ -31,6 +33,7 @@ interface PoolSearchPageModalProps {
  * @param title 수영 검색 page-modal 제목
  */
 export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
+  const router = useRouter();
   const { pageModalRef, pageModalState, handlers } = usePoolSearchPageModal();
   const [poolSearchText, setPoolSearchText] = useState('');
 
@@ -40,9 +43,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     data?.data.searchedPools.length === 0;
 
   const handleBackArrowClick = () => {
-    const currentUrl = new URL(window.location.href);
-    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
-    window.history.replaceState(null, '', newUrl);
+    router.back();
     handlers.onClosePageModal();
   };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/navigation';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -32,6 +33,7 @@ export function DistancePageModal({
   defaultTotalMeter,
   defaultTotalLap,
 }: DistancePageModalProps) {
+  const router = useRouter();
   const { setValue, control } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
 
@@ -85,14 +87,8 @@ export function DistancePageModal({
     },
   ];
 
-  const historyReplace = () => {
-    const currentUrl = new URL(window.location.href);
-    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
-    window.history.replaceState(null, '', newUrl);
-  };
-
   const handleBackArrowClick = () => {
-    historyReplace();
+    router.back();
     handlers.onClosePageModal();
   };
 
@@ -141,7 +137,7 @@ export function DistancePageModal({
         );
     }
     handlers.onClosePageModal();
-    historyReplace();
+    router.back();
   };
 
   return (
