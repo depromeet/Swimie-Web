@@ -3,12 +3,13 @@
 import { css } from '@/styled-system/css';
 
 import useGetNotification from '../../apis/use-get-notification';
-import { NoNotification, NotificationElement } from '../molecules';
+import { FollowNotification, NoNotification } from '../molecules';
+import { CheerNotification } from '../molecules/cheer-notification';
 
 export function NotificationList() {
   const { ref, isLoading, getByFarNotificationData } = useGetNotification();
   return (
-    <ul className={layoutStyles}>
+    <ol className={layoutStyles}>
       {!isLoading && getByFarNotificationData.length === 0 && (
         <NoNotification
           mainText="아직 받은 알림이 없어요"
@@ -17,14 +18,24 @@ export function NotificationList() {
       )}
       {!isLoading &&
         getByFarNotificationData.length > 0 &&
-        getByFarNotificationData.map((notification) => (
-          <NotificationElement
-            ref={ref}
-            key={notification.notificationId}
-            {...notification}
-          />
-        ))}
-    </ul>
+        getByFarNotificationData.map((notification, i) =>
+          'memoryId' in notification ? (
+            <CheerNotification
+              ref={ref}
+              assignRef={i === getByFarNotificationData.length - 1}
+              key={notification.notificationId}
+              {...notification}
+            />
+          ) : (
+            <FollowNotification
+              ref={ref}
+              assignRef={i === getByFarNotificationData.length - 1}
+              key={notification.notificationId}
+              {...notification}
+            />
+          ),
+        )}
+    </ol>
   );
 }
 

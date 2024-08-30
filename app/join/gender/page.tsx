@@ -54,7 +54,7 @@ export default function JoinPage() {
       const responseData = (await response.json()) as GenderResponse;
 
       if (responseData.status === 200) {
-        router.push('/');
+        router.push('/join/finish');
       } else {
         console.error('Unexpected response status:', responseData.status);
       }
@@ -65,7 +65,7 @@ export default function JoinPage() {
 
   return (
     <div>
-      <HeaderBar className={headerStyles}>
+      <HeaderBar>
         <HeaderBar.LeftContent>
           <BackButton />
         </HeaderBar.LeftContent>
@@ -105,10 +105,6 @@ export default function JoinPage() {
     </div>
   );
 }
-
-const headerStyles = css({
-  marginBottom: '24px',
-});
 
 const pageStyles = flex({
   direction: 'column',

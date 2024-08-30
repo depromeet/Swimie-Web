@@ -1,9 +1,9 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 
-import { Button, Image } from '@/components/atoms';
-import { BottomSheet } from '@/components/molecules';
+import { Button } from '@/components/atoms';
+import { BottomSheet, ProfileImage } from '@/components/molecules';
 import {
   defaultProfileImages,
   ProfileIndexType,
@@ -20,21 +20,13 @@ import { DefaultProfile } from '../atoms/default-profile';
 export function ProfileImageBottomSheet({
   isOpen,
   onClose,
+  //api로 받아온 현재 프로필
+  currentProfileImage,
   onChangeFile,
   onChangeImage,
-  onChangeDefaultProfileIndex,
 }: ProfileImageBottomSheetProps) {
-  const {
-    image,
-    file,
-    isProfileImageSet,
-    fileInput,
-    resetImageInfo,
-    handlers,
-  } = useProfileImageBottomSheet();
-
-  const [defaultProfileIndex, setDefaultProfileIndex] =
-    useState<ProfileIndexType>(0);
+  const { image, file, fileInput, resetFile, handlers } =
+    useProfileImageBottomSheet();
 
   const handleProfileImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadImage = async () => {
@@ -68,15 +60,9 @@ export function ProfileImageBottomSheet({
       fileInput.current.click();
     }
   };
-
-  const handleSelectDefaultProfile = (index: ProfileIndexType) => {
-    setDefaultProfileIndex(index);
-  };
-
   const handleSelectButtonClick = () => {
-    onChangeImage(image);
+    if (image) onChangeImage(image);
     onChangeFile(file);
-    onChangeDefaultProfileIndex(defaultProfileIndex);
     onClose();
   };
   return (
@@ -86,28 +72,40 @@ export function ProfileImageBottomSheet({
       header={{ title: '프로필 이미지' }}
     >
       <div className={layoutStyles.selectedImage}>
-        {image ? (
-          <div className={layoutStyles.image}>
-            <Image
-              src={image}
-              alt="선택 프로필"
+        <div className={imageStyes.selected}>
+          {!image && currentProfileImage && (
+            <ProfileImage
+              src={currentProfileImage}
+              alt="프로필 이미지"
               fill
               sizes="40vw"
               className={css({ borderRadius: 'full', objectFit: 'cover' })}
             />
-          </div>
-        ) : (
-          <DefaultProfile size="big" profileIndex={defaultProfileIndex} />
-        )}
+          )}
+          {image && isNaN(parseInt(image)) && (
+            <ProfileImage
+              src={image}
+              alt="프로필 이미지"
+              fill
+              sizes="40vw"
+              className={css({ borderRadius: 'full', objectFit: 'cover' })}
+            />
+          )}
+          {image && !isNaN(parseInt(image)) && (
+            <DefaultProfile
+              size="big"
+              defaultprofileIndex={Number(image) as ProfileIndexType}
+            />
+          )}
+        </div>
       </div>
       <div className={layoutStyles.selectImage}>
         {Object.entries(defaultProfileImages).map(([iconIndex]) => (
           <DefaultProfile
             key={iconIndex}
-            profileIndex={Number(iconIndex) as ProfileIndexType}
-            isProfileImageSet={isProfileImageSet}
-            onChangeDefaultProfileIndex={handleSelectDefaultProfile}
-            resetImageInfo={resetImageInfo}
+            defaultprofileIndex={Number(iconIndex) as ProfileIndexType}
+            onChangeImage={handlers.onChangeImage}
+            resetFile={resetFile}
           />
         ))}
         <OpenAlbumButton onClick={handleAddImageClick} />
@@ -138,7 +136,6 @@ const layoutStyles = {
     height: '116px',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '16px',
     marginBottom: '24px',
   }),
   selectImage: flex({
@@ -158,5 +155,13 @@ const layoutStyles = {
     w: 'full',
     marginTop: '16px',
     padding: '0 20px',
+  }),
+};
+
+const imageStyes = {
+  selected: css({
+    position: 'relative',
+    width: '100px',
+    height: '100px',
   }),
 };

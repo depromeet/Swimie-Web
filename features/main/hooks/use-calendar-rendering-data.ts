@@ -52,5 +52,16 @@ export const useCalendarRendaringData = () => {
     return true;
   };
 
-  return [squares, startPoint, endPoint, isDateToday] as const;
+  const isDateFuture = (targetDate: number) => {
+    if (todayYear < year) return true;
+    else if (todayYear > year) return false;
+
+    if (todayMonth < month) return true;
+    else if (todayMonth > month) return false;
+
+    if (todayDate >= targetDate) return false;
+    return true;
+  };
+
+  return [squares, startPoint, endPoint, isDateToday, isDateFuture] as const;
 };

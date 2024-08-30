@@ -1,11 +1,18 @@
 'use client';
 
+import { ProfileList } from '@/components/molecules';
+
 import { useFollowerList } from '../apis';
-import { FollowVirtualList } from '../components';
+import { EmptyFollowList } from '../components';
 
 export const FollowerSection = ({ id }: { id: number }) => {
-  const { flattenData, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFollowerList(id);
+  const {
+    flattenData,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isLoading,
+  } = useFollowerList(id);
 
   const fetchNextData = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -13,5 +20,15 @@ export const FollowerSection = ({ id }: { id: number }) => {
     }
   };
 
-  return <FollowVirtualList data={flattenData} fetchNextData={fetchNextData} />;
+  if (!flattenData.length && !isLoading) {
+    return <EmptyFollowList type="follower" />;
+  }
+  return (
+    <ProfileList
+      data={flattenData}
+      fetchNextData={fetchNextData}
+      isLoading={isLoading}
+      isFetchingNextPage={isFetchingNextPage}
+    />
+  );
 };

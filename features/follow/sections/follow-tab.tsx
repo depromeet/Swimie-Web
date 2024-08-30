@@ -16,15 +16,15 @@ export const FollowTabSection = ({ tab }: FollowTabSection) => {
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.set('tab', tab);
 
-    router.push(currentUrl.toString());
+    router.replace(currentUrl.toString());
   };
 
   return (
     <Tab>
       <TabItem
         text="팔로워"
-        selected={tab === 'follow'}
-        onClick={() => handleClickTab('follow')}
+        selected={tab === 'follower'}
+        onClick={() => handleClickTab('follower')}
       />
       <TabItem
         text="팔로잉"

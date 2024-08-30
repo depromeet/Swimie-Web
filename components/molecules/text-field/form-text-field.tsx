@@ -43,6 +43,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
       placeholder,
       unit,
       className,
+      maxLength,
       wrapperClassName,
       absoluteClassName,
       subTextClassName,
@@ -74,6 +75,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             name={name}
             type={inputType}
             placeholder={placeholder}
+            maxLength={maxLength}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
             onChange={handleInputChange}

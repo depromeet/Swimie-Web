@@ -1,90 +1,45 @@
 'use client';
 
-import { useState } from 'react';
-
-import { useBottomSheet, useToast } from '@/hooks';
+import { CheerBottomSheet, CheerProgress } from '@/components/molecules';
+import { useCheerBottomSheet } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { useCheer, useCheerEligibility, useCheerPreviewList } from '../apis';
-import { CheerBottomSheet, CheerProgress } from '../components';
-import { initialCheerList } from '../data';
-import { DetailCheerItemSelected, RecordDetailType } from '../types';
+import { useCheerList, useCheerPreviewList } from '../apis';
+import { RecordDetailType } from '../types';
 
 export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
-  const { mutate: mutateCheer } = useCheer();
   const { refetch: refetchCheer } = useCheerPreviewList(data.id);
-  const { data: eligibilityData } = useCheerEligibility(
-    data.id,
-    data.isMyMemory,
-  );
+  const { refetch: refetchCheerList } = useCheerList(data.id);
 
-  const [cheerList, setCheerList] = useState(initialCheerList);
-  const [selectedCheerItem, setSelectedCheerItem] =
-    useState<DetailCheerItemSelected>();
+  const handleSuccessCheer = () => {
+    void refetchCheer();
+    void refetchCheerList();
+  };
 
-  const { toast } = useToast();
   const {
-    isOpen: isOpenBottomSheet,
-    open: openBottomSheet,
-    close: closeBottomSheet,
-  } = useBottomSheet();
-
-  const handleClickFab = () => {
-    if (!eligibilityData?.isRegistrable) {
-      toast('하나의 기록에 3번까지 응원을 보낼 수 있어요', { type: 'warning' });
-      return;
-    }
-
-    openBottomSheet();
-  };
-
-  const handleClickCheerItem = (index: number) => {
-    setCheerList((prev) =>
-      prev.map((item, idx) =>
-        idx === index
-          ? { ...item, isSelected: !item.isSelected }
-          : { ...item, isSelected: false },
-      ),
-    );
-  };
-
-  const handleClickSendCheer = () => {
-    const selectedCheerItem = cheerList.find(({ isSelected }) => isSelected);
-    if (!selectedCheerItem) return;
-
-    mutateCheer(
-      {
-        emoji: selectedCheerItem.emoji,
-        comment: selectedCheerItem.comment,
-        memoryId: data.id,
-      },
-      {
-        onSuccess: ({ status, code, message }) => {
-          if (status === 400 || code === 'REACTION_4') {
-            alert(message);
-            return;
-          }
-
-          void refetchCheer();
-          setSelectedCheerItem(selectedCheerItem);
-          closeBottomSheet();
-        },
-      },
-    );
-  };
-
-  const handleChangeSelectedItem = (isOpen: boolean) => {
-    if (isOpen) return;
-    setSelectedCheerItem(undefined);
-  };
+    cheerList,
+    selectedCheerItem,
+    handleClickCheerItem,
+    handleClickSendCheer,
+    handleChangeSelectedItem,
+    isOpenBottomSheet,
+    handleClickCloseBottomSheet,
+    handleClickOpenBottomSheet,
+  } = useCheerBottomSheet({
+    memoryId: data.id,
+    onSuccessCheer: handleSuccessCheer,
+    isIncludeVerification: { isMyMemory: data.isMyMemory },
+  });
 
   const { isMyMemory } = data;
-
   return (
     <>
       {/* NOTE: 응원 FAB Button */}
       {!isMyMemory && (
-        <button className={cheerButtonWrapperStyle} onClick={handleClickFab}>
+        <button
+          className={cheerButtonWrapperStyle}
+          onClick={handleClickOpenBottomSheet}
+        >
           {data.member?.name}님에게 응원 보내기 👏
         </button>
       )}
@@ -101,7 +56,7 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
         isOpen={isOpenBottomSheet}
-        onClose={closeBottomSheet}
+        onClose={handleClickCloseBottomSheet}
         cheerList={cheerList}
         onClickCheerItem={handleClickCheerItem}
         onClickSendCheer={handleClickSendCheer}

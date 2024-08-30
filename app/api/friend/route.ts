@@ -2,13 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
 
-export type followingProps = {
+export type FollowRequestBody = {
   followingId: number;
 };
 
 export async function PUT(request: NextRequest) {
-  const { followingId } = (await request.json()) as followingProps;
-  const data = await fetchData(`/friend`, 'PUT', { followingId });
+  const body = (await request.json()) as Promise<FollowRequestBody>;
+  const data = await fetchData(`/friend`, 'PUT', body);
+
+  return NextResponse.json(data);
+}
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const ids = searchParams.get('ids');
+  const data = await fetchData(`/friend?${ids ? `ids=${ids}` : ''}`, 'GET');
 
   return NextResponse.json(data);
 }

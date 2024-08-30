@@ -19,6 +19,7 @@ export const DetailDiarySection = ({ data }: { data: RecordDetailType }) => {
             <Image
               src={images?.[0]?.url ?? ''}
               alt="기록 이미지"
+              sizes="100vw"
               fill
               style={{
                 objectFit: 'cover',

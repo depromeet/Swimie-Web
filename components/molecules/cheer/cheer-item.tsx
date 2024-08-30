@@ -1,6 +1,5 @@
+import { DetailCheerItem } from '@/features/record-detail';
 import { css, cva } from '@/styled-system/css';
-
-import { DetailCheerItem } from '../types';
 
 type CheerItem = {
   isSelected?: boolean;

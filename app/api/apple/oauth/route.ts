@@ -1,43 +1,53 @@
-import { error } from 'console';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextRequest, NextResponse } from 'next/server';
-
-import { setAuthCookies } from '@/apis/server-cookie';
-import { LoginResponse } from '@/types/authType';
+import { parse } from 'querystring';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const { searchParams } = new URL(request.url);
-  const code = searchParams.get('code');
+  try {
+    const body = await request.text();
+    const formData = parse(body);
 
-  console.log(code);
+    const code = formData['code'];
+    const idToken = formData['id_token'];
+    const userData = formData['user'];
 
-  if (!code) {
-    return NextResponse.json(
-      { error: '코드가 누락되었습니다.' },
-      { status: 400 },
+    if (!code || !idToken) {
+      return NextResponse.json(
+        { error: 'code 또는 id_token이 누락되었습니다.' },
+        { status: 400 },
+      );
+    }
+
+    const bodyData = {
+      code: code.toString(),
+      id_token: idToken.toString(),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      user: userData ? JSON.parse(userData.toString()) : undefined,
+    };
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/login/apple`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+      },
     );
+
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: '서버 요청 실패' },
+        { status: res.status },
+      );
+    }
+
+    const data = await res.json();
+
+    return NextResponse.json({ data }, { status: 200 });
+  } catch (error) {
+    console.error('Error handling POST request:', error);
+    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/login/apple`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Origin: `${process.env.NEXT_PUBLIC_LOGIN_URL}`,
-    },
-    body: JSON.stringify({ code }),
-  });
-
-  if (!res.ok) {
-    console.error('Error fetching data:', error);
-    return NextResponse.json(
-      { error: '토큰을 확인해주세요.' },
-      { status: res.status },
-    );
-  }
-
-  const data = (await res.json()) as LoginResponse;
-
-  // 쿠키 설정
-  setAuthCookies(data.data);
-
-  return NextResponse.json({ data }, { status: res.status });
 }

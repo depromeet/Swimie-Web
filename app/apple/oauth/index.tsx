@@ -1,56 +1,47 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
-import { useSetAtom } from 'jotai';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { LoadingArea } from '@/components/atoms';
-import { AuthInfoAtom } from '@/store/auth';
 import { flex } from '@/styled-system/patterns';
-import { AuthResponse } from '@/types/authType';
 
 const Page = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const setAuth = useSetAtom(AuthInfoAtom);
 
   useEffect(() => {
-    const APPLE_CODE = searchParams.get('code');
-    console.log(APPLE_CODE);
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    const idToken = url.searchParams.get('id_token');
 
-    const postCode = async () => {
-      if (!APPLE_CODE) {
-        console.error('코드가 유효하지 않습니다.');
-        return;
-      }
-      try {
-        const response = await fetch(`/api/apple/oauth?code=${APPLE_CODE}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code: APPLE_CODE }),
+    if (code && idToken) {
+      const user = url.searchParams.get('user');
+
+      fetch('/api/apple/oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          code: code,
+          id_token: idToken,
+          user: user ?? '',
+        }).toString(),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            console.error('Login Error:', data.error);
+          } else {
+            router.push('/');
+          }
+        })
+        .catch((error) => {
+          console.error('Fetch Error:', error);
         });
-
-        if (response.status === 200) {
-          const data = (await response.json()) as AuthResponse;
-
-          setAuth({
-            isLogined: true,
-            nickname: data.data.data.nickname,
-            userId: data.data.data.userId,
-          });
-          router.push('/join/nickname');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    postCode().catch((error) => {
-      console.error('Error:', error);
-    });
-  }, [router, searchParams, setAuth]);
+    }
+  }, [router]);
 
   return (
     <div className={LoadingWrapper}>

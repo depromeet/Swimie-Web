@@ -14,8 +14,7 @@ export const EmptyNews = () => {
           친구를 만들고 서로의 기록에 응원을 남겨보세요
         </p>
       </div>
-      {/* TODO: 친구 찾기 페이지로 이동 */}
-      <Link href="/" className={linkStyles}>
+      <Link href="/profile/search" className={linkStyles}>
         친구 찾기
       </Link>
     </div>

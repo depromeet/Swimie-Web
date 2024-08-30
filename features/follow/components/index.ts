@@ -1,1 +1,1 @@
-export * from './follow-virtual-list';
+export * from './empty-follow-list';

@@ -7,6 +7,7 @@ export interface ProfileProps {
     isMyProfile: boolean;
     followerCount: number;
     followingCount: number;
-    introduction: string;
+    introduction?: string;
+    profileImageUrl: string;
   };
 }

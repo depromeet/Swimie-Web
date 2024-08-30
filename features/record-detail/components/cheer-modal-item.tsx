@@ -1,4 +1,4 @@
-import { Image } from '@/components/atoms';
+import { ProfileImage } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -23,10 +23,10 @@ export const CheerModalItem = ({
     <div className={containerStyle}>
       <button className={profile.wrapperStyle} onClick={onClickProfile}>
         <div className={profile.imageStyle}>
-          <Image
+          <ProfileImage
             src={profileImageUrl ?? ''}
-            width={16}
-            height={16}
+            fill
+            sizes="5vw"
             alt="profile image"
             style={{ objectFit: 'cover' }}
           />
@@ -65,6 +65,7 @@ const profile = {
   }),
 
   imageStyle: flex({
+    position: 'relative',
     justify: 'center',
     rounded: 'full',
     w: '16px',

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { FormTextArea, FormTextField } from '@/components/molecules';
@@ -8,16 +9,26 @@ import { css } from '@/styled-system/css';
 interface ProfileEditTextInfoSectionProps {
   nickNameLabel: string;
   nickNameSubText: string;
-  introducePlaceholder: string;
+  introductionPlaceholder: string;
+  currentNickname?: string;
+  currentIntroduction?: string;
 }
 
 //Todo: 한줄 소개 현재 글자 수 세는 UI 추가
 export function ProfileEditTextInfoSection({
   nickNameLabel,
   nickNameSubText,
-  introducePlaceholder,
+  introductionPlaceholder,
+  currentNickname,
+  currentIntroduction,
 }: ProfileEditTextInfoSectionProps) {
-  const { register, control } = useFormContext();
+  const { register, control, setValue } = useFormContext();
+  useEffect(() => {
+    if (currentNickname) setValue('nickname', currentNickname);
+    if (currentIntroduction) setValue('introduction', currentIntroduction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentNickname, currentIntroduction]);
+
   return (
     <>
       <FormTextField
@@ -34,8 +45,8 @@ export function ProfileEditTextInfoSection({
         wrapperClassName={css({ marginBottom: '24px' })}
       />
       <FormTextArea
-        {...register('introduce')}
-        placeholder={introducePlaceholder}
+        {...register('introduction')}
+        placeholder={introductionPlaceholder}
       />
     </>
   );

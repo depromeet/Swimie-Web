@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import { DetailCheerItem } from '@/features/record-detail';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-import { DetailCheerItem } from '../types';
 
 type CheerProgress = {
   isOpen: boolean;
@@ -117,6 +116,7 @@ const content = {
     textStyle: 'heading4',
     fontWeight: 'bold',
     color: 'text.normal',
+    width: 'max-content',
 
     '& > span': {
       ml: '8px',

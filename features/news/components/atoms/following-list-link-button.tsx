@@ -1,48 +1,27 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { DefaultProfileIcon, Image, PersonsIcon } from '@/components/atoms';
+import { DefaultProfileIcon, PersonsIcon } from '@/components/atoms';
+import { ProfileImage } from '@/components/molecules';
+import { useCurrentMemberInfo } from '@/hooks';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-interface FollowingInfo {
-  memberId: number;
-  name: string;
-  introduction: string;
-  profileUrl?: string;
-}
-
-const dummy: { followings: Array<FollowingInfo>; followingCount: number } = {
-  followings: [
-    {
-      memberId: 1,
-      name: '홍길동',
-      introduction: '안녕하세요. 홍길동입니다',
-    },
-    {
-      memberId: 2,
-      name: '홍길동',
-      introduction: '안녕하세요. 홍길동입니다',
-    },
-    {
-      memberId: 3,
-      name: '홍길동',
-      introduction: '안녕하세요. 홍길동입니다',
-    },
-  ],
-  followingCount: 12,
-};
+import { useFollowingSummary } from '../../hooks';
 
 const MAX_NUMBER_OF_PROFILES = 3;
 
 export const FollowingListLinkButton = () => {
-  const { followings, followingCount } = dummy;
-  const hasFollowings = followingCount > 0;
-  const indexOffset = MAX_NUMBER_OF_PROFILES - followings.length;
-  let nodeList: Array<ReactNode> = [];
+  const { data: followingSummaryData } = useFollowingSummary();
+  const { data: currentMemberInfoData } = useCurrentMemberInfo();
 
-  if (hasFollowings) {
-    nodeList = followings.map(({ memberId, profileUrl }, index) => (
+  if (!followingSummaryData || !currentMemberInfoData) return null;
+
+  const { id: currentMemberId } = currentMemberInfoData.data;
+  const { followings, followingCount } = followingSummaryData.data;
+  const indexOffset = MAX_NUMBER_OF_PROFILES - followings.length;
+  const nodeList: Array<ReactNode> = [
+    ...followings.map(({ memberId, profileImageUrl }, index) => (
       <div
         key={memberId}
         className={cx(
@@ -51,14 +30,22 @@ export const FollowingListLinkButton = () => {
           profileStyles[index + indexOffset],
         )}
       >
-        {profileUrl ? (
-          <Image src={profileUrl} alt="following profiles" />
+        {profileImageUrl ? (
+          <ProfileImage
+            src={profileImageUrl}
+            alt="following profiles"
+            width={28}
+            height={28}
+            style={{
+              objectFit: 'cover',
+            }}
+          />
         ) : (
           <DefaultProfileIcon width={24} height={24} />
         )}
       </div>
-    ));
-  }
+    )),
+  ];
 
   nodeList.push(
     <div key="follower-count" className={cx(containerStyles, borderStyles)}>
@@ -68,7 +55,10 @@ export const FollowingListLinkButton = () => {
   );
 
   return (
-    <Link href="/" className={linkStyles}>
+    <Link
+      href={`/profile/${currentMemberId}/follow?tab=following`}
+      className={linkStyles}
+    >
       {nodeList.map((node) => node)}
     </Link>
   );
@@ -95,22 +85,27 @@ const borderStyles = css({
   borderColor: 'white',
 });
 
-const baseProfileStyle = css({
+const baseProfileStyle = flex({
   position: 'absolute',
   top: '2px',
-  borderRadius: 'full',
+  width: '28px',
+  height: '28px',
   backgroundColor: 'white',
+  align: 'stretch',
+  rounded: 'full',
+  overflow: 'hidden',
 });
 
 const profileStyles = [
-  css({ right: '-96px' }),
-  css({ right: '-80px' }),
-  css({ right: '-64px' }),
+  css({ right: '-98px' }),
+  css({ right: '-82px' }),
+  css({ right: '-66px' }),
 ];
 
 const countStyles = css({
-  w: '14px',
+  w: '16px',
   h: '16px',
+  textAlign: 'center',
   textStyle: 'caption1',
   fontWeight: 'bold',
   color: 'primary.swim.총거리.default',
