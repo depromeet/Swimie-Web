@@ -19,7 +19,11 @@ export function NotificationButton() {
 function NotificationCount() {
   const { data } = useCountNotification();
   if (!data?.data.totalCount) return null;
-  return <div className={notificationCountStyles}>{data?.data.totalCount}</div>;
+  return (
+    <div className={notificationCountStyles}>
+      {data?.data.totalCount >= 100 ? '99+' : data?.data.totalCount}
+    </div>
+  );
 }
 
 const linkLayoutStyles = css({

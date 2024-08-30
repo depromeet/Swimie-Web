@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react';
 import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
 import { useMemberFollowingState } from '@/hooks';
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 import { convertTimeToElapsedTime } from '@/utils';
 
 import { useReadNotification } from '../../apis/use-read-notification';
@@ -88,7 +88,7 @@ export const FollowNotification = forwardRef<
                 label="팔로잉"
                 variant="outlined"
                 buttonType="assistive"
-                className={followButtonStyles}
+                className={css(followButtonStyles.raw({ isFollowing }))}
                 onClick={handleFollowButtonClick}
               />
             </div>
@@ -98,7 +98,7 @@ export const FollowNotification = forwardRef<
               label="팔로우"
               variant="outlined"
               buttonType="primary"
-              className={followButtonStyles}
+              className={css(followButtonStyles.raw({ isFollowing }))}
               onClick={handleFollowButtonClick}
             />
           ))}
@@ -109,20 +109,29 @@ export const FollowNotification = forwardRef<
 
 FollowNotification.displayName = 'FollowNotification';
 
-const followButtonStyles = css({
-  position: 'absolute',
-  top: '16px',
-  right: '20px',
-  backgroundColor: 'transparent',
-  '&::before': {
-    content: '""',
+const followButtonStyles = cva({
+  base: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#3B87F4',
-    opacity: 0.05,
+    top: '16px',
+    right: '20px',
+    backgroundColor: 'transparent',
+  },
+  variants: {
+    isFollowing: {
+      true: {},
+      false: {
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#3B87F4',
+          opacity: 0.05,
+        },
+      },
+    },
   },
 });
 
