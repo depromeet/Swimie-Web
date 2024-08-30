@@ -8,7 +8,6 @@ export async function PATCH(
   { params }: { params: { memoryId: number } },
 ) {
   const body = (await request.json()) as Promise<{ imageNames: string[] }>;
-  console.log(body);
   const data = await fetchData<ImagePresignedResponse>(
     `/image/memory/${params.memoryId}`,
     'PATCH',
