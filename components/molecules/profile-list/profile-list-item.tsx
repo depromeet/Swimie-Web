@@ -74,9 +74,9 @@ export const ProfileListItem = ({
 
 const containerStyle = flex({
   py: '8px',
-  gap: '16px',
   align: 'center',
-  width: 'full',
+  maxWidth: '100%',
+  justify: 'space-between',
 });
 
 const profileImageStyle = flex({
@@ -85,12 +85,15 @@ const profileImageStyle = flex({
   align: 'stretch',
   rounded: 'full',
   overflow: 'hidden',
+  flexShrink: 0,
 });
 
 const linkStyle = flex({
+  // button, gap
+  maxWidth: 'calc(100% - 70px - 16px)',
   gap: '16px',
   align: 'center',
-  width: '100%',
+  mr: '16px',
 });
 
 const followButtonStyle = css({
@@ -101,7 +104,8 @@ const text = {
   wrapperStyle: flex({
     gap: '2px',
     direction: 'column',
-    grow: 1,
+    flexGrow: 1,
+    overflow: 'hidden',
   }),
 
   nicknameStyle: css({
@@ -110,8 +114,12 @@ const text = {
   }),
 
   summaryStyle: css({
+    width: '100%',
     textStyle: 'body2.normal',
     fontWeight: 'regular',
     color: 'text.alternative',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   }),
 };
