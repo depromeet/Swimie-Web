@@ -1,5 +1,7 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
 import {
   GlobalNavigationBar,
   HeaderBar,
@@ -10,11 +12,19 @@ import { SettingButton } from '@/components/molecules';
 import {
   MainTab,
   MainTabType,
-  TimeLine,
+  TimeLineSkeleton,
   UserCalendarProfile,
 } from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
+
+const DynamicTimeLine = dynamic(
+  () => import('@/features/main').then(({ TimeLine }) => TimeLine),
+  {
+    ssr: false,
+    loading: () => <TimeLineSkeleton />,
+  },
+);
 
 export default function Home({
   searchParams,
@@ -39,7 +49,7 @@ export default function Home({
       <MainTab tab={tab} />
       <main className={styles}>
         <section className={contentStyles}>
-          {tab === 'calendar' ? <UserCalendarProfile /> : <TimeLine />}
+          {tab === 'calendar' ? <UserCalendarProfile /> : <DynamicTimeLine />}
         </section>
       </main>
       <GlobalNavigationBar />
