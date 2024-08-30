@@ -10,6 +10,7 @@ import { flex } from '@/styled-system/patterns';
 import { useLogout } from '../../apis';
 import { useDeleteAccount } from '../../apis/use-delete-account';
 import { usePostWithdrawal } from '../../apis/use-post-withdrawal';
+import { useDeleteDialogHandler } from '../../hooks';
 import { DeleteAccountResponse, WithdrawalRequestData } from '../../types';
 
 export function Step3() {
@@ -17,6 +18,7 @@ export function Step3() {
   const logout = useLogout();
   const withdrawalText = useAtomValue(withdrawalTextAtom);
   const withdrawalReason = useAtomValue(withdrawalReasonAtom);
+  const { openDeleteModal } = useDeleteDialogHandler();
 
   const withdrawalMutation = useMutation<
     DeleteAccountResponse,
@@ -41,6 +43,7 @@ export function Step3() {
     onSuccess: (data) => {
       if (data.status === 200) {
         void logout();
+        openDeleteModal();
       } else {
         console.error('Account deletion failed');
       }
@@ -60,6 +63,8 @@ export function Step3() {
       feedback: withdrawalText,
     });
   };
+
+  // TODO: isPending으로 loading 잡고 있는데 추후 hook 확인 필요
 
   return (
     <div className={containerStyles}>
@@ -86,6 +91,9 @@ export function Step3() {
           size="large"
           className={css({ backgroundColor: 'status.negative', width: '100%' })}
           onClick={handleGoToDeleteAccount}
+          isLoading={
+            withdrawalMutation.isPending || deleteAccountMutation.isPending
+          }
         />
       </div>
     </div>
