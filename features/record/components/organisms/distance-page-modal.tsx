@@ -85,10 +85,14 @@ export function DistancePageModal({
     },
   ];
 
-  const handleBackArrowClick = () => {
+  const historyReplace = () => {
     const currentUrl = new URL(window.location.href);
     const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
     window.history.replaceState(null, '', newUrl);
+  };
+
+  const handleBackArrowClick = () => {
+    historyReplace();
     handlers.onClosePageModal();
   };
 
@@ -137,9 +141,7 @@ export function DistancePageModal({
         );
     }
     handlers.onClosePageModal();
-    const currentUrl = new URL(window.location.href);
-    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
-    window.history.replaceState(null, '', newUrl);
+    historyReplace();
   };
 
   return (
