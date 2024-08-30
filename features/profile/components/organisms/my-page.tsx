@@ -7,6 +7,7 @@ import { Button } from '@/components/atoms';
 import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import { Tab, TabItem } from '@/components/molecules';
+import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
@@ -19,6 +20,21 @@ export function MyProfile({
   profileData: ProfileProps['data'];
 }) {
   const [selectedTab, setSelectedTab] = useState<ProfileType>('statistics');
+  const { toast } = useToast();
+
+  const handleShareProfile = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => {
+          toast('내 프로필 링크를 복사했어요.');
+        })
+        .catch((err) => {
+          console.error('Failed to copy: ', err);
+          toast('프로필 링크 복사에 실패했어요.', { type: 'error' });
+        });
+    }
+  };
 
   return (
     <div>
@@ -40,6 +56,7 @@ export function MyProfile({
             buttonType="assistive"
             variant="outlined"
             className={buttonStyle}
+            onClick={handleShareProfile}
           />
         </div>
       </section>
