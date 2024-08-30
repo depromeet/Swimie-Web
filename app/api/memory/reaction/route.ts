@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchData } from '@/apis/fetch-data';
-import { Cheer } from '@/features/record-detail/apis';
+import { Cheer } from '@/hooks';
 
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as Promise<Cheer>;
