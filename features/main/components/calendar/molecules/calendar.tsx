@@ -12,7 +12,7 @@ import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { CalendarItem, DayLabels } from '../atoms';
+import { CalendarItem, CalendarItemSkeleton, DayLabels } from '../atoms';
 import { CalendarItemLayout } from '../atoms/calendar-item-layout';
 import { CalendarHeader } from './calendar-header';
 
@@ -36,7 +36,7 @@ export const Calendar = ({ targetId }: CalendarProps) => {
     setSwimCount(memories.length);
   }, [memories, setSwimCount]);
 
-  if (!memories || !memberInfo) return null;
+  const isLoading = !memories || !memberInfo;
 
   return (
     <div className={calendarContainerStyles}>
@@ -44,6 +44,8 @@ export const Calendar = ({ targetId }: CalendarProps) => {
       <DayLabels />
       <ul className={CalendarGridStyles}>
         {squares.map((squareNumber, index) => {
+          if (isLoading) return <CalendarItemSkeleton key={squareNumber} />;
+
           const isInRenderingRange = index >= startPoint && index <= endPoint;
           const date = squareNumber - startPoint;
           const isValidMemory =

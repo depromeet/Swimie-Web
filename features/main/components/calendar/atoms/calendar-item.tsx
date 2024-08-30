@@ -6,7 +6,7 @@ import { css } from '@/styled-system/css';
 
 import { Memory } from '../../../types/calendar';
 import { ItemContent } from './calendar-item-content';
-import { CalendarItemSkeleton } from './calendar-item-skeleton';
+import { CalendarItemSkeletonBody } from './calendar-item-skeleton';
 
 interface CalendarItemProps {
   date: number;
@@ -27,7 +27,7 @@ export const CalendarItem = ({
   const { year, month } = useAtomValue(calendarDateAtom);
   const targetDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
 
-  if (isFetching) return <CalendarItemSkeleton />;
+  if (isFetching) return <CalendarItemSkeletonBody />;
 
   if (!memory)
     return (
