@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata, Viewport } from 'next';
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 
 import MetaTagImage from '@/public/images/meta-tag.png';
 import { css } from '@/styled-system/css';
@@ -64,6 +65,10 @@ export default function RootLayout({
           <div className={containerStyle}>{children}</div>
           <DynamicPortalRoot />
         </ReactQueryProvider>
+        <Script
+          type="text/javascript"
+          src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
+        />
       </body>
     </html>
   );

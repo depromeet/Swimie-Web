@@ -22,8 +22,41 @@ export default function LoginClient() {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
   };
 
-  const appleLogin = () => {
-    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
+  // TODO: nonce 생성 함수 별도 분리 예정
+  function generateNonceAndState(length = 16) {
+    const charset =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let nonce = '';
+    const charsetLength = charset.length;
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charsetLength);
+      nonce += charset[randomIndex];
+    }
+
+    return nonce;
+  }
+
+  const nonce = generateNonceAndState();
+
+  const appleLogin = async () => {
+    console.log('sign in with apple');
+
+    window.AppleID.auth.init({
+      clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
+      scope: 'name email',
+      redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
+      state: 'swimie',
+      nonce: nonce,
+      usePopup: true,
+    });
+
+    try {
+      const res = await window.AppleID.auth.signIn();
+      console.log(res);
+    } catch (error) {
+      console.error('Apple Login Error:', error);
+    }
   };
 
   const [isSplashCompleted, setIsSplashCompleted] = useState(false);
@@ -85,7 +118,12 @@ export default function LoginClient() {
                     <span>Google로 로그인</span>
                   </div>
                 </button>
-                <button className={appleLoginButton} onClick={appleLogin}>
+                <button
+                  className={appleLoginButton}
+                  onClick={() => {
+                    void appleLogin();
+                  }}
+                >
                   <div className={buttonContent}>
                     <AppleLogoIcon />
                     <span>Apple ID로 로그인</span>
