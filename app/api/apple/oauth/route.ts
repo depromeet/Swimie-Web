@@ -20,8 +20,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const bodyData = {
       code: code.toString(),
-      id_token: idToken.toString(),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      idToken: idToken.toString(),
       user: userData ? JSON.parse(userData.toString()) : undefined,
     };
 
@@ -44,8 +43,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const data = await res.json();
+    console.log(data);
 
-    return NextResponse.json({ data }, { status: 200 });
+    return NextResponse.redirect(new URL('/', request.url));
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
