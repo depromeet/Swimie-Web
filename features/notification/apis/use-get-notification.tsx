@@ -58,7 +58,7 @@ export default function useGetNotification() {
         ?.flatMap((notification) =>
           'memberId' in notification ? notification.memberId : null,
         )
-        ?.filter((id) => id !== null) ?? [],
+        ?.filter((id): id is number => id !== null) ?? [],
     [lastPageCount, data?.pages],
   );
 
