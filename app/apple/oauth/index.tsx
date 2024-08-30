@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -14,12 +15,32 @@ const Page = () => {
     const code = url.searchParams.get('code');
     const idToken = url.searchParams.get('id_token');
 
-    if (code) {
-      console.log('Authorization Code:', code);
-    }
+    if (code && idToken) {
+      const user = url.searchParams.get('user');
 
-    if (idToken) {
-      console.log('ID Token:', idToken);
+      fetch('/api/apple/oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: new URLSearchParams({
+          code: code,
+          id_token: idToken,
+          user: user ?? '',
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // 로그인 성공 후 리디렉션
+          if (data.error) {
+            console.error('Login Error:', data.error);
+          } else {
+            router.push('/');
+          }
+        })
+        .catch((error) => {
+          console.error('Fetch Error:', error);
+        });
     }
   }, [router]);
 
