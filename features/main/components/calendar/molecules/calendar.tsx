@@ -17,7 +17,7 @@ import { CalendarHeader } from './calendar-header';
 
 export const Calendar = ({ targetId }: { targetId?: number }) => {
   const setSwimCount = useSetAtom(calendarSwimCountAtom);
-  const { data, isFetching } = useCalendarData();
+  const { data, isFetching } = useCalendarData(targetId);
   const [squares, startPoint, endPoint, isDateToday, isDateFuture] =
     useCalendarRendaringData();
   let memoryIndex = 0;
