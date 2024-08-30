@@ -98,8 +98,8 @@ export const semanticColors = {
         sub: { value: '#CCF1E0' },
       },
       접영: {
-        default: { value: '#FF9F59' },
-        sub: { value: '#FFDCC2' },
+        default: { value: '#EC6344' },
+        sub: { value: '#FCB7A7' },
       },
       킥판: {
         default: { value: '#9859FF' },
