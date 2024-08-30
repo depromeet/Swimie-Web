@@ -116,6 +116,7 @@ const content = {
     textStyle: 'heading4',
     fontWeight: 'bold',
     color: 'text.normal',
+    width: 'max-content',
 
     '& > span': {
       ml: '8px',
