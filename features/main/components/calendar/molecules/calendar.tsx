@@ -12,7 +12,12 @@ import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { CalendarItem, CalendarItemSkeleton, DayLabels } from '../atoms';
+import {
+  CalendarHeaderSkeleton,
+  CalendarItem,
+  CalendarItemSkeleton,
+  DayLabels,
+} from '../atoms';
 import { CalendarItemLayout } from '../atoms/calendar-item-layout';
 import { CalendarHeader } from './calendar-header';
 
@@ -40,7 +45,7 @@ export const Calendar = ({ targetId }: CalendarProps) => {
 
   return (
     <div className={calendarContainerStyles}>
-      <CalendarHeader />
+      {isLoading ? <CalendarHeaderSkeleton /> : <CalendarHeader />}
       <DayLabels />
       <ul className={CalendarGridStyles}>
         {squares.map((squareNumber, index) => {
