@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { Button, SuccessCheckIcon } from '@/components/atoms';
+import { Button, Image } from '@/components/atoms';
+import SuccessRecordImage from '@/public/images/success-record.png';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -15,7 +16,13 @@ export default function RecordSuccessPage({
   return (
     <div className={layoutStyles.full}>
       <div className={layoutStyles.content}>
-        <SuccessCheckIcon />
+        <Image
+          src={SuccessRecordImage}
+          width={250}
+          height={250}
+          priority
+          alt="success record"
+        />
         <h3 className={textStyles.title}>
           {isEditMode ? '수정' : '기록'} 완료!
         </h3>
@@ -52,7 +59,7 @@ const layoutStyles = {
   full: flex({
     justifyContent: 'center',
     alignItems: 'center',
-    height: '65vh',
+    height: 'calc(100dvh - 100px)',
   }),
   content: flex({
     direction: 'column',
@@ -64,7 +71,7 @@ const textStyles = {
   title: css({
     textStyle: 'heading3',
     fontWeight: 600,
-    margin: '20px 0 8px 0',
+    mb: '8px',
   }),
   paragraph: css({
     textStyle: 'heading6',
