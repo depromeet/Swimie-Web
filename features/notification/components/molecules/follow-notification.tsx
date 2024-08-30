@@ -82,16 +82,14 @@ export const FollowNotification = forwardRef<
 
         {type === 'FOLLOW' &&
           (isFollowing ? (
-            <div>
-              <Button
-                size="small"
-                label="팔로잉"
-                variant="outlined"
-                buttonType="assistive"
-                className={css(followButtonStyles.raw({ isFollowing }))}
-                onClick={handleFollowButtonClick}
-              />
-            </div>
+            <Button
+              size="small"
+              label="팔로잉"
+              variant="outlined"
+              buttonType="assistive"
+              className={css(followButtonStyles.raw({ isFollowing }))}
+              onClick={handleFollowButtonClick}
+            />
           ) : (
             <Button
               size="small"
