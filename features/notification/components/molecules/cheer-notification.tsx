@@ -12,9 +12,6 @@ import { layoutStyles, textStyles } from '../../styles';
 import { CheerNotificationProps } from '../../types';
 import { CheerUpIcon } from '../atoms';
 
-//Todo: 추후 알림 내용이 추가될 때 props가 너무 많아질 시, 합성 컴포넌트 도입 고려
-//Todo: 팔로우 api 연결
-//Todo: 클릭 api 처리
 export const CheerNotification = forwardRef<
   HTMLLIElement,
   CheerNotificationProps & { assignRef: boolean }
