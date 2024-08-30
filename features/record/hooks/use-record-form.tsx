@@ -1,7 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { formatDateToDash } from '@/utils';
 
@@ -30,10 +30,24 @@ export function useRecordForm(lane: number) {
     });
   };
 
+  const closePoolSearchPageModal = () => {
+    setIsPoolSearchPageModalOpen({
+      isOpen: false,
+      jumpDirection: 'backward',
+    });
+  };
+
   const openDistancePageModal = () => {
     setIsDistancePageModalOpen({
       isOpen: true,
       jumpDirection: 'forward',
+    });
+  };
+
+  const closeDistancePageModal = () => {
+    setIsDistancePageModalOpen({
+      isOpen: false,
+      jumpDirection: 'backward',
     });
   };
 
@@ -100,6 +114,27 @@ export function useRecordForm(lane: number) {
           .join(' · ');
     }
   };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#pool-page-modal') {
+        openPoolSearchPageModal();
+      } else if (window.location.hash === '#distance-page-modal') {
+        openDistancePageModal();
+      } else if (window.location.hash === '') {
+        closePoolSearchPageModal();
+        closeDistancePageModal();
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     isLoading,

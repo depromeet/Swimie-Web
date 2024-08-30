@@ -15,8 +15,6 @@ const PoolSearchResultElement = lazy(() =>
   })),
 );
 
-import { usePreventRouterBack } from '@/hooks';
-
 import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
@@ -41,14 +39,16 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     data?.data.favoritePools.length === 0 &&
     data?.data.searchedPools.length === 0;
 
+  const handleBackArrowClick = () => {
+    const currentUrl = new URL(window.location.href);
+    const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
+    window.history.replaceState(null, '', newUrl);
+    handlers.onClosePageModal();
+  };
+
   const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(removeSpecialSymbols(text));
   }, 300);
-
-  usePreventRouterBack({
-    isDirty: pageModalState.isOpen,
-    alterAction: handlers.onClosePageModal,
-  });
 
   return (
     <PageModal
@@ -59,7 +59,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
       <div ref={pageModalRef}>
         <HeaderBar>
           <HeaderBar.LeftContent>
-            <BackButton onClickBack={() => handlers.onClosePageModal()} />
+            <BackButton onClickBack={handleBackArrowClick} />
           </HeaderBar.LeftContent>
         </HeaderBar>
         <div className={layoutStyles}>

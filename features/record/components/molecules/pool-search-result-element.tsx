@@ -44,6 +44,9 @@ export const PoolSearchResultElement = forwardRef<
         isOpen: false,
         jumpDirection: 'backward',
       });
+      const currentUrl = new URL(window.location.href);
+      const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
+      window.history.replaceState(null, '', newUrl);
     };
 
     const handleStarIconClick = () => {
