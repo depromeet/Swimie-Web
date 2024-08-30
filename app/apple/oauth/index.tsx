@@ -27,11 +27,10 @@ const Page = () => {
           code: code,
           id_token: idToken,
           user: user ?? '',
-        }),
+        }).toString(),
       })
         .then((response) => response.json())
         .then((data) => {
-          // 로그인 성공 후 리디렉션
           if (data.error) {
             console.error('Login Error:', data.error);
           } else {

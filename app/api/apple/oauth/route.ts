@@ -1,21 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextRequest, NextResponse } from 'next/server';
-
-export interface AppleLoginUser {
-  name?: {
-    firstName: string;
-    lastName: string;
-  };
-  email?: string;
-}
+import { parse } from 'querystring';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const formData = await request.formData();
+    const body = await request.text();
+    const formData = parse(body);
 
-    const code = formData.get('code');
-    const idToken = formData.get('id_token');
-    const userData = formData.get('user');
+    const code = formData['code'];
+    const idToken = formData['id_token'];
+    const userData = formData['user'];
 
     if (!code || !idToken) {
       return NextResponse.json(
@@ -27,6 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const bodyData = {
       code: code.toString(),
       id_token: idToken.toString(),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       user: userData ? JSON.parse(userData.toString()) : undefined,
     };
 
