@@ -46,8 +46,8 @@ export const TimeLine = () => {
           <Image
             src={EmptyTimeLineCharacterImage}
             alt="empty-timeline-character"
-            width={96}
-            height={96}
+            width={140}
+            height={140}
           />
           <p className={descriptionStyles}>아직 수영 기록이 없어요!</p>
         </div>
