@@ -49,7 +49,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
       clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
       scope: 'name email',
       redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
-      state: 'swimie',
+      state: 'origin: swimie',
       nonce: nonce,
       usePopup: false,
       responseType: 'code id_token',
