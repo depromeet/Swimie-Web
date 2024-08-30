@@ -4,10 +4,11 @@ import React, { forwardRef } from 'react';
 import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
 import { useMemberFollowingState } from '@/hooks';
-import { css, cva } from '@/styled-system/css';
+import { css } from '@/styled-system/css';
 import { convertTimeToElapsedTime } from '@/utils';
 
 import { useReadNotification } from '../../apis/use-read-notification';
+import { layoutStyles, textStyles } from '../../styles';
 import { FollowNotificationProps } from '../../types';
 
 export const FollowNotification = forwardRef<
@@ -49,7 +50,7 @@ export const FollowNotification = forwardRef<
           onClick={handleListElementClick}
           className={css({ display: 'flex' })}
         >
-          <div className={layoutStyles.profileImage}>
+          <div className={profileImageStyles}>
             <ProfileImage
               alt="프로필 사진"
               src={profileImageUrl ?? ''}
@@ -87,7 +88,7 @@ export const FollowNotification = forwardRef<
                 label="팔로잉"
                 variant="outlined"
                 buttonType="assistive"
-                className={layoutStyles.button}
+                className={followButtonStyles}
                 onClick={handleFollowButtonClick}
               />
             </div>
@@ -97,7 +98,7 @@ export const FollowNotification = forwardRef<
               label="팔로우"
               variant="outlined"
               buttonType="primary"
-              className={layoutStyles.button}
+              className={followButtonStyles}
               onClick={handleFollowButtonClick}
             />
           ))}
@@ -108,78 +109,25 @@ export const FollowNotification = forwardRef<
 
 FollowNotification.displayName = 'FollowNotification';
 
-const layoutStyles = {
-  total: cva({
-    base: { position: 'relative', padding: '16px 20px' },
-    variants: {
-      hasRead: {
-        true: {},
-        false: {
-          backgroundColor: '#F7FBFF',
-        },
-      },
-    },
-  }),
-  text: cva({
-    base: {
-      marginLeft: '16px',
-      gap: '4px',
-      wordBreak: 'keep-all',
-    },
-    variants: {
-      type: {
-        FOLLOW: {
-          width: '60%',
-        },
-        FRIEND: {
-          width: '60%',
-        },
-        CHEER: {},
-      },
-    },
-  }),
-  button: css({
+const followButtonStyles = css({
+  position: 'absolute',
+  top: '16px',
+  right: '20px',
+  backgroundColor: 'transparent',
+  '&::before': {
+    content: '""',
     position: 'absolute',
-    top: '16px',
-    right: '20px',
-    backgroundColor: 'transparent',
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: '#3B87F4',
-      opacity: 0.05,
-    },
-  }),
-  profileImage: css({
-    position: 'relative',
-    width: '40px',
-    height: '40px',
-  }),
-};
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#3B87F4',
+    opacity: 0.05,
+  },
+});
 
-const textStyles = {
-  main: css({
-    textStyle: 'body2.normal',
-    fontWeight: 400,
-    color: 'text.normal',
-  }),
-  userName: css({
-    textStyle: 'body2.normal',
-    fontWeight: 600,
-    color: 'text.normal',
-  }),
-  time: css({
-    textStyle: 'label2',
-    color: 'text.alternative',
-    fontWeight: 400,
-  }),
-  description: css({
-    textStyle: 'body2.normal',
-    fontWeight: 400,
-    color: 'text.alternative',
-  }),
-};
+const profileImageStyles = css({
+  position: 'relative',
+  width: '40px',
+  height: '40px',
+});
