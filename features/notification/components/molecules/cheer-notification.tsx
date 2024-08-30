@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import React, { forwardRef } from 'react';
 
-import { css, cva } from '@/styled-system/css';
+import { css } from '@/styled-system/css';
 import {
   convertTimeToElapsedTime,
   formatDateToKoreanExceptYear,
 } from '@/utils';
 
 import { useReadNotification } from '../../apis/use-read-notification';
+import { layoutStyles, textStyles } from '../../styles';
 import { CheerNotificationProps } from '../../types';
 import { CheerUpIcon } from '../atoms';
 
@@ -48,7 +49,7 @@ export const CheerNotification = forwardRef<
           <div className={css(layoutStyles.text.raw({ type }))}>
             {type === 'CHEER' && (
               <>
-                <p>
+                <p className={textStyles.main}>
                   {formatDateToKoreanExceptYear(recordCreatedAt)} 기록에{' '}
                   <span className={textStyles.userName}>{nickname}</span>
                   님이 응원을 남겼어요.
@@ -67,75 +68,3 @@ export const CheerNotification = forwardRef<
 );
 
 CheerNotification.displayName = 'CheerNotification';
-
-const layoutStyles = {
-  total: cva({
-    base: { display: 'flex', position: 'relative', padding: '16px 20px' },
-    variants: {
-      hasRead: {
-        true: {},
-        false: {
-          backgroundColor: '#F7FBFF',
-        },
-      },
-    },
-  }),
-  text: cva({
-    base: {
-      direction: 'column',
-      justifyContent: 'space-between',
-      marginLeft: '16px',
-      gap: '4px',
-      wordBreak: 'keep-all',
-    },
-    variants: {
-      type: {
-        FOLLOW: {
-          width: '60%',
-        },
-        FRIEND: {
-          width: '60%',
-        },
-        CHEER: {},
-      },
-    },
-  }),
-  button: css({
-    position: 'absolute',
-    right: '20px',
-    backgroundColor: 'transparent',
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: '#3B87F4',
-      opacity: 0.05,
-    },
-  }),
-};
-
-const textStyles = {
-  main: css({
-    textStyle: 'body2.normal',
-    fontWeight: 400,
-    color: 'text.normal',
-  }),
-  userName: css({
-    textStyle: 'body2.normal',
-    fontWeight: 600,
-    color: 'text.normal',
-  }),
-  time: css({
-    textStyle: 'label2',
-    color: 'text.alternative',
-    fontWeight: 400,
-  }),
-  description: css({
-    textStyle: 'body2.normal',
-    fontWeight: 400,
-    color: 'text.alternative',
-  }),
-};
