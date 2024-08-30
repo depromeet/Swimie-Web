@@ -12,7 +12,7 @@ import { FollowNotificationProps } from '../../types';
 
 export const FollowNotification = forwardRef<
   HTMLLIElement,
-  FollowNotificationProps
+  FollowNotificationProps & { assignRef: boolean }
 >(
   (
     {
@@ -23,6 +23,7 @@ export const FollowNotification = forwardRef<
       memberId,
       createdAt,
       hasRead,
+      assignRef,
     },
     ref,
   ) => {
@@ -39,7 +40,10 @@ export const FollowNotification = forwardRef<
     };
 
     return (
-      <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
+      <li
+        ref={assignRef ? ref : undefined}
+        className={css(layoutStyles.total.raw({ hasRead }))}
+      >
         <Link
           href={`/profile/${memberId}`}
           onClick={handleListElementClick}

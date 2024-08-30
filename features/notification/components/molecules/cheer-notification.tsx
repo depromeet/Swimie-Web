@@ -16,7 +16,7 @@ import { CheerUpIcon } from '../atoms';
 //Todo: 클릭 api 처리
 export const CheerNotification = forwardRef<
   HTMLLIElement,
-  CheerNotificationProps
+  CheerNotificationProps & { assignRef: boolean }
 >(
   (
     {
@@ -28,6 +28,7 @@ export const CheerNotification = forwardRef<
       createdAt,
       recordCreatedAt,
       hasRead,
+      assignRef,
     },
     ref,
   ) => {
@@ -39,7 +40,10 @@ export const CheerNotification = forwardRef<
 
     return (
       <Link href={`record-detail/${memoryId}`} onClick={handleListElementClick}>
-        <li ref={ref} className={css(layoutStyles.total.raw({ hasRead }))}>
+        <li
+          ref={assignRef ? ref : undefined}
+          className={css(layoutStyles.total.raw({ hasRead }))}
+        >
           <CheerUpIcon />
           <div className={css(layoutStyles.text.raw({ type }))}>
             {type === 'CHEER' && (
