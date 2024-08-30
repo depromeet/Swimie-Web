@@ -1,7 +1,7 @@
 import { StrokeInfo } from '@/features/main/types';
-import { StrokeName } from '@/features/record-detail';
 import { css, cva } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
+import { StrokeName } from '@/types';
 import { getSwimColor } from '@/utils';
 
 interface SwimRecordChartProps {

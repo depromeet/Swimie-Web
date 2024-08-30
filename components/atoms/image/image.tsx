@@ -3,7 +3,7 @@
 import NextImage, { ImageProps } from 'next/image';
 import React, { useState } from 'react';
 
-import fallbackImage from '@/public/images/fallbackImage.png';
+import fallbackImage from '@/public/images/fallback.png';
 import { css, cva, cx } from '@/styled-system/css';
 
 export const Image = ({ src, alt, className, ...props }: ImageProps) => {

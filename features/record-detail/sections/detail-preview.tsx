@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Image } from '@/components/atoms';
 import { RecordMark } from '@/components/molecules';
-import placeholderImage from '@/public/images/fallbackImage.png';
+import placeholderImage from '@/public/images/fallback.png';
 import { SwimToolName } from '@/public/images/swim-tools';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
