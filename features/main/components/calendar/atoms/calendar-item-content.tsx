@@ -35,6 +35,7 @@ export const ItemContent = ({
             src={imageUrl}
             alt="user-image"
             fill
+            sizes="10vw"
             className={css({
               objectFit: 'cover',
             })}

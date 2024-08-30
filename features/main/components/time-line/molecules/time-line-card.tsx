@@ -97,6 +97,7 @@ const TimeLineCardBody = ({
               src={imageUrl}
               alt="recorded image"
               fill
+              sizes="10vw"
               style={{ objectFit: 'cover' }}
             />
           </div>

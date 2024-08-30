@@ -34,8 +34,8 @@ export const ProfileListItem = ({
           <ProfileImage
             src={profileImageUrl ?? ''}
             alt="profile image"
-            width={40}
-            height={40}
+            sizes="30vw"
+            fill
             style={{ objectFit: 'cover' }}
           />
         </div>
@@ -80,9 +80,10 @@ const containerStyle = flex({
 });
 
 const profileImageStyle = flex({
+  position: 'relative',
   width: '40px',
   height: '40px',
-  align: 'stretch',
+  align: 'center',
   rounded: 'full',
   overflow: 'hidden',
   flexShrink: 0,
