@@ -8,6 +8,7 @@ import {
   useCalendarData,
   useCalendarRendaringData,
 } from '@/features/main/hooks';
+import { useCurrentMemberInfo } from '@/hooks';
 import { calendarSwimCountAtom } from '@/store';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -15,21 +16,27 @@ import { flex } from '@/styled-system/patterns';
 import { CalendarItem, DayLabels } from '../atoms';
 import { CalendarHeader } from './calendar-header';
 
-export const Calendar = ({ targetId }: { targetId?: number }) => {
+interface CalendarProps {
+  targetId?: number;
+}
+
+export const Calendar = ({ targetId }: CalendarProps) => {
   const setSwimCount = useSetAtom(calendarSwimCountAtom);
-  const { data, isFetching } = useCalendarData(targetId);
+  const { data: calendarData, isFetching } = useCalendarData(targetId);
+  const { data: currentMemberData } = useCurrentMemberInfo();
   const [squares, startPoint, endPoint, isDateToday, isDateFuture] =
     useCalendarRendaringData();
   let memoryIndex = 0;
 
-  const memories = data?.data.memories;
+  const memberInfo = currentMemberData?.data;
+  const memories = calendarData?.data.memories;
 
   useEffect(() => {
     if (!memories) return;
     setSwimCount(memories.length);
   }, [memories, setSwimCount]);
 
-  if (!memories) return null;
+  if (!memories || !memberInfo) return null;
 
   return (
     <div className={calendarContainerStyles}>
@@ -56,6 +63,7 @@ export const Calendar = ({ targetId }: { targetId?: number }) => {
                 isToday={isDateToday(date)}
                 isFuture={isDateFuture(date)}
                 memory={currentMemory}
+                isDisableRecord={!!(targetId && memberInfo.id !== targetId)}
               />
             ) : (
               <div key={`out-of-range-${index}`} />

@@ -18,6 +18,7 @@ interface CalendarItemProps extends ItemLayoutProps {
   memory: Memory | undefined;
   totalDistance?: number;
   isFuture: boolean;
+  isDisableRecord: boolean;
 }
 
 export const CalendarItem = ({
@@ -25,6 +26,7 @@ export const CalendarItem = ({
   isToday,
   isFuture,
   memory,
+  isDisableRecord,
 }: CalendarItemProps) => {
   const { year, month } = useAtomValue(calendarDateAtom);
   const targetDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
@@ -32,7 +34,7 @@ export const CalendarItem = ({
   if (!memory)
     return (
       <ItemLayout date={date} isToday={isToday}>
-        {isFuture ? (
+        {isFuture || isDisableRecord ? (
           <div className={linkContainerStyles} />
         ) : (
           <Link
