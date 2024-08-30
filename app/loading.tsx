@@ -1,3 +1,5 @@
+'use client';
+
 import { LoadingWave } from '@/components/atoms';
 import { flex } from '@/styled-system/patterns';
 
