@@ -29,7 +29,7 @@ export default function useSearchPool(nameQuery: string) {
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.cursorId : undefined,
     });
-  const { hasNextPage, fetchNextPage } = queryInfo;
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = queryInfo;
 
   const { ref, inView } = useInView({
     rootMargin: '100px 0px 0px 0px',
@@ -46,5 +46,5 @@ export default function useSearchPool(nameQuery: string) {
     data?.pages.map((page) => page.data.poolInfos).flat() || [];
   const getByFarPoolData: PoolProps[] = rawPoolData;
 
-  return { ref, isLoading, getByFarPoolData };
+  return { ref, isLoading, isFetchingNextPage, getByFarPoolData };
 }
