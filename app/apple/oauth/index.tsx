@@ -21,7 +21,7 @@ const Page = () => {
       fetch('/api/apple/oauth', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
           code: code,
