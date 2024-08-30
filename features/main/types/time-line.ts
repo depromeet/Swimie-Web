@@ -1,4 +1,4 @@
-import { StrokeName } from '@/features/record-detail';
+import { StrokeName } from '@/types';
 
 import { MemberInfo, MemoryType } from './calendar';
 

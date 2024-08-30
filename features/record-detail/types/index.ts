@@ -1,3 +1,5 @@
+import { StrokeName } from '@/types';
+
 export type DetailMember = {
   goal: number;
   name: string;
@@ -11,7 +13,6 @@ export type DetailPool = {
 };
 
 export type StrokeMapType = Record<StrokeName, DetailStroke>;
-export type StrokeName = '자유형' | '배영' | '접영' | '평영' | '킥판';
 export type DetailStroke = {
   strokeId: number;
   name: StrokeName;
