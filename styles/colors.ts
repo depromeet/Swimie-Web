@@ -86,16 +86,16 @@ export const semanticColors = {
   primary: {
     swim: {
       자유형: {
-        default: { value: '#71C2FC' },
-        sub: { value: '#CDEAFF' },
+        default: { value: '#3B87F4' },
+        sub: { value: '#B9D6FF' },
       },
       배영: {
-        default: { value: '#FFCD1D' },
-        sub: { value: '#AFF3BA' },
+        default: { value: '#F3DD62' },
+        sub: { value: '#FBF2C1' },
       },
       평영: {
-        default: { value: '#58E06E' },
-        sub: { value: '#FFECAB' },
+        default: { value: '#88D4B0' },
+        sub: { value: '#CCF1E0' },
       },
       접영: {
         default: { value: '#FF9F59' },
@@ -106,8 +106,8 @@ export const semanticColors = {
         sub: { value: '#DBC6FF' },
       },
       총거리: {
-        default: { value: '{colors.blue.60}' },
-        sub: { value: '#C2CCF0' },
+        default: { value: '#0166DB' },
+        sub: { value: '#91BBEC' },
       },
     },
   },
