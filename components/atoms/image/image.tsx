@@ -1,7 +1,7 @@
 'use client';
 
 import NextImage, { ImageProps } from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import fallbackImage from '@/public/images/fallback.png';
 import { css, cva, cx } from '@/styled-system/css';
@@ -9,6 +9,15 @@ import { css, cva, cx } from '@/styled-system/css';
 export const Image = ({ src, alt, className, ...props }: ImageProps) => {
   const [imgSrc, setImgSrc] = useState(src);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!src) {
+      setImgSrc(fallbackImage);
+      return;
+    }
+
+    setImgSrc(src);
+  }, [src]);
 
   const handleError = () => {
     setImgSrc(fallbackImage);
