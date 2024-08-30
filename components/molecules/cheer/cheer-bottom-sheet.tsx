@@ -1,7 +1,6 @@
 import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
 import { DetailCheerItemSelected } from '@/features/record-detail';
-import { usePreventBodyScroll } from '@/hooks';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { CheerItem } from './cheer-item';
@@ -19,8 +18,6 @@ export const CheerBottomSheet = ({
   onClickCheerItem,
   onClickSendCheer,
 }: CheerBottomSheet) => {
-  usePreventBodyScroll({ isOpen });
-
   return (
     <BottomSheet header={header} isOpen={isOpen} onClose={onClose}>
       <div className={tagContainerStyle}>
