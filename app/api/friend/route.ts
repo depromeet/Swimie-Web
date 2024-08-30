@@ -6,10 +6,6 @@ export type FollowRequestBody = {
   followingId: number;
 };
 
-export type FollowListRequestBody = {
-  friends: number[];
-};
-
 export async function PUT(request: NextRequest) {
   const body = (await request.json()) as Promise<FollowRequestBody>;
   const data = await fetchData(`/friend`, 'PUT', body);
@@ -17,9 +13,10 @@ export async function PUT(request: NextRequest) {
   return NextResponse.json(data);
 }
 
-export async function POST(request: NextRequest) {
-  const body = (await request.json()) as Promise<FollowListRequestBody>;
-  const data = await fetchData(`/friend`, 'POST', body);
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const ids = searchParams.get('ids');
+  const data = await fetchData(`/friend?${ids ? `ids=${ids}` : ''}`, 'GET');
 
   return NextResponse.json(data);
 }
