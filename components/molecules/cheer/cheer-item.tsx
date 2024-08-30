@@ -6,6 +6,7 @@ type CheerItem = {
   onClick?: () => void;
   nickname?: string;
   size?: 'small' | 'medium';
+  isAnimate?: boolean;
 } & DetailCheerItem;
 
 export const CheerItem = ({
@@ -13,13 +14,18 @@ export const CheerItem = ({
   onClick,
   nickname,
   size = 'medium',
+  isAnimate,
   ...item
 }: CheerItem) => {
   if (!item?.emoji?.length && !item?.comment?.length) return null;
   return (
     // NOTE: isSelected undefined 대응하여 Boolean 사용
     <button
-      className={containerStyle({ isSelected: Boolean(isSelected), size })}
+      className={containerStyle({
+        isSelected: Boolean(isSelected),
+        size,
+        isAnimate,
+      })}
       onClick={onClick}
     >
       {item?.emoji?.length && <div>{item.emoji}</div>}
@@ -62,6 +68,11 @@ const containerStyle = cva({
       medium: {
         p: '8px 14px',
         textStyle: 'body1.normal',
+      },
+    },
+    isAnimate: {
+      true: {
+        animation: 'cheerFadeIn 0.2s',
       },
     },
   },
