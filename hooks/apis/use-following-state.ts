@@ -15,13 +15,12 @@ export type FollowState = {
 
 export type FollowStateResponse = Response<{ followingList: FollowState[] }>;
 
-const fetchFollowingList = async (friendsArr: number[]) => {
-  const res = await fetch(`/api/friend`, {
-    method: 'POST',
+const fetchFollowingList = async (ids: number[]) => {
+  const res = await fetch(`/api/friend?ids=${ids.join(',')}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ friends: friendsArr }),
   });
 
   return res.json();
