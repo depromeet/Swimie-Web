@@ -13,15 +13,18 @@ const fetchCheerEligibility = async (memoryId: number) => {
 };
 
 export const useCheerEligibility = (memoryId: number, isMyMemory?: boolean) => {
+  const enabled = !!memoryId && !isMyMemory;
+
   const query = useQuery<{ data: { isRegistrable: boolean } }>({
     queryKey: ['useCheerEligibility', memoryId],
     queryFn: () => fetchCheerEligibility(memoryId),
     retry: 3,
-    enabled: !!memoryId && !isMyMemory,
+    enabled,
   });
 
   return {
     ...query,
     data: query.data?.data,
+    refetch: () => enabled && query.refetch(),
   };
 };
