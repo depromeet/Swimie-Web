@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 
 import MetaTagImage from '@/public/images/meta-tag.png';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { pretendard } from '@/styles/font';
 
 import ReactQueryProvider from './providers/ReactQueryProvider';
@@ -58,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={pretendard.className}>
+    <html lang="ko" className={cx(pretendard.className, htmlStyles)}>
       <body className={rootStyle}>
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
@@ -73,6 +73,9 @@ export default function RootLayout({
     </html>
   );
 }
+
+// NOTE: Disable Safari Pull to Refresh
+const htmlStyles = css({ overflow: 'hidden', overscrollBehavior: 'none' });
 
 const containerStyle = css({
   minHeight: '100%',

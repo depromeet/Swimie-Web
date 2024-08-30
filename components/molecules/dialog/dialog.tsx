@@ -27,6 +27,10 @@ export const Dialog = ({
   isDim = true,
 }: DialogProps) => {
   if (!isOpen) return null;
+
+  const buttonStyle =
+    Object.keys(buttons).length === 1 ? singleButtonStyle : gridButtonStyle;
+
   return (
     <>
       <div className={containerStyle}>
@@ -39,7 +43,7 @@ export const Dialog = ({
           </div>
 
           {Boolean(Object.keys(buttons).length) && (
-            <div className={content.buttonStyle}>
+            <div className={buttonStyle}>
               {buttons.cancel && (
                 <Button
                   onClick={buttons.cancel.onClick}
@@ -88,15 +92,21 @@ const contentStyle = flex({
   gap: '24px',
 });
 
+const singleButtonStyle = css({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  gap: '12px',
+});
+
+const gridButtonStyle = grid({
+  gap: '12px',
+  gridTemplateColumns: 2,
+});
+
 const content = {
   textStyle: flex({
     direction: 'column',
     gap: '4px',
-  }),
-
-  buttonStyle: grid({
-    gap: '12px',
-    gridTemplateColumns: 2,
   }),
 };
 

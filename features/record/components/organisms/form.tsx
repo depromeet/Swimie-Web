@@ -75,16 +75,16 @@ export function Form() {
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
-        heartRate: prevData.memoryDetail.heartRate
+        heartRate: prevData.memoryDetail?.heartRate
           ? prevData.memoryDetail.heartRate
           : undefined,
-        paceMinutes: prevData.memoryDetail.paceMinutes
+        paceMinutes: prevData.memoryDetail?.paceMinutes
           ? prevData.memoryDetail.paceMinutes
           : undefined,
-        paceSeconds: prevData.memoryDetail.paceSeconds
+        paceSeconds: prevData.memoryDetail?.paceSeconds
           ? prevData.memoryDetail.paceSeconds
           : undefined,
-        kcal: prevData.memoryDetail.kcal
+        kcal: prevData.memoryDetail?.kcal
           ? prevData.memoryDetail.kcal
           : undefined,
         strokes: prevData.strokes ? prevData.strokes : undefined,
@@ -307,7 +307,7 @@ export function Form() {
         <Divider variant="thick" />
         <EquipmentSection
           title="장비"
-          defaultEquipment={data?.data.memoryDetail.item}
+          defaultEquipment={data?.data.memoryDetail?.item}
         />
         <Divider variant="thick" />
         <SubInfoSection title="심박수 · 페이스 · 칼로리" />

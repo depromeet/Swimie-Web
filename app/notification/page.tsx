@@ -3,7 +3,10 @@ import { Suspense } from 'react';
 
 import { LeftArrowIcon } from '@/components/atoms';
 import { HeaderBar } from '@/components/molecules';
-import { NotificationList } from '@/features/notification';
+import {
+  NotificationList,
+  NotificationListSkeleton,
+} from '@/features/notification';
 const DynamicBackButton = dynamic(
   () => import('@/components/molecules').then(({ BackButton }) => BackButton),
   {
@@ -23,7 +26,7 @@ export default function NotificationPage() {
         <HeaderBar.Title>알림</HeaderBar.Title>
       </HeaderBar>
       {/* Todo: 로딩 UI */}
-      <Suspense>
+      <Suspense fallback={<NotificationListSkeleton />}>
         <NotificationList />
       </Suspense>
     </>

@@ -61,7 +61,7 @@ export const CalendarItem = ({
         }
       </Link>
       <div className={totalDistanceAreaStyles}>
-        {totalDistance && <p>{totalDistance}</p>}
+        {totalDistance && <p className={textStyles}>{totalDistance}</p>}
       </div>
     </>
   );
@@ -75,4 +75,11 @@ export const linkContainerStyles = css({
   maxHeight: '120px',
   backgroundColor: 'background.gray',
   rounded: '2px',
+});
+
+const textStyles = css({
+  textStyle: 'caption2',
+  fontWeight: 'medium',
+  textAlign: 'center',
+  color: 'text.placeHolder',
 });
