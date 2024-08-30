@@ -123,6 +123,7 @@ const layoutStyles = cva({
     justifyContent: 'center',
     rounded: '2px',
     overflow: 'hidden',
+    animation: 'dimFadeIn 0.2s',
   },
   variants: {
     renderType: {
