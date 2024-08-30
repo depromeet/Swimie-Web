@@ -1,6 +1,7 @@
 'use client';
 
 import { useSetAtom } from 'jotai';
+import { useRouter } from 'next/navigation';
 import { forwardRef, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -30,6 +31,7 @@ export const PoolSearchResultElement = forwardRef<
     { poolId, poolSearchText, name, address, isFavorite, className, assignRef },
     ref,
   ) => {
+    const router = useRouter();
     const [favorite, setFavorite] = useState(isFavorite);
 
     const { setValue } = useFormContext();
@@ -44,9 +46,7 @@ export const PoolSearchResultElement = forwardRef<
         isOpen: false,
         jumpDirection: 'backward',
       });
-      const currentUrl = new URL(window.location.href);
-      const newUrl = `${currentUrl.pathname}${currentUrl.search}`;
-      window.history.replaceState(null, '', newUrl);
+      router.back();
     };
 
     const handleStarIconClick = () => {
