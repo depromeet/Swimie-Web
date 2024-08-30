@@ -3,7 +3,6 @@
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
-import { LoadingArea } from '@/components/atoms';
 import {
   useCalendarData,
   useCalendarRendaringData,
@@ -14,6 +13,7 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { CalendarItem, DayLabels } from '../atoms';
+import { CalendarItemLayout } from '../atoms/calendar-item-layout';
 import { CalendarHeader } from './calendar-header';
 
 interface CalendarProps {
@@ -42,35 +42,36 @@ export const Calendar = ({ targetId }: CalendarProps) => {
     <div className={calendarContainerStyles}>
       <CalendarHeader />
       <DayLabels />
-      {isFetching ? (
-        <LoadingArea />
-      ) : (
-        <ul className={CalendarGridStyles}>
-          {squares.map((squareNumber, index) => {
-            const isInRenderingRange = index >= startPoint && index <= endPoint;
-            const date = squareNumber - startPoint;
-            const isValidMemory =
-              memoryIndex < memories.length &&
-              memories[memoryIndex].memoryDate === date;
-            const currentMemory = isValidMemory
-              ? memories[memoryIndex++]
-              : undefined;
+      <ul className={CalendarGridStyles}>
+        {squares.map((squareNumber, index) => {
+          const isInRenderingRange = index >= startPoint && index <= endPoint;
+          const date = squareNumber - startPoint;
+          const isValidMemory =
+            memoryIndex < memories.length &&
+            memories[memoryIndex].memoryDate === date;
+          const currentMemory = isValidMemory
+            ? memories[memoryIndex++]
+            : undefined;
 
-            return isInRenderingRange ? (
+          return isInRenderingRange ? (
+            <CalendarItemLayout
+              key={squareNumber}
+              date={date}
+              isToday={isDateToday(date)}
+            >
               <CalendarItem
-                key={squareNumber}
                 date={date}
-                isToday={isDateToday(date)}
                 isFuture={isDateFuture(date)}
                 memory={currentMemory}
                 isDisableRecord={!!(targetId && memberInfo.id !== targetId)}
+                isFetching={isFetching}
               />
-            ) : (
-              <div key={`out-of-range-${index}`} />
-            );
-          })}
-        </ul>
-      )}
+            </CalendarItemLayout>
+          ) : (
+            <div key={`out-of-range-${index}`} />
+          );
+        })}
+      </ul>
     </div>
   );
 };
