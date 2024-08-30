@@ -11,6 +11,7 @@ import { formatDateToKorean, getFormatDate } from '@/utils';
 
 import { CardWrapper } from '../atoms';
 import { TimeLineCard } from '../molecules';
+import { TimeLineSkeleton } from './time-line-skeleton';
 
 interface GroupedTimelineContents {
   date: string;
@@ -18,7 +19,12 @@ interface GroupedTimelineContents {
 }
 
 export const TimeLine = () => {
-  const { data: timelineData, fetchNextPage, hasNextPage } = useTimeLineData();
+  const {
+    data: timelineData,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+  } = useTimeLineData();
 
   if (!timelineData) return null;
 
@@ -31,6 +37,7 @@ export const TimeLine = () => {
       ? 0
       : groupedContents[lastGroupIndex].contents.length - 1;
 
+  if (isLoading) return <TimeLineSkeleton />;
   return (
     <>
       {isEmptyTimeLine ? (

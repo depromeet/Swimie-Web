@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+'use client';
 
 import {
   GlobalNavigationBar,
@@ -7,35 +7,14 @@ import {
   NotificationButton,
 } from '@/components/molecules';
 import { SettingButton } from '@/components/molecules';
-import { MainTabType, TimeLineSkeleton } from '@/features/main';
+import {
+  MainTab,
+  MainTabType,
+  TimeLine,
+  UserCalendarProfile,
+} from '@/features/main';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-const DynamicTabSection = dynamic(
-  () => import('@/features/main').then(({ MainTab }) => MainTab),
-  {
-    ssr: false,
-  },
-);
-
-const DynamicTimeLine = dynamic(
-  () => import('@/features/main').then(({ TimeLine }) => TimeLine),
-  {
-    ssr: false,
-    loading: () => <TimeLineSkeleton />,
-  },
-);
-
-// TODO: Calendar loading skeleton 변경
-const DynamicUserCalendarProfile = dynamic(
-  () =>
-    import('@/features/main').then(
-      ({ UserCalendarProfile }) => UserCalendarProfile,
-    ),
-  {
-    ssr: false,
-  },
-);
 
 export default function Home({
   searchParams,
@@ -57,14 +36,10 @@ export default function Home({
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>
-      <DynamicTabSection tab={tab} />
+      <MainTab tab={tab} />
       <main className={styles}>
         <section className={contentStyles}>
-          {tab === 'calendar' ? (
-            <DynamicUserCalendarProfile />
-          ) : (
-            <DynamicTimeLine />
-          )}
+          {tab === 'calendar' ? <UserCalendarProfile /> : <TimeLine />}
         </section>
       </main>
       <GlobalNavigationBar />
