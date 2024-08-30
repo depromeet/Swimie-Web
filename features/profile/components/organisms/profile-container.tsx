@@ -1,6 +1,6 @@
-import { ProfileImage } from '@/components/molecules';
 import Link from 'next/link';
 
+import { ProfileImage } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
