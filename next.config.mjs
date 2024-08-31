@@ -7,6 +7,11 @@ const nextConfig = {
       { protocol: 'http', hostname: '**.cloudfront.net' },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['appleid.apple.com'],
+    },
+  },
 };
 
 export default nextConfig;
