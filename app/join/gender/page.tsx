@@ -133,7 +133,7 @@ const buttonsStyles = flex({
 const buttonStyles = cva({
   base: {
     width: 'full',
-    height: '140px',
+    height: '100%',
     textStyle: 'heading3',
   },
   variants: {
