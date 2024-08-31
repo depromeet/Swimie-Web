@@ -51,7 +51,7 @@ export default function Page() {
 const pageContainer = flex({
   direction: 'column',
   justifyContent: 'space-between',
-  height: '100vh',
+  height: '100dvh',
 });
 
 const contentWrapper = flex({

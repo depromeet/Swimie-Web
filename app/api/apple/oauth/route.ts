@@ -46,11 +46,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const data = (await res.json()) as LoginResponse;
-    console.log(data);
 
     setAuthCookies(data.data);
 
-    return NextResponse.redirect(new URL('/', request.url));
+    const loginUrl = new URL('/apple/test', request.url);
+    loginUrl.searchParams.set('data', JSON.stringify(data));
+
+    return NextResponse.redirect(loginUrl);
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
