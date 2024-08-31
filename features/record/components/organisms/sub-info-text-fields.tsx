@@ -34,6 +34,7 @@ export function SubInfoTextFields() {
               name: 'paceMinutes',
             }) as number
           }
+          maxLength={2}
           inputType="number"
           label="페이스"
           wrapperClassName={paceStyles.field}
@@ -47,6 +48,7 @@ export function SubInfoTextFields() {
               name: 'paceSeconds',
             }) as number
           }
+          maxLength={2}
           inputType="number"
           unit="/100m"
           wrapperClassName={cx(paceStyles.field, css({ paddingTop: '24px' }))}
@@ -60,6 +62,7 @@ export function SubInfoTextFields() {
             name: 'kcal' as string,
           }) as number
         }
+        maxLength={4}
         inputType="number"
         label="칼로리"
         unit="Kcal"
