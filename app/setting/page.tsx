@@ -37,6 +37,10 @@ export default function Page() {
     openNoticeModal();
   };
 
+  const handleGoToInquiry = () => {
+    window.location.href = 'https://forms.gle/1yz3fcjCt2NEpwd99';
+  };
+
   const handleGoToChangeDistance = () => {
     router.push('/change-distance');
   };
@@ -54,7 +58,7 @@ export default function Page() {
     { text: '오픈소스 라이선스', onClick: handleGoToSetting, divider: true },
     { text: '로그아웃', onClick: openLogoutModal },
     { text: '탈퇴하기', onClick: handleGoToDeleteAccount, divider: true },
-    { text: '스위미팀에게 문의하기', onClick: handleGoToSetting },
+    { text: '스위미팀에게 문의하기', onClick: handleGoToInquiry },
   ];
 
   return (
