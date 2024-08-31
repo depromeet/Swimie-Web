@@ -1,9 +1,9 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
+// import { useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 
-import { PullToRefresh } from '@/components/atoms';
+// import { PullToRefresh } from '@/components/atoms';
 import { HeaderBar, InfiniteScroller } from '@/components/molecules';
 import { TimeLineCard, TimeLineContent } from '@/features/main';
 import { css } from '@/styled-system/css';
@@ -16,7 +16,7 @@ import { EmptyNews, NewsItemWrapper, NewsItemWrapperProps } from '../molecules';
 
 export const NewsList = () => {
   const ptrRef = useRef(null);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const { data: newsData, fetchNextPage, hasNextPage } = useNewsData();
 
   if (!newsData) return null;
@@ -25,10 +25,10 @@ export const NewsList = () => {
   const isEmpty = contents.length === 0;
   const lastItemIndex = contents.length - 1;
 
-  const handlePullToRefresh = () => {
-    void queryClient.invalidateQueries({ queryKey: ['newsData'] });
-    void queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
-  };
+  // const handlePullToRefresh = () => {
+  //   void queryClient.invalidateQueries({ queryKey: ['newsData'] });
+  //   void queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
+  // };
 
   return isEmpty ? (
     <section className={emptySectionStyle}>
@@ -46,7 +46,7 @@ export const NewsList = () => {
       </HeaderBar>
 
       <div className={sectionStyle} ref={ptrRef}>
-        <PullToRefresh ref={ptrRef} onRefresh={handlePullToRefresh} />
+        {/* <PullToRefresh ref={ptrRef} onRefresh={handlePullToRefresh} /> */}
         <InfiniteScroller
           isLastPage={!hasNextPage}
           onIntersect={() => void fetchNextPage()}
