@@ -3,11 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import {
-  AppleLogoIcon,
-  GoogleLogoIcon,
-  KakaoLogoIcon,
-} from '@/components/atoms/icons';
+import { GoogleLogoIcon, KakaoLogoIcon } from '@/components/atoms/icons';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
 import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
 import { css, cva } from '@/styled-system/css';
@@ -26,43 +22,43 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
   };
 
   // TODO: nonce 생성 함수 별도 분리 예정
-  function generateNonceAndState(length = 16) {
-    const charset =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let nonce = '';
-    const charsetLength = charset.length;
+  // function generateNonceAndState(length = 16) {
+  //   const charset =
+  //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //   let nonce = '';
+  //   const charsetLength = charset.length;
 
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charsetLength);
-      nonce += charset[randomIndex];
-    }
+  //   for (let i = 0; i < length; i++) {
+  //     const randomIndex = Math.floor(Math.random() * charsetLength);
+  //     nonce += charset[randomIndex];
+  //   }
 
-    return nonce;
-  }
+  //   return nonce;
+  // }
 
-  const nonce = generateNonceAndState();
+  // const nonce = generateNonceAndState();
 
-  const appleLogin = async () => {
-    console.log('sign in with apple');
+  // const appleLogin = async () => {
+  //   console.log('sign in with apple');
 
-    window.AppleID.auth.init({
-      clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
-      scope: 'name email',
-      redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
-      state: 'origin: swimie',
-      nonce: nonce,
-      usePopup: false,
-      responseType: 'code id_token',
-      responseMode: 'form_post',
-    });
+  //   window.AppleID.auth.init({
+  //     clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
+  //     scope: 'name email',
+  //     redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
+  //     state: 'origin: swimie',
+  //     nonce: nonce,
+  //     usePopup: false,
+  //     responseType: 'code id_token',
+  //     responseMode: 'form_post',
+  //   });
 
-    try {
-      const res = await window.AppleID.auth.signIn();
-      console.log(res);
-    } catch (error) {
-      console.error('Apple Login Error:', error);
-    }
-  };
+  //   try {
+  //     const res = await window.AppleID.auth.signIn();
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.error('Apple Login Error:', error);
+  //   }
+  // };
 
   return (
     <div className={loginPage}>
@@ -116,7 +112,8 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <span>Google로 로그인</span>
               </div>
             </button>
-            <button
+            {/* TODO: 애플 로그인 버튼 미노출 */}
+            {/* <button
               className={buttons({ type: 'apple' })}
               onClick={() => {
                 void appleLogin();
@@ -126,7 +123,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <AppleLogoIcon />
                 <span>Apple ID로 로그인</span>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
         {/* TODO: Button 리팩토링 예정 */}
