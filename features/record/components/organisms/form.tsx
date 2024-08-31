@@ -75,6 +75,9 @@ export function Form() {
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
+        item: prevData.memoryDetail?.item
+          ? prevData.memoryDetail.item
+          : undefined,
         heartRate: prevData.memoryDetail?.heartRate
           ? prevData.memoryDetail.heartRate
           : undefined,
