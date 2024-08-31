@@ -15,6 +15,7 @@ import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
+import { LoginLoading } from '@/features/login';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getBlobData, getToday } from '@/utils';
@@ -48,7 +49,9 @@ export function Form() {
   const date = searchParams.get('date');
   const memoryId = searchParams.get('memoryId');
   const isEditMode = Boolean(memoryId);
-  const { data } = usePullEditMemory(Number(memoryId));
+  const { data, isLoading: isLoadingPreviousMemory } = usePullEditMemory(
+    Number(memoryId),
+  );
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
@@ -75,6 +78,9 @@ export function Form() {
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
         poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
         diary: prevData.diary ? prevData.diary : undefined,
+        item: prevData.memoryDetail?.item
+          ? prevData.memoryDetail.item
+          : undefined,
         heartRate: prevData.memoryDetail?.heartRate
           ? prevData.memoryDetail.heartRate
           : undefined,
@@ -224,6 +230,8 @@ export function Form() {
     }
   };
 
+  //Todo: Dim Loading 상태 공통 코드로 분리
+  if (isLoadingPreviousMemory) return <LoginLoading />;
   return (
     //react-hook-form 전역적으로 사용
     <FormProvider {...methods}>
