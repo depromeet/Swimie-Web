@@ -15,7 +15,7 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
           onClick: () => {
             close();
             void logout();
-            router.push('/');
+            router.push('/login');
           },
         },
         cancel: {
