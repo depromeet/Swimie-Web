@@ -15,7 +15,7 @@ const PoolSearchResultElement = lazy(() =>
   })),
 );
 
-import { usePreventRouterBack } from '@/hooks';
+import { useRouter } from 'next/navigation';
 
 import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
@@ -33,6 +33,7 @@ interface PoolSearchPageModalProps {
  * @param title 수영 검색 page-modal 제목
  */
 export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
+  const router = useRouter();
   const { pageModalRef, pageModalState, handlers } = usePoolSearchPageModal();
   const [poolSearchText, setPoolSearchText] = useState('');
 
@@ -41,14 +42,14 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
     data?.data.favoritePools.length === 0 &&
     data?.data.searchedPools.length === 0;
 
+  const handleBackArrowClick = () => {
+    router.back();
+    handlers.onClosePageModal();
+  };
+
   const handlePoolSearchTextChange = debounce((text: string) => {
     setPoolSearchText(removeSpecialSymbols(text));
   }, 300);
-
-  usePreventRouterBack({
-    isDirty: pageModalState.isOpen,
-    alterAction: handlers.onClosePageModal,
-  });
 
   return (
     <PageModal
@@ -59,7 +60,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
       <div ref={pageModalRef}>
         <HeaderBar>
           <HeaderBar.LeftContent>
-            <BackButton onClickBack={() => handlers.onClosePageModal()} />
+            <BackButton onClickBack={handleBackArrowClick} />
           </HeaderBar.LeftContent>
         </HeaderBar>
         <div className={layoutStyles}>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/navigation';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/atoms';
@@ -12,7 +13,6 @@ import {
   TabItem,
   TextField,
 } from '@/components/molecules';
-import { usePreventRouterBack } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -33,6 +33,7 @@ export function DistancePageModal({
   defaultTotalMeter,
   defaultTotalLap,
 }: DistancePageModalProps) {
+  const router = useRouter();
   const { setValue, control } = useFormContext();
   const pageModalState = useAtomValue(isDistancePageModalOpen);
 
@@ -87,6 +88,7 @@ export function DistancePageModal({
   ];
 
   const handleBackArrowClick = () => {
+    router.back();
     handlers.onClosePageModal();
   };
 
@@ -135,12 +137,8 @@ export function DistancePageModal({
         );
     }
     handlers.onClosePageModal();
+    router.back();
   };
-
-  usePreventRouterBack({
-    isDirty: pageModalState.isOpen,
-    alterAction: handlers.onClosePageModal,
-  });
 
   return (
     <PageModal

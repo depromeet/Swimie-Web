@@ -74,6 +74,9 @@ export default function RootLayout({
   );
 }
 
+// NOTE: Disable Safari Pull to Refresh
+// const htmlStyles = css({ overflow: 'hidden', overscrollBehavior: 'none' });
+
 const containerStyle = css({
   minHeight: '100%',
 

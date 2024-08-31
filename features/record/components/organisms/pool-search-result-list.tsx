@@ -1,3 +1,4 @@
+import { LoadingArea } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -11,7 +12,8 @@ interface PoolSearchResultListProps {
 export function PoolSearchResultList({
   poolSearchText,
 }: PoolSearchResultListProps) {
-  const { ref, isLoading, getByFarPoolData } = useSearchPool(poolSearchText);
+  const { ref, isLoading, isFetchingNextPage, getByFarPoolData } =
+    useSearchPool(poolSearchText);
   return (
     <ul className={resultStyles.list}>
       {!isLoading && getByFarPoolData.length === 0 && (
@@ -36,6 +38,7 @@ export function PoolSearchResultList({
             className={resultStyles.element}
           />
         ))}
+      {isFetchingNextPage && <LoadingArea width={30} height={30} />}
     </ul>
   );
 }

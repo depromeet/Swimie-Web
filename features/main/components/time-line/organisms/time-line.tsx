@@ -2,9 +2,10 @@
 
 import { Fragment } from 'react';
 
-import { SwimmerIcon } from '@/components/atoms';
+import { Image } from '@/components/atoms';
 import { InfiniteScroller } from '@/components/molecules';
 import { TimeLineContent, useTimeLineData } from '@/features/main';
+import EmptyTimeLineCharacterImage from '@/public/images/empty-timeline-character.png';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getFormatDate } from '@/utils';
@@ -42,7 +43,12 @@ export const TimeLine = () => {
     <>
       {isEmptyTimeLine ? (
         <div className={cx(fullspaceStyles, iconContainer)}>
-          <SwimmerIcon width={96} height={96} />
+          <Image
+            src={EmptyTimeLineCharacterImage}
+            alt="empty-timeline-character"
+            width={140}
+            height={140}
+          />
           <p className={descriptionStyles}>아직 수영 기록이 없어요!</p>
         </div>
       ) : (
@@ -98,7 +104,7 @@ const groupBySameYearAndMonth = (contents: Array<TimeLineContent>) => {
   return result;
 };
 
-const fullspaceStyles = css({ pt: '55%', width: 'full', height: 'full' });
+const fullspaceStyles = css({ pt: '40%', width: 'full', height: 'full' });
 
 const iconContainer = flex({
   direction: 'column',

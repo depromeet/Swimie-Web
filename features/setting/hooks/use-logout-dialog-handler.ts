@@ -1,7 +1,10 @@
+import { useRouter } from 'next/navigation';
+
 import { useDialog } from '@/hooks';
 
 export function useLogoutDialogHandler(logout: () => Promise<void>) {
   const { dialog, close } = useDialog();
+  const router = useRouter();
 
   const openLogoutModal = () => {
     dialog({
@@ -12,6 +15,7 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
           onClick: () => {
             close();
             void logout();
+            router.push('/');
           },
         },
         cancel: {
