@@ -59,7 +59,10 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
     const shouldEmphasize = isWritten || focused;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      void onChange(event);
+      if (maxLength && event.target.value.length >= maxLength) {
+        event.target.value = event.target.value.slice(0, maxLength);
+        void onChange(event);
+      } else void onChange(event);
     };
 
     return (
