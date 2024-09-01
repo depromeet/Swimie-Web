@@ -47,7 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // const loginUrl = new URL('/apple/test', request.url);
   // loginUrl.searchParams.set('data', JSON.stringify(data));
-  const loginUrl = new URL('/');
+  const loginUrl = new URL('/join/nickname', request.url);
 
   return NextResponse.redirect(loginUrl);
 }
