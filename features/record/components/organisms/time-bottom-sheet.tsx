@@ -1,6 +1,5 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -11,64 +10,37 @@ import { BottomSheet } from '@/components/molecules';
 import { usePreventBodyScroll } from '@/hooks';
 import { css } from '@/styled-system/css';
 
+import { time } from '../../constants';
 import { timeBottomSheetState } from '../../store';
+import { AmpmType, HourType, MinuteType } from '../../types';
+import { addMinutes, convertTo24HourFormat } from '../../utils';
 
 export function TimeBottomSheet() {
-  const { setValue } = useFormContext();
+  const { getValues, setValue } = useFormContext();
   const [timeBottmSheetState, setTimeBottmSheetState] =
     useAtom(timeBottomSheetState);
 
-  usePreventBodyScroll({ isOpen: timeBottmSheetState.isOpen });
-
-  const handleTimeChange = (date: dayjs.Dayjs) => {
-    setTimeBottmSheetState((prev) => ({ ...prev, time: date.format('HH:mm') }));
-  };
-  console.log(handleTimeChange);
-  const handleDoneButtonClick = () => {
-    if (timeBottmSheetState.variant === 'start')
-      setValue('startTime', timeBottmSheetState.time);
-    else if (timeBottmSheetState.variant === 'end')
-      setValue('endTime', timeBottmSheetState.time);
-    setTimeBottmSheetState((prev) => ({ ...prev, isOpen: false }));
-  };
-
-  const selections = {
-    ampm: ['오전', '오후'],
-    hour: [
-      '01',
-      '02',
-      '03',
-      '04',
-      '05',
-      '06',
-      '07',
-      '08',
-      '09',
-      '10',
-      '11',
-      '12',
-    ],
-    minute: [
-      '00',
-      '05',
-      '10',
-      '15',
-      '20',
-      '25',
-      '30',
-      '35',
-      '40',
-      '45',
-      '50',
-      '55',
-    ],
-  };
-
-  const [pickerValue, setPickerValue] = useState({
+  const [pickerValue, setPickerValue] = useState<{
+    ampm: AmpmType;
+    hour: HourType;
+    minute: MinuteType;
+  }>({
     ampm: '오후',
     hour: '02',
     minute: '05',
   });
+
+  usePreventBodyScroll({ isOpen: timeBottmSheetState.isOpen });
+
+  const handleDoneButtonClick = () => {
+    if (timeBottmSheetState.variant === 'start') {
+      setValue('startTime', convertTo24HourFormat(pickerValue));
+      if (!getValues('endTime'))
+        setValue('endTime', addMinutes(pickerValue, 50));
+    } else if (timeBottmSheetState.variant === 'end')
+      setValue('endTime', convertTo24HourFormat(pickerValue));
+    setTimeBottmSheetState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   return (
     <BottomSheet
@@ -91,9 +63,9 @@ export function TimeBottomSheet() {
           itemHeight={34}
           className={layoutStyles.picker}
         >
-          {Object.keys(selections).map((name) => (
+          {Object.keys(time).map((name) => (
             <Picker.Column key={name} name={name}>
-              {selections[name as keyof typeof selections].map((option) => (
+              {time[name as keyof typeof time].map((option) => (
                 <Picker.Item key={option} value={option}>
                   {({ selected }) => (
                     <span
