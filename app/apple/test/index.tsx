@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 import { LoginLoading, LoginScreen } from '@/features/login';
 import { AuthInfoAtom } from '@/store/auth';
-import { LoginResponse } from '@/types/authType';
 
 const Page = () => {
   const router = useRouter();
@@ -15,17 +14,17 @@ const Page = () => {
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const data = url.searchParams.get('data') as string;
-    const decodedData = decodeURIComponent(data);
-    const jsonData = JSON.parse(decodedData) as LoginResponse;
+    const userId = Number(url.searchParams.get('userId'));
+    const nickname = url.searchParams.get('nickname') as string;
+    const isSignUpComplete = Boolean(url.searchParams.get('isSignUpComplete'));
 
     setAuth({
       isLogined: true,
-      nickname: jsonData.data.nickname,
-      userId: jsonData.data.userId,
+      nickname: nickname,
+      userId: userId,
     });
 
-    if (jsonData.data.isSignUpComplete) {
+    if (isSignUpComplete) {
       router.push('/');
     } else {
       router.push('/join/nickname');
