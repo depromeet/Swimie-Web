@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
-
 import { useSetAtom } from 'jotai';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { LoginLoading, LoginScreen } from '@/features/login';
@@ -10,26 +8,29 @@ import { AuthInfoAtom } from '@/store/auth';
 
 const Page = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const setAuth = useSetAtom(AuthInfoAtom);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const userId = Number(url.searchParams.get('userId'));
-    const nickname = url.searchParams.get('nickname') as string;
-    const isSignUpComplete = Boolean(url.searchParams.get('isSignUpComplete'));
+    const userId = searchParams.get('userId');
+    const nickname = searchParams.get('nickname');
+    const profileImageUrl = searchParams.get('profileImageUrl');
+    const isSignUpComplete = searchParams.get('isSignUpComplete');
 
-    setAuth({
-      isLogined: true,
-      nickname: nickname,
-      userId: userId,
-    });
+    if (userId && nickname && profileImageUrl && isSignUpComplete !== null) {
+      setAuth({
+        isLogined: true,
+        nickname,
+        userId: Number(userId),
+      });
 
-    if (isSignUpComplete) {
-      router.push('/');
-    } else {
-      router.push('/join/nickname');
+      if (isSignUpComplete) {
+        router.push('/');
+      } else {
+        router.push('/join/nickname');
+      }
     }
-  }, [router, setAuth]);
+  }, [router, searchParams, setAuth]);
 
   return (
     <>

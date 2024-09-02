@@ -1,12 +1,12 @@
 'use client';
 
-import { error } from 'console';
 import { useSetAtom } from 'jotai';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { LoginLoading, LoginScreen } from '@/features/login';
 import { AuthInfoAtom } from '@/store/auth';
+import { AuthResponse } from '@/types/authType';
 
 const Page = () => {
   const router = useRouter();
@@ -14,26 +14,45 @@ const Page = () => {
   const setAuth = useSetAtom(AuthInfoAtom);
 
   useEffect(() => {
-    const userId = searchParams.get('userId');
-    const nickname = searchParams.get('nickname');
-    const profileImageUrl = searchParams.get('profileImageUrl');
-    const isSignUpComplete = searchParams.get('isSignUpComplete');
+    const KAKAO_CODE = searchParams.get('code');
 
-    if (userId && nickname && profileImageUrl && isSignUpComplete !== null) {
-      setAuth({
-        isLogined: true,
-        nickname,
-        userId: Number(userId),
-      });
-
-      if (isSignUpComplete) {
-        router.push('/');
-      } else {
-        router.push('/join/nickname');
+    const postCode = async () => {
+      if (!KAKAO_CODE) {
+        console.error('코드가 유효하지 않습니다.');
+        return;
       }
-    } else {
-      console.error(error);
-    }
+      try {
+        const response = await fetch(`/api/kakao/oauth?code=${KAKAO_CODE}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code: KAKAO_CODE }),
+        });
+
+        if (response.status === 200) {
+          const data = (await response.json()) as AuthResponse;
+
+          setAuth({
+            isLogined: true,
+            nickname: data.data.data.nickname,
+            userId: data.data.data.userId,
+          });
+
+          if (data.data.data.isSignUpComplete) {
+            router.push('/');
+          } else {
+            router.push('/join/nickname');
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    postCode().catch((error) => {
+      console.error('Error:', error);
+    });
   }, [router, searchParams, setAuth]);
 
   return (
