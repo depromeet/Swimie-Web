@@ -60,7 +60,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
     loginUrl.searchParams.set('isSignUpComplete', isSignUpComplete.toString());
 
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(loginUrl, 302);
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
