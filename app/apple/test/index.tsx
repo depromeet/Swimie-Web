@@ -24,7 +24,7 @@ const Page = () => {
         userId: Number(userId),
       });
 
-      if (isSignUpComplete) {
+      if (isSignUpComplete === 'true') {
         router.push('/');
       } else {
         router.push('/join/nickname');
