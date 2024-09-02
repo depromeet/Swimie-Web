@@ -58,7 +58,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
         redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
         state: 'origin: swimie',
         nonce: nonce,
-        usePopup: false,
+        usePopup: true,
         responseType: 'code id_token',
         responseMode: 'form_post',
       });

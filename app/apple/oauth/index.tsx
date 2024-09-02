@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import { useSetAtom } from 'jotai';
@@ -16,18 +15,20 @@ const Page = () => {
   useEffect(() => {
     const url = new URL(window.location.href);
     const data = url.searchParams.get('data') as string;
-    const jsonData = JSON.parse(data) as LoginResponse;
 
-    setAuth({
-      isLogined: true,
-      nickname: jsonData.data.nickname,
-      userId: jsonData.data.userId,
-    });
+    if (data) {
+      const jsonData = JSON.parse(data) as LoginResponse;
+      setAuth({
+        isLogined: true,
+        nickname: jsonData.data.nickname,
+        userId: jsonData.data.userId,
+      });
 
-    if (jsonData.data.isSignUpComplete) {
-      router.push('/');
-    } else {
-      router.push('/join/nickname');
+      if (jsonData.data.isSignUpComplete) {
+        router.push('/');
+      } else {
+        router.push('/join/nickname');
+      }
     }
   }, [router, setAuth]);
 
