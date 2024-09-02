@@ -46,11 +46,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const data = (await res.json()) as LoginResponse;
+    const { userId, nickname, profileImageUrl, isSignUpComplete } = data.data;
 
     setAuthCookies(data.data);
 
     const loginUrl = new URL('/apple/test', request.url);
-    loginUrl.searchParams.set('data', encodeURIComponent(JSON.stringify(data)));
+
+    loginUrl.searchParams.set('userId', userId.toString());
+    loginUrl.searchParams.set('nickname', encodeURIComponent(nickname));
+    loginUrl.searchParams.set(
+      'profileImageUrl',
+      encodeURIComponent(profileImageUrl),
+    );
+    loginUrl.searchParams.set('isSignUpComplete', isSignUpComplete.toString());
 
     return NextResponse.redirect(loginUrl);
   } catch (error) {
