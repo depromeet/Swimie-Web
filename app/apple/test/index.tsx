@@ -20,7 +20,7 @@ const Page = () => {
     if (userId && nickname && profileImageUrl && isSignUpComplete !== null) {
       setAuth({
         isLogined: true,
-        nickname,
+        nickname: decodeURIComponent(nickname),
         userId: Number(userId),
       });
 
