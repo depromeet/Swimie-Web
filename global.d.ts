@@ -15,7 +15,7 @@ interface ClientConfig {
   clientId: string;
   redirectURI: string;
   scope?: string;
-  state?: string;
+  state: string;
   nonce?: string;
   usePopup?: boolean;
   responseType?: string;
