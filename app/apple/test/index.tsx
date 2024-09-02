@@ -20,11 +20,11 @@ const Page = () => {
     if (userId && nickname && profileImageUrl && isSignUpComplete !== null) {
       setAuth({
         isLogined: true,
-        nickname,
+        nickname: decodeURIComponent(nickname),
         userId: Number(userId),
       });
 
-      if (isSignUpComplete) {
+      if (isSignUpComplete === 'true') {
         router.push('/');
       } else {
         router.push('/join/nickname');
