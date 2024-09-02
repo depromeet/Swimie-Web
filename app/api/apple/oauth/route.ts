@@ -24,6 +24,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const bodyData = {
       code: code.toString(),
       idToken: idToken.toString(),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       user: userData ? JSON.parse(userData.toString()) : undefined,
     };
 
@@ -51,7 +52,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const loginUrl = new URL('/apple/test', request.url);
     loginUrl.searchParams.set('data', encodeURIComponent(JSON.stringify(data)));
-
     return NextResponse.redirect(loginUrl);
   } catch (error) {
     console.error('Error handling POST request:', error);

@@ -1,9 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useSetAtom } from 'jotai';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import {
   AppleLogoIcon,
@@ -12,10 +10,8 @@ import {
 } from '@/components/atoms/icons';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
 import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
-import { AuthInfoAtom } from '@/store/auth';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { AuthResponse } from '@/types/authType';
 
 type LoginScreen = {
   isAnimate?: boolean;
@@ -46,60 +42,25 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
 
   const nonce = generateNonceAndState();
 
-  const router = useRouter();
-
-  const setAuth = useSetAtom(AuthInfoAtom);
-
   const appleLogin = async () => {
+    console.log('sign in with apple');
+
+    window.AppleID.auth.init({
+      clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
+      scope: 'name email',
+      redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
+      state: 'origin: swimie',
+      nonce: nonce,
+      usePopup: false,
+      responseType: 'code id_token',
+      responseMode: 'form_post',
+    });
+
     try {
-      window.AppleID.auth.init({
-        clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
-        scope: 'name email',
-        redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
-        state: 'origin: swimie',
-        nonce: nonce,
-        usePopup: false,
-        responseType: 'code id_token',
-        responseMode: 'form_post',
-      });
-
-      const {
-        authorization: { code, id_token, state },
-        user,
-      } = await window.AppleID.auth.signIn();
-
-      // 서버로 데이터 전송
-      const response = await fetch('/api/apple/oauth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          code,
-          id_token,
-          state,
-          email: user?.email || '',
-          name: user?.name || '',
-        }),
-      });
-
-      if (response.status === 200) {
-        const data = (await response.json()) as AuthResponse;
-
-        setAuth({
-          isLogined: true,
-          nickname: data.data.data.nickname,
-          userId: data.data.data.userId,
-        });
-
-        if (data.data.data.isSignUpComplete) {
-          router.push('/');
-        } else {
-          router.push('/join/nickname');
-        }
-      }
+      const res = await window.AppleID.auth.signIn();
+      console.log(res);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Apple Login Error:', error);
     }
   };
 

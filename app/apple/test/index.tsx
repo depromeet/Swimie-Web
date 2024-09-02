@@ -30,7 +30,7 @@ const Page = () => {
     } else {
       router.push('/join/nickname');
     }
-  }, [router, setAuth]);
+  }, [router]);
 
   return (
     <>
