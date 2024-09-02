@@ -16,6 +16,7 @@ import { Button } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
 import { SelectTextField } from '@/components/molecules/text-field/select-text-field';
 import { LoginLoading } from '@/features/login';
+import { useToast } from '@/hooks';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { formatDateToKorean, getBlobData, getToday } from '@/utils';
@@ -32,6 +33,7 @@ import {
 import { useRecordForm } from '../../hooks';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
+import { compareTime } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
@@ -52,7 +54,11 @@ export function Form() {
   const { data, isLoading: isLoadingPreviousMemory } = usePullEditMemory(
     Number(memoryId),
   );
+
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
+
+  const { toast } = useToast();
+
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       recordAt: date ? formatDateToKorean(date) : getToday(),
@@ -160,6 +166,11 @@ export function Form() {
   //Todo: 기록 에러 발생 시 처리
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (isLoading || !startTime || !endTime) return;
+
+    if (!compareTime(startTime, endTime)) {
+      toast('시간을 다시 설정해주세요', { type: 'warning' });
+      return;
+    }
     //기록 수정 모드일 때
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
