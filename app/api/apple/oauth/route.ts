@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'querystring';
 
@@ -10,9 +9,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body = await request.text();
     const formData = parse(body);
 
-    const code = formData['code'];
-    const idToken = formData['id_token'];
-    const userData = formData['user'];
+    const code = formData['code'] as string;
+    const idToken = formData['id_token'] as string;
+    const state = formData['state'] as string;
+    const email = formData['email'] as string;
+    const name = formData['name'] as string;
 
     if (!code || !idToken) {
       return NextResponse.json(
@@ -21,13 +22,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const bodyData = {
-      code: code.toString(),
-      idToken: idToken.toString(),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      user: userData ? JSON.parse(userData.toString()) : undefined,
-    };
-
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/login/apple`,
       {
@@ -35,7 +29,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bodyData),
+        body: JSON.stringify({
+          code,
+          idToken,
+          state,
+          email: email || undefined,
+          name: name || undefined,
+        }),
       },
     );
 
@@ -50,9 +50,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     setAuthCookies(data.data);
 
-    const loginUrl = new URL('/apple/test', request.url);
-    loginUrl.searchParams.set('data', encodeURIComponent(JSON.stringify(data)));
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.json({ data }, { status: res.status });
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
