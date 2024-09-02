@@ -25,7 +25,7 @@ interface ClientConfig {
 interface Authorization {
   code: string;
   id_token: string;
-  state?: string;
+  state: string;
 }
 
 interface User {
