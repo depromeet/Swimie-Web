@@ -1,9 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useSetAtom } from 'jotai';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import {
   AppleLogoIcon,
@@ -12,10 +10,8 @@ import {
 } from '@/components/atoms/icons';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
 import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
-import { AuthInfoAtom } from '@/store/auth';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-import { AuthResponse } from '@/types/authType';
 
 type LoginScreen = {
   isAnimate?: boolean;
@@ -29,29 +25,10 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
   };
 
-  // TODO: nonce 생성 함수 별도 분리 예정
-  function generateNonceAndState(length = 16) {
-    const charset =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let nonce = '';
-    const charsetLength = charset.length;
-
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charsetLength);
-      nonce += charset[randomIndex];
-    }
-
-    return nonce;
-  }
-
-  const nonce = generateNonceAndState();
-
-  const router = useRouter();
-
-  const setAuth = useSetAtom(AuthInfoAtom);
-
   const appleLogin = async () => {
     try {
+      const nonce = generateNonceAndState();
+
       window.AppleID.auth.init({
         clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
         scope: 'name email',
@@ -63,44 +40,21 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
         responseMode: 'form_post',
       });
 
-      const {
-        authorization: { code, id_token, state },
-        user,
-      } = await window.AppleID.auth.signIn();
-
-      const response = await fetch('/api/apple/oauth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          code,
-          id_token,
-          state,
-          email: user?.email || '',
-          name: user?.name || '',
-        }),
-      });
-
-      if (response.status === 200) {
-        const data = (await response.json()) as AuthResponse;
-
-        setAuth({
-          isLogined: true,
-          nickname: data.data.data.nickname,
-          userId: data.data.data.userId,
-        });
-
-        if (data.data.data.isSignUpComplete) {
-          router.push('/');
-        } else {
-          router.push('/join/nickname');
-        }
-      }
+      await window.AppleID.auth.signIn();
     } catch (error) {
-      console.error('Error:', error);
+      console.error('애플 로그인 중 오류 발생:', error);
     }
   };
+
+  function generateNonceAndState(length = 16) {
+    const charset =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let nonce = '';
+    for (let i = 0; i < length; i++) {
+      nonce += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    return nonce;
+  }
 
   return (
     <div className={loginPage}>
