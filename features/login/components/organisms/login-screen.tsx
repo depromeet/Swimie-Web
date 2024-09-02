@@ -25,36 +25,19 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
   };
 
-  const appleLogin = async () => {
-    try {
-      const nonce = generateNonceAndState();
-
-      window.AppleID.auth.init({
-        clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
-        scope: 'name email',
-        redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
-        state: 'origin: swimie',
-        nonce: nonce,
-        usePopup: false,
-        responseType: 'code id_token',
-        responseMode: 'form_post',
-      });
-
-      await window.AppleID.auth.signIn();
-    } catch (error) {
-      console.error('애플 로그인 중 오류 발생:', error);
-    }
+  const appleLogin = () => {
+    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
-  function generateNonceAndState(length = 16) {
-    const charset =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let nonce = '';
-    for (let i = 0; i < length; i++) {
-      nonce += charset.charAt(Math.floor(Math.random() * charset.length));
-    }
-    return nonce;
-  }
+  // function generateNonceAndState(length = 16) {
+  //   const charset =
+  //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //   let nonce = '';
+  //   for (let i = 0; i < length; i++) {
+  //     nonce += charset.charAt(Math.floor(Math.random() * charset.length));
+  //   }
+  //   return nonce;
+  // }
 
   return (
     <div className={loginPage}>
