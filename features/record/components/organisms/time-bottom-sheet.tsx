@@ -37,8 +37,9 @@ export function TimeBottomSheet() {
       setValue('startTime', convertTo24HourFormat(pickerValue));
       if (!getValues('endTime'))
         setValue('endTime', addMinutes(pickerValue, 50));
-    } else if (timeBottmSheetState.variant === 'end')
+    } else if (timeBottmSheetState.variant === 'end') {
       setValue('endTime', convertTo24HourFormat(pickerValue));
+    }
     setTimeBottmSheetState((prev) => ({ ...prev, isOpen: false }));
   };
 
