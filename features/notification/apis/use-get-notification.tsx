@@ -32,12 +32,10 @@ export function useGetNotification() {
     });
   const { fetchNextPage, isFetchingNextPage } = queryInfo;
 
-  const rawNotificationData =
-    data?.pages.map((page) => page.data.notifications).flat() || [];
   const getByFarNotificationData: (
     | CheerNotificationProps
     | FollowNotificationProps
-  )[] = rawNotificationData;
+  )[] = data?.pages.map((page) => page.data.notifications).flat() || [];
 
   const lastPageCount = data?.pages.length ?? 0;
   const lastMemberIdList = useMemo(

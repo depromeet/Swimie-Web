@@ -34,29 +34,35 @@ export function NotificationList() {
           subText="공지, 활동 소식이 도착하면 알려드릴게요"
         />
       )}
-      <Virtuoso
-        data={getByFarNotificationData}
-        overscan={200}
-        useWindowScroll
-        rangeChanged={handleRangeChanged}
-        itemContent={(_, notification) =>
-          'memoryId' in notification ? (
-            <CheerNotification
-              key={notification.notificationId}
-              {...notification}
-            />
-          ) : (
-            <FollowNotification
-              key={notification.notificationId}
-              {...notification}
-            />
-          )
-        }
-        components={{
-          Footer: () =>
-            isFetchingNextPage ? <LoadingArea width={30} height={30} /> : <></>,
-        }}
-      />
+      {!isLoading && getByFarNotificationData.length > 0 && (
+        <Virtuoso
+          data={getByFarNotificationData}
+          overscan={200}
+          useWindowScroll
+          rangeChanged={handleRangeChanged}
+          itemContent={(_, notification) =>
+            'memoryId' in notification ? (
+              <CheerNotification
+                key={notification.notificationId}
+                {...notification}
+              />
+            ) : (
+              <FollowNotification
+                key={notification.notificationId}
+                {...notification}
+              />
+            )
+          }
+          components={{
+            Footer: () =>
+              isFetchingNextPage ? (
+                <LoadingArea width={30} height={30} />
+              ) : (
+                <></>
+              ),
+          }}
+        />
+      )}
     </ol>
   );
 }
