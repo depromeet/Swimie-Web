@@ -1,3 +1,3 @@
 export * from './lane';
 export * from './stroke-options';
-export * from './time';
+export * from './time-options';
