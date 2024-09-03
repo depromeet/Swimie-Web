@@ -34,15 +34,12 @@ export const addMinutes = (
     hour24 = 0;
   }
 
-  // 새로운 Date 객체 생성
   const date = new Date();
   date.setHours(hour24);
   date.setMinutes(parseInt(pickerValue.minute, 10));
 
-  // 50분 더하기
   date.setMinutes(date.getMinutes() + minutesToAdd);
 
-  // 새로운 시간 반환
   const newHour = date.getHours().toString().padStart(2, '0');
   const newMinute = date.getMinutes().toString().padStart(2, '0');
 
