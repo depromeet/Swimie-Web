@@ -42,9 +42,8 @@ export default function useSearchPool(nameQuery: string) {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  const rawPoolData =
+  const getByFarPoolData: PoolProps[] =
     data?.pages.map((page) => page.data.poolInfos).flat() || [];
-  const getByFarPoolData: PoolProps[] = rawPoolData;
 
   return { ref, isLoading, isFetchingNextPage, getByFarPoolData };
 }
