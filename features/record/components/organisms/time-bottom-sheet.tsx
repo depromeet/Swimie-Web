@@ -10,7 +10,7 @@ import { BottomSheet } from '@/components/molecules';
 import { usePreventBodyScroll } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { time } from '../../constants';
+import { timeOptions } from '../../constants';
 import { timeBottomSheetState } from '../../store';
 import { AmpmType, HourType, MinuteType } from '../../types';
 import { addMinutes, convertTo24HourFormat } from '../../utils';
@@ -64,9 +64,9 @@ export function TimeBottomSheet() {
           itemHeight={34}
           className={layoutStyles.picker}
         >
-          {Object.keys(time).map((name) => (
+          {Object.keys(timeOptions).map((name) => (
             <Picker.Column key={name} name={name}>
-              {time[name as keyof typeof time].map((option) => (
+              {timeOptions[name as keyof typeof timeOptions].map((option) => (
                 <Picker.Item key={option} value={option}>
                   {({ selected }) => (
                     <span

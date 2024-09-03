@@ -1,4 +1,4 @@
-export const time = {
+export const timeOptions = {
   ampm: ['오전', '오후'],
   hour: [
     '01',
