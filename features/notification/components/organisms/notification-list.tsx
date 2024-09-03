@@ -1,5 +1,7 @@
 'use client';
 
+import { Virtuoso } from 'react-virtuoso';
+
 import { LoadingArea } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
@@ -9,8 +11,19 @@ import { CheerNotification } from '../molecules/cheer-notification';
 import { NotificationListSkeleton } from './notification-list-skeleton';
 
 export function NotificationList() {
-  const { ref, isLoading, isFetchingNextPage, getByFarNotificationData } =
-    useGetNotification();
+  const {
+    fetchNextPage,
+    isLoading,
+    isFetchingNextPage,
+    getByFarNotificationData,
+  } = useGetNotification();
+
+  const handleRangeChanged = (range: { endIndex: number }) => {
+    const currentContentsLastIndex = getByFarNotificationData.length - 1;
+    if (range.endIndex >= currentContentsLastIndex - 2) {
+      void fetchNextPage();
+    }
+  };
 
   if (isLoading) return <NotificationListSkeleton />;
   return (
@@ -21,26 +34,29 @@ export function NotificationList() {
           subText="공지, 활동 소식이 도착하면 알려드릴게요"
         />
       )}
-      {!isLoading &&
-        getByFarNotificationData.length > 0 &&
-        getByFarNotificationData.map((notification, i) =>
+      <Virtuoso
+        data={getByFarNotificationData}
+        overscan={200}
+        useWindowScroll
+        rangeChanged={handleRangeChanged}
+        itemContent={(_, notification) =>
           'memoryId' in notification ? (
             <CheerNotification
-              ref={ref}
-              assignRef={i === getByFarNotificationData.length - 1}
               key={notification.notificationId}
               {...notification}
             />
           ) : (
             <FollowNotification
-              ref={ref}
-              assignRef={i === getByFarNotificationData.length - 1}
               key={notification.notificationId}
               {...notification}
             />
-          ),
-        )}
-      {isFetchingNextPage && <LoadingArea width={30} height={30} />}
+          )
+        }
+        components={{
+          Footer: () =>
+            isFetchingNextPage ? <LoadingArea width={30} height={30} /> : <></>,
+        }}
+      />
     </ol>
   );
 }
