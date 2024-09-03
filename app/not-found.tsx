@@ -46,6 +46,7 @@ const textStyles = {
   subtitle: css({
     textStyle: 'body2.normal',
     fontWeight: 'regular',
+    color: 'text.alternative',
   }),
 };
 
