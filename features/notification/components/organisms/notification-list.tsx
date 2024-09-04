@@ -28,13 +28,13 @@ export function NotificationList() {
   if (isLoading) return <NotificationListSkeleton />;
   return (
     <ol className={layoutStyles}>
-      {!isLoading && getByFarNotificationData.length === 0 && (
+      {getByFarNotificationData.length === 0 && (
         <NoNotification
           mainText="아직 받은 알림이 없어요"
           subText="공지, 활동 소식이 도착하면 알려드릴게요"
         />
       )}
-      {!isLoading && getByFarNotificationData.length > 0 && (
+      {getByFarNotificationData.length > 0 && (
         <Virtuoso
           data={getByFarNotificationData}
           overscan={200}
