@@ -7,8 +7,6 @@ import { css } from '@/styled-system/css';
 
 export default function Page() {
   const router = useRouter();
-
-  if (!router) return null;
   return (
     <>
       <HeaderBar>
