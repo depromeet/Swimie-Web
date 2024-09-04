@@ -10,6 +10,7 @@ export interface TextFieldProps {
   placeholder?: string;
   unit?: string;
   maxLength?: number;
+  step?: number;
   className?: string;
   wrapperClassName?: string;
   absoluteClassName?: string;

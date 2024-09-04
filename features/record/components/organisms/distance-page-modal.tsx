@@ -183,6 +183,7 @@ export function DistancePageModal({
                   : undefined
               }
               maxLength={isAssistiveIndexOne ? 3 : 5}
+              step={isAssistiveIndexOne ? 0.5 : undefined}
               value={isAssistiveIndexZero ? totalMeter : totalLaps}
               unit={isAssistiveIndexZero ? '미터(m)' : '바퀴'}
               wrapperClassName={css({ marginTop: '16px' })}
