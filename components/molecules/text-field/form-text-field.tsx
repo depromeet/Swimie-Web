@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ChangeEvent, forwardRef } from 'react';
+import React, { ChangeEvent, forwardRef, KeyboardEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
 
@@ -65,6 +65,12 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
       } else void onChange(event);
     };
 
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === '-') {
+        event.preventDefault();
+      }
+    };
+
     return (
       <TextFieldWrapper
         isRequired={isRequired}
@@ -81,6 +87,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             maxLength={maxLength}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
+            onKeyDown={inputType === 'number' ? handleKeyDown : undefined}
             onChange={handleInputChange}
             className={cx(
               css(
