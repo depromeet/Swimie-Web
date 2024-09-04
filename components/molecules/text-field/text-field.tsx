@@ -3,6 +3,7 @@
 import { ChangeEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
+import { preventMinus } from '@/utils';
 
 import {
   absoluteStyles,
@@ -49,9 +50,13 @@ export function TextField({
 
   const shouldEmphasize = isWritten || focused;
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
-    onChange?.(newText);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let newValue = event.target.value;
+
+    if (maxLength && newValue.length >= maxLength) {
+      newValue = newValue.slice(0, maxLength);
+      void onChange?.(newValue);
+    } else void onChange?.(newValue);
   };
 
   return (
@@ -73,6 +78,7 @@ export function TextField({
             onChange={handleInputChange}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
+            onKeyDown={inputType === 'number' ? preventMinus : undefined}
             className={cx(
               css(
                 shouldEmphasize
