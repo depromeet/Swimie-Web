@@ -1,10 +1,10 @@
 .page-jump-forward-enter {
-  transform: translateX(100%);
+  left: 100%;
 }
 
 .page-jump-forward-enter-active {
-  transform: translateX(0);
-  transition: transform 300ms ease-in-out;
+  left: 0;
+  transition: left 300ms ease-in-out;
 }
 
 .page-jump-backward-exit {

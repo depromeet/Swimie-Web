@@ -1,9 +1,9 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
-import { preventMinus } from '@/utils';
+import { preventCharacters } from '@/utils';
 
 import {
   absoluteStyles,
@@ -41,6 +41,7 @@ export function TextField({
   placeholder,
   unit,
   step,
+  preventDecimal,
   maxLength,
   className,
   wrapperClassName,
@@ -74,6 +75,10 @@ export function TextField({
     void onChange?.(newValue);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    preventCharacters(event, ['-', preventDecimal ? '.' : '']);
+  };
+
   return (
     <TextFieldWrapper
       isRequired={isRequired}
@@ -93,7 +98,7 @@ export function TextField({
             onChange={handleInputChange}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
-            onKeyDown={inputType === 'number' ? preventMinus : undefined}
+            onKeyDown={inputType === 'number' ? handleKeyDown : undefined}
             className={cx(
               css(
                 shouldEmphasize

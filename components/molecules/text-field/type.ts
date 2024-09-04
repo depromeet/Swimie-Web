@@ -11,6 +11,7 @@ export interface TextFieldProps {
   unit?: string;
   maxLength?: number;
   step?: number;
+  preventDecimal?: boolean;
   className?: string;
   wrapperClassName?: string;
   absoluteClassName?: string;

@@ -19,6 +19,7 @@ export function SubInfoTextFields() {
             name: 'heartRate',
           }) as number
         }
+        preventDecimal
         maxLength={3}
         inputType="number"
         label="심박수"
@@ -34,6 +35,7 @@ export function SubInfoTextFields() {
               name: 'paceMinutes',
             }) as number
           }
+          preventDecimal
           maxLength={2}
           inputType="number"
           label="페이스"
@@ -48,6 +50,7 @@ export function SubInfoTextFields() {
               name: 'paceSeconds',
             }) as number
           }
+          preventDecimal
           maxLength={2}
           inputType="number"
           unit="/100m"
@@ -62,6 +65,7 @@ export function SubInfoTextFields() {
             name: 'kcal' as string,
           }) as number
         }
+        preventDecimal
         maxLength={4}
         inputType="number"
         label="칼로리"

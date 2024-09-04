@@ -1,9 +1,9 @@
 'use client';
 
-import React, { ChangeEvent, forwardRef } from 'react';
+import React, { ChangeEvent, forwardRef, KeyboardEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
-import { preventMinus } from '@/utils';
+import { preventCharacters } from '@/utils';
 
 import {
   absoluteStyles,
@@ -24,7 +24,6 @@ import { useFormTextField } from './use-form-text-field';
  * @param placeholder placeholder 값
  * @param unit 입력값 단위
  * @param maxLength input의 최대길이
- * @param step 단위 제한
  * @param registerName input 요소를 구독할 때 사용할 name
  * @param className input 태그 추가 스타일
  * @param wrapperClassName text-field-wrapper 컴포넌트 추가 스타일 부여
@@ -44,6 +43,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
       subText,
       placeholder,
       unit,
+      preventDecimal,
       className,
       maxLength,
       wrapperClassName,
@@ -61,11 +61,14 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
     const shouldEmphasize = isWritten || focused;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      //최대 길이 제한
       if (maxLength && event.target.value.length >= maxLength) {
         event.target.value = event.target.value.slice(0, maxLength);
         void onChange(event);
       } else void onChange(event);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      preventCharacters(event, ['-', preventDecimal ? '.' : '']);
     };
 
     return (
@@ -84,7 +87,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             maxLength={maxLength}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
-            onKeyDown={inputType === 'number' ? preventMinus : undefined}
+            onKeyDown={inputType === 'number' ? handleKeyDown : undefined}
             onChange={handleInputChange}
             className={cx(
               css(

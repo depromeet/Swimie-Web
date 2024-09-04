@@ -1,1 +1,1 @@
-export * from './prevent-minus';
+export * from './prevent-characters';
