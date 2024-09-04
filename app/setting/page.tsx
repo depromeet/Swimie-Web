@@ -37,6 +37,14 @@ export default function Page() {
     openNoticeModal();
   };
 
+  const handleClickTerms = () => {
+    router.push('/setting/terms');
+  };
+
+  const handleClickPrivacyPolicy = () => {
+    router.push('/setting/privacy-policy');
+  };
+
   const handleGoToInquiry = () => {
     window.location.href = 'https://forms.gle/1yz3fcjCt2NEpwd99';
   };
@@ -53,8 +61,8 @@ export default function Page() {
       onClick: handleGoToChangeDistance,
       divider: true,
     },
-    { text: '서비스 이용 약관', onClick: handleGoToSetting },
-    { text: '개인정보 처리방침', onClick: handleGoToSetting },
+    { text: '서비스 이용 약관', onClick: handleClickTerms },
+    { text: '개인정보 처리방침', onClick: handleClickPrivacyPolicy },
     { text: '오픈소스 라이선스', onClick: handleGoToSetting, divider: true },
     { text: '로그아웃', onClick: openLogoutModal },
     { text: '탈퇴하기', onClick: handleGoToDeleteAccount, divider: true },
