@@ -99,7 +99,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
             >
               <div className={buttonContent}>
                 <AppleLogoIcon />
-                <span>Apple ID로 로그인</span>
+                <span>Apple로 로그인</span>
               </div>
             </button>
           </div>
