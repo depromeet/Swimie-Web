@@ -10,7 +10,7 @@ import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export interface GenderData {
-  gender: 'W' | 'M';
+  gender: 'W' | 'M' | 'N';
 }
 
 export interface GenderResponse {
@@ -26,9 +26,11 @@ export interface GenderResponse {
 
 export default function JoinPage() {
   const router = useRouter();
-  const [selectedGender, setSelectedGender] = useState<'W' | 'M' | ''>('');
+  const [selectedGender, setSelectedGender] = useState<'W' | 'M' | 'N' | ''>(
+    '',
+  );
 
-  const handleGenderSelect = (gender: 'W' | 'M') => {
+  const handleGenderSelect = (gender: 'W' | 'M' | 'N') => {
     setSelectedGender(gender);
   };
 
@@ -75,24 +77,38 @@ export default function JoinPage() {
           <div className={noticeStyles}>성별을 입력해주세요</div>
           <div className={subNoticeStyles}>맞춤형 기록을 도와드려요!</div>
         </div>
+
         <div className={buttonsStyles}>
-          <Button
-            className={buttonStyles({
-              gender: selectedGender === 'W' ? 'W' : 'default',
-            })}
-            label="여자"
-            size="large"
-            onClick={() => handleGenderSelect('W')}
-          />
-          <Button
-            className={buttonStyles({
-              gender: selectedGender === 'M' ? 'M' : 'default',
-            })}
-            label="남자"
-            size="large"
-            onClick={() => handleGenderSelect('M')}
-          />
+          <div className={genderButtonsStyles}>
+            <Button
+              className={buttonStyles({
+                gender: selectedGender === 'W' ? 'W' : 'default',
+              })}
+              label="여자"
+              size="large"
+              onClick={() => handleGenderSelect('W')}
+            />
+            <Button
+              className={buttonStyles({
+                gender: selectedGender === 'M' ? 'M' : 'default',
+              })}
+              label="남자"
+              size="large"
+              onClick={() => handleGenderSelect('M')}
+            />
+          </div>
+          <div>
+            <Button
+              className={buttonStyles({
+                gender: selectedGender === 'N' ? 'N' : 'default',
+              })}
+              size="large"
+              label="입력하고 싶지 않아요"
+              onClick={() => handleGenderSelect('N')}
+            />
+          </div>
         </div>
+
         <Button
           buttonType="primary"
           variant="solid"
@@ -100,6 +116,7 @@ export default function JoinPage() {
           size="large"
           disabled={!selectedGender}
           onClick={onSubmit}
+          className={css({ marginTop: '67px' })}
         />
       </div>
     </div>
@@ -123,11 +140,12 @@ const subNoticeStyles = css({
   color: 'text.placeHolder',
 });
 
-const buttonsStyles = flex({
-  width: 'full',
+const buttonsStyles = flex({ direction: 'column', gap: '15px' });
+
+const genderButtonsStyles = flex({
   gap: '10px',
   height: '140px',
-  margin: '28px 0px',
+  marginTop: '30px',
 });
 
 const buttonStyles = cva({
@@ -143,6 +161,10 @@ const buttonStyles = cva({
         color: 'blue.40',
       },
       M: {
+        backgroundColor: 'blue.90',
+        color: 'blue.40',
+      },
+      N: {
         backgroundColor: 'blue.90',
         color: 'blue.40',
       },

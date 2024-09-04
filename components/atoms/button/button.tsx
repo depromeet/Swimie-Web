@@ -25,11 +25,12 @@ export const Button = ({
     cursor: disabled ? 'not-allowed' : 'pointer',
   });
 
+  // TODO: 리팩토링 예정
   const sizeStylesMap = new Map([
     [
       'large',
       css({
-        height: '48px',
+        // height: '48px',
         padding: '12px 28px',
         borderRadius: '10px',
         textStyle: 'body1.normal',
@@ -39,7 +40,7 @@ export const Button = ({
     [
       'medium',
       css({
-        height: '40px',
+        // height: '40px',
         padding: '9px 20px',
         borderRadius: '8px',
         textStyle: 'body2.normal',
@@ -49,7 +50,7 @@ export const Button = ({
     [
       'small',
       css({
-        height: '32px',
+        // height: '32px',
         padding: '7px 14px',
         borderRadius: '6px',
         textStyle: 'label2',
