@@ -32,7 +32,8 @@ export function DistanceFieldWithBadge({
   className,
   onChangeStroke,
 }: DistanceFieldWithBadgeProps) {
-  const unit = assistiveTabIndex === 0 ? 'm' : '바퀴';
+  const isAssistiveTabIndexZero = assistiveTabIndex === 0;
+  const unit = isAssistiveTabIndexZero ? 'm' : '바퀴';
 
   const handleStrokeFieldChange = (text: string) => {
     onChangeStroke?.(index, text);
@@ -45,6 +46,7 @@ export function DistanceFieldWithBadge({
       </div>
       <TextField
         inputType="number"
+        maxLength={isAssistiveTabIndexZero ? 5 : 3}
         placeholder="0"
         value={value ? String(value) : ''}
         unit={unit}
