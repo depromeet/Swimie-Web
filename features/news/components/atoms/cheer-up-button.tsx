@@ -1,3 +1,7 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/atoms';
 import { CheerBottomSheet, CheerProgress } from '@/components/molecules';
 import { useCheerBottomSheet } from '@/hooks';
@@ -9,6 +13,7 @@ interface CheerUpButtonProps {
 }
 
 export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
+  const router = useRouter();
   const {
     cheerList,
     selectedCheerItem,
@@ -22,6 +27,11 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
     memoryId,
   });
 
+  const handleChangeOpen = (isOpen: boolean) => {
+    handleChangeSelectedItem(isOpen);
+    router.push(`/record-detail/${memoryId}`);
+  };
+
   return (
     <>
       <Button
@@ -34,7 +44,7 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
       {/* NOTE: 응원 Progress 모달 */}
       <CheerProgress
         isOpen={Boolean(selectedCheerItem)}
-        onChangeOpen={handleChangeSelectedItem}
+        onChangeOpen={handleChangeOpen}
         authorName={nickname}
         cheerItem={selectedCheerItem}
       />
