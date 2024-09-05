@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useRouter } from 'next/navigation';
 
 import { useDialog } from '@/hooks';
@@ -12,10 +13,14 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
       buttons: {
         confirm: {
           text: '네',
-          onClick: () => {
-            void logout();
-            close();
-            router.push('/login');
+          onClick: async () => {
+            try {
+              await logout();
+              close();
+              router.push('/login');
+            } catch (error) {
+              console.error('Logout failed', error);
+            }
           },
         },
         cancel: {
