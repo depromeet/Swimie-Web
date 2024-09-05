@@ -13,8 +13,8 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
         confirm: {
           text: '네',
           onClick: () => {
-            close();
             void logout();
+            close();
             router.push('/login');
           },
         },
