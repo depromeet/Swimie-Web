@@ -9,7 +9,6 @@ import { BackButton, HeaderBar } from '@/components/molecules';
 import { useLogout } from '@/features/setting/apis';
 import { ListItem } from '@/features/setting/components';
 import { useLogoutDialogHandler } from '@/features/setting/hooks/use-logout-dialog-handler';
-import { useNoticeDialogHandler } from '@/features/setting/hooks/use-notice-dialog.handler';
 import { useCurrentMemberInfo } from '@/hooks';
 import { css } from '@/styled-system/css';
 
@@ -19,7 +18,9 @@ export default function Page() {
 
   const { data, isLoading, error } = useCurrentMemberInfo();
   const { openLogoutModal } = useLogoutDialogHandler(logout);
-  const { openNoticeModal } = useNoticeDialogHandler();
+
+  // TODO: 앱 심사를 위해 주석 처리
+  // const { openNoticeModal } = useNoticeDialogHandler();
 
   if (isLoading) {
     return <LoadingArea />;
@@ -33,9 +34,10 @@ export default function Page() {
     router.push('/delete-account?step=1');
   };
 
-  const handleGoToSetting = () => {
-    openNoticeModal();
-  };
+  // TODO: 앱 심사를 위해 주석 처리
+  // const handleGoToSetting = () => {
+  //   openNoticeModal();
+  // };
 
   const handleClickTerms = () => {
     router.push('/setting/terms');
@@ -62,8 +64,13 @@ export default function Page() {
       divider: true,
     },
     { text: '서비스 이용 약관', onClick: handleClickTerms },
-    { text: '개인정보 처리방침', onClick: handleClickPrivacyPolicy },
-    { text: '오픈소스 라이선스', onClick: handleGoToSetting, divider: true },
+    {
+      text: '개인정보 처리방침',
+      onClick: handleClickPrivacyPolicy,
+      divider: true,
+    },
+    // TODO: 앱 심사를 위해 주석 처리
+    // { text: '오픈소스 라이선스', onClick: handleGoToSetting, divider: true },
     { text: '로그아웃', onClick: openLogoutModal },
     { text: '탈퇴하기', onClick: handleGoToDeleteAccount, divider: true },
     { text: '스위미팀에게 문의하기', onClick: handleGoToInquiry },
