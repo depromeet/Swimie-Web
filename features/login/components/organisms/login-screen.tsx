@@ -3,7 +3,11 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import { GoogleLogoIcon, KakaoLogoIcon } from '@/components/atoms/icons';
+import {
+  AppleLogoIcon,
+  // GoogleLogoIcon,
+  KakaoLogoIcon,
+} from '@/components/atoms/icons';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
 import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
 import { css, cva } from '@/styled-system/css';
@@ -17,48 +21,23 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&prompt=select_account`;
   };
 
-  const googleLogin = () => {
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
+  // const googleLogin = () => {
+  //   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
+  // };
+
+  const appleLogin = () => {
+    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
-  // TODO: nonce 생성 함수 별도 분리 예정
   // function generateNonceAndState(length = 16) {
   //   const charset =
   //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   //   let nonce = '';
-  //   const charsetLength = charset.length;
-
   //   for (let i = 0; i < length; i++) {
-  //     const randomIndex = Math.floor(Math.random() * charsetLength);
-  //     nonce += charset[randomIndex];
+  //     nonce += charset.charAt(Math.floor(Math.random() * charset.length));
   //   }
-
   //   return nonce;
   // }
-
-  // const nonce = generateNonceAndState();
-
-  // const appleLogin = async () => {
-  //   console.log('sign in with apple');
-
-  //   window.AppleID.auth.init({
-  //     clientId: `${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}`,
-  //     scope: 'name email',
-  //     redirectURI: `${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}`,
-  //     state: 'origin: swimie',
-  //     nonce: nonce,
-  //     usePopup: false,
-  //     responseType: 'code id_token',
-  //     responseMode: 'form_post',
-  //   });
-
-  //   try {
-  //     const res = await window.AppleID.auth.signIn();
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.error('Apple Login Error:', error);
-  //   }
-  // };
 
   return (
     <div className={loginPage}>
@@ -103,7 +82,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <span>카카오로 로그인</span>
               </div>
             </button>
-            <button
+            {/* <button
               className={buttons({ type: 'google' })}
               onClick={googleLogin}
             >
@@ -111,9 +90,8 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <GoogleLogoIcon />
                 <span>Google로 로그인</span>
               </div>
-            </button>
-            {/* TODO: 애플 로그인 버튼 미노출 */}
-            {/* <button
+            </button> */}
+            <button
               className={buttons({ type: 'apple' })}
               onClick={() => {
                 void appleLogin();
@@ -121,9 +99,9 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
             >
               <div className={buttonContent}>
                 <AppleLogoIcon />
-                <span>Apple ID로 로그인</span>
+                <span>Apple로 로그인</span>
               </div>
-            </button> */}
+            </button>
           </div>
         </div>
         {/* TODO: Button 리팩토링 예정 */}

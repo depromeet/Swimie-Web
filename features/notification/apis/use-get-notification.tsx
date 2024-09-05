@@ -1,8 +1,7 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useMemo } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useMemo } from 'react';
 
 import { useMemberFollowingState } from '@/hooks';
 
@@ -31,25 +30,12 @@ export function useGetNotification() {
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.cursorCreatedAt : undefined,
     });
-  const { hasNextPage, fetchNextPage, isFetchingNextPage } = queryInfo;
+  const { fetchNextPage, isFetchingNextPage } = queryInfo;
 
-  const { ref, inView } = useInView({
-    rootMargin: '100px 0px 0px 0px',
-  });
-
-  useEffect(() => {
-    if (inView) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      hasNextPage && fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
-
-  const rawNotificationData =
-    data?.pages.map((page) => page.data.notifications).flat() || [];
   const getByFarNotificationData: (
     | CheerNotificationProps
     | FollowNotificationProps
-  )[] = rawNotificationData;
+  )[] = data?.pages.map((page) => page.data.notifications).flat() || [];
 
   const lastPageCount = data?.pages.length ?? 0;
   const lastMemberIdList = useMemo(
@@ -65,5 +51,10 @@ export function useGetNotification() {
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState(lastMemberIdList);
 
-  return { ref, isLoading, isFetchingNextPage, getByFarNotificationData };
+  return {
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    getByFarNotificationData,
+  };
 }

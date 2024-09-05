@@ -4,13 +4,11 @@ type TimeVariantType = 'start' | 'end';
 
 interface TimeBottomSheetStateProps {
   variant: TimeVariantType;
-  time: string;
   isOpen: boolean;
 }
 
 const initialTimeBottomSheetState: TimeBottomSheetStateProps = {
   variant: 'start',
-  time: '',
   isOpen: false,
 };
 

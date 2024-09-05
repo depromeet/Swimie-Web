@@ -61,6 +61,9 @@ importers:
       react-intersection-observer:
         specifier: ^9.13.0
         version: 9.13.0(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      react-mobile-picker:
+        specifier: ^1.0.1
+        version: 1.0.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       react-transition-group:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
@@ -8499,6 +8502,15 @@ packages:
         integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==,
       }
 
+  react-mobile-picker@1.0.1:
+    resolution:
+      {
+        integrity: sha512-rUbAiEAXC2/Kvnc4iBnchEf6Fzj/ymL1xiDTsPPhUBY1akB84NGRpIdgE9DQeB+mCLGIKuSEIJpMA3Zg1AUL0g==,
+      }
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+
   react-refresh@0.14.2:
     resolution:
       {
@@ -16019,6 +16031,11 @@ snapshots:
   react-is@18.1.0: {}
 
   react-is@18.3.1: {}
+
+  react-mobile-picker@1.0.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0):
+    dependencies:
+      react: 18.0.0
+      react-dom: 18.0.0(react@18.0.0)
 
   react-refresh@0.14.2: {}
 
