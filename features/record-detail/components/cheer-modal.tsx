@@ -55,7 +55,7 @@ export const CheerModal = ({
       description: '삭제된 응원은 복구할 수 없습니다.',
       buttons: {
         confirm: {
-          text: '삭제',
+          label: '삭제',
           onClick: () => {
             removeCheer(reactionId, {
               onSuccess: () => {
@@ -70,7 +70,7 @@ export const CheerModal = ({
           },
         },
         cancel: {
-          text: '취소',
+          label: '취소',
           onClick: closeDialog,
         },
       },

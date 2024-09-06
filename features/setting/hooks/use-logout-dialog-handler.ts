@@ -12,7 +12,7 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
       title: '로그아웃 할까요?',
       buttons: {
         confirm: {
-          text: '네',
+          label: '네',
           onClick: async () => {
             try {
               await logout();
@@ -24,7 +24,7 @@ export function useLogoutDialogHandler(logout: () => Promise<void>) {
           },
         },
         cancel: {
-          text: '아니오',
+          label: '아니오',
           onClick: close,
         },
       },

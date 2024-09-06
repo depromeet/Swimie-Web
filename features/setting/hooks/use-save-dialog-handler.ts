@@ -11,13 +11,13 @@ export function useSaveDialogHandler() {
       title: '변경한 내용을 저장하지 않고 나갈까요?',
       buttons: {
         confirm: {
-          text: '나가기',
+          label: '나가기',
           onClick: () => {
             close(), router.push('/setting');
           },
         },
         cancel: {
-          text: '취소',
+          label: '취소',
           onClick: close,
         },
       },
