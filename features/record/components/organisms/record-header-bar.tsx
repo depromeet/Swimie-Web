@@ -7,7 +7,11 @@ import { css } from '@/styled-system/css';
 
 import { DeleteRecordButton } from '../atoms';
 
-export function RecordHeaderBar() {
+interface RecordHeaderBarProps {
+  title: string;
+}
+
+export function RecordHeaderBar({ title }: RecordHeaderBarProps) {
   const searchParams = useSearchParams();
   const memoryId = searchParams.get('memoryId');
   const isEditMode = Boolean(memoryId);
@@ -17,7 +21,7 @@ export function RecordHeaderBar() {
       <HeaderBar.LeftContent>
         <BackButton />
       </HeaderBar.LeftContent>
-      <HeaderBar.Title>수영 기록하기</HeaderBar.Title>
+      <HeaderBar.Title>{title}</HeaderBar.Title>
       {isEditMode && (
         <HeaderBar.RightContent>
           {[{ component: <DeleteRecordButton />, key: 'delete' }]}
