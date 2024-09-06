@@ -5,8 +5,8 @@ export interface ButtonProps {
   label: string;
   size?: 'large' | 'medium' | 'small';
   interaction?: 'normal' | 'hovered' | 'focused' | 'pressed';
-  variant?: 'solid' | 'outlined' | 'text';
-  buttonType?: 'primary' | 'secondary' | 'assistive';
+  variant?: 'solid' | 'outlined' | 'text' | 'negative';
+  buttonType?: 'primary' | 'secondary' | 'assistive' | 'negative';
   type?: 'button' | 'reset' | 'submit';
   leftIconSrc?: ReactNode;
   rightIconSrc?: ReactNode;

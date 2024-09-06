@@ -13,7 +13,7 @@ export function useDeleteDialogHandler() {
       description: `스위미를 이용해주셔서 감사합니다. 나중에 또 만나요!`,
       buttons: {
         confirm: {
-          text: '확인',
+          label: '확인',
           onClick: () => {
             close();
             router.push('/login');
