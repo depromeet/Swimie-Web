@@ -10,7 +10,7 @@ import { BottomSheet } from '@/components/molecules';
 import { usePreventBodyScroll } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-import { timeOptions } from '../../constants';
+import { defaultPickerValue, timeOptions } from '../../constants';
 import { timeBottomSheetState } from '../../store';
 import { AmpmType, HourType, MinuteType } from '../../types';
 import {
@@ -36,11 +36,7 @@ export function TimeBottomSheet({
     ampm: AmpmType;
     hour: HourType;
     minute: MinuteType;
-  }>({
-    ampm: '오전',
-    hour: '02',
-    minute: '05',
-  });
+  }>(defaultPickerValue);
 
   useEffect(() => {
     if (timeBottmSheetState.variant === 'start')

@@ -1,3 +1,4 @@
+import { defaultPickerValue } from '../constants';
 import { AmpmType, HourType, MinuteType } from '../types';
 
 export const convertTo24HourFormat = (pickerValue: {
@@ -19,12 +20,7 @@ export const convertTo24HourFormat = (pickerValue: {
 };
 
 export const convertToPickerValue = (time?: string) => {
-  if (!time)
-    return {
-      ampm: '오후' as AmpmType,
-      hour: '02' as HourType,
-      minute: '05' as MinuteType,
-    };
+  if (!time) return defaultPickerValue;
   let hour = time.split(':').map(Number)[0];
   const minute = time.split(':').map(Number)[1];
 
