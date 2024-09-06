@@ -10,13 +10,17 @@ export function DeleteRecordButton() {
       description: `삭제한 기록은 다시 복구할 수 없어요.`,
       buttons: {
         cancel: {
-          text: '닫기',
+          label: '닫기',
           onClick: () => close(),
+          variant: 'outlined',
+          buttonType: 'assistive',
         },
         //삭제 api 연결
         confirm: {
-          text: '삭제하기',
+          label: '삭제하기',
           onClick: () => close(),
+          variant: 'negative',
+          buttonType: 'negative',
         },
       },
       isDim: true,
