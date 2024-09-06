@@ -6,6 +6,7 @@ import { LoadingArea } from '@/components/atoms';
 import { useCurrentMemberInfo } from '@/hooks';
 import { MemberProfile } from '@/types';
 
+import { ProfileBlockedListItem } from './profile-blocked-list-item';
 import { ProfileListItem } from './profile-list-item';
 import { ProfileListSkeleton } from './profile-list-skeleton';
 
@@ -14,12 +15,14 @@ type ProfileList = {
   fetchNextData: () => void;
   isLoading?: boolean;
   isFetchingNextPage?: boolean;
+  isBlockedList?: boolean;
 };
 export const ProfileList = ({
   data,
   fetchNextData,
   isLoading,
   isFetchingNextPage,
+  isBlockedList = false,
 }: ProfileList) => {
   const { data: myData } = useCurrentMemberInfo();
 
@@ -46,10 +49,16 @@ export const ProfileList = ({
       useWindowScroll
       rangeChanged={handleRangeChanged}
       itemContent={(_, item) => (
-        <ProfileListItem
-          {...item}
-          isMyProfile={getIsMyProfile(item.memberId)}
-        />
+        <>
+          {isBlockedList ? (
+            <ProfileBlockedListItem {...item} />
+          ) : (
+            <ProfileListItem
+              {...item}
+              isMyProfile={getIsMyProfile(item.memberId)}
+            />
+          )}
+        </>
       )}
       style={{
         width: '100%',
