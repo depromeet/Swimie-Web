@@ -36,6 +36,16 @@ const DynamicPreviewSection = dynamic(
   },
 );
 
+// const DynamicReportFabSection = dynamic(
+//   () =>
+//     import('@/features/record-detail').then(
+//       ({ DetailReportFabSection }) => DetailReportFabSection,
+//     ),
+//   {
+//     ssr: false,
+//   },
+// );
+
 const DynamicCheerFabSection = dynamic(
   () =>
     import('@/features/record-detail').then(
@@ -101,11 +111,20 @@ export default async function RecordDetail({ params }: RecordDetail) {
         <HeaderBar.Title>
           {data.member?.name ?? '스위미'}의 수영 기록
         </HeaderBar.Title>
-        {data?.isMyMemory && (
-          <HeaderBar.RightContent>
-            {[{ component: <EditButton memoryId={params.id} />, key: 'edit' }]}
-          </HeaderBar.RightContent>
-        )}
+        <HeaderBar.RightContent>
+          {[
+            {
+              component: data.isMyMemory ? (
+                <EditButton memoryId={params.id} />
+              ) : (
+                // TODO: 기록 신고하기 메뉴 컴포넌트 적용
+                // <DynamicReportFabSection memoryId={params.id} />
+                <></>
+              ),
+              key: 'edit',
+            },
+          ]}
+        </HeaderBar.RightContent>
       </HeaderBar>
 
       <article className={containerStyle}>
