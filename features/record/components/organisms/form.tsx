@@ -140,7 +140,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
   });
 
   const { isLoading, modifySubmitData, modifyStrokesData, handlers } =
-    useRecordForm(lane);
+    useRecordForm(lane, isEditMode, prevSwimStartTime);
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
