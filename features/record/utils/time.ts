@@ -18,6 +18,31 @@ export const convertTo24HourFormat = (pickerValue: {
   return `${hour24.toString().padStart(2, '0')}:${pickerValue.minute}`;
 };
 
+export const convertToPickerValue = (time?: string) => {
+  if (!time)
+    return {
+      ampm: '오후' as AmpmType,
+      hour: '02' as HourType,
+      minute: '05' as MinuteType,
+    };
+  let hour = time.split(':').map(Number)[0];
+  const minute = time.split(':').map(Number)[1];
+
+  const ampm = hour >= 12 ? '오후' : '오전';
+
+  if (hour > 12) hour -= 12;
+  if (hour === 0) hour = 12;
+
+  const hourStr = hour.toString().padStart(2, '0');
+  const minuteStr = minute.toString().padStart(2, '0');
+
+  return {
+    ampm: ampm as AmpmType,
+    hour: hourStr as HourType,
+    minute: minuteStr as MinuteType,
+  };
+};
+
 export const addMinutes = (
   pickerValue: {
     ampm: AmpmType;

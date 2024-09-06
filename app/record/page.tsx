@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { cookies } from 'next/headers';
 import { Suspense } from 'react';
 
 import { LeftArrowIcon } from '@/components/atoms';
@@ -15,6 +16,8 @@ const DynamicBackButton = dynamic(
 );
 
 export default function RecordPage() {
+  const prevSwimStartTime = cookies().get('startTime')?.value;
+  const prevSwimEndTime = cookies().get('endTime')?.value;
   return (
     <div>
       <HeaderBar className={css({ marginBottom: '24px' })}>
@@ -26,7 +29,10 @@ export default function RecordPage() {
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>
       <Suspense>
-        <Form />
+        <Form
+          prevSwimStartTime={prevSwimStartTime}
+          prevSwimEndTime={prevSwimEndTime}
+        />
       </Suspense>
     </div>
   );

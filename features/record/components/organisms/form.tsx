@@ -31,6 +31,7 @@ import {
   usePullEditMemory,
 } from '../../apis';
 import { useRecordForm } from '../../hooks';
+import { saveSwimTime } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { compareTime } from '../../utils';
@@ -43,10 +44,14 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
+interface FormProps {
+  prevSwimStartTime?: string;
+  prevSwimEndTime?: string;
+}
+
 //Todo: 코드 개선
-//Todo: 수정모드일 시, 기록 불러올 때 보여줄 로딩 UI 구현
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
-export function Form() {
+export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const memoryId = searchParams.get('memoryId');
@@ -62,8 +67,8 @@ export function Form() {
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       recordAt: date ? formatDateToKorean(date) : getToday(),
-      startTime: '',
-      endTime: '',
+      startTime: prevSwimStartTime ? prevSwimStartTime : '',
+      endTime: prevSwimEndTime ? prevSwimEndTime : '',
       poolName: '',
       laneMeter: '25m',
       lane: 25,
@@ -176,7 +181,6 @@ export function Form() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
     const submitData = modifySubmitData(restData);
-
     handlers.onChangeIsLoading(true);
     if (isEditMode) {
       //이미지가 수정 되었을 때
@@ -214,6 +218,7 @@ export function Form() {
     }
     //기록 생성 모드일 때
     else {
+      saveSwimTime(submitData.startTime, submitData.endTime);
       //기록에서 이미지가 포함되었을 때
       if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await getImagePresignedUrl([
@@ -340,7 +345,10 @@ export function Form() {
         defaultTotalLap={data?.data.totalLap}
         defaultTotalMeter={data?.data.totalMeter}
       />
-      <TimeBottomSheet />
+      <TimeBottomSheet
+        prevSwimStartTime={prevSwimStartTime}
+        prevSwimEndTime={prevSwimEndTime}
+      />
     </FormProvider>
   );
 }
