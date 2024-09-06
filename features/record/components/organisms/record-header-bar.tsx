@@ -2,8 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { LeftArrowIcon } from '@/components/atoms';
-import { HeaderBar } from '@/components/molecules';
+import { BackButton, HeaderBar } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
 import { DeleteRecordButton } from '../atoms';
@@ -16,7 +15,7 @@ export function RecordHeaderBar() {
   return (
     <HeaderBar className={css({ marginBottom: '24px' })}>
       <HeaderBar.LeftContent>
-        <LeftArrowIcon />
+        <BackButton />
       </HeaderBar.LeftContent>
       <HeaderBar.Title>수영 기록하기</HeaderBar.Title>
       {isEditMode && (
