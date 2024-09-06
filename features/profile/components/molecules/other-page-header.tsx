@@ -1,9 +1,11 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 
 import { BackButton, HeaderBar } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { useBlockDialogHandler } from '../../hooks/use-block-dialog-handler';
+import { useBlockDialogHandler } from '../../hooks';
 import { ProfileProps } from '../../types';
 import { BlockButton } from '../atoms';
 
