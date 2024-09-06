@@ -37,3 +37,4 @@ export * from './triangle-arrow-icon';
 export * from './triangle-arrow-icon-reverse';
 export * from './types';
 export * from './user-image-icon';
+export * from './warn-icon';

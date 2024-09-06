@@ -13,7 +13,7 @@ export function RecordHeaderBar() {
   const isEditMode = Boolean(memoryId);
 
   return (
-    <HeaderBar className={css({ marginBottom: '24px' })}>
+    <HeaderBar className={css({ marginBottom: '16px' })}>
       <HeaderBar.LeftContent>
         <BackButton />
       </HeaderBar.LeftContent>
