@@ -1,9 +1,9 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
-import { preventMinus } from '@/utils';
+import { preventCharacters } from '@/utils';
 
 import {
   absoluteStyles,
@@ -24,6 +24,7 @@ import { useTextField } from './use-text-field';
  * @param subText 추가 설명 텍스트
  * @param placeholder placeholder 값
  * @param unit 입력값 단위
+ * @param step 소수점 단위 제한
  * @param maxLength input의 최대길이
  * @param className input태그 추가 스타일
  * @param wrapperClassName text-field-wrapper 컴포넌트 추가 스타일 부여
@@ -39,6 +40,8 @@ export function TextField({
   subText,
   placeholder,
   unit,
+  step,
+  preventDecimal,
   maxLength,
   className,
   wrapperClassName,
@@ -52,11 +55,28 @@ export function TextField({
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     let newValue = event.target.value;
+    let numValue = parseFloat(event.target.value);
 
-    if (maxLength && newValue.length >= maxLength) {
-      newValue = newValue.slice(0, maxLength);
-      void onChange?.(newValue);
-    } else void onChange?.(newValue);
+    //소수점 단위가 제한되어 있을 때
+    if (step && numValue % step !== 0) {
+      numValue = Math.round(numValue * 2) / 2;
+      newValue = numValue.toString();
+    }
+
+    const lengthWithoutDecimal = newValue.replace('.', '').length;
+
+    //소수점도 고려한 maxLength 적용
+    if (maxLength && lengthWithoutDecimal >= maxLength) {
+      newValue = newValue.slice(
+        0,
+        maxLength + (newValue.includes('.') ? 2 : 0),
+      );
+    }
+    void onChange?.(newValue);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    preventCharacters(event, ['-', preventDecimal ? '.' : '']);
   };
 
   return (
@@ -78,7 +98,7 @@ export function TextField({
             onChange={handleInputChange}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
-            onKeyDown={inputType === 'number' ? preventMinus : undefined}
+            onKeyDown={inputType === 'number' ? handleKeyDown : undefined}
             className={cx(
               css(
                 shouldEmphasize

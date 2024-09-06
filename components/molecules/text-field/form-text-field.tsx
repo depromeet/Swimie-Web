@@ -1,9 +1,9 @@
 'use client';
 
-import React, { ChangeEvent, forwardRef } from 'react';
+import React, { ChangeEvent, forwardRef, KeyboardEvent } from 'react';
 
 import { css, cx } from '@/styled-system/css';
-import { preventMinus } from '@/utils';
+import { preventCharacters } from '@/utils';
 
 import {
   absoluteStyles,
@@ -43,6 +43,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
       subText,
       placeholder,
       unit,
+      preventDecimal,
       className,
       maxLength,
       wrapperClassName,
@@ -66,6 +67,10 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
       } else void onChange(event);
     };
 
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      preventCharacters(event, ['-', preventDecimal ? '.' : '']);
+    };
+
     return (
       <TextFieldWrapper
         isRequired={isRequired}
@@ -82,7 +87,7 @@ export const FormTextField = forwardRef<HTMLInputElement, FormTextFieldProps>(
             maxLength={maxLength}
             onFocus={() => handlers.onChangeFocus(true)}
             onBlur={() => handlers.onChangeFocus(false)}
-            onKeyDown={inputType === 'number' ? preventMinus : undefined}
+            onKeyDown={inputType === 'number' ? handleKeyDown : undefined}
             onChange={handleInputChange}
             className={cx(
               css(

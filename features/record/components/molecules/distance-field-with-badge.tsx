@@ -47,6 +47,8 @@ export function DistanceFieldWithBadge({
       <TextField
         inputType="number"
         maxLength={isAssistiveTabIndexZero ? 5 : 3}
+        step={isAssistiveTabIndexZero ? undefined : 0.5}
+        preventDecimal={isAssistiveTabIndexZero}
         placeholder="0"
         value={value ? String(value) : ''}
         unit={unit}

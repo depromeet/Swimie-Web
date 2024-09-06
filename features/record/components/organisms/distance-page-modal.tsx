@@ -182,7 +182,9 @@ export function DistancePageModal({
                   ? '레인 길이에 따라 자동으로 거리를 계산해드릴게요'
                   : undefined
               }
-              maxLength={isAssistiveIndexOne ? 3 : 5}
+              maxLength={isAssistiveIndexZero ? 5 : 3}
+              step={isAssistiveIndexZero ? undefined : 0.5}
+              preventDecimal={isAssistiveIndexZero}
               value={isAssistiveIndexZero ? totalMeter : totalLaps}
               unit={isAssistiveIndexZero ? '미터(m)' : '바퀴'}
               wrapperClassName={css({ marginTop: '16px' })}
