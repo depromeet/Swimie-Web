@@ -65,7 +65,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
           {strokes?.length && member?.goal ? (
             <RecordMark
               isAchieved={Boolean(
-                member?.goal && totalMeter && totalMeter > member?.goal,
+                member?.goal && totalMeter && totalMeter >= member?.goal,
               )}
               strokes={strokes}
               totalDistance={totalMeter}
