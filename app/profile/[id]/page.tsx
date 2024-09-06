@@ -5,10 +5,11 @@ import {
   GlobalNavigationBar,
   HeaderBar,
 } from '@/components/molecules';
-import { SettingButton } from '@/components/molecules';
 import { ProfileContainerSkeleton, useProfileData } from '@/features/profile';
-import { MyProfile } from '@/features/profile/components/organisms/my-page';
-import { OtherPage } from '@/features/profile/components/organisms/other-page';
+import { MyPageHeader } from '@/features/profile';
+import { OtherPageHeader } from '@/features/profile';
+import { MyProfile } from '@/features/profile';
+import { OtherPage } from '@/features/profile';
 import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -62,17 +63,11 @@ export default function Profile({ params }: Mypage) {
 
   return (
     <article className={containerStyle}>
-      <HeaderBar>
-        {isMyProfile ? (
-          <HeaderBar.RightContent className={css({ right: '20px' })}>
-            {[{ component: <SettingButton />, key: 'setting' }]}
-          </HeaderBar.RightContent>
-        ) : (
-          <HeaderBar.LeftContent>
-            <BackButton />
-          </HeaderBar.LeftContent>
-        )}
-      </HeaderBar>
+      {isMyProfile ? (
+        <MyPageHeader />
+      ) : (
+        <OtherPageHeader profileData={profileData} />
+      )}
 
       {isMyProfile ? (
         <MyProfile profileData={profileData} />
