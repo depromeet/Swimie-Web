@@ -72,3 +72,10 @@ export type CheerPreview = {
   profileImageUrl: string;
   memberId: number;
 } & DetailCheerItem;
+
+export type ReasonCode =
+  | 'REPORT_REASON_1'
+  | 'REPORT_REASON_2'
+  | 'REPORT_REASON_3'
+  | 'REPORT_REASON_4'
+  | 'REPORT_REASON_5';
