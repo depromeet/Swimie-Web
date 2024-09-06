@@ -15,8 +15,8 @@ export function OtherPageHeader({
   profileData: ProfileProps['data'];
 }) {
   const router = useRouter();
-  const { nickname } = profileData;
-  const { openBlockModal } = useBlockDialogHandler(nickname);
+  const { nickname, memberId } = profileData;
+  const { openBlockModal } = useBlockDialogHandler({ nickname, memberId });
 
   const handleClickOpenBlockModal = () => {
     openBlockModal();

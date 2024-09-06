@@ -6,9 +6,17 @@ import { useDialog, useToast } from '@/hooks';
 
 import { useBlockMember } from './use-block-member';
 
-export function useBlockDialogHandler(nickname: string) {
+export interface blockMemberInfoProps {
+  nickname: string;
+  memberId: number;
+}
+
+export function useBlockDialogHandler({
+  nickname,
+  memberId,
+}: blockMemberInfoProps) {
   const { dialog, close } = useDialog();
-  const { blockMember } = useBlockMember();
+  const { blockMember } = useBlockMember(memberId);
   const { toast } = useToast();
   const router = useRouter();
 
