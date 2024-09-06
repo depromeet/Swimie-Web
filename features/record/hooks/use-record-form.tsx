@@ -14,7 +14,11 @@ import {
 } from '../store';
 import { StrokeProps } from '../types';
 
-export function useRecordForm(lane: number) {
+export function useRecordForm(
+  lane: number,
+  isEditMode: boolean,
+  prevSwimStartTime?: string,
+) {
   const [isLoading, setIsLoading] = useState(false);
   const setIsPoolSearchPageModalOpen = useSetAtom(isPoolSearchPageModalOpen);
   const setIsDistancePageModalOpen = useSetAtom(isDistancePageModalOpen);
@@ -114,6 +118,11 @@ export function useRecordForm(lane: number) {
           .join(' · ');
     }
   };
+
+  useEffect(() => {
+    if (!isEditMode && !prevSwimStartTime) openStartTimeBottomSheet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
