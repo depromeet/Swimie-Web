@@ -46,7 +46,7 @@ export const ReportBottomSheet = ({
   memoryId,
 }: ReportBottomSheet) => {
   const { toast } = useToast();
-  const { mutate: mutateReport } = useReport();
+  const { mutate: mutateReport, isPending } = useReport();
   const [selectedReportItem, setSelectedReportItem] = useState<Report>();
 
   const handleClickReport = () => {
@@ -90,6 +90,7 @@ export const ReportBottomSheet = ({
           buttonType="primary"
           disabled={!selectedReportItem}
           onClick={handleClickReport}
+          isLoading={isPending}
         />
       </div>
     </BottomSheet>
