@@ -16,8 +16,8 @@ const DynamicBackButton = dynamic(
 );
 
 export default function RecordPage() {
-  const prevSwimStartTime = cookies().get('startTime')?.value;
-  const prevSwimEndTime = cookies().get('endTime')?.value;
+  const prevSwimStartTime = cookies().get('swimStartTime')?.value;
+  const prevSwimEndTime = cookies().get('swimEndTime')?.value;
   return (
     <div>
       <HeaderBar className={css({ marginBottom: '24px' })}>
