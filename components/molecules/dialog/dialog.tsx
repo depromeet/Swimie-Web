@@ -1,19 +1,15 @@
-import { Button, Dim } from '@/components/atoms';
+import { Button, ButtonProps, Dim } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
-type Button = {
-  text: string;
-  onClick: () => void;
-};
 export type DialogProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   description?: string;
   buttons?: {
-    confirm?: Button;
-    cancel?: Button;
+    confirm?: ButtonProps;
+    cancel?: ButtonProps;
   };
   isDim?: boolean;
 };
@@ -46,20 +42,22 @@ export const Dialog = ({
             <div className={buttonStyle}>
               {buttons.cancel && (
                 <Button
-                  onClick={buttons.cancel.onClick}
-                  label={buttons.cancel.text}
-                  size="large"
-                  buttonType="secondary"
-                  variant="outlined"
+                  {...{
+                    buttonType: 'secondary',
+                    variant: 'outlined',
+                    size: 'large',
+                    ...buttons.cancel,
+                  }}
                 />
               )}
               {buttons.confirm && (
                 <Button
-                  onClick={buttons.confirm.onClick}
-                  label={buttons.confirm.text}
-                  size="large"
-                  buttonType="primary"
-                  variant="solid"
+                  {...{
+                    buttonType: 'primary',
+                    variant: 'solid',
+                    size: 'large',
+                    ...buttons.confirm,
+                  }}
                 />
               )}
             </div>

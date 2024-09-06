@@ -83,6 +83,13 @@ export const Button = ({
       'text',
       css({ backgroundColor: 'white', border: 'none', padding: '4px 0px' }),
     ],
+    [
+      'negative',
+      css({
+        backgroundColor: disabled ? 'fill.disable' : 'status.negative',
+        border: 'none',
+      }),
+    ],
   ]);
 
   const typeStylesMap = new Map([
@@ -116,6 +123,12 @@ export const Button = ({
             : variant === 'outlined'
               ? 'text.normal'
               : 'text.alternative',
+      }),
+    ],
+    [
+      'negative',
+      css({
+        color: variant === 'negative' ? 'white' : 'blue.60',
       }),
     ],
   ]);

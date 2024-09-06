@@ -9,7 +9,7 @@ export function useNoticeDialogHandler() {
       description: '조금만 기다려주세요!',
       buttons: {
         confirm: {
-          text: '확인',
+          label: '확인',
           onClick: () => {
             close();
           },
