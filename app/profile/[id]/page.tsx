@@ -6,10 +6,12 @@ import {
   HeaderBar,
 } from '@/components/molecules';
 import { ProfileContainerSkeleton, useProfileData } from '@/features/profile';
-import { MyPageHeader } from '@/features/profile';
-import { OtherPageHeader } from '@/features/profile';
-import { MyProfile } from '@/features/profile';
-import { OtherPage } from '@/features/profile';
+import {
+  MyPageHeader,
+  MyProfile,
+  OtherPage,
+  OtherPageHeader,
+} from '@/features/profile';
 import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
