@@ -3,6 +3,7 @@ import { css } from '@/styled-system/css';
 
 export function DeleteRecordButton() {
   const { dialog, close } = useDialog();
+
   const handleDeleteButtonClick = () => {
     dialog({
       title: '기록을 삭제할까요?',
@@ -10,15 +11,12 @@ export function DeleteRecordButton() {
       buttons: {
         cancel: {
           text: '닫기',
-          onClick: () => {
-            close();
-          },
+          onClick: () => close(),
         },
+        //삭제 api 연결
         confirm: {
           text: '삭제하기',
-          onClick: () => {
-            close();
-          },
+          onClick: () => close(),
         },
       },
       isDim: true,
