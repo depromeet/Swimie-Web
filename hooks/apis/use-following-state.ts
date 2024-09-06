@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { RefetchOptions, useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
 import { Response } from '@/apis';
@@ -101,7 +101,10 @@ export const useMemberFollowingState = () => {
   };
 
   // NOTE: toggle Follow State
-  const toggleFollow = async (friendId: number) => {
+  const toggleFollow = async (
+    friendId: number,
+    refetch?: (options?: RefetchOptions) => Promise<unknown>,
+  ) => {
     const currentFollowingState = await getMemberFollowingState(friendId);
 
     if (!currentFollowingState._original) {
@@ -115,7 +118,11 @@ export const useMemberFollowingState = () => {
     };
 
     storeSet(friendId, nextFollowingState);
-    debouncedFollowMutate(friendId);
+    debouncedFollowMutate(friendId, {
+      onSuccess: () => {
+        refetch && void refetch();
+      },
+    });
   };
 
   return {

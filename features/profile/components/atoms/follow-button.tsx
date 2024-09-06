@@ -4,11 +4,14 @@ import { Button } from '@/components/atoms';
 import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 
+import { useProfileData } from '../../hooks';
+
 type FollowButtonProps = {
   followingId: number;
 };
 
 export function FollowButton({ followingId }: FollowButtonProps) {
+  const { refetch } = useProfileData(followingId);
   const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
   const { isFollowing } = useMemberIsFollowing(followingId);
 
@@ -17,7 +20,7 @@ export function FollowButton({ followingId }: FollowButtonProps) {
   const buttonType = isFollowing ? 'assistive' : 'primary';
 
   const handleClickFollow = () => {
-    void toggleFollow(followingId);
+    void toggleFollow(followingId, refetch);
   };
 
   return (
