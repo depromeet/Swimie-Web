@@ -32,8 +32,8 @@ const defaultArgs = {
   isOpen: true,
   title: '타이틀 테스트',
   buttons: {
-    confirm: { text: '확인', onClick: () => alert('확인 클릭') },
-    cancel: { text: '취소', onClick: () => alert('취소 클릭') },
+    confirm: { label: '확인', onClick: () => alert('확인 클릭') },
+    cancel: { label: '취소', onClick: () => alert('취소 클릭') },
   },
 };
 
