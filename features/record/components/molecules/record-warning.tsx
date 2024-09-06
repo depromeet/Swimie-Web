@@ -2,17 +2,18 @@ import { WarnIcon } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-export function RecordWarning() {
+interface RecordWarningProps {
+  description: string;
+}
+
+export function RecordWarning({ description }: RecordWarningProps) {
   return (
     <div className={layoutStyles.total}>
       <div className={layoutStyles.content}>
         <div className={layoutStyles.icon}>
           <WarnIcon />
         </div>
-        <p className={descriptionStyles}>
-          욕설, 비방 등 불쾌한 내용 또는 수영과 관련없는 기록은 서비스 이용에
-          제재를 받을 수 있어요.
-        </p>
+        <p className={descriptionStyles}>{description}</p>
       </div>
     </div>
   );

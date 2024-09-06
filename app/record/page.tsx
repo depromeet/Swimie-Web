@@ -10,8 +10,11 @@ export default function RecordPage() {
   const prevSwimEndTime = cookies().get('swimEndTime')?.value;
   return (
     <div>
-      <RecordHeaderBar />
-      <RecordWarning />
+      <RecordHeaderBar title="수영 기록하기" />
+      <RecordWarning
+        description="욕설, 비방 등 불쾌한 내용 또는 수영과 관련없는 기록은 서비스 이용에
+          제재를 받을 수 있어요."
+      />
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>
       <Suspense>
