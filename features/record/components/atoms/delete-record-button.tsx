@@ -1,8 +1,31 @@
-import { useDialog } from '@/hooks';
+'use client';
+
+import { useRouter } from 'next/navigation';
+
+import { useDialog, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 
-export function DeleteRecordButton() {
+import { useDeleteMemory } from '../../apis';
+
+interface DeleteRecordButtonProps {
+  memoryId: string;
+}
+
+export function DeleteRecordButton({ memoryId }: DeleteRecordButtonProps) {
+  const router = useRouter();
+
+  const { mutateAsync: deleteMemory, isPending } = useDeleteMemory();
   const { dialog, close } = useDialog();
+  const { toast } = useToast();
+
+  const handleDeleteMemory = async () => {
+    close();
+    const deleteMemoryRes = await deleteMemory(memoryId);
+    if (deleteMemoryRes.status === 200) {
+      toast('기록이 삭제되었습니다.', { type: 'success' });
+      router.back();
+    } else alert('오류가 발생했습니다');
+  };
 
   const handleDeleteButtonClick = () => {
     dialog({
@@ -15,12 +38,16 @@ export function DeleteRecordButton() {
           variant: 'outlined',
           buttonType: 'assistive',
         },
-        //Todo: 삭제 api 연결
         confirm: {
           label: '삭제하기',
-          onClick: () => close(),
+          onClick: () => {
+            handleDeleteMemory().catch((error) => {
+              console.log(error);
+            });
+          },
           variant: 'negative',
           buttonType: 'negative',
+          isLoading: isPending,
         },
       },
       isDim: true,

@@ -24,7 +24,12 @@ export function RecordHeaderBar({ title }: RecordHeaderBarProps) {
       <HeaderBar.Title>{title}</HeaderBar.Title>
       {isEditMode && (
         <HeaderBar.RightContent>
-          {[{ component: <DeleteRecordButton />, key: 'delete' }]}
+          {[
+            {
+              component: <DeleteRecordButton memoryId={memoryId as string} />,
+              key: 'delete',
+            },
+          ]}
         </HeaderBar.RightContent>
       )}
     </HeaderBar>
