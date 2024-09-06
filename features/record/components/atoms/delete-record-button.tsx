@@ -15,7 +15,7 @@ export function DeleteRecordButton() {
           variant: 'outlined',
           buttonType: 'assistive',
         },
-        //삭제 api 연결
+        //Todo: 삭제 api 연결
         confirm: {
           label: '삭제하기',
           onClick: () => close(),

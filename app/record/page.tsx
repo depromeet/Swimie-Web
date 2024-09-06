@@ -1,16 +1,7 @@
 import { cookies } from 'next/headers';
 import { Suspense } from 'react';
 
-import { Form } from '@/features/record';
-const DynamicRecordHeaderBar = dynamic(
-  () =>
-    import('@/features/record').then(({ RecordHeaderBar }) => RecordHeaderBar),
-  {
-    ssr: false,
-  },
-);
-import dynamic from 'next/dynamic';
-
+import { Form, RecordHeaderBar } from '@/features/record';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -19,7 +10,7 @@ export default function RecordPage() {
   const prevSwimEndTime = cookies().get('swimEndTime')?.value;
   return (
     <div>
-      <DynamicRecordHeaderBar />
+      <RecordHeaderBar />
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>
       <Suspense>
