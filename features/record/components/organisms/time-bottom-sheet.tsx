@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Picker from 'react-mobile-picker';
 
@@ -13,9 +13,21 @@ import { css } from '@/styled-system/css';
 import { timeOptions } from '../../constants';
 import { timeBottomSheetState } from '../../store';
 import { AmpmType, HourType, MinuteType } from '../../types';
-import { addMinutes, convertTo24HourFormat } from '../../utils';
+import {
+  addMinutes,
+  convertTo24HourFormat,
+  convertToPickerValue,
+} from '../../utils';
 
-export function TimeBottomSheet() {
+interface TimeBottomSheetProps {
+  prevSwimStartTime?: string;
+  prevSwimEndTime?: string;
+}
+
+export function TimeBottomSheet({
+  prevSwimStartTime,
+  prevSwimEndTime,
+}: TimeBottomSheetProps) {
   const { getValues, setValue } = useFormContext();
   const [timeBottmSheetState, setTimeBottmSheetState] =
     useAtom(timeBottomSheetState);
@@ -25,10 +37,18 @@ export function TimeBottomSheet() {
     hour: HourType;
     minute: MinuteType;
   }>({
-    ampm: '오후',
+    ampm: '오전',
     hour: '02',
     minute: '05',
   });
+
+  useEffect(() => {
+    if (timeBottmSheetState.variant === 'start')
+      setPickerValue(convertToPickerValue(prevSwimStartTime));
+    if (timeBottmSheetState.variant === 'end')
+      setPickerValue(convertToPickerValue(prevSwimEndTime));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeBottmSheetState.variant]);
 
   usePreventBodyScroll({ isOpen: timeBottmSheetState.isOpen });
 
