@@ -4,6 +4,7 @@ export * from './dialog';
 export * from './global-navigation-bar';
 export * from './header-bar';
 export * from './infinite-scroller';
+export * from './menu';
 export * from './modal';
 export * from './page-modal';
 export * from './profile-image';
