@@ -40,4 +40,5 @@ const layoutStyles = css({
   borderRadius: '10px',
   shadow: 'emphasize',
   animation: 'fadeDown 0.2s',
+  backgroundColor: 'background.white',
 });
