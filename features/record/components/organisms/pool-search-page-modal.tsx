@@ -63,7 +63,7 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
             <BackButton onClickBack={handleBackArrowClick} />
           </HeaderBar.LeftContent>
         </HeaderBar>
-        <div className={layoutStyles}>
+        <div className={layoutStyles.fixed}>
           <h2 className={textStyles.title}>{title}</h2>
           <SearchBar
             value={poolSearchText}
@@ -77,7 +77,9 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
               <br /> 즐겨찾기할 수 있어요
             </p>
           )}
-          {/* Todo: 스켈레톤 컴포넌트 */}
+        </div>
+        <div style={{ height: '106px' }} />
+        <div className={layoutStyles.result}>
           {!poolSearchText && !isDataEmpty && (
             <Suspense fallback={<PoolSearchSkeleton />}>
               <div className={css({ padding: '16px 0' })}>
@@ -105,9 +107,18 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   );
 }
 
-const layoutStyles = css({
-  padding: '0 20px',
-});
+const layoutStyles = {
+  fixed: css({
+    padding: '0 20px',
+    position: 'fixed',
+    w: 'full',
+    maxWidth: 'maxWidth',
+    backgroundColor: 'background.white',
+  }),
+  result: css({
+    padding: '0 20px',
+  }),
+};
 
 const textStyles = {
   title: css({
