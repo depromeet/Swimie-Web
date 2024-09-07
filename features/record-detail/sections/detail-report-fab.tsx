@@ -1,26 +1,45 @@
 'use client';
 
-import { useBottomSheet } from '@/hooks';
+import { MenuIcon } from '@/components/atoms';
+import { Menu } from '@/components/molecules';
+import { useBottomSheet, useMenu } from '@/hooks';
 import { css } from '@/styled-system/css';
 
 import { ReportBottomSheet } from '../components';
 
 export const DetailReportFabSection = ({ memoryId }: { memoryId: string }) => {
-  const { isOpen, close, open } = useBottomSheet();
+  const { isOpen: isMenuOpen, close: closeMenu, open: openMenu } = useMenu();
+  const {
+    isOpen: isBottomSheetOpen,
+    close: closeBottomSheet,
+    open: openBottomSheet,
+  } = useBottomSheet();
 
   return (
     <>
-      <button className={ReportButtonStyle} onClick={open}>
-        기록 신고하기
-      </button>
-      <ReportBottomSheet isOpen={isOpen} onClose={close} memoryId={memoryId} />
+      <div className={menuLayoutStyles}>
+        <MenuIcon onClick={openMenu} />
+        <Menu
+          isOpen={isMenuOpen}
+          menuItems={[
+            {
+              label: '기록 신고하기',
+              onClick: openBottomSheet,
+            },
+          ]}
+          onClose={closeMenu}
+          className={css({ right: 0 })}
+        />
+      </div>
+      <ReportBottomSheet
+        isOpen={isBottomSheetOpen}
+        onClose={closeBottomSheet}
+        memoryId={memoryId}
+      />
     </>
   );
 };
 
-const ReportButtonStyle = css({
-  textStyle: 'heading6',
-  color: 'text.normal',
-  fontWeight: 'medium',
-  p: '8px 16px',
+const menuLayoutStyles = css({
+  position: 'relative',
 });

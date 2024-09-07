@@ -20,6 +20,7 @@ export { LeftArrowIcon } from './left-arrow-icon';
 export * from './loading-button-icon';
 export * from './loading-icon';
 export * from './logo-icon';
+export * from './menu-icon';
 export * from './normal-shape-icon';
 export * from './persons-icon';
 export * from './search-icon';
