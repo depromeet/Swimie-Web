@@ -36,4 +36,5 @@ const layoutStyles = css({
   padding: '8px 16px',
   borderRadius: '10px',
   shadow: 'emphasize',
+  animation: 'fadeDown 0.2s',
 });
