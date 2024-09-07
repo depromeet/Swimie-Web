@@ -45,5 +45,6 @@ export const DetailReportFabSection = ({ memoryId }: { memoryId: string }) => {
 };
 
 const menuLayoutStyles = css({
+  w: 'full',
   position: 'relative',
 });
