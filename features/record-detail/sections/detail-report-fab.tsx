@@ -8,7 +8,11 @@ import { css } from '@/styled-system/css';
 import { ReportBottomSheet } from '../components';
 
 export const DetailReportFabSection = ({ memoryId }: { memoryId: string }) => {
-  const { isOpen: isMenuOpen, close: closeMenu, open: openMenu } = useMenu();
+  const {
+    isOpen: isMenuOpen,
+    close: closeMenu,
+    toggle: toggleMenu,
+  } = useMenu();
   const {
     isOpen: isBottomSheetOpen,
     close: closeBottomSheet,
@@ -18,7 +22,7 @@ export const DetailReportFabSection = ({ memoryId }: { memoryId: string }) => {
   return (
     <>
       <div className={menuLayoutStyles}>
-        <MenuIcon onClick={openMenu} />
+        <MenuIcon onClick={toggleMenu} />
         <Menu
           isOpen={isMenuOpen}
           menuItems={[
