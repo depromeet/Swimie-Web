@@ -49,4 +49,8 @@ const layoutStyles = css({
   backgroundColor: 'white',
   zIndex: 1000,
   overflow: 'auto',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 });
