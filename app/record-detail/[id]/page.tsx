@@ -36,15 +36,15 @@ const DynamicPreviewSection = dynamic(
   },
 );
 
-// const DynamicReportFabSection = dynamic(
-//   () =>
-//     import('@/features/record-detail').then(
-//       ({ DetailReportFabSection }) => DetailReportFabSection,
-//     ),
-//   {
-//     ssr: false,
-//   },
-// );
+const DynamicReportFabSection = dynamic(
+  () =>
+    import('@/features/record-detail').then(
+      ({ DetailReportFabSection }) => DetailReportFabSection,
+    ),
+  {
+    ssr: false,
+  },
+);
 
 const DynamicCheerFabSection = dynamic(
   () =>
@@ -117,9 +117,7 @@ export default async function RecordDetail({ params }: RecordDetail) {
               component: data.isMyMemory ? (
                 <EditButton memoryId={params.id} />
               ) : (
-                // TODO: 기록 신고하기 메뉴 컴포넌트 적용
-                // <DynamicReportFabSection memoryId={params.id} />
-                <></>
+                <DynamicReportFabSection memoryId={params.id} />
               ),
               key: 'edit',
             },
