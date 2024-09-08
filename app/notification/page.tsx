@@ -27,7 +27,6 @@ export default function NotificationPage() {
       </HeaderBar>
       {/* Todo: 로딩 UI */}
       <Suspense fallback={<NotificationListSkeleton />}>
-        <NotificationListSkeleton />
         <NotificationList />
       </Suspense>
     </>
