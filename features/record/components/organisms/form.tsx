@@ -87,7 +87,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
         lane: prevData.lane,
         laneMeter: prevData.lane + 'm',
         poolId: prevData?.pool?.id ? prevData.pool.id : undefined,
-        poolName: prevData?.pool?.name ? prevData.pool.name : undefined,
+        poolName: prevData?.pool?.name ? prevData.pool.name : '',
         diary: prevData.diary ? prevData.diary : undefined,
         item: prevData.memoryDetail?.item
           ? prevData.memoryDetail.item
@@ -107,7 +107,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
         strokes: prevData.strokes ? prevData.strokes : undefined,
         totalDistance: prevData.totalMeter
           ? prevData.totalMeter.toLocaleString() + 'm'
-          : undefined,
+          : '',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
