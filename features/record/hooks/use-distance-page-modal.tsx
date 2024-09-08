@@ -19,11 +19,22 @@ export function useDistancePageModal<T>(
   defaultTotalMeter?: number,
   defaultTotalLap?: number,
 ) {
+  const isRecordedByTotalMeter =
+    defaultStrokes?.length === 1 && defaultStrokes[0].name === '총거리';
+  const isRecordedByTotalLaps =
+    defaultStrokes?.length === 1 && defaultStrokes[0].name === '총바퀴';
+  const isRecordedByStrokesMeter = defaultStrokes?.every((stroke) =>
+    Boolean(stroke.meter),
+  );
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
-  const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(0);
-  const [assistiveTabIndex, setAssistiveTabIndex] = useState<tabIndex>(0);
+  const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(
+    isRecordedByTotalMeter || isRecordedByTotalLaps ? 0 : 1,
+  );
+  const [assistiveTabIndex, setAssistiveTabIndex] = useState<tabIndex>(
+    isRecordedByTotalMeter || isRecordedByStrokesMeter ? 0 : 1,
+  );
   const [totalMeter, setTotalMeter] = useState<string>('');
   const [totalLaps, setTotalLaps] = useState<string>('');
   const [totalStrokeDistance, setTotalStrokeDistance] = useState<number>(0);
