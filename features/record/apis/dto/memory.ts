@@ -48,3 +48,5 @@ export type MemoryPullResponse = Response<{
   totalMeter: number;
   diary: string;
 }>;
+
+export type MemoryDeleteResponse = Response;

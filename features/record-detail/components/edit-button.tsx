@@ -4,7 +4,11 @@ import { css } from '@/styled-system/css';
 
 export const EditButton = ({ memoryId }: { memoryId: string }) => {
   return (
-    <Link href={`/record?memoryId=${memoryId}`} className={editButtonStyle}>
+    <Link
+      href={`/record?memoryId=${memoryId}`}
+      replace
+      className={editButtonStyle}
+    >
       수정
     </Link>
   );
