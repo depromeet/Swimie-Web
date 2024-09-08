@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/atoms';
-import { useBlockedList, useUnblocked } from '@/features/setting-blocked/apis';
+import { useBlockedList, useUnblocked } from '@/features/setting-blocked';
 import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
