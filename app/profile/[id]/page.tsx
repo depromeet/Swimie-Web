@@ -1,5 +1,6 @@
 'use client';
 
+import NotFound from '@/app/not-found';
 import {
   BackButton,
   GlobalNavigationBar,
@@ -13,7 +14,6 @@ import {
   OtherPageHeader,
 } from '@/features/profile';
 import { useMemberFollowingState } from '@/hooks';
-import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export type Mypage = {
@@ -44,21 +44,9 @@ export default function Profile({ params }: Mypage) {
     );
   }
 
-  // TODO: 404 page
+  // TODO: 1) 차단한 계정 2) 차단 당한 계정 3) 탈퇴한 계정 조회 시 404
   if (profileError || !profileData) {
-    return (
-      <article className={containerStyle}>
-        <HeaderBar>
-          <HeaderBar.LeftContent>
-            <BackButton />
-          </HeaderBar.LeftContent>
-        </HeaderBar>
-        <div className={css({ padding: '20px', textAlign: 'center' })}>
-          멤버가 존재하지 않아요.
-        </div>
-        <GlobalNavigationBar />
-      </article>
-    );
+    return <NotFound />;
   }
 
   const isMyProfile = profileData.isMyProfile;
