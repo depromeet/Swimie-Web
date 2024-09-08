@@ -16,7 +16,7 @@ const SkeletonItem = () => {
 export const NotificationListSkeleton = () => {
   return (
     <div className={containerStyle}>
-      {new Array(9).fill(0).map((_, index) => (
+      {new Array(12).fill(0).map((_, index) => (
         <SkeletonItem key={index} />
       ))}
     </div>
@@ -60,11 +60,11 @@ const content = {
     variants: {
       type: {
         short: {
-          width: '50px',
+          width: '20%',
           height: '18px',
         },
         long: {
-          width: '220px',
+          width: '85%',
           height: '22px',
         },
       },
