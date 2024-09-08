@@ -144,9 +144,8 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
-    router.replace(
-      `/record/success?editMode=true&memoryId=${Number(memoryId)}`,
-    );
+    router.replace(`/record-detail/${Number(memoryId)}`);
+    toast('기록 수정이 완료되었어요.', { type: 'success' });
     setFormSubInfo({
       imageFiles: [],
       isDistanceLapModified: false,
