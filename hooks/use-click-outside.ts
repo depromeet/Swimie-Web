@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
  *
  * 사용 방법
  * const { isOpen, toggle, close } = useMenu();
- * const {ref} = useOutsideClick(isOpen, close);
+ * const {ref} = useClickOutside(isOpen, close);
  *
  * return <Menu ref={ref} isOpen={isOpen} onClose={close}>
  */
