@@ -159,7 +159,7 @@ export function SettingCalendar({
 
 const pageContainer = flex({
   flexDirection: 'column',
-  height: 'calc(100vh - 48px)',
+  height: 'calc(100dvh - 48px)',
 });
 
 const contentContainer = css({
