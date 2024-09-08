@@ -11,17 +11,17 @@ import { useEffect, useRef } from 'react';
  *
  * return <Menu ref={ref} isOpen={isOpen} onClose={close}>
  */
-export default function useOutsideClick<U extends HTMLElement>(
+export default function useClickOutside<T extends HTMLElement>(
   isOpen: boolean,
-  onClose: () => void,
+  callback: () => void,
 ) {
-  const ref = useRef<U>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (!isOpen) return;
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        onClose();
+        callback();
       }
     };
 
@@ -30,7 +30,7 @@ export default function useOutsideClick<U extends HTMLElement>(
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, [onClose, isOpen]);
+  }, [callback, isOpen]);
 
   return { ref };
 }

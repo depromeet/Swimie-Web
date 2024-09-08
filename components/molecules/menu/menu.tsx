@@ -1,4 +1,4 @@
-import useOutsideClick from '@/hooks/use-outside-click';
+import useClickOutside from '@/hooks/use-click-outside';
 import { css, cx } from '@/styled-system/css';
 
 import { MenuItem } from './menu-item';
@@ -12,7 +12,7 @@ interface MenuProps {
 }
 
 export function Menu({ isOpen, menuItems, onClose, className }: MenuProps) {
-  const { ref } = useOutsideClick<HTMLDivElement>(isOpen, onClose);
+  const { ref } = useClickOutside<HTMLDivElement>(isOpen, onClose);
 
   const handleMenuItemClick = (index: number) => {
     menuItems[index].onClick();
