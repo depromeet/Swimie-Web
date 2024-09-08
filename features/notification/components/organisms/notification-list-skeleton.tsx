@@ -64,7 +64,7 @@ const content = {
           height: '18px',
         },
         long: {
-          width: '85%',
+          width: '92%',
           height: '22px',
         },
       },
