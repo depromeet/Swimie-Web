@@ -14,7 +14,7 @@ interface DeleteRecordButtonProps {
 export function DeleteRecordButton({ memoryId }: DeleteRecordButtonProps) {
   const router = useRouter();
 
-  const { mutateAsync: deleteMemory, isPending } = useDeleteMemory();
+  const { mutateAsync: deleteMemory } = useDeleteMemory();
   const { dialog, close } = useDialog();
   const { toast } = useToast();
 
@@ -47,7 +47,6 @@ export function DeleteRecordButton({ memoryId }: DeleteRecordButtonProps) {
           },
           variant: 'negative',
           buttonType: 'negative',
-          isLoading: isPending,
         },
       },
       isDim: true,
