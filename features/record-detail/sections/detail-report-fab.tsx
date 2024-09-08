@@ -22,7 +22,7 @@ export const DetailReportFabSection = ({ memoryId }: { memoryId: string }) => {
   return (
     <>
       <div className={menuLayoutStyles}>
-        <MenuIcon onClick={toggleMenu} />
+        <MenuIcon onClick={toggleMenu} className={css({ cursor: 'pointer' })} />
         <Menu
           isOpen={isMenuOpen}
           menuItems={[

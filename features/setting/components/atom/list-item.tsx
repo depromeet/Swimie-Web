@@ -36,13 +36,13 @@ const listItemStyles = flex({
   alignItems: 'center',
   alignSelf: 'stretch',
   backgroundColor: 'background.white',
+  cursor: 'pointer',
 });
 
 const listItemTextStyles = css({
   color: 'text.normal',
   textStyle: 'heading6',
   fontWeight: '500',
-  cursor: 'pointer',
 });
 
 const listItemSubTextStyles = css({
@@ -54,7 +54,6 @@ const listItemRightStyles = flex({
   justifyContent: 'flex-end',
   alignItems: 'center',
   gap: '8px',
-  cursor: 'pointer',
 });
 
 const listItemDistanceStyles = css({
