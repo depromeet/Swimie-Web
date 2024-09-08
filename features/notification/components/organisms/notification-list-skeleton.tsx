@@ -60,11 +60,11 @@ const content = {
     variants: {
       type: {
         short: {
-          width: '50px',
+          width: '20%',
           height: '18px',
         },
         long: {
-          width: '220px',
+          width: '92%',
           height: '22px',
         },
       },
