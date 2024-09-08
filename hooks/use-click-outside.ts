@@ -11,11 +11,11 @@ import { useEffect, useRef } from 'react';
  *
  * return <Menu ref={ref} isOpen={isOpen} onClose={close}>
  */
-export default function useClickOutside<U extends HTMLElement>(
+export default function useClickOutside<T extends HTMLElement>(
   isOpen: boolean,
   callback: () => void,
 ) {
-  const ref = useRef<U>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
