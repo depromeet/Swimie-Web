@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/atoms';
+import { useBlockedList, useUnblocked } from '@/features/setting-blocked/apis';
+import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { MemberProfile } from '@/types';
@@ -17,9 +19,17 @@ export const ProfileBlockedListItem = ({
   introduction,
   profileImageUrl,
 }: FollowListItem) => {
+  const { refetch } = useBlockedList();
+  const { mutate } = useUnblocked();
+  const { toast } = useToast();
+
   const handleClickBlockedItem = () => {
-    //   TODO: api 연동
-    console.log('toggle blocked!');
+    mutate(memberId, {
+      onSuccess: () => {
+        toast(`${nickname}님이 차단 헤제 되었어요`);
+        void refetch();
+      },
+    });
   };
 
   return (
