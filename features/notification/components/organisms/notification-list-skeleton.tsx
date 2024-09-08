@@ -16,7 +16,7 @@ const SkeletonItem = () => {
 export const NotificationListSkeleton = () => {
   return (
     <div className={containerStyle}>
-      {new Array(12).fill(0).map((_, index) => (
+      {new Array(9).fill(0).map((_, index) => (
         <SkeletonItem key={index} />
       ))}
     </div>
