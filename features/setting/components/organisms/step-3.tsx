@@ -102,7 +102,7 @@ export function Step3() {
 
 const containerStyles = flex({
   direction: 'column',
-  height: 'calc(100vh - 44px)',
+  height: 'calc(100dvh - 44px)',
 });
 
 const contentStyles = flex({
