@@ -103,5 +103,5 @@ const diaryDetailStyle = css({
   color: 'text.neutral',
   backgroundColor: 'background.gray',
   textWrap: 'wrap',
-  whiteSpace: 'pre',
+  whiteSpace: 'pre-wrap',
 });
