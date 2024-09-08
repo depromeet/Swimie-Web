@@ -6,8 +6,15 @@ interface BlockButtonProps {
 
 export function BlockButton({ onClick }: BlockButtonProps) {
   return (
-    <button onClick={onClick} className={css({ cursor: 'pointer' })}>
+    <button onClick={onClick} className={blockButtonStyles}>
       차단
     </button>
   );
 }
+
+const blockButtonStyles = css({
+  textStyle: 'body2.normal',
+  fontWeight: '500',
+  color: 'text.normal',
+  cursor: 'pointer',
+});
