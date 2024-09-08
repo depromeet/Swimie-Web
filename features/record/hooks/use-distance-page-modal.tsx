@@ -145,7 +145,6 @@ export function useDistancePageModal<T>(
     resetStrokesMeter();
     resetStrokesLaps();
   };
-
   //영법별 거리 입력 시 로직 구현 function
   const onChangeStroke = (index: number, text: string) => {
     totalLaps && setTotalLaps('');
@@ -161,7 +160,10 @@ export function useDistancePageModal<T>(
       const copyStrokes = [...prev];
       assistiveTabIndex === 0
         ? (copyStrokes[index] = { ...copyStrokes[index], meter: Number(text) })
-        : (copyStrokes[index] = { ...copyStrokes[index], laps: Number(text) });
+        : (copyStrokes[index] = {
+            ...copyStrokes[index],
+            laps: Number(text) ? Number(text) : 0,
+          });
       return copyStrokes;
     });
   };
