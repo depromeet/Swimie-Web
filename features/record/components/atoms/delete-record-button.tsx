@@ -63,4 +63,5 @@ const buttonStyles = css({
   textStyle: 'body2.normal',
   color: 'status.negative',
   fontWeight: 500,
+  cursor: 'pointer',
 });

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import { LeftArrowIcon } from '@/components/atoms';
+import { css, cx } from '@/styled-system/css';
 
 type BackButton = {
   onClickBack?: () => void;
@@ -16,7 +17,10 @@ export const BackButton = ({ onClickBack, className }: BackButton) => {
   };
 
   return (
-    <button className={className} onClick={handleBackClick}>
+    <button
+      className={cx(css({ cursor: 'pointer' }), className)}
+      onClick={handleBackClick}
+    >
       <LeftArrowIcon />
     </button>
   );

@@ -47,6 +47,7 @@ const titleStyles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '20px 24px',
+    cursor: 'pointer',
   }),
 
   text: css({

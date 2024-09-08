@@ -16,6 +16,7 @@ const layoutStyles = {
   total: flex({
     padding: '8px 0',
     alignItems: 'center',
+    cursor: 'pointer',
   }),
   icon: css({
     marginRight: '10px',

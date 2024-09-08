@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 
 import { CheckInCircleIcon } from '@/components/atoms';
+import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 interface ViewImagehButtonProps
@@ -26,7 +27,10 @@ export const ViewImageButton = ({
         '& > p': { height: '18px' },
       })}
     >
-      <CheckInCircleIcon isActive={isActive} />
+      <CheckInCircleIcon
+        isActive={isActive}
+        className={css({ cursor: 'pointer' })}
+      />
       <p>사진 보기</p>
     </button>
   );
