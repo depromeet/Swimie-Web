@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useDialog, useToast } from '@/hooks';
+import { useCurrentMemberInfo, useDialog, useToast } from '@/hooks';
 
 import { useBlockMember } from './use-block-member';
+import { useProfileData } from './use-profile-data';
 
 export interface blockMemberInfoProps {
   nickname: string;
@@ -19,6 +20,8 @@ export function useBlockDialogHandler({
   const { blockMember } = useBlockMember(memberId);
   const { toast } = useToast();
   const router = useRouter();
+  const { data } = useCurrentMemberInfo();
+  const { refetch } = useProfileData(data?.data.id);
 
   const openBlockModal = () => {
     dialog({
@@ -38,6 +41,7 @@ export function useBlockDialogHandler({
             void (async () => {
               try {
                 await blockMember();
+                void refetch();
                 close();
                 toast(`${nickname}님을 차단했어요.`, { type: 'success' });
                 router.push('/');
