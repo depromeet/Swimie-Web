@@ -7,13 +7,13 @@ import { useEffect, useRef } from 'react';
  *
  * 사용 방법
  * const { isOpen, toggle, close } = useMenu();
- * const {ref} = useOutsideClick(isOpen, close);
+ * const {ref} = useClickOutside(isOpen, close);
  *
  * return <Menu ref={ref} isOpen={isOpen} onClose={close}>
  */
-export default function useOutsideClick<U extends HTMLElement>(
+export default function useClickOutside<U extends HTMLElement>(
   isOpen: boolean,
-  onClose: () => void,
+  callback: () => void,
 ) {
   const ref = useRef<U>(null);
 
@@ -21,7 +21,7 @@ export default function useOutsideClick<U extends HTMLElement>(
     const handleClick = (e: MouseEvent) => {
       if (!isOpen) return;
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        onClose();
+        callback();
       }
     };
 
@@ -30,7 +30,7 @@ export default function useOutsideClick<U extends HTMLElement>(
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, [onClose, isOpen]);
+  }, [callback, isOpen]);
 
   return { ref };
 }
