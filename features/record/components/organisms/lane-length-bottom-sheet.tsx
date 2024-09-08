@@ -32,9 +32,14 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
   }) as string;
 
   const handleSelectLaneLength = (value: string) => {
-    if (formSubInfo.isDistanceLapModified && value === laneOptions[0].label)
+    if (
+      Boolean(totalDistance) &&
+      formSubInfo.isDistanceLapModified &&
+      value === laneOptions[0].label
+    )
       setValue('totalDistance', Number(totalDistance?.slice(0, -1)) / 2 + 'm');
     else if (
+      Boolean(totalDistance) &&
       formSubInfo.isDistanceLapModified &&
       value === laneOptions[1].label
     )
