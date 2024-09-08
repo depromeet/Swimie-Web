@@ -25,6 +25,9 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
     handleClickOpenBottomSheet,
   } = useCheerBottomSheet({
     memoryId,
+    isIncludeVerification: {
+      isMyMemory: false,
+    },
   });
 
   const handleChangeOpen = (isOpen: boolean) => {
