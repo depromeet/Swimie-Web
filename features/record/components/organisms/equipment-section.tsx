@@ -47,10 +47,11 @@ export function EquipmentSection({
     if (defaultEquipment) {
       defaultEquipment.split(',').forEach((equipment) => {
         const swimTool = equipment as SwimToolName;
-        setEquipmentSelectState((prev) => [
-          ...prev,
-          (prev[equipmentList.indexOf(swimTool)] = true),
-        ]);
+        setEquipmentSelectState((prev) =>
+          prev.map((item, i) =>
+            i === equipmentList.indexOf(swimTool) ? true : item,
+          ),
+        );
       });
     }
 
