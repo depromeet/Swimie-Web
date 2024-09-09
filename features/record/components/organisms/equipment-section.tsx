@@ -48,8 +48,8 @@ export function EquipmentSection({
       defaultEquipment.split(',').forEach((equipment) => {
         const swimTool = equipment as SwimToolName;
         setEquipmentSelectState((prev) =>
-          prev.map((item, i) =>
-            i === equipmentList.indexOf(swimTool) ? true : item,
+          prev.map((state, i) =>
+            i === equipmentList.indexOf(swimTool) ? true : state,
           ),
         );
       });
