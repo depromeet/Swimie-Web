@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
 
 import {
   AppleLogoIcon,
@@ -17,6 +18,8 @@ type LoginScreen = {
   isAnimate?: boolean;
 };
 export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
+  const [isAppleLoginDisabled, setIsAppleLoginDisabled] = useState(false);
+
   const kakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&prompt=select_account`;
   };
@@ -26,6 +29,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
   // };
 
   const appleLogin = () => {
+    setIsAppleLoginDisabled(true);
     window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
   };
 
@@ -93,9 +97,8 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
             </button> */}
             <button
               className={buttons({ type: 'apple' })}
-              onClick={() => {
-                void appleLogin();
-              }}
+              onClick={appleLogin}
+              disabled={isAppleLoginDisabled}
             >
               <div className={buttonContent}>
                 <AppleLogoIcon />
