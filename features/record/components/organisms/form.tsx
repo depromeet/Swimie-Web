@@ -35,7 +35,7 @@ import { useRecordForm } from '../../hooks';
 import { saveSwimTime } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
-import { compareTime } from '../../utils';
+import { compareTime, isFuture } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
@@ -78,6 +78,15 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
       imageIdList: [],
     },
   });
+
+  useEffect(() => {
+    if (date && isFuture(date)) {
+      router.replace('/');
+      toast('미래 날짜에는 기록할 수 없어요.', { type: 'warning' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date]);
+
   useEffect(() => {
     if (data) {
       const prevData = data.data;
