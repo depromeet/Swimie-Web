@@ -210,8 +210,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
       }
       //이미지가 수정되지 않았을 때
       else {
-        //이전 이미지가 그대로 있을 때
-        if (!formSubInfo.isPrevImageFileDeleted) {
+        const runMemoryEdit = async () => {
           const memoryEditRes = await memoryEdit({
             formData: submitData,
             memoryId: Number(memoryId),
@@ -219,17 +218,15 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
           if (memoryEditRes.status === 200) {
             handleRecordEditSuccess();
           }
+        };
+        //이전 이미지가 그대로 있을 때
+        if (!formSubInfo.isPrevImageFileDeleted) {
+          void runMemoryEdit();
         }
         //이전 이미지를 삭제했을 때
         else {
           await imageDelete(Number(memoryId));
-          const memoryEditRes = await memoryEdit({
-            formData: submitData,
-            memoryId: Number(memoryId),
-          });
-          if (memoryEditRes.status === 200) {
-            handleRecordEditSuccess();
-          }
+          void runMemoryEdit();
         }
       }
     }
