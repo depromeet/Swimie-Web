@@ -14,13 +14,18 @@ import { DeletePhotoIcon } from '../atoms/delete-photo-icon';
 import { CameraBox } from '../molecules';
 
 interface PhotoSectionProps extends FormSectionProps {
+  isEditMode: boolean;
   defaultImage?: string;
 }
 
 /**
  * @param title 사진 section의 제목
  */
-export function PhotoSection({ title, defaultImage }: PhotoSectionProps) {
+export function PhotoSection({
+  title,
+  isEditMode,
+  defaultImage,
+}: PhotoSectionProps) {
   const [image, setImage] = useState<string[]>([]);
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -71,6 +76,8 @@ export function PhotoSection({ title, defaultImage }: PhotoSectionProps) {
   }, [defaultImage]);
 
   const handleImageDeleteClick = () => {
+    if (isEditMode)
+      setFormSubInfo((prev) => ({ ...prev, isPrevImageFileDeleted: true }));
     setFormSubInfo((prev) => ({ ...prev, imageFiles: [] }));
     setImage([]);
   };

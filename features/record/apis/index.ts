@@ -1,6 +1,7 @@
 export * from './dto';
 export * from './use-delete-memory';
 export * from './use-get-image-presigned-url';
+export * from './use-image-delete';
 export * from './use-image-edit';
 export * from './use-image-status';
 export * from './use-memory';
