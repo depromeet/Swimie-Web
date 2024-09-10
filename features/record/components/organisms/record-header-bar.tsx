@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { BackButton, HeaderBar } from '@/components/molecules';
 import { css } from '@/styled-system/css';
 
-import { formSubInfoState } from '../../store/form-sub-info';
+import { formSubInfoState } from '../../store';
 import { DeleteRecordButton } from '../atoms';
 
 interface RecordHeaderBarProps {
