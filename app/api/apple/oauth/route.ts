@@ -15,10 +15,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const userData = formData['user'];
 
     if (!code || !idToken) {
-      return NextResponse.json(
-        { error: 'code 또는 id_token이 누락되었습니다.' },
-        { status: 400 },
-      );
+      const redirectUrl = new URL('/login', request.url);
+      redirectUrl.searchParams.set('login-failed', 'true');
+
+      return NextResponse.redirect(redirectUrl, 302);
     }
 
     const bodyData = {
@@ -39,7 +39,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
 
     if (res.status === 401) {
-      return NextResponse.redirect(new URL('/login', request.url), 302);
+      const redirectUrl = new URL('/login', request.url);
+      redirectUrl.searchParams.set('login-failed', 'true');
+
+      return NextResponse.redirect(redirectUrl, 302);
     }
 
     if (!res.ok) {
