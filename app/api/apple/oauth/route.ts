@@ -38,6 +38,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     );
 
+    if (res.status === 401) {
+      return NextResponse.redirect(new URL('/login', request.url), 302);
+    }
+
     if (!res.ok) {
       return NextResponse.json(
         { error: '서버 요청 실패' },
@@ -56,6 +60,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     loginUrl.searchParams.set('nickname', encodeURIComponent(nickname));
     loginUrl.searchParams.set(
       'profileImageUrl',
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       encodeURIComponent(profileImageUrl),
     );
     loginUrl.searchParams.set('isSignUpComplete', isSignUpComplete.toString());
