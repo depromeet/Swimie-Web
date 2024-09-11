@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   AppleLogoIcon,
@@ -14,11 +14,14 @@ import SwimieLetterLogo from '@/public/images/login/swimie-letter-logo.png';
 import { css, cva } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { useLoginFailDialogHandler } from '../../hook/use-login-fail-dialog-handler';
+
 type LoginScreen = {
   isAnimate?: boolean;
 };
 export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
   const [isAppleLoginDisabled, setIsAppleLoginDisabled] = useState(false);
+  const { openFailModal } = useLoginFailDialogHandler();
 
   const kakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&prompt=select_account`;
@@ -27,11 +30,6 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
   // const googleLogin = () => {
   //   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
   // };
-
-  const appleLogin = () => {
-    setIsAppleLoginDisabled(true);
-    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
-  };
 
   // function generateNonceAndState(length = 16) {
   //   const charset =
@@ -42,6 +40,22 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
   //   }
   //   return nonce;
   // }
+
+  const appleLogin = () => {
+    setIsAppleLoginDisabled(true);
+    window.location.href = `https://appleid.apple.com/auth/authorize?client_id=${process.env.NEXT_PUBLIC_APPLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email&response_mode=form_post`;
+
+    setTimeout(() => {
+      setIsAppleLoginDisabled(false);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get('login-failed')) {
+      openFailModal();
+    }
+  }, []);
 
   return (
     <div className={loginPage}>
