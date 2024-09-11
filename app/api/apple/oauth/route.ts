@@ -16,7 +16,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     if (!code || !idToken) {
       const redirectUrl = new URL('/login', request.url);
-      redirectUrl.searchParams.set('login-failed', 'login-failed');
+      redirectUrl.searchParams.set('login-failed', 'true');
 
       return NextResponse.redirect(redirectUrl, 302);
     }
