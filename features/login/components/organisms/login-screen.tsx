@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import {
   AppleLogoIcon,
-  // GoogleLogoIcon,
+  GoogleLogoIcon,
   KakaoLogoIcon,
 } from '@/components/atoms/icons';
 import LoginMainCharacter from '@/public/images/login/login-main-character.png';
@@ -27,19 +27,9 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&prompt=select_account`;
   };
 
-  // const googleLogin = () => {
-  //   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
-  // };
-
-  // function generateNonceAndState(length = 16) {
-  //   const charset =
-  //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  //   let nonce = '';
-  //   for (let i = 0; i < length; i++) {
-  //     nonce += charset.charAt(Math.floor(Math.random() * charset.length));
-  //   }
-  //   return nonce;
-  // }
+  const googleLogin = () => {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile&prompt=consent&access_type=offline`;
+  };
 
   const appleLogin = () => {
     setIsAppleLoginDisabled(true);
@@ -100,7 +90,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <span>카카오로 로그인</span>
               </div>
             </button>
-            {/* <button
+            <button
               className={buttons({ type: 'google' })}
               onClick={googleLogin}
             >
@@ -108,7 +98,7 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
                 <GoogleLogoIcon />
                 <span>Google로 로그인</span>
               </div>
-            </button> */}
+            </button>
             <button
               className={buttons({ type: 'apple' })}
               onClick={appleLogin}
