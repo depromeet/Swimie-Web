@@ -21,6 +21,9 @@ export function useDeleteDialogHandler() {
         },
       },
       isDim: true,
+      onCloseCustom: () => {
+        router.push('/login');
+      },
     });
   };
 

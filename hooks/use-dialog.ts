@@ -25,7 +25,9 @@ import { usePreventBodyScroll } from './use-prevent-body-scroll';
  *  })
  * }
  */
-type DialogOptions = Omit<DialogProps, 'isOpen' | 'onClose'>;
+type DialogOptions = {
+  onCloseCustom?: () => void;
+} & Omit<DialogProps, 'isOpen' | 'onClose'>;
 export const useDialog = () => {
   const [dialogState, setDialogState] = useAtom(dialogAtom);
 
@@ -35,7 +37,10 @@ export const useDialog = () => {
     setDialogState({
       ...options,
       isOpen: true,
-      onClose: close,
+      onClose: () => {
+        options?.onCloseCustom?.();
+        close();
+      },
     });
   };
 
