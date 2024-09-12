@@ -6,6 +6,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { BottomSheet } from '@/components/molecules';
 import { usePreventBodyScroll } from '@/hooks';
 import { flex } from '@/styled-system/patterns';
+import { formatMeters } from '@/utils';
 
 import { laneOptions } from '../../constants';
 import { isLaneLengthBottomSheetOpen } from '../../store';
@@ -30,6 +31,9 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
     control,
     name: 'totalDistance',
   }) as string;
+  const totalDistanceNumber = Number(
+    totalDistance?.slice(0, -1).replaceAll(',', ''),
+  );
 
   const handleSelectLaneLength = (value: string) => {
     if (
@@ -37,13 +41,13 @@ export function LaneLengthBottomSheet({ title }: LaneLengthBottomSheetProps) {
       formSubInfo.isDistanceLapModified &&
       value === laneOptions[0].label
     )
-      setValue('totalDistance', Number(totalDistance?.slice(0, -1)) / 2 + 'm');
+      setValue('totalDistance', formatMeters(totalDistanceNumber / 2) + 'm');
     else if (
       Boolean(totalDistance) &&
       formSubInfo.isDistanceLapModified &&
       value === laneOptions[1].label
     )
-      setValue('totalDistance', Number(totalDistance?.slice(0, -1)) * 2 + 'm');
+      setValue('totalDistance', formatMeters(totalDistanceNumber * 2) + 'm');
     setValue('laneMeter', value);
     setValue('lane', Number(value.slice(0, -1)));
   };
