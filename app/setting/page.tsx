@@ -105,7 +105,7 @@ export default function Page() {
       ))}
 
       <div className={versionContainerStyles}>
-        <div className={versionTextStyles}>앱 버전 1.0.5</div>
+        <div className={versionTextStyles}>앱 버전 1.0.6</div>
       </div>
     </div>
   );
