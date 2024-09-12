@@ -16,6 +16,7 @@ import { type RecordDetailType } from '../types';
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
   const router = useRouter();
 
+  console.log(data.rank);
   const handleClickPreviousDate = () => {
     if (!data.prevId) return;
     router.replace(`/record-detail/${data.prevId}`);
@@ -37,6 +38,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
     member,
     memoryDetail,
     type,
+    rank,
   } = data;
 
   const { hour: startHour, minute: startMinute } = getFormatTime({
@@ -56,6 +58,7 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
         {/* 날짜 선택 */}
         <DatePicker
           recordDateStr={recordAt}
+          recordRank={rank}
           onClickPrevious={data.prevId ? handleClickPreviousDate : undefined}
           onClickNext={data.nextId ? handleClickNextDate : undefined}
         />

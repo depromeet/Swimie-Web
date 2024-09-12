@@ -40,6 +40,7 @@ export type RecordDetailType = {
     imageName: string;
     url: string;
   }[];
+  rank: number;
   prevId?: number;
   nextId?: number;
   member?: DetailMember;
