@@ -23,6 +23,7 @@ export * from './logo-icon';
 export * from './menu-icon';
 export * from './normal-shape-icon';
 export * from './persons-icon';
+export * from './reaction-icon';
 export * from './search-icon';
 export * from './setting-icon';
 export * from './speech-bubble-icon';

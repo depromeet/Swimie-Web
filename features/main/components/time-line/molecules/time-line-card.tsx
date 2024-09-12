@@ -3,7 +3,12 @@
 import Link from 'next/link';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
-import { DividerIcon, Image, SwimmerIcon } from '@/components/atoms';
+import {
+  DividerIcon,
+  Image,
+  ReactionIcon,
+  SwimmerIcon,
+} from '@/components/atoms';
 import { TimeLineContent } from '@/features/main/types';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -13,6 +18,7 @@ import { SwimRecordChart } from '../atoms/swim-record-chart';
 
 interface TimeLineCardLayoutProps {
   date: string;
+  reactionCount?: number;
 }
 
 interface TimeLineCardProps {
@@ -28,7 +34,7 @@ export const TimeLineCard = ({
 
   if (isViewDate)
     return (
-      <TimeLineCardLayout date={recordAt}>
+      <TimeLineCardLayout date={recordAt} reactionCount={content.reactionCount}>
         <TimeLineCardBody {...content} />
       </TimeLineCardLayout>
     );
@@ -39,15 +45,30 @@ export const TimeLineCard = ({
 const TimeLineCardLayout = ({
   children,
   date,
+  reactionCount,
 }: PropsWithChildren<TimeLineCardLayoutProps>) => {
   const { day, weekday } = getFormatDate({ dateStr: date });
+  reactionCount = reactionCount || 0;
+  console.log(reactionCount);
   return (
-    <div className={flex({ direction: 'column', gap: '10px' })}>
+    <div
+      className={flex({
+        position: 'relative',
+        direction: 'column',
+        gap: '10px',
+      })}
+    >
       <p className={dateStyles}>
         {`${day}일 ${weekday}`}
         {isTodayDate(date) ? <span className={todayStyles}>Today</span> : ''}
       </p>
       {children}
+      {reactionCount > 0 && (
+        <div className={reactionCountStyles}>
+          <ReactionIcon />
+          <p>{reactionCount}</p>
+        </div>
+      )}
     </div>
   );
 };
@@ -129,6 +150,19 @@ const dateStyles = css({
 });
 
 const todayStyles = css({ paddingLeft: '6px', color: 'blue.60' });
+
+const reactionCountStyles = flex({
+  position: 'absolute',
+  bottom: '-30px',
+  right: '4px',
+  gap: '2px',
+
+  '& > p': {
+    textStyle: 'label1.reading',
+    fontWeight: 'medium',
+    color: 'coolNeutral.80',
+  },
+});
 
 const cardWrapperStyles = flex({
   padding: '20px',

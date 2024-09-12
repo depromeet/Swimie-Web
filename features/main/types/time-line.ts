@@ -35,4 +35,5 @@ export interface TimeLineContent {
   strokes?: Array<StrokeInfo>;
   isAchieved?: boolean;
   imageUrl?: string;
+  reactionCount?: number;
 }
