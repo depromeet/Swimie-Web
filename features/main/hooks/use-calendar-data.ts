@@ -32,5 +32,6 @@ export const useCalendarData = (targetId?: number) => {
     queryKey: ['calendarData', year, month, nickname, targetId],
     queryFn: () => getCalendarData(year, month, targetId),
     placeholderData: keepPreviousData,
+    retry: 3,
   });
 };
