@@ -1,24 +1,27 @@
 import { PropsWithChildren } from 'react';
 
-import { css } from '@/styled-system/css';
+import { css, cva } from '@/styled-system/css';
 
 interface CardWrapperProps {
-  isLast?: boolean;
+  hasDivider?: boolean;
 }
 
 export const CardWrapper = ({
-  isLast = false,
+  hasDivider = false,
   children,
 }: PropsWithChildren<CardWrapperProps>) => {
   return (
-    <li className={wrapperStyles}>
+    <li className={wrapperStyles({ hasDivider })}>
       {children}
-      {!isLast && <div className={lineStyles} />}
+      {!hasDivider && <div className={lineStyles} />}
     </li>
   );
 };
 
-const wrapperStyles = css({ position: 'relative' });
+const wrapperStyles = cva({
+  base: { position: 'relative' },
+  variants: { hasDivider: { false: { mb: '50px' }, true: { mb: '15px' } } },
+});
 
 const lineStyles = css({
   position: 'absolute',
