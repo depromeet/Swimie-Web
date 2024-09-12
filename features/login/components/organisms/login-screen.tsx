@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import {
@@ -110,6 +111,11 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
               </div>
             </button>
           </div>
+          <p className={agreementStyles}>
+            시작함으로써 <Link href="/setting/terms">이용약관</Link> 및{' '}
+            <Link href="/setting/privacy-policy">개인정보 처리방침</Link>에
+            동의합니다.
+          </p>
         </div>
         {/* TODO: Button 리팩토링 예정 */}
       </motion.div>
@@ -202,4 +208,11 @@ const buttons = cva({
       },
     },
   },
+});
+
+const agreementStyles = css({
+  textStyle: 'caption2',
+  fontWeight: 'regular',
+  color: 'line.solid.normal',
+  '& > a': { textDecoration: 'underline' },
 });
