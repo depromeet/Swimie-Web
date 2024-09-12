@@ -278,6 +278,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className={cx(formSectionStyles)}>
           <SelectTextField
+            showArrow={false}
             fieldName="recordAt"
             isRequired
             label="수영 날짜"

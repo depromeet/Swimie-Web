@@ -31,6 +31,7 @@ export interface SelectTextFieldProps
     TextFieldProps,
     'onChange' | 'inputType' | 'value' | 'unit' | 'maxLength' | 'registerName'
   > {
+  showArrow?: boolean;
   subFieldText?: string;
   fieldName?: string;
   onClick?: () => void;
