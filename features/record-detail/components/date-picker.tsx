@@ -35,7 +35,7 @@ export const DatePicker = ({
           })}
           disabled={!onClickPrevious}
         >
-          <DateLeftArrowIcon fill={!onClickPrevious ? '#37383c50' : ''} />
+          <DateLeftArrowIcon fill={!onClickPrevious ? '#37383c30' : ''} />
         </button>
 
         <p
@@ -48,7 +48,7 @@ export const DatePicker = ({
           })}
           disabled={!onClickNext}
         >
-          <DateRightArrowIcon fill={!onClickNext ? '#37383c50' : ''} />
+          <DateRightArrowIcon fill={!onClickNext ? '#37383c30' : ''} />
         </button>
       </div>
       <div className={dateWrapperStyle}>
