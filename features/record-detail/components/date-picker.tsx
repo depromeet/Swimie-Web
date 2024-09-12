@@ -5,15 +5,21 @@ import { getFormatDate } from '@/utils';
 
 type DatePicker = {
   recordDateStr: string;
+  recordRank: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
 };
 
 export const DatePicker = ({
   recordDateStr,
+  recordRank,
   onClickPrevious,
   onClickNext,
 }: DatePicker) => {
+  const { month: currentMonth } = getFormatDate({
+    dateStr: new Date().toString(),
+    padNum: 2,
+  });
   const { year, month, day, weekday } = getFormatDate({
     dateStr: recordDateStr,
     padNum: 2,
@@ -21,31 +27,42 @@ export const DatePicker = ({
 
   return (
     <div className={containerStyle}>
-      <button
-        onClick={onClickPrevious}
-        className={buttonStyle({
-          isDisabled: !onClickPrevious,
-        })}
-        disabled={!onClickPrevious}
-      >
-        <DateLeftArrowIcon fill={!onClickPrevious ? '#37383c50' : ''} />
-      </button>
+      <div className={pickerWrapperStyle}>
+        <button
+          onClick={onClickPrevious}
+          className={buttonStyle({
+            isDisabled: !onClickPrevious,
+          })}
+          disabled={!onClickPrevious}
+        >
+          <DateLeftArrowIcon fill={!onClickPrevious ? '#37383c50' : ''} />
+        </button>
 
-      <p className={textStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
-      <button
-        onClick={onClickNext}
-        className={buttonStyle({
-          isDisabled: !onClickNext,
-        })}
-        disabled={!onClickNext}
-      >
-        <DateRightArrowIcon fill={!onClickNext ? '#37383c50' : ''} />
-      </button>
+        <p
+          className={textStyle}
+        >{`${Number(currentMonth)}월 ${recordRank}번째 기록`}</p>
+        <button
+          onClick={onClickNext}
+          className={buttonStyle({
+            isDisabled: !onClickNext,
+          })}
+          disabled={!onClickNext}
+        >
+          <DateRightArrowIcon fill={!onClickNext ? '#37383c50' : ''} />
+        </button>
+      </div>
+      <div className={dateWrapperStyle}>
+        <p className={dateTextStyle}>{`${year}.${month}.${day}.${weekday}`}</p>
+      </div>
     </div>
   );
 };
 
 const containerStyle = flex({
+  justify: 'space-between',
+});
+
+const pickerWrapperStyle = flex({
   gap: '5px',
   align: 'center',
 });
@@ -71,4 +88,16 @@ const buttonStyle = cva({
       },
     },
   },
+});
+
+const dateWrapperStyle = css({
+  p: '4px 10px',
+  backgroundColor: 'background.gray',
+  rounded: 'full',
+});
+
+const dateTextStyle = css({
+  textStyle: 'label1.normal',
+  color: 'text.alternative',
+  fontWeight: 'medium',
 });
