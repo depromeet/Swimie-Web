@@ -109,8 +109,8 @@ export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
             <span>
               {`${startHour}:${startMinute}`} ~ {`${endHour}:${endMinute}`}
             </span>
-            {totalLap && <span>{totalLap} lap</span>}
-            {lane && <span>{lane}m 레인</span>}
+            {Boolean(totalLap) && <span>{totalLap}바퀴</span>}
+            {Boolean(lane) && <span>{lane}m 레인</span>}
           </p>
         </div>
       </div>
