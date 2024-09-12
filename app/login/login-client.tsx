@@ -15,6 +15,15 @@ export default function LoginClient() {
     return () => clearTimeout(timer);
   }, []);
 
+  // 뒤로가기 스와이프 방지
+  useEffect(() => {
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => document.removeEventListener('touchmove', handleTouchMove);
+  }, []);
+
   return (
     <div style={{ overscrollBehaviorX: 'none' }}>
       {isSplashCompleted ? <LoginScreen /> : <LogoSplash />}
