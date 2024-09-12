@@ -106,7 +106,7 @@ export const semanticColors = {
         sub: { value: '#DBC6FF' },
       },
       총거리: {
-        default: { value: '#0166DB' },
+        default: { value: '#3B87F4' },
         sub: { value: '#91BBEC' },
       },
     },
