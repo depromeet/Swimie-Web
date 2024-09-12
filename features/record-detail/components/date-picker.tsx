@@ -16,10 +16,6 @@ export const DatePicker = ({
   onClickPrevious,
   onClickNext,
 }: DatePicker) => {
-  const { month: currentMonth } = getFormatDate({
-    dateStr: new Date().toString(),
-    padNum: 2,
-  });
   const { year, month, day, weekday } = getFormatDate({
     dateStr: recordDateStr,
     padNum: 2,
@@ -40,7 +36,7 @@ export const DatePicker = ({
 
         <p
           className={textStyle}
-        >{`${Number(currentMonth)}월 ${recordRank}번째 기록`}</p>
+        >{`${Number(month)}월 ${recordRank}번째 기록`}</p>
         <button
           onClick={onClickNext}
           className={buttonStyle({
