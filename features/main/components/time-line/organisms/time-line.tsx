@@ -59,13 +59,13 @@ export const TimeLine = () => {
           <ol className={listStyles}>
             {groupedContents.map(({ date, contents }, groupIndex) => (
               <Fragment key={date}>
-                <CardWrapper>
+                <CardWrapper hasDivider={true}>
                   <p className={dateStyles}>{formatDateToKorean(date, 2)}</p>
                 </CardWrapper>
                 {contents.map((content, contentIndex) => (
                   <CardWrapper
                     key={content.memoryId}
-                    isLast={
+                    hasDivider={
                       lastGroupIndex === groupIndex &&
                       lastContentIndex === contentIndex
                     }
@@ -117,6 +117,6 @@ const descriptionStyles = css({
   fontWeight: 'semibold',
 });
 
-const listStyles = flex({ direction: 'column', gap: '50px' });
+const listStyles = flex({ direction: 'column' });
 
 const dateStyles = css({ textStyle: 'heading4', fontWeight: 'bold' });
