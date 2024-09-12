@@ -15,5 +15,9 @@ export default function LoginClient() {
     return () => clearTimeout(timer);
   }, []);
 
-  return <div>{isSplashCompleted ? <LoginScreen /> : <LogoSplash />}</div>;
+  return (
+    <div style={{ overscrollBehaviorX: 'none' }}>
+      {isSplashCompleted ? <LoginScreen /> : <LogoSplash />}
+    </div>
+  );
 }
