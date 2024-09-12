@@ -122,7 +122,11 @@ const TimeLineCardBody = ({
   );
 };
 
-const dateStyles = css({ textStyle: 'label1.normal', fontWeight: 'bold' });
+const dateStyles = css({
+  py: '2px',
+  textStyle: 'label1.normal',
+  fontWeight: 'medium',
+});
 
 const todayStyles = css({ paddingLeft: '6px', color: 'blue.60' });
 
