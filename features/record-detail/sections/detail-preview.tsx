@@ -16,7 +16,6 @@ import { type RecordDetailType } from '../types';
 export const DetailPreviewSection = ({ data }: { data: RecordDetailType }) => {
   const router = useRouter();
 
-  console.log(data.rank);
   const handleClickPreviousDate = () => {
     if (!data.prevId) return;
     router.replace(`/record-detail/${data.prevId}`);
