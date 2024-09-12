@@ -30,10 +30,18 @@ export function useDistancePageModal<T>(
   const pageModalRef = useRef<T>(null);
   const setPageModalState = useSetAtom(isDistancePageModalOpen);
   const [secondaryTabIndex, setSecondaryTabIndex] = useState<tabIndex>(
-    isRecordedByTotalMeter || isRecordedByTotalLaps ? 0 : 1,
+    defaultTotalMeter
+      ? isRecordedByTotalMeter || isRecordedByTotalLaps
+        ? 0
+        : 1
+      : 0,
   );
   const [assistiveTabIndex, setAssistiveTabIndex] = useState<tabIndex>(
-    isRecordedByTotalMeter || isRecordedByStrokesMeter ? 0 : 1,
+    defaultTotalMeter
+      ? isRecordedByTotalMeter || isRecordedByStrokesMeter
+        ? 0
+        : 1
+      : 0,
   );
   const [totalMeter, setTotalMeter] = useState<string>('');
   const [totalLaps, setTotalLaps] = useState<string>('');
