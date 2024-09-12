@@ -45,11 +45,13 @@ export const DetailDescriptionSection = ({
         />
       </div>
 
-      <div className={detailWrapperStyle}>
-        <SwimDescriptionItem title="♥️심박수" value={heartRate} />
-        <SwimDescriptionItem title="⏱️평균 페이스" value={pace} />
-        <SwimDescriptionItem title="🔥칼로리" value={kcal} />
-      </div>
+      {(heartRate || pace || kcal) && (
+        <div className={detailWrapperStyle}>
+          <SwimDescriptionItem title="♥️심박수" value={heartRate} />
+          <SwimDescriptionItem title="⏱️평균 페이스" value={pace} />
+          <SwimDescriptionItem title="🔥칼로리" value={kcal} />
+        </div>
+      )}
     </section>
   );
 };
