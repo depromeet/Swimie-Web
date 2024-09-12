@@ -26,8 +26,9 @@ export const SwimRecordChart = ({
   totalDistance,
   strokes,
 }: SwimRecordChartProps) => {
-  const chartData: Array<SwimChartData> = strokes
-    .map(({ strokeId, name, meter }) => {
+  strokes = strokes.sort((a, b) => b.meter - a.meter);
+  const chartData: Array<SwimChartData> = strokes.map(
+    ({ strokeId, name, meter }) => {
       const color = getSwimColor(name);
       return {
         strokeId,
@@ -35,8 +36,8 @@ export const SwimRecordChart = ({
         ratio: (meter / (isAchieved ? totalDistance : goal)) * 100 - 1,
         color,
       };
-    })
-    .sort((a, b) => b.ratio - a.ratio);
+    },
+  );
 
   return (
     <>
