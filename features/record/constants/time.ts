@@ -33,7 +33,7 @@ export const timeOptions = {
 };
 
 export const defaultPickerValue = {
-  ampm: '오후' as AmpmType,
-  hour: '02' as HourType,
-  minute: '05' as MinuteType,
+  ampm: '오전' as AmpmType,
+  hour: '09' as HourType,
+  minute: '00' as MinuteType,
 };
