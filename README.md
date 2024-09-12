@@ -4,12 +4,15 @@
 
 🏊‍♂️ Swimie는 수영 기록을 간편하게 관리하고, 친구들과 응원을 주고받을 수 있는 커뮤니티 기반의 수영 기록 앱입니다. <br />
 수영이 더 즐거워지는 공간, 스위미에서 오늘의 수영을 기록하고✒️, 친구들의 응원과 함께 동기부여를 얻어보세요! 💪
+
 #### <a href="https://swimie.life">👉Swimie 바로가기</a>
+
 <br />
 
 ## ✨주요 기능
 
 ### 🦭달력과 타임라인을 통해 내 수영 기록을 시각적으로 확인할 수 있어요.
+
 ![swimie](https://github.com/user-attachments/assets/5c9b88ec-0e51-4ace-8e15-42a4bd01435d)
 
 ![swimie2](https://github.com/user-attachments/assets/acbb5d13-c2bd-4ee3-918a-7d0424abbb36)
@@ -23,13 +26,16 @@
 ![swimie4](https://github.com/user-attachments/assets/bad7149d-72a6-4695-83c9-c60c25ada78e)
 
 ### 🦭수영하는 친구들을 팔로우하고, 서로 응원을 나누며 더 큰 동기부여를 받을 수 있어요.
+
 ![swimie5](https://github.com/user-attachments/assets/aa19ce5a-5a60-425c-b364-1aafda4ab5e3)
 <br /><br />
 
 ## 📲 Contacts
 
 #### <a href="https://docs.google.com/forms/d/11b4SquXH_j-XMhXHK9XVwZTAmWfzllVbZsUZ_uPEPjo/edit">🤔 문의사항</a>
+
 #### <a href="https://www.instagram.com/swimie_app?igsh=MXh3MnJkMG50Y2xxbA%3D%3D&utm_source=qr">⭐️ 인스타그램</a>
+
 <br />
 
 ## 🛠️Tech Stack

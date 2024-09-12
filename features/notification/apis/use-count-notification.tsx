@@ -18,6 +18,6 @@ export function useCountNotification() {
   return useQuery<NotificationCountResponse>({
     queryKey: ['useCountNotification'],
     queryFn: countNotification,
-    retry: 1,
+    retry: 3,
   });
 }
