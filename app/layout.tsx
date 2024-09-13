@@ -9,6 +9,7 @@ import MetaTagImage from '@/public/images/meta-tag.png';
 import { css } from '@/styled-system/css';
 import { pretendard } from '@/styles/font';
 
+import { Clarity } from './analyzers';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
@@ -62,6 +63,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={pretendard.className}>
+      <head>
+        <Clarity />
+      </head>
       <body className={rootStyle}>
         <ReactQueryProvider>
           <ReactQueryDevtools initialIsOpen={true} />
