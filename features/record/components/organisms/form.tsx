@@ -35,7 +35,7 @@ import { useRecordForm } from '../../hooks';
 import { saveSwimTime } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
-import { compareTime, isFuture } from '../../utils';
+import { isFuture } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
@@ -184,11 +184,6 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
   const onSubmit: SubmitHandler<RecordRequestProps> = async (data) => {
     if (isLoading || !startTime || !endTime) return;
 
-    //종료 시간이 시작 시간보다 이전일 때
-    if (!compareTime(startTime, endTime)) {
-      toast('시간을 다시 설정해주세요', { type: 'warning' });
-      return;
-    }
     //기록 수정 모드일 때
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { poolName, laneMeter, totalDistance, ...restData } = data;
