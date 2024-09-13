@@ -1,11 +1,12 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { LoadingArea } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 
-import { useGetNotification } from '../../apis';
+import { useGetNotification, useReadNotification } from '../../apis';
 import { FollowNotification, NoNotification } from '../molecules';
 import { CheerNotification } from '../molecules/cheer-notification';
 import { NotificationListSkeleton } from './notification-list-skeleton';
@@ -17,6 +18,7 @@ export function NotificationList() {
     isFetchingNextPage,
     getByFarNotificationData,
   } = useGetNotification();
+  const { mutate: readNotification } = useReadNotification();
 
   const handleRangeChanged = (range: { endIndex: number }) => {
     const currentContentsLastIndex = getByFarNotificationData.length - 1;
@@ -24,6 +26,11 @@ export function NotificationList() {
       void fetchNextPage();
     }
   };
+
+  useEffect(() => {
+    readNotification();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isLoading) return <NotificationListSkeleton />;
   return (

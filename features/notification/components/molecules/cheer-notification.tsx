@@ -7,13 +7,11 @@ import {
   formatDateToKoreanExceptYear,
 } from '@/utils';
 
-import { useReadNotification } from '../../apis/use-read-notification';
 import { layoutStyles, textStyles } from '../../styles';
 import { CheerNotificationProps } from '../../types';
 import { CheerUpIcon } from '../atoms';
 
 export function CheerNotification({
-  notificationId,
   type,
   memoryId,
   hasRead,
@@ -22,14 +20,8 @@ export function CheerNotification({
   content,
   createdAt,
 }: CheerNotificationProps) {
-  const { mutate: readNotification } = useReadNotification();
-
-  const handleListElementClick = () => {
-    readNotification({ notificationId, type });
-  };
-
   return (
-    <Link href={`record-detail/${memoryId}`} onClick={handleListElementClick}>
+    <Link href={`record-detail/${memoryId}`}>
       <li className={css(layoutStyles.total.raw({ hasRead }))}>
         <CheerUpIcon />
         <div className={css(layoutStyles.text.raw({ type }))}>
