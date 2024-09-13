@@ -20,14 +20,11 @@ import {
 } from '../../utils';
 
 interface TimeBottomSheetProps {
-  prevSwimStartTime?: string;
-  prevSwimEndTime?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
-export function TimeBottomSheet({
-  prevSwimStartTime,
-  prevSwimEndTime,
-}: TimeBottomSheetProps) {
+export function TimeBottomSheet({ startTime, endTime }: TimeBottomSheetProps) {
   const { getValues, setValue } = useFormContext();
   const [timeBottmSheetState, setTimeBottmSheetState] =
     useAtom(timeBottomSheetState);
@@ -39,10 +36,10 @@ export function TimeBottomSheet({
   }>(defaultPickerValue);
 
   useEffect(() => {
-    if (timeBottmSheetState.variant === 'start')
-      setPickerValue(convertToPickerValue(prevSwimStartTime));
-    if (timeBottmSheetState.variant === 'end')
-      setPickerValue(convertToPickerValue(prevSwimEndTime));
+    if (Boolean(startTime) && timeBottmSheetState.variant === 'start')
+      setPickerValue(convertToPickerValue(startTime));
+    if (Boolean(endTime) && timeBottmSheetState.variant === 'end')
+      setPickerValue(convertToPickerValue(endTime));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeBottmSheetState.variant]);
 
