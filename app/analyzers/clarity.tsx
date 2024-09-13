@@ -1,8 +1,6 @@
 import Script from 'next/script';
 
 export const Clarity = () => {
-  if (process.env.NODE_ENV !== 'production') return null;
-
   return (
     <Script id="clarity" type="text/javascript">
       {`
