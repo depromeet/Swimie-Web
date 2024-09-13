@@ -112,8 +112,8 @@ export const LoginScreen = ({ isAnimate = true }: LoginScreen) => {
             </button>
           </div>
           <p className={agreementStyles}>
-            시작함으로써 <Link href="/setting/info/terms">이용약관</Link> 및{' '}
-            <Link href="/setting/info/privacy-policy">개인정보 처리방침</Link>에
+            시작함으로써 <Link href="/setting/terms">이용약관</Link> 및{' '}
+            <Link href="/setting/privacy-policy">개인정보 처리방침</Link>에
             동의합니다.
           </p>
         </div>
