@@ -5,7 +5,7 @@ import { css } from '@/styled-system/css';
 export function MyPageHeader() {
   return (
     <HeaderBar>
-      <HeaderBar.RightContent className={css({ right: '20px', gap: '14px!' })}>
+      <HeaderBar.RightContent className={css({ right: '20px', gap: '16px!' })}>
         {[
           { component: <FindMemberButton />, key: 'findMember' },
           { component: <SettingButton />, key: 'setting' },
