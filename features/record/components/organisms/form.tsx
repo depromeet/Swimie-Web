@@ -370,10 +370,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
         defaultTotalLap={data?.data.totalLap}
         defaultTotalMeter={data?.data.totalMeter}
       />
-      <TimeBottomSheet
-        prevSwimStartTime={prevSwimStartTime}
-        prevSwimEndTime={prevSwimEndTime}
-      />
+      <TimeBottomSheet startTime={startTime} endTime={endTime} />
     </FormProvider>
   );
 }
