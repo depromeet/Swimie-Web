@@ -49,14 +49,14 @@ export function TimeBottomSheet({ startTime, endTime }: TimeBottomSheetProps) {
     // 시작 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
     if (
       !getValues('startTime') ||
-      getValues('startTime') > getValues('endTime')
+      getValues('startTime') >= getValues('endTime')
     )
       setValue('startTime', subtractMinutes(pickerValue, 50));
   };
 
   const autoSetEndTime = () => {
     // 끝 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
-    if (!getValues('endTime') || getValues('startTime') > getValues('endTime'))
+    if (!getValues('endTime') || getValues('startTime') >= getValues('endTime'))
       setValue('endTime', addMinutes(pickerValue, 50));
   };
 
