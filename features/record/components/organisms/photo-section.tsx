@@ -37,7 +37,7 @@ export function PhotoSection({
       try {
         if (e.target.files) {
           const targetFile = e.target.files[0];
-          const resizedImage = await resizeFile(targetFile, 600, 600, 100);
+          const resizedImage = await resizeFile(targetFile, 800, 1000, 100);
           setFormSubInfo((prev) => ({
             ...prev,
             imageFiles: [...prev.imageFiles, resizedImage],
