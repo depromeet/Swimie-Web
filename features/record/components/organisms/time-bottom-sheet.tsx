@@ -17,18 +17,18 @@ import {
   addMinutes,
   convertTo24HourFormat,
   convertToPickerValue,
+  subtractMinutes,
 } from '../../utils';
 
 interface TimeBottomSheetProps {
-  startTime?: string;
-  endTime?: string;
+  startTime: string;
+  endTime: string;
 }
 
 export function TimeBottomSheet({ startTime, endTime }: TimeBottomSheetProps) {
   const { getValues, setValue } = useFormContext();
   const [timeBottmSheetState, setTimeBottmSheetState] =
     useAtom(timeBottomSheetState);
-
   const [pickerValue, setPickerValue] = useState<{
     ampm: AmpmType;
     hour: HourType;
@@ -48,10 +48,20 @@ export function TimeBottomSheet({ startTime, endTime }: TimeBottomSheetProps) {
   const handleDoneButtonClick = () => {
     if (timeBottmSheetState.variant === 'start') {
       setValue('startTime', convertTo24HourFormat(pickerValue));
-      if (!getValues('endTime'))
+      // 끝 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
+      if (
+        !getValues('endTime') ||
+        getValues('startTime') > getValues('endTime')
+      )
         setValue('endTime', addMinutes(pickerValue, 50));
     } else if (timeBottmSheetState.variant === 'end') {
       setValue('endTime', convertTo24HourFormat(pickerValue));
+      // 시작 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
+      if (
+        !getValues('startTime') ||
+        getValues('startTime') > getValues('endTime')
+      )
+        setValue('startTime', subtractMinutes(pickerValue, 50));
     }
     setTimeBottmSheetState((prev) => ({ ...prev, isOpen: false }));
   };
