@@ -20,7 +20,10 @@ export function ProfileContainer({
             src={profileData.profileImageUrl}
             fill
             sizes="10vw"
-            className={css({ borderRadius: 'full', objectFit: 'cover' })}
+            className={css({
+              borderRadius: 'full',
+              objectFit: 'cover',
+            })}
           />
         </div>
         <div>
@@ -52,6 +55,7 @@ const imageLayoutStyles = css({
   width: '60px',
   height: '60px',
   position: 'relative',
+  flexShrink: 0,
 });
 
 const inforWrapper = flex({
