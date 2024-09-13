@@ -45,23 +45,28 @@ export function TimeBottomSheet({ startTime, endTime }: TimeBottomSheetProps) {
 
   usePreventBodyScroll({ isOpen: timeBottmSheetState.isOpen });
 
+  const autoSetStartTime = () => {
+    // 시작 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
+    if (
+      !getValues('startTime') ||
+      getValues('startTime') > getValues('endTime')
+    )
+      setValue('startTime', subtractMinutes(pickerValue, 50));
+  };
+
+  const autoSetEndTime = () => {
+    // 끝 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
+    if (!getValues('endTime') || getValues('startTime') > getValues('endTime'))
+      setValue('endTime', addMinutes(pickerValue, 50));
+  };
+
   const handleDoneButtonClick = () => {
     if (timeBottmSheetState.variant === 'start') {
       setValue('startTime', convertTo24HourFormat(pickerValue));
-      // 끝 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
-      if (
-        !getValues('endTime') ||
-        getValues('startTime') > getValues('endTime')
-      )
-        setValue('endTime', addMinutes(pickerValue, 50));
+      autoSetEndTime();
     } else if (timeBottmSheetState.variant === 'end') {
       setValue('endTime', convertTo24HourFormat(pickerValue));
-      // 시작 시간이 아직 설정 안됨 or 시작 시간이 종료 시간보다 이후일 경우
-      if (
-        !getValues('startTime') ||
-        getValues('startTime') > getValues('endTime')
-      )
-        setValue('startTime', subtractMinutes(pickerValue, 50));
+      autoSetStartTime();
     }
     setTimeBottmSheetState((prev) => ({ ...prev, isOpen: false }));
   };
