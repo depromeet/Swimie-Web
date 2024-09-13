@@ -7,13 +7,11 @@ import { useMemberFollowingState } from '@/hooks';
 import { css, cva } from '@/styled-system/css';
 import { convertTimeToElapsedTime } from '@/utils';
 
-import { useReadNotification } from '../../apis/use-read-notification';
 import { layoutStyles, textStyles } from '../../styles';
 import { FollowNotificationProps } from '../../types';
 
 export function FollowNotification({
   memberId,
-  notificationId,
   type,
   hasRead,
   profileImageUrl,
@@ -22,11 +20,6 @@ export function FollowNotification({
 }: FollowNotificationProps) {
   const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
   const { isFollowing } = useMemberIsFollowing(memberId);
-  const { mutate: readNotification } = useReadNotification();
-
-  const handleListElementClick = () => {
-    readNotification({ notificationId, type });
-  };
 
   const handleFollowButtonClick = () => {
     void toggleFollow(memberId);
@@ -34,11 +27,7 @@ export function FollowNotification({
 
   return (
     <li className={css(layoutStyles.total.raw({ hasRead }))}>
-      <Link
-        href={`/profile/${memberId}`}
-        onClick={handleListElementClick}
-        className={css({ display: 'flex' })}
-      >
+      <Link href={`/profile/${memberId}`} className={css({ display: 'flex' })}>
         <div className={profileImageStyles}>
           <ProfileImage
             alt="프로필 사진"
