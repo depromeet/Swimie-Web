@@ -126,18 +126,17 @@ export function useRecordForm(
 
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash === '#pool-page-modal') {
+      if (location.hash === '#pool-page-modal') {
         openPoolSearchPageModal();
-      } else if (window.location.hash === '#distance-page-modal') {
+      } else if (location.hash === '#distance-page-modal') {
         openDistancePageModal();
-      } else if (window.location.hash === '') {
+      } else if (location.hash === '') {
         closePoolSearchPageModal();
         closeDistancePageModal();
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);

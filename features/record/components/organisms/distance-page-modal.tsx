@@ -89,7 +89,6 @@ export function DistancePageModal({
 
   const handleBackArrowClick = () => {
     router.back();
-    handlers.onClosePageModal();
   };
 
   const handleDoneButtonClick = () => {

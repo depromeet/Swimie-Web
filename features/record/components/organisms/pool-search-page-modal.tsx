@@ -1,22 +1,23 @@
 'use client';
 
 import { debounce } from 'lodash';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
 
 import { BackButton, HeaderBar, PageModal } from '@/components/molecules';
 import { SearchBar } from '@/components/molecules/search-bar';
 import { css } from '@/styled-system/css';
 
 import { useSearchPoolInitial } from '../../apis';
-import { usePoolSearchPageModal } from '../../hooks';
 const PoolSearchResultElement = lazy(() =>
   import('../molecules').then((module) => ({
     default: module.PoolSearchResultElement,
   })),
 );
 
+import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 
+import { isPoolSearchPageModalOpen } from '../../store';
 import { removeSpecialSymbols } from '../../utils';
 import { PoolSearchSkeleton } from '../skeleton/pool-search-skeleton';
 const PoolSearchResultList = lazy(() =>
@@ -34,7 +35,9 @@ interface PoolSearchPageModalProps {
  */
 export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
   const router = useRouter();
-  const { pageModalRef, pageModalState, handlers } = usePoolSearchPageModal();
+
+  const pageModalRef = useRef<HTMLDivElement>(null);
+  const pageModalState = useAtomValue(isPoolSearchPageModalOpen);
   const [poolSearchText, setPoolSearchText] = useState('');
 
   const { data } = useSearchPoolInitial(poolSearchText, pageModalState.isOpen);
@@ -44,7 +47,6 @@ export function PoolSearchPageModal({ title }: PoolSearchPageModalProps) {
 
   const handleBackArrowClick = () => {
     router.back();
-    handlers.onClosePageModal();
   };
 
   const handlePoolSearchTextChange = debounce((text: string) => {

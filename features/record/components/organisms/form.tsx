@@ -305,8 +305,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
             onClick={() => {
-              window.history.pushState(null, '', '#pool-page-modal');
-              handlers.openPoolSearchPageModal();
+              location.hash = 'pool-page-modal';
             }}
           />
           <SelectTextField
@@ -321,8 +320,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
             label="수영 거리"
             subText={modifyStrokesData(strokes)}
             onClick={() => {
-              window.history.pushState(null, '', '#distance-page-modal');
-              handlers.openDistancePageModal();
+              location.hash = 'distance-page-modal';
             }}
           />
           <div className={buttonStyles.layout}>
