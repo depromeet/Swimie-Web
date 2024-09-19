@@ -44,11 +44,11 @@ export default function Page() {
   };
 
   const handleClickTerms = () => {
-    router.push('/setting/info/terms');
+    router.push('/setting/terms');
   };
 
   const handleClickPrivacyPolicy = () => {
-    router.push('/setting/info/privacy-policy');
+    router.push('/setting/privacy-policy');
   };
 
   const handleGoToInquiry = () => {
