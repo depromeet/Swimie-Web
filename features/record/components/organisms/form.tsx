@@ -31,6 +31,7 @@ import {
   useMemoryEdit,
   usePullEditMemory,
 } from '../../apis';
+import { HASH_ROUTE } from '../../constants';
 import { useRecordForm } from '../../hooks';
 import { saveSwimTime } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
@@ -305,7 +306,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
             label="수영장"
             wrapperClassName={css({ marginBottom: '24px' })}
             onClick={() => {
-              location.hash = 'pool-page-modal';
+              location.hash = HASH_ROUTE.POOL_PAGE_MODAL;
             }}
           />
           <SelectTextField
@@ -320,7 +321,7 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
             label="수영 거리"
             subText={modifyStrokesData(strokes)}
             onClick={() => {
-              location.hash = 'distance-page-modal';
+              location.hash = HASH_ROUTE.DISTANCE_PAGE_MODAL;
             }}
           />
           <div className={buttonStyles.layout}>

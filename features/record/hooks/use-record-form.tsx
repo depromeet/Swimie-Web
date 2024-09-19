@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { formatDateToDash } from '@/utils';
 
 import { SubmitRecordRequestProps } from '../apis';
+import { HASH_ROUTE } from '../constants';
 import {
   isDistancePageModalOpen,
   isLaneLengthBottomSheetOpen,
@@ -126,11 +127,11 @@ export function useRecordForm(
 
   useEffect(() => {
     const handleHashChange = () => {
-      if (location.hash === '#pool-page-modal') {
+      if (location.hash === '#' + HASH_ROUTE.POOL_PAGE_MODAL) {
         openPoolSearchPageModal();
-      } else if (location.hash === '#distance-page-modal') {
+      } else if (location.hash === '#' + HASH_ROUTE.DISTANCE_PAGE_MODAL) {
         openDistancePageModal();
-      } else if (location.hash === '') {
+      } else if (location.hash === HASH_ROUTE.NONE) {
         closePoolSearchPageModal();
         closeDistancePageModal();
       }
