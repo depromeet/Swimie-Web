@@ -29,6 +29,15 @@ function Title({ children, className }: TitleProps) {
   return <h3 className={cx(titleStyles, className)}>{children}</h3>;
 }
 
+interface CenterContentProps {
+  children?: ReactNode;
+  className?: string;
+}
+
+function CenterContent({ children, className }: CenterContentProps) {
+  return <div className={cx(titleStyles, className)}>{children}</div>;
+}
+
 interface RightContentProps {
   children?: { component: ReactNode; key: string | number }[];
   className?: string;
@@ -69,6 +78,11 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
     1,
     (<LeftContent />).type as FunctionComponent,
   );
+  const centerContent = getChildrenArray(
+    children,
+    1,
+    (<CenterContent />).type as FunctionComponent,
+  );
   const title = getChildrenArray(
     children,
     1,
@@ -85,6 +99,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
       <header className={layoutStyles.header}>
         <div className={layoutStyles.content}>
           {leftContent}
+          {centerContent}
           {title}
           {rightContent}
         </div>
@@ -96,6 +111,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
 export const HeaderBar = Object.assign(HeaderBarLayout, {
   LeftContent,
   Title,
+  CenterContent,
   RightContent,
 });
 
