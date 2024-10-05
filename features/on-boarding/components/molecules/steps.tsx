@@ -59,19 +59,11 @@ export function Steps({ current }: StepsProps) {
           stepText[current].highlight,
         )}
       </p>
-      <div
-        className={css({
-          position: 'relative',
-          aspectRatio: '375/499',
-        })}
-      >
-        <Image
-          src={OnBoardingImages[current]}
-          alt="온보딩 이미지"
-          fill
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
+      <Image
+        src={OnBoardingImages[current]}
+        alt="온보딩 이미지"
+        style={{ objectFit: 'cover' }}
+      />
     </>
   );
 }
