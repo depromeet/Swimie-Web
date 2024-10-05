@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { Button } from '@/components/atoms';
 import { BackButton, HeaderBar } from '@/components/molecules';
 import {
@@ -8,13 +10,17 @@ import {
   Steps,
   useProgressIndicator,
 } from '@/features/on-boarding';
+import { OnBoardingImages } from '@/public/images/on-boarding';
 import { css } from '@/styled-system/css';
 
 export default function OnBoarding() {
   const { step, handlers } = useProgressIndicator();
   return (
     <div
-      className={css({ backgroundColor: 'background.gray', height: '100dvh' })}
+      className={css({
+        backgroundColor: 'background.gray',
+        height: '100dvh',
+      })}
     >
       <HeaderBar
         className={css({
@@ -41,15 +47,28 @@ export default function OnBoarding() {
       </HeaderBar>
       <Steps current={step} />
       <div className={layout.button}>
-        <Button
-          buttonType="secondary"
-          variant="outlined"
-          size="large"
-          label="다음"
-          interaction="normal"
-          onClick={() => handlers.next()}
-          className={css({ w: 'full' })}
-        />
+        {step < OnBoardingImages.length - 1 ? (
+          <Button
+            buttonType="secondary"
+            variant="outlined"
+            size="large"
+            label="다음"
+            interaction="normal"
+            onClick={() => handlers.next()}
+            className={css({ w: 'full' })}
+          />
+        ) : (
+          <Link href="/">
+            <Button
+              buttonType="primary"
+              variant="solid"
+              size="large"
+              label="시작하기"
+              interaction="normal"
+              className={css({ w: 'full' })}
+            />
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -58,6 +77,7 @@ export default function OnBoarding() {
 const layout = {
   button: css({
     w: 'full',
+    maxWidth: 'maxWidth',
     position: 'absolute',
     bottom: 'calc(15px + env(safe-area-inset-bottom))',
     padding: '0 20px',
