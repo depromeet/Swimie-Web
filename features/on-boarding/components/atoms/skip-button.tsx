@@ -2,10 +2,15 @@ import { css } from '@/styled-system/css';
 
 interface SkipButtonProps {
   label: string;
+  onClick: () => void;
 }
 
-export function SkipButton({ label }: SkipButtonProps) {
-  return <button className={skipButtonStyles}>{label}</button>;
+export function SkipButton({ label, onClick }: SkipButtonProps) {
+  return (
+    <button onClick={onClick} className={skipButtonStyles}>
+      {label}
+    </button>
+  );
 }
 
 const skipButtonStyles = css({
