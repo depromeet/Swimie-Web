@@ -5,6 +5,7 @@ import { BackButton, HeaderBar } from '@/components/molecules';
 import {
   ProgressIndicator,
   SkipButton,
+  Steps,
   useProgressIndicator,
 } from '@/features/on-boarding';
 import { css } from '@/styled-system/css';
@@ -12,8 +13,15 @@ import { css } from '@/styled-system/css';
 export default function OnBoarding() {
   const { step, handlers } = useProgressIndicator();
   return (
-    <>
-      <HeaderBar>
+    <div
+      className={css({ backgroundColor: 'background.gray', height: '100dvh' })}
+    >
+      <HeaderBar
+        className={css({
+          marginBottom: '43px',
+        })}
+        innerClassName={css({ backgroundColor: 'background.gray!' })}
+      >
         <HeaderBar.LeftContent>
           <BackButton />
         </HeaderBar.LeftContent>
@@ -31,6 +39,7 @@ export default function OnBoarding() {
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>
+      <Steps current={step} />
       <div className={layout.button}>
         <Button
           buttonType="secondary"
@@ -42,7 +51,7 @@ export default function OnBoarding() {
           className={css({ w: 'full' })}
         />
       </div>
-    </>
+    </div>
   );
 }
 
