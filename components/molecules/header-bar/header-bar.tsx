@@ -70,9 +70,14 @@ const getChildrenArray = (
 interface HeaderBarProps {
   children?: ReactNode;
   className?: string;
+  innerClassName?: string;
 }
 
-function HeaderBarLayout({ children, className }: HeaderBarProps) {
+function HeaderBarLayout({
+  children,
+  className,
+  innerClassName,
+}: HeaderBarProps) {
   const leftContent = getChildrenArray(
     children,
     1,
@@ -96,7 +101,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
   return (
     <>
       <div style={{ height: '44px' }} className={className} />
-      <header className={layoutStyles.header}>
+      <header className={cx(layoutStyles.header, innerClassName)}>
         <div className={layoutStyles.content}>
           {leftContent}
           {centerContent}
