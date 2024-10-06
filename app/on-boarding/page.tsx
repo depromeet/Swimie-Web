@@ -16,7 +16,7 @@ import { css } from '@/styled-system/css';
 export default function OnBoarding() {
   const { step, handlers } = useProgressIndicator();
   return (
-    <div className={layout.page}>
+    <div className={layoutStyles.total}>
       <HeaderBar
         className={css({
           marginBottom: '43px',
@@ -41,7 +41,7 @@ export default function OnBoarding() {
         </HeaderBar.RightContent>
       </HeaderBar>
       <Steps current={step} />
-      <div className={layout.button}>
+      <div className={layoutStyles.button}>
         {step < OnBoardingImages.length - 1 ? (
           <Button
             buttonType="secondary"
@@ -69,8 +69,8 @@ export default function OnBoarding() {
   );
 }
 
-const layout = {
-  page: css({
+const layoutStyles = {
+  total: css({
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: 'background.gray',
@@ -79,7 +79,7 @@ const layout = {
   button: css({
     w: 'full',
     maxWidth: 'maxWidth',
-    position: 'absolute',
+    position: 'fixed',
     bottom: 'calc(15px + env(safe-area-inset-bottom))',
     padding: '0 20px',
   }),
