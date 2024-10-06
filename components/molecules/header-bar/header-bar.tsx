@@ -11,36 +11,25 @@ import { flex } from '@/styled-system/patterns';
 
 import { leftIconStyles } from './style';
 
-interface LeftContentProps {
+interface CommonProps {
   children?: ReactNode;
   className?: string;
 }
 
-function LeftContent({ children, className }: LeftContentProps) {
+function LeftContent({ children, className }: CommonProps) {
   return <div className={cx(leftIconStyles, className)}>{children}</div>;
 }
 
-interface TitleProps {
-  children?: ReactNode;
-  className?: string;
-}
-
-function Title({ children, className }: TitleProps) {
+function Title({ children, className }: CommonProps) {
   return <h3 className={cx(titleStyles, className)}>{children}</h3>;
 }
 
-interface CenterContentProps {
-  children?: ReactNode;
-  className?: string;
-}
-
-function CenterContent({ children, className }: CenterContentProps) {
+function CenterContent({ children, className }: CommonProps) {
   return <div className={cx(titleStyles, className)}>{children}</div>;
 }
 
-interface RightContentProps {
+interface RightContentProps extends Pick<CommonProps, 'className'> {
   children?: { component: ReactNode; key: string | number }[];
-  className?: string;
 }
 
 function RightContent({ children, className }: RightContentProps) {

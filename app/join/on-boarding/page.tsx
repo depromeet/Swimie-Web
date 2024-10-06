@@ -16,12 +16,7 @@ import { css } from '@/styled-system/css';
 export default function OnBoarding() {
   const { step, handlers } = useProgressIndicator();
   return (
-    <div
-      className={css({
-        backgroundColor: 'background.gray',
-        height: '100dvh',
-      })}
-    >
+    <div className={layout.page}>
       <HeaderBar
         className={css({
           marginBottom: '43px',
@@ -75,6 +70,12 @@ export default function OnBoarding() {
 }
 
 const layout = {
+  page: css({
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'background.gray',
+    height: '100dvh',
+  }),
   button: css({
     w: 'full',
     maxWidth: 'maxWidth',
