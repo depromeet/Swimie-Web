@@ -14,8 +14,8 @@ export default function Page() {
   const router = useRouter();
   const authInfo = useAtomValue(AuthInfoAtom);
 
-  const handleGoToMain = () => {
-    router.push('/');
+  const handleStartClick = () => {
+    router.push('/on-boarding');
   };
 
   return (
@@ -41,7 +41,7 @@ export default function Page() {
           buttonType="primary"
           size="large"
           className={buttonStyles}
-          onClick={handleGoToMain}
+          onClick={handleStartClick}
         />
       </div>
     </div>
