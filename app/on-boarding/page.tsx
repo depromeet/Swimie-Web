@@ -1,6 +1,10 @@
 'use client';
 
+import '../../features/on-boarding/steps.css';
+
 import Link from 'next/link';
+import { cloneElement, ReactElement } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { Button } from '@/components/atoms';
 import { BackButton, HeaderBar } from '@/components/molecules';
@@ -40,7 +44,18 @@ export default function OnBoarding() {
           ]}
         </HeaderBar.RightContent>
       </HeaderBar>
-      <Steps current={step} />
+      <TransitionGroup
+        component={null}
+        childFactory={(child: ReactElement) => {
+          return cloneElement(child, {
+            classNames: 'fade',
+          });
+        }}
+      >
+        <CSSTransition key={step} timeout={200}>
+          <Steps current={step} />
+        </CSSTransition>
+      </TransitionGroup>
       <div className={layoutStyles.button}>
         {step < OnBoardingImages.length - 1 ? (
           <Button
