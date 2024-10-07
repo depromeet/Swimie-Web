@@ -52,7 +52,7 @@ export function Steps({ current }: StepsProps) {
               src={OnBoardingImages[current]}
               alt="온보딩 이미지"
               fill
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'fill' }}
             />
           </div>
         </div>

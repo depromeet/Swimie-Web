@@ -9,23 +9,27 @@ import {
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { leftIconStyles } from './style';
-
 interface CommonProps {
   children?: ReactNode;
   className?: string;
 }
 
 function LeftContent({ children, className }: CommonProps) {
-  return <div className={cx(leftIconStyles, className)}>{children}</div>;
+  return (
+    <div className={cx(layoutStyles.leftContent, className)}>{children}</div>
+  );
 }
 
 function Title({ children, className }: CommonProps) {
-  return <h3 className={cx(titleStyles, className)}>{children}</h3>;
+  return (
+    <h3 className={cx(layoutStyles.centerContent, className)}>{children}</h3>
+  );
 }
 
 function CenterContent({ children, className }: CommonProps) {
-  return <div className={cx(titleStyles, className)}>{children}</div>;
+  return (
+    <div className={cx(layoutStyles.centerContent, className)}>{children}</div>
+  );
 }
 
 interface RightContentProps extends Pick<CommonProps, 'className'> {
@@ -34,7 +38,7 @@ interface RightContentProps extends Pick<CommonProps, 'className'> {
 
 function RightContent({ children, className }: RightContentProps) {
   return (
-    <div className={cx(layoutStyles.rightIcon, className)}>
+    <div className={cx(layoutStyles.rightContent, className)}>
       {children?.map((object) => (
         <div key={object.key}>{object.component}</div>
       ))}
@@ -91,7 +95,7 @@ function HeaderBarLayout({
     <>
       <div style={{ height: '44px' }} className={className} />
       <header className={cx(layoutStyles.header, innerClassName)}>
-        <div className={layoutStyles.content}>
+        <div className={layoutStyles.totalContent}>
           {leftContent}
           {centerContent}
           {title}
@@ -121,23 +125,27 @@ const layoutStyles = {
     backgroundColor: 'white',
     zIndex: 200,
   }),
-  content: css({
+  totalContent: css({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     w: 'full',
   }),
-  rightIcon: flex({
+  leftContent: flex({
+    position: 'absolute',
+    alignItems: 'center',
+    left: '12px',
+  }),
+  centerContent: flex({
+    justifyContent: 'center',
+    alignItems: 'center',
+    w: 'full',
+    textStyle: 'heading6',
+    fontWeight: 500,
+  }),
+  rightContent: flex({
     position: 'absolute',
     right: '12px',
     gap: '24px',
   }),
 };
-
-const titleStyles = flex({
-  justifyContent: 'center',
-  alignItems: 'center',
-  w: 'full',
-  textStyle: 'heading6',
-  fontWeight: 500,
-});
