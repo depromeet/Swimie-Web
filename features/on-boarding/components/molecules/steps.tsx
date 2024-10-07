@@ -1,5 +1,4 @@
-import { cloneElement, Fragment, ReactElement } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Fragment } from 'react';
 
 import { Image } from '@/components/atoms';
 import { OnBoardingImages } from '@/public/images/on-boarding';
@@ -29,34 +28,23 @@ export function Steps({ current }: StepsProps) {
   };
 
   return (
-    <TransitionGroup
-      component={null}
-      childFactory={(child: ReactElement) => {
-        return cloneElement(child, {
-          classNames: 'fade',
-        });
-      }}
-    >
-      <CSSTransition key={current} timeout={200}>
-        <div className={layout.total}>
-          <p className={textStyles.total}>
-            {highlightText(
-              stepsIntroduce[current].total,
-              stepsIntroduce[current].highlight,
-            )}
-          </p>
-          <div className={layout.image}>
-            <Image
-              key={current}
-              src={OnBoardingImages[current]}
-              alt="온보딩 이미지"
-              fill
-              style={{ objectFit: 'contain' }}
-            />
-          </div>
-        </div>
-      </CSSTransition>
-    </TransitionGroup>
+    <div className={layout.total}>
+      <p className={textStyles.total}>
+        {highlightText(
+          stepsIntroduce[current].total,
+          stepsIntroduce[current].highlight,
+        )}
+      </p>
+      <div className={layout.image}>
+        <Image
+          key={current}
+          src={OnBoardingImages[current]}
+          alt="온보딩 이미지"
+          fill
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    </div>
   );
 }
 
