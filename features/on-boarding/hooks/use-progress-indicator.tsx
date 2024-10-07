@@ -9,13 +9,9 @@ export function useProgressIndicator() {
     setStep((prev) => (prev += 1));
   };
 
-  const prev = () => {
-    setStep((prev) => (prev -= 1));
-  };
-
   const skip = () => {
     setStep(5);
   };
 
-  return { step, handlers: { next, prev, skip } };
+  return { step, handlers: { next, skip } };
 }
