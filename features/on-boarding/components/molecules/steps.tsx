@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 
 import { Image } from '@/components/atoms';
-import { OnBoardingImages } from '@/public/images/on-boarding';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -12,7 +11,7 @@ interface StepsProps {
 }
 
 export function Steps({ current }: StepsProps) {
-  const highlightText = (text: string, highlightTexts: string[]) => {
+  const getHighlightedText = (text: string, highlightTexts: string[]) => {
     const regex = new RegExp(`(${highlightTexts.join('|')})`, 'g');
     const parts = text.split(regex);
 
@@ -30,7 +29,7 @@ export function Steps({ current }: StepsProps) {
   return (
     <div className={layout.total}>
       <p className={textStyles.total}>
-        {highlightText(
+        {getHighlightedText(
           stepsIntroduce[current].total,
           stepsIntroduce[current].highlight,
         )}
@@ -38,7 +37,7 @@ export function Steps({ current }: StepsProps) {
       <div className={layout.image}>
         <Image
           key={current}
-          src={OnBoardingImages[current]}
+          src={stepsIntroduce[current].image}
           alt="온보딩 이미지"
           fill
           style={{ objectFit: 'contain' }}
