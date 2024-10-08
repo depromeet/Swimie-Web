@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Fragment } from 'react';
 
-import { Image } from '@/components/atoms';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
