@@ -9,34 +9,36 @@ import {
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { leftIconStyles } from './style';
-
-interface LeftContentProps {
+interface CommonProps {
   children?: ReactNode;
   className?: string;
 }
 
-function LeftContent({ children, className }: LeftContentProps) {
-  return <div className={cx(leftIconStyles, className)}>{children}</div>;
+function LeftContent({ children, className }: CommonProps) {
+  return (
+    <div className={cx(layoutStyles.leftContent, className)}>{children}</div>
+  );
 }
 
-interface TitleProps {
-  children?: ReactNode;
-  className?: string;
+function Title({ children, className }: CommonProps) {
+  return (
+    <h3 className={cx(layoutStyles.centerContent, className)}>{children}</h3>
+  );
 }
 
-function Title({ children, className }: TitleProps) {
-  return <h3 className={cx(titleStyles, className)}>{children}</h3>;
+function CenterContent({ children, className }: CommonProps) {
+  return (
+    <div className={cx(layoutStyles.centerContent, className)}>{children}</div>
+  );
 }
 
-interface RightContentProps {
+interface RightContentProps extends Pick<CommonProps, 'className'> {
   children?: { component: ReactNode; key: string | number }[];
-  className?: string;
 }
 
 function RightContent({ children, className }: RightContentProps) {
   return (
-    <div className={cx(layoutStyles.rightIcon, className)}>
+    <div className={cx(layoutStyles.rightContent, className)}>
       {children?.map((object) => (
         <div key={object.key}>{object.component}</div>
       ))}
@@ -61,13 +63,23 @@ const getChildrenArray = (
 interface HeaderBarProps {
   children?: ReactNode;
   className?: string;
+  innerClassName?: string;
 }
 
-function HeaderBarLayout({ children, className }: HeaderBarProps) {
+function HeaderBarLayout({
+  children,
+  className,
+  innerClassName,
+}: HeaderBarProps) {
   const leftContent = getChildrenArray(
     children,
     1,
     (<LeftContent />).type as FunctionComponent,
+  );
+  const centerContent = getChildrenArray(
+    children,
+    1,
+    (<CenterContent />).type as FunctionComponent,
   );
   const title = getChildrenArray(
     children,
@@ -82,9 +94,10 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
   return (
     <>
       <div style={{ height: '44px' }} className={className} />
-      <header className={layoutStyles.header}>
-        <div className={layoutStyles.content}>
+      <header className={cx(layoutStyles.header, innerClassName)}>
+        <div className={layoutStyles.totalContent}>
           {leftContent}
+          {centerContent}
           {title}
           {rightContent}
         </div>
@@ -96,6 +109,7 @@ function HeaderBarLayout({ children, className }: HeaderBarProps) {
 export const HeaderBar = Object.assign(HeaderBarLayout, {
   LeftContent,
   Title,
+  CenterContent,
   RightContent,
 });
 
@@ -111,23 +125,27 @@ const layoutStyles = {
     backgroundColor: 'white',
     zIndex: 200,
   }),
-  content: css({
+  totalContent: css({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     w: 'full',
   }),
-  rightIcon: flex({
+  leftContent: flex({
+    position: 'absolute',
+    alignItems: 'center',
+    left: '12px',
+  }),
+  centerContent: flex({
+    justifyContent: 'center',
+    alignItems: 'center',
+    w: 'full',
+    textStyle: 'heading6',
+    fontWeight: 500,
+  }),
+  rightContent: flex({
     position: 'absolute',
     right: '12px',
     gap: '24px',
   }),
 };
-
-const titleStyles = flex({
-  justifyContent: 'center',
-  alignItems: 'center',
-  w: 'full',
-  textStyle: 'heading6',
-  fontWeight: 500,
-});
