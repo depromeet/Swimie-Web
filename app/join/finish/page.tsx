@@ -27,6 +27,7 @@ export default function Page() {
             height={164}
             src={LoginSuccessCharacter}
             alt="회원가입 성공 이미지"
+            priority
           />
         </div>
         <div className={textContainer}>
