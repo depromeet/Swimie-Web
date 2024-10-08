@@ -12,9 +12,9 @@ import {
   ProgressIndicator,
   SkipButton,
   Steps,
+  stepsIntroduce,
   useProgressIndicator,
 } from '@/features/on-boarding';
-import { OnBoardingImages } from '@/public/images/on-boarding';
 import { css } from '@/styled-system/css';
 
 export default function OnBoarding() {
@@ -57,7 +57,7 @@ export default function OnBoarding() {
         </CSSTransition>
       </TransitionGroup>
       <div className={layoutStyles.button}>
-        {step < OnBoardingImages.length - 1 ? (
+        {step < stepsIntroduce.length - 1 ? (
           <Button
             buttonType="secondary"
             variant="outlined"
