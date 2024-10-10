@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 export const Clarity = () => {
   return (
-    <Script id="clarity" type="text/javascript">
+    <Script id="ms_clarity" type="text/javascript">
       {`
           (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
