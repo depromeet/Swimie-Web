@@ -41,6 +41,7 @@ export function Steps({ current }: StepsProps) {
           alt="온보딩 이미지"
           fill
           style={{ objectFit: 'contain' }}
+          loading="eager"
         />
       </div>
     </div>
