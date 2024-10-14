@@ -16,11 +16,18 @@ import {
   stepsIntroduce,
   useProgressIndicator,
 } from '@/features/on-boarding';
+import { useSwipe } from '@/hooks';
 import { css } from '@/styled-system/css';
 
 export default function OnBoarding() {
   const router = useRouter();
   const { step, handlers } = useProgressIndicator();
+
+  const { handleTouchStart, handleTouchEnd } = useSwipe({
+    onSwipeLeft: step < stepsIntroduce.length - 1 ? handlers.next : undefined,
+    onSwipeRight: step > 0 ? handlers.prev : undefined,
+    threshold: 20,
+  });
 
   const handleBackButtonClick = () => {
     if (step > 0) handlers.prev();
@@ -28,7 +35,11 @@ export default function OnBoarding() {
   };
 
   return (
-    <div className={layoutStyles.total}>
+    <div
+      className={layoutStyles.total}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <HeaderBar
         className={css({
           marginBottom: '43px',
