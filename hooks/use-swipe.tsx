@@ -23,9 +23,9 @@ export function useSwipe({
     if (touchStartX === null) return;
 
     const touchEndX = e.changedTouches[0].clientX;
-    const totalMove = touchStartX - touchEndX;
+    const totalMove = Math.abs(touchStartX - touchEndX);
 
-    if (Math.abs(totalMove) > threshold) {
+    if (totalMove > threshold) {
       if (totalMove > 0) {
         onSwipeLeft?.();
       } else {
