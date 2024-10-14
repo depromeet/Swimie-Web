@@ -15,11 +15,11 @@ export function useSwipe({
 }: UseSwipeProps) {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setTouchStartX(e.touches[0].clientX);
-  }
+  };
 
-  function handleTouchEnd(e: React.TouchEvent<HTMLDivElement>) {
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     if (touchStartX === null) return;
 
     const touchEndX = e.changedTouches[0].clientX;
@@ -34,7 +34,7 @@ export function useSwipe({
     }
 
     setTouchStartX(null);
-  }
+  };
 
   return {
     handleTouchStart,
