@@ -23,10 +23,10 @@ export function useSwipe({
     if (touchStartX === null) return;
 
     const touchEndX = e.changedTouches[0].clientX;
-    const totalMove = Math.abs(touchStartX - touchEndX);
+    const deltaX = touchStartX - touchEndX;
 
-    if (totalMove > threshold) {
-      if (totalMove > 0) {
+    if (Math.abs(deltaX) > threshold) {
+      if (deltaX > 0) {
         onSwipeLeft?.();
       } else {
         onSwipeRight?.();
