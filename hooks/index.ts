@@ -9,4 +9,5 @@ export * from './use-menu';
 export * from './use-modal';
 export * from './use-prevent-body-scroll';
 export * from './use-prevent-router-back';
+export * from './use-swipe';
 export * from './use-toast';

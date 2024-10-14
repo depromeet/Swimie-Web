@@ -3,6 +3,7 @@
 import '../../features/on-boarding/steps.css';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { cloneElement, ReactElement } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -15,10 +16,24 @@ import {
   stepsIntroduce,
   useProgressIndicator,
 } from '@/features/on-boarding';
+import { useSwipe } from '@/hooks';
 import { css } from '@/styled-system/css';
 
 export default function OnBoarding() {
+  const router = useRouter();
   const { step, handlers } = useProgressIndicator();
+
+  const { handleTouchStart, handleTouchEnd } = useSwipe({
+    onSwipeLeft: step < stepsIntroduce.length - 1 ? handlers.next : undefined,
+    onSwipeRight: step > 0 ? handlers.prev : undefined,
+    threshold: 20,
+  });
+
+  const handleBackButtonClick = () => {
+    if (step > 0) handlers.prev();
+    else router.back();
+  };
+
   return (
     <div className={layoutStyles.total}>
       <HeaderBar
@@ -28,7 +43,7 @@ export default function OnBoarding() {
         innerClassName={css({ backgroundColor: 'background.gray!' })}
       >
         <HeaderBar.LeftContent>
-          <BackButton />
+          <BackButton onClickBack={handleBackButtonClick} />
         </HeaderBar.LeftContent>
         <HeaderBar.CenterContent>
           <ProgressIndicator step={step} />
@@ -53,7 +68,11 @@ export default function OnBoarding() {
         }}
       >
         <CSSTransition key={step} timeout={200}>
-          <Steps current={step} />
+          <Steps
+            current={step}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          />
         </CSSTransition>
       </TransitionGroup>
       <div className={layoutStyles.button}>

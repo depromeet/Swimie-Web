@@ -5,6 +5,10 @@ import { useState } from 'react';
 export function useProgressIndicator() {
   const [step, setStep] = useState(0);
 
+  const prev = () => {
+    setStep((prev) => (prev -= 1));
+  };
+
   const next = () => {
     setStep((prev) => (prev += 1));
   };
@@ -13,5 +17,5 @@ export function useProgressIndicator() {
     setStep(5);
   };
 
-  return { step, handlers: { next, skip } };
+  return { step, handlers: { prev, next, skip } };
 }
