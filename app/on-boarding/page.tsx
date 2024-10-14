@@ -35,11 +35,7 @@ export default function OnBoarding() {
   };
 
   return (
-    <div
-      className={layoutStyles.total}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className={layoutStyles.total}>
       <HeaderBar
         className={css({
           marginBottom: '43px',
@@ -72,7 +68,11 @@ export default function OnBoarding() {
         }}
       >
         <CSSTransition key={step} timeout={200}>
-          <Steps current={step} />
+          <Steps
+            current={step}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          />
         </CSSTransition>
       </TransitionGroup>
       <div className={layoutStyles.button}>

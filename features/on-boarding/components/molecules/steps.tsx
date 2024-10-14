@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Fragment } from 'react';
+import { Fragment, TouchEvent } from 'react';
 
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -7,10 +7,12 @@ import { flex } from '@/styled-system/patterns';
 import { stepsIntroduce } from '../../constants';
 
 interface StepsProps {
+  onTouchStart: (e: TouchEvent<HTMLDivElement>) => void;
+  onTouchEnd: (e: TouchEvent<HTMLDivElement>) => void;
   current: number;
 }
 
-export function Steps({ current }: StepsProps) {
+export function Steps({ onTouchStart, onTouchEnd, current }: StepsProps) {
   const getHighlightedText = (text: string, highlightTexts: string[]) => {
     const regex = new RegExp(`(${highlightTexts.join('|')})`, 'g');
     const parts = text.split(regex);
@@ -27,7 +29,11 @@ export function Steps({ current }: StepsProps) {
   };
 
   return (
-    <div className={layout.total}>
+    <div
+      className={layout.total}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <p className={textStyles.total}>
         {getHighlightedText(
           stepsIntroduce[current].total,
