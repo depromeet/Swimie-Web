@@ -1,5 +1,6 @@
 import '../styles/global.css';
 
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata, Viewport } from 'next';
 import dynamic from 'next/dynamic';
@@ -61,9 +62,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const measurementId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID;
+  const tagManagerId = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+
   return (
     <html lang="ko" className={pretendard.className}>
       <head>
+        {tagManagerId && <GoogleTagManager gtmId={tagManagerId} />}
         <Clarity />
       </head>
       <body className={rootStyle}>
@@ -72,10 +77,13 @@ export default function RootLayout({
           <div className={containerStyle}>{children}</div>
           <DynamicPortalRoot />
         </ReactQueryProvider>
+
         <Script
           type="text/javascript"
           src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
         />
+
+        {measurementId && <GoogleAnalytics gaId={measurementId} />}
       </body>
     </html>
   );
