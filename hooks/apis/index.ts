@@ -3,3 +3,4 @@ export * from './use-cheer-eligibility';
 export * from './use-current-member-info';
 export * from './use-follow-mutate';
 export * from './use-following-state';
+export * from './use-greeting-text';
