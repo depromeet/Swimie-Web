@@ -1,8 +1,11 @@
 'use client';
 
+import { useAtomValue } from 'jotai';
+
 import { Image } from '@/components/atoms';
 import { useCurrentMemberInfo, useGreetingText } from '@/hooks';
 import SwimieCharacterImage from '@/public/images/swimie-character.png';
+import { calendarSwimCountAtom } from '@/store';
 import { css, cx } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -11,11 +14,17 @@ import { Calendar } from '../molecules';
 
 export const UserCalendarProfile = () => {
   const { data, isLoading } = useCurrentMemberInfo();
-  const { data: greetingTextData } = useGreetingText();
+  const {
+    data: greetingTextData,
+    isLoading: isGreetingTextDataLoading,
+    isSuccess: isGreetingTextDataSuccess,
+  } = useGreetingText();
+  const totalSwimCount = useAtomValue(calendarSwimCountAtom);
+  const isEmptyCount = totalSwimCount === 0;
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isGreetingTextDataLoading ? (
         <UserProfileSkeleton />
       ) : (
         <div className={cx(profileContainerStyles, profileColorStyle)}>
@@ -29,7 +38,11 @@ export const UserCalendarProfile = () => {
           <div className={userInfoStyles}>
             <p className={nicknameStyles}>{data?.data.nickname}님,</p>
             <p className={descriptionStyles}>
-              {greetingTextData?.data.message}
+              {isGreetingTextDataSuccess
+                ? greetingTextData.data.message
+                : isEmptyCount
+                  ? '이번달 수영 기록을 해볼까요?'
+                  : `이번달 수영을 ${totalSwimCount}번 다녀왔어요!`}
             </p>
           </div>
         </div>
