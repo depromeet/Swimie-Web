@@ -80,4 +80,5 @@ const descriptionStyles = css({
   textStyle: 'label1.normal',
   fontWeight: 'medium',
   color: 'line.solid.neutral',
+  wordBreak: 'keep-all',
 });
