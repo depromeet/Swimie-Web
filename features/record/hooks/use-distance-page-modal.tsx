@@ -41,7 +41,7 @@ export function useDistancePageModal<T>(
       ? isRecordedByTotalMeter || isRecordedByStrokesMeter
         ? 0
         : 1
-      : 0,
+      : 1,
   );
   const [totalMeter, setTotalMeter] = useState<string>('');
   const [totalLaps, setTotalLaps] = useState<string>('');
