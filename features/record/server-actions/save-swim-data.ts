@@ -7,8 +7,7 @@ import { PoolDataProps } from '../types';
 export const saveSwimData = (
   startTime: string,
   endTime: string,
-  poolName?: string,
-  poolId?: number,
+  poolData?: PoolDataProps,
 ) => {
   const prevSwimStartTime = cookies().get('swimStartTime')?.value;
   const prevSwimEndTime = cookies().get('swimEndTime')?.value;
@@ -41,16 +40,16 @@ export const saveSwimData = (
     });
 
   //현재 생성한 기록에 수영장 정보가 포함되어 있을 때
-  if (poolName && poolId) {
+  if (poolData) {
     //저장된 수영장 정보가 없거나
     if (
       !prevPoolData ||
       //저장된 수영장 정보가 있지만, 현재 생성한 기록의 수영장 정보와 다르다면
-      (prevPoolData && prevPoolData.id !== poolId)
+      (prevPoolData && prevPoolData.id !== poolData.id)
     ) {
       cookies().set(
         'poolData',
-        JSON.stringify({ name: poolName, id: poolId }),
+        JSON.stringify({ name: poolData.name, id: poolData.id }),
         {
           maxAge: Infinity,
           httpOnly: true,

@@ -246,8 +246,12 @@ export function Form({
       saveSwimData(
         submitData.startTime,
         submitData.endTime,
-        data.poolName,
-        submitData.poolId,
+        submitData.poolId && data.poolName
+          ? {
+              name: data.poolName,
+              id: submitData.poolId,
+            }
+          : undefined,
       );
       //기록에서 이미지가 포함되었을 때
       if (formSubInfo.imageFiles.length > 0) {
