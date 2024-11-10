@@ -32,7 +32,7 @@ import {
   usePullEditMemory,
 } from '../../apis';
 import { useRecordForm } from '../../hooks';
-import { saveSwimTime } from '../../server-actions';
+import { saveSwimData } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { isFuture } from '../../utils';
@@ -48,11 +48,19 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 interface FormProps {
   prevSwimStartTime?: string;
   prevSwimEndTime?: string;
+  prevPoolData: {
+    name?: string;
+    id?: string;
+  };
 }
 
 //Todo: 코드 개선
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
-export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
+export function Form({
+  prevSwimStartTime,
+  prevSwimEndTime,
+  prevPoolData,
+}: FormProps) {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const memoryId = searchParams.get('memoryId');
@@ -70,7 +78,8 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
       recordAt: date ? formatDateToKorean(date) : getToday(),
       startTime: prevSwimStartTime ? prevSwimStartTime : '',
       endTime: prevSwimEndTime ? prevSwimEndTime : '',
-      poolName: '',
+      poolId: prevPoolData.id ? Number(prevPoolData.id) : undefined,
+      poolName: prevPoolData.name ? prevPoolData.name : '',
       laneMeter: '25m',
       lane: 25,
       totalDistance: '',
@@ -236,7 +245,12 @@ export function Form({ prevSwimStartTime, prevSwimEndTime }: FormProps) {
     }
     //기록 생성 모드일 때
     else {
-      saveSwimTime(submitData.startTime, submitData.endTime);
+      saveSwimData(
+        submitData.startTime,
+        submitData.endTime,
+        data.poolName,
+        submitData.poolId,
+      );
       //기록에서 이미지가 포함되었을 때
       if (formSubInfo.imageFiles.length > 0) {
         const getImagePresignedUrlRes = await getImagePresignedUrl([

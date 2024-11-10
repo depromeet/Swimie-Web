@@ -8,6 +8,10 @@ import { flex } from '@/styled-system/patterns';
 export default function RecordPage() {
   const prevSwimStartTime = cookies().get('swimStartTime')?.value;
   const prevSwimEndTime = cookies().get('swimEndTime')?.value;
+  const prevPoolData = {
+    name: cookies().get('poolName')?.value,
+    id: cookies().get('poolId')?.value,
+  };
   return (
     <div>
       <RecordHeaderBar title="수영 기록하기" />
@@ -21,6 +25,7 @@ export default function RecordPage() {
         <Form
           prevSwimStartTime={prevSwimStartTime}
           prevSwimEndTime={prevSwimEndTime}
+          prevPoolData={prevPoolData}
         />
       </Suspense>
     </div>
