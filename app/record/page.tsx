@@ -1,22 +1,10 @@
-import { cookies } from 'next/headers';
 import { Suspense } from 'react';
 
-import {
-  Form,
-  PoolDataProps,
-  RecordHeaderBar,
-  RecordWarning,
-} from '@/features/record';
+import { Form, RecordHeaderBar, RecordWarning } from '@/features/record';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export default function RecordPage() {
-  const prevSwimStartTime = cookies().get('swimStartTime')?.value;
-  const prevSwimEndTime = cookies().get('swimEndTime')?.value;
-  const prevPoolData = cookies().get('poolData')
-    ? (JSON.parse(cookies().get('poolData')?.value as string) as PoolDataProps)
-    : undefined;
-
   return (
     <div>
       <RecordHeaderBar title="수영 기록하기" />
@@ -27,11 +15,7 @@ export default function RecordPage() {
       {/* Title 컴포넌트 생성 시 대체 */}
       <h1 className={titleStyles.form}>기본정보</h1>
       <Suspense>
-        <Form
-          prevSwimStartTime={prevSwimStartTime}
-          prevSwimEndTime={prevSwimEndTime}
-          prevPoolData={prevPoolData}
-        />
+        <Form />
       </Suspense>
     </div>
   );

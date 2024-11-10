@@ -32,11 +32,10 @@ import {
   usePullEditMemory,
 } from '../../apis';
 import { useRecordForm } from '../../hooks';
-import { saveSwimData } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
 import { PoolDataProps } from '../../types';
-import { isFuture } from '../../utils';
+import { isFuture, saveSwimData } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
@@ -46,19 +45,9 @@ import { PoolSearchPageModal } from './pool-search-page-modal';
 import { SubInfoSection } from './sub-info-section';
 import { TimeBottomSheet } from './time-bottom-sheet';
 
-interface FormProps {
-  prevSwimStartTime?: string;
-  prevSwimEndTime?: string;
-  prevPoolData?: PoolDataProps;
-}
-
 //Todo: 코드 개선
 //Todo: 수정모드일 시, 불러온 기록 데이터에서 차이가 없을 때는 버튼 disabled
-export function Form({
-  prevSwimStartTime,
-  prevSwimEndTime,
-  prevPoolData,
-}: FormProps) {
+export function Form() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const memoryId = searchParams.get('memoryId');
@@ -66,6 +55,12 @@ export function Form({
   const { data, isLoading: isLoadingPreviousMemory } = usePullEditMemory(
     Number(memoryId),
   );
+
+  const prevSwimStartTime = localStorage.getItem('swimStartTime') ?? undefined;
+  const prevSwimEndTime = localStorage.getItem('swimEndTime') ?? undefined;
+  const prevPoolData = localStorage.getItem('poolData')
+    ? (JSON.parse(localStorage.getItem('poolData') as string) as PoolDataProps)
+    : undefined;
 
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
 
