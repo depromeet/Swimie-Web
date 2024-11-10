@@ -35,6 +35,7 @@ import { useRecordForm } from '../../hooks';
 import { saveSwimData } from '../../server-actions';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
+import { PoolDataProps } from '../../types';
 import { isFuture } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
@@ -48,10 +49,7 @@ import { TimeBottomSheet } from './time-bottom-sheet';
 interface FormProps {
   prevSwimStartTime?: string;
   prevSwimEndTime?: string;
-  prevPoolData: {
-    name?: string;
-    id?: string;
-  };
+  prevPoolData?: PoolDataProps;
 }
 
 //Todo: 코드 개선
@@ -78,8 +76,8 @@ export function Form({
       recordAt: date ? formatDateToKorean(date) : getToday(),
       startTime: prevSwimStartTime ? prevSwimStartTime : '',
       endTime: prevSwimEndTime ? prevSwimEndTime : '',
-      poolId: prevPoolData.id ? Number(prevPoolData.id) : undefined,
-      poolName: prevPoolData.name ? prevPoolData.name : '',
+      poolId: prevPoolData ? prevPoolData.id : undefined,
+      poolName: prevPoolData ? prevPoolData.name : '',
       laneMeter: '25m',
       lane: 25,
       totalDistance: '',
