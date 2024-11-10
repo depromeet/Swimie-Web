@@ -34,8 +34,7 @@ import {
 import { useRecordForm } from '../../hooks';
 import { formSubInfoState } from '../../store/form-sub-info';
 import { formSectionStyles } from '../../styles/form-section';
-import { PoolDataProps } from '../../types';
-import { isFuture, saveSwimData } from '../../utils';
+import { getSavedSwimData, isFuture, saveSwimData } from '../../utils';
 import { DiarySection } from './diary-section';
 import { DistancePageModal } from './distance-page-modal';
 import { EquipmentSection } from './equipment-section';
@@ -56,11 +55,7 @@ export function Form() {
     Number(memoryId),
   );
 
-  const prevSwimStartTime = localStorage.getItem('swimStartTime') ?? undefined;
-  const prevSwimEndTime = localStorage.getItem('swimEndTime') ?? undefined;
-  const prevPoolData = localStorage.getItem('poolData')
-    ? (JSON.parse(localStorage.getItem('poolData') as string) as PoolDataProps)
-    : undefined;
+  const { savedSwimTimeData, savedPoolInfoData } = getSavedSwimData();
 
   const [formSubInfo, setFormSubInfo] = useAtom(formSubInfoState);
 
@@ -69,10 +64,10 @@ export function Form() {
   const methods = useForm<RecordRequestProps>({
     defaultValues: {
       recordAt: date ? formatDateToKorean(date) : getToday(),
-      startTime: prevSwimStartTime ? prevSwimStartTime : '',
-      endTime: prevSwimEndTime ? prevSwimEndTime : '',
-      poolId: prevPoolData ? prevPoolData.id : undefined,
-      poolName: prevPoolData ? prevPoolData.name : '',
+      startTime: savedSwimTimeData ? savedSwimTimeData.start : '',
+      endTime: savedSwimTimeData ? savedSwimTimeData.end : '',
+      poolId: savedPoolInfoData ? savedPoolInfoData.id : undefined,
+      poolName: savedPoolInfoData ? savedPoolInfoData.name : '',
       laneMeter: '25m',
       lane: 25,
       totalDistance: '',
@@ -153,7 +148,7 @@ export function Form() {
   });
 
   const { isLoading, modifySubmitData, modifyStrokesData, handlers } =
-    useRecordForm(lane, isEditMode, prevSwimStartTime);
+    useRecordForm(lane, isEditMode, savedSwimTimeData?.start);
 
   const handleRecordEditSuccess = () => {
     handlers.onChangeIsLoading(false);
@@ -241,12 +236,8 @@ export function Form() {
       saveSwimData(
         submitData.startTime,
         submitData.endTime,
-        submitData.poolId && data.poolName
-          ? {
-              name: data.poolName,
-              id: submitData.poolId,
-            }
-          : undefined,
+        data.poolName,
+        submitData.poolId,
       );
       //기록에서 이미지가 포함되었을 때
       if (formSubInfo.imageFiles.length > 0) {
