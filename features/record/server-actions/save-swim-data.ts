@@ -2,6 +2,8 @@
 
 import { cookies } from 'next/headers';
 
+import { PoolDataProps } from '../types';
+
 export const saveSwimData = (
   startTime: string,
   endTime: string,
@@ -10,8 +12,9 @@ export const saveSwimData = (
 ) => {
   const prevSwimStartTime = cookies().get('swimStartTime')?.value;
   const prevSwimEndTime = cookies().get('swimEndTime')?.value;
-  const prevPoolName = cookies().get('poolName')?.value;
-  const prevPoolID = cookies().get('poolId')?.value;
+  const prevPoolData = cookies().get('poolData')
+    ? (JSON.parse(cookies().get('poolData')?.value as string) as PoolDataProps)
+    : undefined;
 
   if (
     //저장된 수영 시작 시간이 없거나
@@ -39,27 +42,21 @@ export const saveSwimData = (
 
   //현재 생성한 기록에 수영장 정보가 포함되어 있을 때
   if (poolName && poolId) {
+    //저장된 수영장 정보가 없거나
     if (
-      //저장된 수영장 이름이 없거나
-      !prevPoolName ||
-      //저장된 수영장 이름이 있지만, 현재 생성한 기록의 수영장 이름과 다르면
-      (prevPoolName && prevPoolName !== poolName)
-    )
-      cookies().set('poolName', poolName, {
-        maxAge: Infinity,
-        httpOnly: true,
-        secure: true,
-      });
-    if (
-      //저장된 수영장 ID가 없거나
-      !prevPoolID ||
-      //저장된 수영장 ID가 있지만, 현재 생성한 기록의 수영장 ID와 다르면
-      (prevPoolID && Number(prevPoolID) !== poolId)
-    )
-      cookies().set('poolId', String(poolId), {
-        maxAge: Infinity,
-        httpOnly: true,
-        secure: true,
-      });
+      !prevPoolData ||
+      //저장된 수영장 정보가 있지만, 현재 생성한 기록의 수영장 정보와 다르다면
+      (prevPoolData && prevPoolData.id !== poolId)
+    ) {
+      cookies().set(
+        'poolData',
+        JSON.stringify({ name: poolName, id: poolId }),
+        {
+          maxAge: Infinity,
+          httpOnly: true,
+          secure: true,
+        },
+      );
+    }
   }
 };
