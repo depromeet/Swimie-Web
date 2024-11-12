@@ -12,6 +12,6 @@ export const useProfileData = (id?: number) => {
         return data.data;
       }),
     enabled: !!id,
-    staleTime: Infinity,
+    // staleTime: Infinity,
   });
 };
