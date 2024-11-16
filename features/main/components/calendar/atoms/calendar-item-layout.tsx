@@ -47,6 +47,7 @@ const DateStyles = css({
   width: '18px',
   marginBottom: '5px',
   borderRadius: 'full',
+  wordBreak: 'keep-all',
 });
 
 const EmptyStyles = '';
