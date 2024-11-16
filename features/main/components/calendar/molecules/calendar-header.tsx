@@ -75,4 +75,5 @@ const CurrentDateStyles = css({
   textAlign: 'center',
   textStyle: 'heading2',
   fontWeight: 'bold',
+  wordBreak: 'keep-all',
 });
