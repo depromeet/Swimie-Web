@@ -131,8 +131,14 @@ export function SettingCalendar({
           <ListItem text="1,000m" onClick={() => handleListItemClick(1000)}>
             <Radio value={1000} />
           </ListItem>
+          <ListItem text="2,000m" onClick={() => handleListItemClick(2000)}>
+            <Radio value={2000} />
+          </ListItem>
           <ListItem text="3,000m" onClick={() => handleListItemClick(3000)}>
             <Radio value={3000} />
+          </ListItem>
+          <ListItem text="4,000m" onClick={() => handleListItemClick(4000)}>
+            <Radio value={4000} />
           </ListItem>
           <ListItem text="5,000m" onClick={() => handleListItemClick(5000)}>
             <Radio value={5000} />

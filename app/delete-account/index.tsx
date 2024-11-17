@@ -40,11 +40,13 @@ export default function Page() {
 
   return (
     <div>
-      <HeaderBar>
-        <HeaderBar.LeftContent>
-          <BackButton />
-        </HeaderBar.LeftContent>
-      </HeaderBar>
+      {step !== 3 && (
+        <HeaderBar>
+          <HeaderBar.LeftContent>
+            <BackButton />
+          </HeaderBar.LeftContent>
+        </HeaderBar>
+      )}
       {getStepComponent(step)}
     </div>
   );
