@@ -1,6 +1,7 @@
 import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
 import { DetailCheerItemSelected } from '@/features/record-detail';
+import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { CheerItem } from './cheer-item';
@@ -29,6 +30,7 @@ export const CheerBottomSheet = ({
           />
         ))}
       </div>
+      <p className={directInputContainerStyle}>직접 입력 +</p>
       <div className={buttonContainerStyle}>
         <Button
           label="닫기"
@@ -54,6 +56,12 @@ const tagContainerStyle = flex({
   gap: '10px',
   rowGap: '10px',
   p: '8px 20px',
+});
+
+const directInputContainerStyle = css({
+  p: '8px 20px',
+  color: 'primary.swim.총거리.default',
+  textStyle: 'body1.normal',
 });
 
 const buttonContainerStyle = grid({
