@@ -55,6 +55,7 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
       {/* NOTE: 응원 바텀시트 */}
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
+        memoryId={memoryId}
         isOpen={isOpenBottomSheet}
         onClose={handleClickCloseBottomSheet}
         cheerList={cheerList}
