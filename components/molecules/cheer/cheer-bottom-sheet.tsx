@@ -12,12 +12,14 @@ import { CheerItem } from './cheer-item';
 import { DirectCheerBottomSheet } from './direct-cheer-bottom-sheet';
 
 type CheerBottomSheet = {
+  memoryId: number;
   cheerList: DetailCheerItemSelected[];
   onClickCheerItem: (index: number) => void;
   onClickSendCheer: () => void;
 } & BottomSheetProps;
 export const CheerBottomSheet = ({
   header,
+  memoryId,
   isOpen,
   onClose,
   cheerList,
@@ -71,6 +73,7 @@ export const CheerBottomSheet = ({
       </BottomSheet>
       <DirectCheerBottomSheet
         isOpen={isDirectCheerBottomSheetOpen}
+        memoryId={memoryId}
         onClose={handleCloseDirectCheerBottomSheet}
       />
     </>
