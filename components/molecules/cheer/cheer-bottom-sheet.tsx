@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
 import { DetailCheerItemSelected } from '@/features/record-detail';
@@ -5,6 +9,7 @@ import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { CheerItem } from './cheer-item';
+import { DirectCheerBottomSheet } from './direct-cheer-bottom-sheet';
 
 type CheerBottomSheet = {
   cheerList: DetailCheerItemSelected[];
@@ -19,35 +24,56 @@ export const CheerBottomSheet = ({
   onClickCheerItem,
   onClickSendCheer,
 }: CheerBottomSheet) => {
+  const [isDirectCheerBottomSheetOpen, setIsDirectCheerBottomSheetOpen] =
+    useState(false);
+
+  const handleClickDirectCheer = () => {
+    setIsDirectCheerBottomSheetOpen(true);
+  };
+
+  const handleCloseDirectCheerBottomSheet = () => {
+    setIsDirectCheerBottomSheetOpen(false);
+  };
   return (
-    <BottomSheet header={header} isOpen={isOpen} onClose={onClose}>
-      <div className={tagContainerStyle}>
-        {cheerList.map((item, index) => (
-          <CheerItem
-            key={index}
-            onClick={() => onClickCheerItem(index)}
-            {...item}
+    <>
+      <BottomSheet header={header} isOpen={isOpen} onClose={onClose}>
+        <div className={tagContainerStyle}>
+          {cheerList.map((item, index) => (
+            <CheerItem
+              key={index}
+              onClick={() => onClickCheerItem(index)}
+              {...item}
+            />
+          ))}
+        </div>
+        <p
+          className={directInputContainerStyle}
+          onClick={handleClickDirectCheer}
+        >
+          직접 입력 +
+        </p>
+        <div className={buttonContainerStyle}>
+          <Button
+            label="닫기"
+            variant="outlined"
+            size="large"
+            onClick={onClose}
           />
-        ))}
-      </div>
-      <p className={directInputContainerStyle}>직접 입력 +</p>
-      <div className={buttonContainerStyle}>
-        <Button
-          label="닫기"
-          variant="outlined"
-          size="large"
-          onClick={onClose}
-        />
-        <Button
-          label="보내기"
-          size="large"
-          variant="solid"
-          buttonType="primary"
-          onClick={onClickSendCheer}
-          disabled={!cheerList.find(({ isSelected }) => isSelected)}
-        />
-      </div>
-    </BottomSheet>
+          <Button
+            label="보내기"
+            size="large"
+            variant="solid"
+            buttonType="primary"
+            onClick={onClickSendCheer}
+            disabled={!cheerList.find(({ isSelected }) => isSelected)}
+          />
+        </div>
+      </BottomSheet>
+      <DirectCheerBottomSheet
+        isOpen={isDirectCheerBottomSheetOpen}
+        onClose={handleCloseDirectCheerBottomSheet}
+      />
+    </>
   );
 };
 
