@@ -1,10 +1,17 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 
 import { useImagePresignUrl } from '@/apis';
 import { Button } from '@/components/atoms';
+import { FormTextArea, FormTextField } from '@/components/molecules';
 import { useCurrentMemberInfo, useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -17,7 +24,6 @@ import {
 } from '../../apis';
 import { useProfileData, useProfileEditForm } from '../../hooks';
 import { ProfileEditImageSection } from './profile-edit-image-section';
-import { ProfileEditTextInfoSection } from './profile-edit-text-info-section';
 
 interface ProfileEditFormProps {
   nickname: string;
@@ -147,7 +153,32 @@ export function ProfileEditForm() {
     }
   };
 
+  const nickname = useWatch({ control: methods.control, name: 'nickname' });
+  const introduction = useWatch({
+    control: methods.control,
+    name: 'introduction',
+  });
+
+  useEffect(() => {
+    if (!profileData) return;
+
+    const { nickname: currentNickname, introduction: currentIntroduction } =
+      profileData;
+
+    if (currentNickname) methods.setValue('nickname', currentNickname);
+    if (currentIntroduction)
+      methods.setValue('introduction', currentIntroduction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileData]);
+
   if (!profileData) return null;
+
+  const isDirty = () => {
+    const { nickname: prevNickname, introduction: prevIntroduction } =
+      profileData;
+    return !(nickname === prevNickname && introduction === prevIntroduction);
+  };
+
   return (
     <FormProvider {...methods}>
       <ProfileEditImageSection
@@ -161,12 +192,17 @@ export function ProfileEditForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className={layoutStyles.form}
       >
-        <ProfileEditTextInfoSection
-          nickNameLabel="닉네임"
-          nickNameSubText="14자까지 입력할 수 있어요"
-          introductionPlaceholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
-          currentNickname={profileData?.nickname.trim()}
-          currentIntroduction={profileData?.introduction?.trim()}
+        <FormTextField
+          {...methods.register('nickname')}
+          registerdFieldValue={nickname}
+          label="닉네임"
+          subText="14자까지 입력할 수 있어요"
+          maxLength={14}
+          wrapperClassName={css({ marginBottom: '24px' })}
+        />
+        <FormTextArea
+          {...methods.register('introduction')}
+          placeholder="한 줄 소개를 입력해주세요 (수린이 1년차 / 접영 드릴 연습중)"
         />
         <div className={buttonStyles.layout}>
           <Button
@@ -176,6 +212,7 @@ export function ProfileEditForm() {
             label="저장하기"
             size="large"
             className={buttonStyles.content}
+            disabled={isDirty() === false}
           />
         </div>
       </form>
