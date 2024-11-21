@@ -25,7 +25,7 @@ export const Waves = ({
     Q ${width / 4} ${offsetY + waveAmplitude} ${width / 2} ${offsetY}
     T ${width} ${offsetY}
     V ${offsetY + waveHeight}
-    T 0 ${offsetY + waveHeight}
+    H ${offsetY + waveHeight} 0
     Z
   `;
   };
