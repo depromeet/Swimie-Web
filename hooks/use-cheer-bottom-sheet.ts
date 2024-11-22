@@ -137,6 +137,7 @@ export const useCheerBottomSheet = ({
           handleClickCloseBottomSheet();
           isOpenDirectCheerBottomSheet &&
             handleClickCloseDirectCheerBottomSheet();
+          directCheerComment && setDirectCheerComment('');
           void refetchCheerEligibility();
           onSuccessCheer?.();
         },
