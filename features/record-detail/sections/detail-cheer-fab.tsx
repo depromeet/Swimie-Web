@@ -23,8 +23,13 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
     handleClickSendCheer,
     handleChangeSelectedItem,
     isOpenBottomSheet,
+    isOpenDirectCheerBottomSheet,
+    directCheerComment,
     handleClickCloseBottomSheet,
     handleClickOpenBottomSheet,
+    handleChangeDirectCheerComment,
+    handleOpenDirectCheerBottomSheet,
+    handleCloseDirectCheerBottomSheet,
   } = useCheerBottomSheet({
     memoryId: data.id,
     onSuccessCheer: handleSuccessCheer,
@@ -56,8 +61,13 @@ export const DetailCheerFabSection = ({ data }: { data: RecordDetailType }) => {
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
         isOpen={isOpenBottomSheet}
+        isOpenDirectCheerBottomSheet={isOpenDirectCheerBottomSheet}
         onClose={handleClickCloseBottomSheet}
         cheerList={cheerList}
+        directCheerComment={directCheerComment}
+        onChangeDirectCheerComment={handleChangeDirectCheerComment}
+        onOpenDirectCheerBottomSheet={handleOpenDirectCheerBottomSheet}
+        onCloseDirectCheerBottomSheet={handleCloseDirectCheerBottomSheet}
         onClickCheerItem={handleClickCheerItem}
         onClickSendCheer={handleClickSendCheer}
       />

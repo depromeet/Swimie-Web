@@ -21,8 +21,13 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
     handleClickSendCheer,
     handleChangeSelectedItem,
     isOpenBottomSheet,
+    isOpenDirectCheerBottomSheet,
+    directCheerComment,
     handleClickCloseBottomSheet,
     handleClickOpenBottomSheet,
+    handleChangeDirectCheerComment,
+    handleOpenDirectCheerBottomSheet,
+    handleCloseDirectCheerBottomSheet,
   } = useCheerBottomSheet({
     memoryId,
     isIncludeVerification: {
@@ -55,10 +60,14 @@ export const CheerUpButton = ({ memoryId, nickname }: CheerUpButtonProps) => {
       {/* NOTE: 응원 바텀시트 */}
       <CheerBottomSheet
         header={{ title: '응원 보내기' }}
-        memoryId={memoryId}
         isOpen={isOpenBottomSheet}
+        isOpenDirectCheerBottomSheet={isOpenDirectCheerBottomSheet}
         onClose={handleClickCloseBottomSheet}
         cheerList={cheerList}
+        directCheerComment={directCheerComment}
+        onChangeDirectCheerComment={handleChangeDirectCheerComment}
+        onOpenDirectCheerBottomSheet={handleOpenDirectCheerBottomSheet}
+        onCloseDirectCheerBottomSheet={handleCloseDirectCheerBottomSheet}
         onClickCheerItem={handleClickCheerItem}
         onClickSendCheer={handleClickSendCheer}
       />

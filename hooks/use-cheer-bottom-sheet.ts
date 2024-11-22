@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { DetailCheerItemSelected } from '@/features/record-detail';
 import { useCheer, useCheerEligibility, usePreventBodyScroll } from '@/hooks';
@@ -56,9 +56,12 @@ export const useCheerBottomSheet = ({
   isIncludeVerification,
 }: UseCheerBottomSheet) => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [isOpenDirectCheerBottomSheet, setIsOpenDirectCheerBottomSheet] =
+    useState(false);
   const [cheerList, setCheerList] = useState(initialCheerList);
   const [selectedCheerItem, setSelectedCheerItem] =
     useState<DetailCheerItemSelected>();
+  const [directCheerComment, setDirectCheerComment] = useState('');
 
   const { mutate: mutateCheer } = useCheer();
   const { data: eligibilityData, refetch: refetchCheerEligibility } =
@@ -86,6 +89,18 @@ export const useCheerBottomSheet = ({
     setIsOpenBottomSheet(true);
   };
 
+  const handleOpenDirectCheerBottomSheet = () => {
+    setIsOpenDirectCheerBottomSheet(true);
+  };
+
+  const handleCloseDirectCheerBottomSheet = () => {
+    setIsOpenDirectCheerBottomSheet(false);
+  };
+
+  const handleClickCloseDirectCheerBottomSheet = () => {
+    setIsOpenDirectCheerBottomSheet(false);
+  };
+
   const handleClickCheerItem = (index: number) => {
     setCheerList((prev) =>
       prev.map((item, idx) =>
@@ -97,7 +112,12 @@ export const useCheerBottomSheet = ({
   };
 
   const handleClickSendCheer = () => {
-    const selectedCheerItem = cheerList.find(({ isSelected }) => isSelected);
+    const selectedCheerItem = isOpenDirectCheerBottomSheet
+      ? {
+          emoji: '💬',
+          comment: directCheerComment,
+        }
+      : cheerList.find(({ isSelected }) => isSelected);
     if (!selectedCheerItem) return;
 
     mutateCheer(
@@ -115,6 +135,8 @@ export const useCheerBottomSheet = ({
 
           setSelectedCheerItem(selectedCheerItem);
           handleClickCloseBottomSheet();
+          isOpenDirectCheerBottomSheet &&
+            handleClickCloseDirectCheerBottomSheet();
           void refetchCheerEligibility();
           onSuccessCheer?.();
         },
@@ -127,6 +149,12 @@ export const useCheerBottomSheet = ({
     setSelectedCheerItem(undefined);
   };
 
+  const handleChangeDirectCheerComment = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDirectCheerComment(event.target.value);
+  };
+
   return {
     cheerList,
     selectedCheerItem,
@@ -135,6 +163,11 @@ export const useCheerBottomSheet = ({
     handleChangeSelectedItem,
     handleClickOpenBottomSheet,
     handleClickCloseBottomSheet,
+    handleChangeDirectCheerComment,
+    handleOpenDirectCheerBottomSheet,
+    handleCloseDirectCheerBottomSheet,
+    directCheerComment,
     isOpenBottomSheet,
+    isOpenDirectCheerBottomSheet,
   };
 };
