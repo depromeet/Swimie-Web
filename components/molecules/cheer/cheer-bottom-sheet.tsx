@@ -1,6 +1,4 @@
-'use client';
-
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import { Button } from '@/components/atoms';
 import { BottomSheet, BottomSheetProps } from '@/components/molecules';
@@ -12,30 +10,28 @@ import { CheerItem } from './cheer-item';
 import { DirectCheerBottomSheet } from './direct-cheer-bottom-sheet';
 
 type CheerBottomSheet = {
-  memoryId: number;
+  isOpenDirectCheerBottomSheet: boolean;
   cheerList: DetailCheerItemSelected[];
+  directCheerComment: string;
   onClickCheerItem: (index: number) => void;
   onClickSendCheer: () => void;
+  onChangeDirectCheerComment: (event: ChangeEvent<HTMLInputElement>) => void;
+  onOpenDirectCheerBottomSheet: () => void;
+  onCloseDirectCheerBottomSheet: () => void;
 } & BottomSheetProps;
 export const CheerBottomSheet = ({
   header,
-  memoryId,
   isOpen,
   onClose,
   cheerList,
+  directCheerComment,
+  isOpenDirectCheerBottomSheet,
+  onChangeDirectCheerComment,
+  onOpenDirectCheerBottomSheet,
+  onCloseDirectCheerBottomSheet,
   onClickCheerItem,
   onClickSendCheer,
 }: CheerBottomSheet) => {
-  const [isDirectCheerBottomSheetOpen, setIsDirectCheerBottomSheetOpen] =
-    useState(false);
-
-  const handleClickDirectCheer = () => {
-    setIsDirectCheerBottomSheetOpen(true);
-  };
-
-  const handleCloseDirectCheerBottomSheet = () => {
-    setIsDirectCheerBottomSheetOpen(false);
-  };
   return (
     <>
       <BottomSheet header={header} isOpen={isOpen} onClose={onClose}>
@@ -50,7 +46,7 @@ export const CheerBottomSheet = ({
         </div>
         <p
           className={directInputContainerStyle}
-          onClick={handleClickDirectCheer}
+          onClick={onOpenDirectCheerBottomSheet}
         >
           직접 입력 +
         </p>
@@ -72,9 +68,11 @@ export const CheerBottomSheet = ({
         </div>
       </BottomSheet>
       <DirectCheerBottomSheet
-        isOpen={isDirectCheerBottomSheetOpen}
-        memoryId={memoryId}
-        onClose={handleCloseDirectCheerBottomSheet}
+        isOpen={isOpenDirectCheerBottomSheet}
+        directCheerComment={directCheerComment}
+        onClickSendCheer={onClickSendCheer}
+        onChangeDirectCheerComment={onChangeDirectCheerComment}
+        onClose={onCloseDirectCheerBottomSheet}
       />
     </>
   );
