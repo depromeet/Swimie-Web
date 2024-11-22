@@ -118,7 +118,11 @@ export const useCheerBottomSheet = ({
           comment: directCheerComment,
         }
       : cheerList.find(({ isSelected }) => isSelected);
-    if (!selectedCheerItem) return;
+    if (
+      !selectedCheerItem ||
+      (isOpenDirectCheerBottomSheet && !directCheerComment)
+    )
+      return;
 
     mutateCheer(
       {
