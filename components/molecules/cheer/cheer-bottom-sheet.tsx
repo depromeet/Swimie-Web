@@ -1,13 +1,16 @@
 import { ChangeEvent } from 'react';
 
 import { Button } from '@/components/atoms';
-import { BottomSheet, BottomSheetProps } from '@/components/molecules';
+import {
+  BottomSheet,
+  BottomSheetProps,
+  DirectCheerBottomSheet,
+} from '@/components/molecules';
 import { DetailCheerItemSelected } from '@/features/record-detail';
 import { css } from '@/styled-system/css';
 import { flex, grid } from '@/styled-system/patterns';
 
 import { CheerItem } from './cheer-item';
-import { DirectCheerBottomSheet } from './direct-cheer-bottom-sheet';
 
 type CheerBottomSheet = {
   isOpenDirectCheerBottomSheet: boolean;
@@ -67,6 +70,7 @@ export const CheerBottomSheet = ({
           />
         </div>
       </BottomSheet>
+
       <DirectCheerBottomSheet
         isOpen={isOpenDirectCheerBottomSheet}
         directCheerComment={directCheerComment}
