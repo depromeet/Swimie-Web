@@ -1,54 +1,66 @@
 import Link from 'next/link';
 
 import { SpeechBubbleIcon } from '@/components/atoms';
+import { Divider } from '@/components/atoms/divider';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 export const EmptyNews = () => {
   return (
-    <div className={containerStyles}>
-      <SpeechBubbleIcon />
-      <div className={descriptionStyles}>
-        <p className={titleStyles}>아직 친구 소식이 없어요</p>
-        <p className={subTitleStyles}>
-          친구를 만들고 서로의 기록에 응원을 남겨보세요
-        </p>
+    <>
+      <h1 className={titleStyles}>친구 소식</h1>
+      <div className={containerStyles}>
+        <SpeechBubbleIcon />
+        <div className={descriptionStyles}>
+          <p className={mainTextStyles}>친구 기록에 응원을 남겨보세요</p>
+          <p className={subTextStyles}>
+            함께 꾸준히 수영 기록을 쌓아가는 즐거움을 느껴보세요!
+          </p>
+        </div>
+        <Link href="/profile/search" className={linkStyles}>
+          + 친구 찾기
+        </Link>
       </div>
-      <Link href="/profile/search" className={linkStyles}>
-        친구 찾기
-      </Link>
-    </div>
+      <Divider variant="thick" />
+    </>
   );
 };
 
 const containerStyles = flex({
   w: 'full',
-  h: 'full',
   direction: 'column',
-  justifyContent: 'center',
   alignItems: 'center',
   gap: '20px',
+  p: '24px 20px',
 });
 
 const descriptionStyles = css({ textAlign: 'center' });
 
 const titleStyles = css({
+  p: '16px 20px',
+  textStyle: 'heading2',
+  fontWeight: 700,
+});
+
+const mainTextStyles = css({
   pb: '4px',
   textStyle: 'heading6',
   fontWeight: 'medium',
 });
 
-const subTitleStyles = css({
+const subTextStyles = css({
   textStyle: 'body2.normal',
   fontWeight: 'normal',
   color: 'text.alternative',
 });
 
-const linkStyles = css({
-  p: '9px 20px',
-  borderWidth: '2px',
+const linkStyles = flex({
+  w: 'full',
+  justifyContent: 'center',
+  p: '9px 0',
   borderRadius: '8px',
-  color: 'primary.swim.총거리.default',
+  backgroundColor: 'primary.swim.총거리.default',
+  color: 'white',
   textStyle: 'body2.normal',
-  fontWeight: 'semibold',
+  fontWeight: 600,
 });
