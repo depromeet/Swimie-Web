@@ -37,11 +37,7 @@ export function ProfileCard({ isMyProfile, memberId }: ProfileCardProps) {
         </div>
         <p className={ProfileCardStyle.nickname}>{profileData.nickname}</p>
         <p className={ProfileCardStyle.introduction}>
-          {profileData.introduction
-            ? profileData.introduction.length > 22
-              ? profileData.introduction.slice(0, 22) + '...'
-              : profileData.introduction
-            : null}
+          {profileData.introduction ? profileData.introduction : null}
         </p>
       </Link>
       <div className={ProfileCardStyle.followButton}>
@@ -106,6 +102,7 @@ const ProfileCardStyle = {
     fontWeight: 400,
     color: 'text.alternative',
     textAlign: 'center',
+    lineClamp: 2,
   }),
   followButton: css({
     w: 'full',
