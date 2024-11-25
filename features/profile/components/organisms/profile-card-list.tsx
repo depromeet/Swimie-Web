@@ -1,6 +1,10 @@
+import { Suspense } from 'react';
+
+import { useCurrentMemberInfo, useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { useProfileData } from '../../hooks';
 import { ProfileCard } from '../molecules';
 
 interface ProfileCardListProps {
@@ -9,14 +13,33 @@ interface ProfileCardListProps {
 
 export function ProfileCardList({ title }: ProfileCardListProps) {
   const recommendedUserIds = [64, 56, 298, 480, 397];
+
+  const { data: myData } = useCurrentMemberInfo();
+  const { refetch } = useProfileData(myData?.data.id);
+  const { useSyncFollowingListState } = useMemberFollowingState();
+  useSyncFollowingListState(recommendedUserIds);
+
+  const getIsMyProfile = (memberId: number) => {
+    if (!myData?.data) return false;
+    const myMemberId = myData?.data.id;
+    return myMemberId === memberId;
+  };
+
   return (
     <section className={ProfileCardListStyle.layout}>
       <p className={ProfileCardListStyle.title}>{title}</p>
-      <div className={ProfileCardListStyle.slider}>
-        {recommendedUserIds.map((id) => (
-          <ProfileCard key={id} id={id} />
-        ))}
-      </div>
+      <Suspense>
+        <div className={ProfileCardListStyle.slider}>
+          {recommendedUserIds.map((memberId) => (
+            <ProfileCard
+              key={memberId}
+              memberId={memberId}
+              isMyProfile={getIsMyProfile(memberId)}
+              refetchMyProfile={refetch}
+            />
+          ))}
+        </div>
+      </Suspense>
     </section>
   );
 }
