@@ -12,7 +12,10 @@ interface ProfileCardProps {
   memberId: number;
 }
 
-export function ProfileCard({ isMyProfile, memberId }: ProfileCardProps) {
+export function RecommendedProfileCard({
+  isMyProfile,
+  memberId,
+}: ProfileCardProps) {
   const { data: profileData } = useProfileData(memberId);
   const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
   const { isFollowing } = useMemberIsFollowing(memberId);
