@@ -1,42 +1,81 @@
+import { RefetchOptions } from '@tanstack/react-query';
 import Link from 'next/link';
 
+import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
+import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { useProfileData } from '../../hooks';
-import { FollowButton } from '../atoms';
 
 interface ProfileCardProps {
-  id: number;
+  isMyProfile: boolean;
+  memberId: number;
+  refetchMyProfile: (options?: RefetchOptions) => Promise<unknown>;
 }
 
-export function ProfileCard({ id }: ProfileCardProps) {
-  const { data: profileData } = useProfileData(id);
+export function ProfileCard({
+  isMyProfile,
+  memberId,
+  refetchMyProfile,
+}: ProfileCardProps) {
+  const { data: profileData } = useProfileData(memberId);
+  const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
+  const { isFollowing } = useMemberIsFollowing(memberId);
+
+  const handleClickFollow = () => {
+    void toggleFollow(memberId, refetchMyProfile);
+  };
+
   if (!profileData) return null;
   return (
-    <Link href={`/profile/${id}`} className={ProfileCardStyle.layout}>
-      <div className={ProfileCardStyle.image}>
-        <ProfileImage
-          alt="profile image"
-          src={profileData.profileImageUrl}
-          fill
-          sizes="25vw"
-          className={css({ borderRadius: 'full', objectFit: 'cover' })}
-        />
-      </div>
-      <p className={ProfileCardStyle.nickname}>{profileData.nickname}</p>
-      <p className={ProfileCardStyle.introduction}>
-        {profileData.introduction
-          ? profileData.introduction.length > 22
-            ? profileData.introduction.slice(0, 22) + '...'
-            : profileData.introduction
-          : null}
-      </p>
+    <div className={ProfileCardStyle.layout}>
+      <Link href={`/profile/${memberId}`} className={ProfileCardStyle.link}>
+        <div className={ProfileCardStyle.image}>
+          <ProfileImage
+            alt="profile image"
+            src={profileData.profileImageUrl}
+            fill
+            sizes="25vw"
+            className={css({ borderRadius: 'full', objectFit: 'cover' })}
+          />
+        </div>
+        <p className={ProfileCardStyle.nickname}>{profileData.nickname}</p>
+        <p className={ProfileCardStyle.introduction}>
+          {profileData.introduction
+            ? profileData.introduction.length > 22
+              ? profileData.introduction.slice(0, 22) + '...'
+              : profileData.introduction
+            : null}
+        </p>
+      </Link>
       <div className={ProfileCardStyle.followButton}>
-        <FollowButton followingId={id} />
+        {!isMyProfile && (
+          <>
+            {isFollowing ? (
+              <Button
+                size="small"
+                label="팔로잉"
+                variant="outlined"
+                buttonType="assistive"
+                className={css({ w: 'full' })}
+                onClick={handleClickFollow}
+              />
+            ) : (
+              <Button
+                size="small"
+                label="팔로우"
+                variant="outlined"
+                buttonType="primary"
+                className={css({ w: 'full' })}
+                onClick={handleClickFollow}
+              />
+            )}
+          </>
+        )}
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -51,6 +90,11 @@ const ProfileCardStyle = {
     borderRadius: '10px',
     shrink: 0,
     p: '16px',
+  }),
+  link: flex({
+    position: 'relative',
+    direction: 'column',
+    alignItems: 'center',
   }),
   image: css({
     position: 'relative',
