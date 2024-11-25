@@ -5,13 +5,13 @@ import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
 import { recommendedMemberIds } from '../../constants';
-import { ProfileCard } from '../molecules';
+import { RecommendedProfileCard } from '../molecules';
 
 interface ProfileCardListProps {
   title: string;
 }
 
-export function ProfileCardList({ title }: ProfileCardListProps) {
+export function RecommendedProfileCardList({ title }: ProfileCardListProps) {
   const { data: myData } = useCurrentMemberInfo();
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState(recommendedMemberIds);
@@ -28,7 +28,7 @@ export function ProfileCardList({ title }: ProfileCardListProps) {
       <Suspense>
         <div className={ProfileCardListStyle.slider}>
           {recommendedMemberIds.map((memberId) => (
-            <ProfileCard
+            <RecommendedProfileCard
               key={memberId}
               memberId={memberId}
               isMyProfile={getIsMyProfile(memberId)}
