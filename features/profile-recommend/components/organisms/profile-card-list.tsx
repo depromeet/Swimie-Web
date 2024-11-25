@@ -4,6 +4,7 @@ import { useCurrentMemberInfo, useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
+import { recommendedMemberIds } from '../../constants';
 import { ProfileCard } from '../molecules';
 
 interface ProfileCardListProps {
@@ -11,11 +12,9 @@ interface ProfileCardListProps {
 }
 
 export function ProfileCardList({ title }: ProfileCardListProps) {
-  const recommendedUserIds = [64, 56, 298, 480, 397];
-
   const { data: myData } = useCurrentMemberInfo();
   const { useSyncFollowingListState } = useMemberFollowingState();
-  useSyncFollowingListState(recommendedUserIds);
+  useSyncFollowingListState(recommendedMemberIds);
 
   const getIsMyProfile = (memberId: number) => {
     if (!myData?.data) return false;
@@ -28,7 +27,7 @@ export function ProfileCardList({ title }: ProfileCardListProps) {
       <p className={ProfileCardListStyle.title}>{title}</p>
       <Suspense>
         <div className={ProfileCardListStyle.slider}>
-          {recommendedUserIds.map((memberId) => (
+          {recommendedMemberIds.map((memberId) => (
             <ProfileCard
               key={memberId}
               memberId={memberId}

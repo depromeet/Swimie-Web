@@ -1,6 +1,5 @@
 export * from './my-page';
 export * from './other-page';
-export * from './profile-card-list';
 export * from './profile-container';
 export * from './profile-edit-form';
 export * from './profile-edit-image-section';
