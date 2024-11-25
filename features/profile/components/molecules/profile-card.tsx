@@ -1,4 +1,3 @@
-import { RefetchOptions } from '@tanstack/react-query';
 import Link from 'next/link';
 
 import { Button } from '@/components/atoms';
@@ -12,20 +11,15 @@ import { useProfileData } from '../../hooks';
 interface ProfileCardProps {
   isMyProfile: boolean;
   memberId: number;
-  refetchMyProfile: (options?: RefetchOptions) => Promise<unknown>;
 }
 
-export function ProfileCard({
-  isMyProfile,
-  memberId,
-  refetchMyProfile,
-}: ProfileCardProps) {
+export function ProfileCard({ isMyProfile, memberId }: ProfileCardProps) {
   const { data: profileData } = useProfileData(memberId);
   const { useMemberIsFollowing, toggleFollow } = useMemberFollowingState();
   const { isFollowing } = useMemberIsFollowing(memberId);
 
   const handleClickFollow = () => {
-    void toggleFollow(memberId, refetchMyProfile);
+    void toggleFollow(memberId);
   };
 
   if (!profileData) return null;
