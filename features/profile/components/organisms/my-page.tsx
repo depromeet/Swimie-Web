@@ -13,6 +13,7 @@ import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
 
 import { ProfileProps } from '../../types/profile';
+import { ProfileCardList } from './profile-card-list';
 import { ProfileContainer } from './profile-container';
 export function MyProfile({
   profileData,
@@ -60,6 +61,7 @@ export function MyProfile({
           />
         </div>
       </section>
+      <ProfileCardList title="다른 수영인들과 응원을 주고 받아보세요" />
       <Tab type="primary">
         <TabItem
           text="통계"
