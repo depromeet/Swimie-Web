@@ -4,7 +4,6 @@ import { useCurrentMemberInfo, useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
-import { useProfileData } from '../../hooks';
 import { ProfileCard } from '../molecules';
 
 interface ProfileCardListProps {
@@ -15,7 +14,6 @@ export function ProfileCardList({ title }: ProfileCardListProps) {
   const recommendedUserIds = [64, 56, 298, 480, 397];
 
   const { data: myData } = useCurrentMemberInfo();
-  const { refetch } = useProfileData(myData?.data.id);
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState(recommendedUserIds);
 
@@ -35,7 +33,6 @@ export function ProfileCardList({ title }: ProfileCardListProps) {
               key={memberId}
               memberId={memberId}
               isMyProfile={getIsMyProfile(memberId)}
-              refetchMyProfile={refetch}
             />
           ))}
         </div>
