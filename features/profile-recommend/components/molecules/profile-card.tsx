@@ -2,11 +2,10 @@ import Link from 'next/link';
 
 import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
+import { useProfileData } from '@/features/profile/hooks';
 import { useMemberFollowingState } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
-
-import { useProfileData } from '../../hooks';
 
 interface ProfileCardProps {
   isMyProfile: boolean;

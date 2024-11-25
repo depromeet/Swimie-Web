@@ -7,13 +7,13 @@ import { Button } from '@/components/atoms';
 import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import { Tab, TabItem } from '@/components/molecules';
+import { ProfileCardList } from '@/features/profile-recommend';
 import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 import { ProfileType } from '@/types/profileType';
 
 import { ProfileProps } from '../../types/profile';
-import { ProfileCardList } from './profile-card-list';
 import { ProfileContainer } from './profile-container';
 export function MyProfile({
   profileData,
