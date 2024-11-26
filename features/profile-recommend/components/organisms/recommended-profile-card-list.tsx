@@ -1,17 +1,22 @@
 import { Suspense } from 'react';
 
 import { useCurrentMemberInfo, useMemberFollowingState } from '@/hooks';
-import { css } from '@/styled-system/css';
-import { flex } from '@/styled-system/patterns';
+import { css, cva } from '@/styled-system/css';
 
 import { recommendedMemberIds } from '../../constants';
 import { RecommendedProfileCard } from '../molecules';
 
-interface ProfileCardListProps {
+type VariantType = 'vertical' | 'horizontal';
+
+export interface ProfileCardListProps {
   title: string;
+  variant?: VariantType;
 }
 
-export function RecommendedProfileCardList({ title }: ProfileCardListProps) {
+export function RecommendedProfileCardList({
+  title,
+  variant = 'horizontal',
+}: ProfileCardListProps) {
   const { data: myData } = useCurrentMemberInfo();
   const { useSyncFollowingListState } = useMemberFollowingState();
   useSyncFollowingListState(recommendedMemberIds);
@@ -26,10 +31,11 @@ export function RecommendedProfileCardList({ title }: ProfileCardListProps) {
     <section className={ProfileCardListStyle.layout}>
       <p className={ProfileCardListStyle.title}>{title}</p>
       <Suspense>
-        <div className={ProfileCardListStyle.slider}>
+        <div className={css(ProfileCardListStyle.slider.raw({ variant }))}>
           {recommendedMemberIds.map((memberId) => (
             <RecommendedProfileCard
               key={memberId}
+              variant={variant === 'vertical' ? 'horizontal' : 'vertical'}
               memberId={memberId}
               isMyProfile={getIsMyProfile(memberId)}
             />
@@ -52,12 +58,23 @@ const ProfileCardListStyle = {
     fontWeight: 600,
     mb: '16px',
   }),
-  slider: flex({
-    gap: '8px',
-    overflowX: 'auto',
-    mb: '16px',
-    '&::-webkit-scrollbar': {
-      display: 'none',
+  slider: cva({
+    base: {
+      display: 'flex',
+      gap: '8px',
+      overflowX: 'auto',
+      mb: '16px',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+    },
+    variants: {
+      variant: {
+        vertical: {
+          flexDirection: 'column',
+        },
+        horizontal: {},
+      },
     },
   }),
 };

@@ -61,7 +61,7 @@ export function MyProfile({
           />
         </div>
       </section>
-      <RecommendedProfileCardList title="다른 수영인들과 응원을 주고 받아보세요" />
+      <RecommendedProfileCardList title="다른 수영인과 응원을 주고 받아보세요" />
       <Tab type="primary">
         <TabItem
           text="통계"

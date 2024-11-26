@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { SpeechBubbleIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
+import { RecommendedProfileCardList } from '@/features/profile-recommend';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -22,6 +23,10 @@ export const EmptyNews = () => {
         </Link>
       </div>
       <Divider variant="thick" />
+      <RecommendedProfileCardList
+        title="다른 수영인과 응원을 주고 받아보세요"
+        variant="vertical"
+      />
     </>
   );
 };

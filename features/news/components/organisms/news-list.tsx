@@ -30,7 +30,7 @@ export const NewsList = () => {
   //   void queryClient.refetchQueries({ queryKey: ['newsData'], type: 'active' });
   // };
 
-  return !isEmpty ? (
+  return isEmpty ? (
     <EmptyNews />
   ) : (
     <>
