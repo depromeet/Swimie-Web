@@ -4,15 +4,17 @@ import { Button } from '@/components/atoms';
 import { ProfileImage } from '@/components/molecules';
 import { useProfileData } from '@/features/profile/hooks';
 import { useMemberFollowingState } from '@/hooks';
-import { css } from '@/styled-system/css';
-import { flex } from '@/styled-system/patterns';
+import { css, cva } from '@/styled-system/css';
 
-interface ProfileCardProps {
+import { ProfileCardListProps } from '../organisms';
+
+interface ProfileCardProps extends Pick<ProfileCardListProps, 'variant'> {
   isMyProfile: boolean;
   memberId: number;
 }
 
 export function RecommendedProfileCard({
+  variant = 'vertical',
   isMyProfile,
   memberId,
 }: ProfileCardProps) {
@@ -26,9 +28,12 @@ export function RecommendedProfileCard({
 
   if (!profileData) return null;
   return (
-    <div className={ProfileCardStyle.layout}>
-      <Link href={`/profile/${memberId}`} className={ProfileCardStyle.link}>
-        <div className={ProfileCardStyle.image}>
+    <div className={css(ProfileCardStyle.layout.raw({ variant }))}>
+      <Link
+        href={`/profile/${memberId}`}
+        className={css(ProfileCardStyle.link.raw({ variant }))}
+      >
+        <div className={css(ProfileCardStyle.imageLayout.raw({ variant }))}>
           <ProfileImage
             alt="profile image"
             src={profileData.profileImageUrl}
@@ -37,12 +42,14 @@ export function RecommendedProfileCard({
             className={css({ borderRadius: 'full', objectFit: 'cover' })}
           />
         </div>
-        <p className={ProfileCardStyle.nickname}>{profileData.nickname}</p>
-        <p className={ProfileCardStyle.introduction}>
-          {profileData.introduction ? profileData.introduction : null}
-        </p>
+        <div className={css(ProfileCardStyle.textLayout.raw({ variant }))}>
+          <p className={ProfileCardStyle.nickname}>{profileData.nickname}</p>
+          <p className={css(ProfileCardStyle.introduction.raw({ variant }))}>
+            {profileData.introduction ? profileData.introduction : null}
+          </p>
+        </div>
       </Link>
-      <div className={ProfileCardStyle.followButton}>
+      <div className={css(ProfileCardStyle.followButton.raw({ variant }))}>
         {!isMyProfile && (
           <>
             {isFollowing ? (
@@ -72,44 +79,110 @@ export function RecommendedProfileCard({
 }
 
 const ProfileCardStyle = {
-  layout: flex({
-    position: 'relative',
-    direction: 'column',
-    alignItems: 'center',
-    width: '146px',
-    height: '208px',
-    backgroundColor: 'fill.normal',
-    borderRadius: '10px',
-    shrink: 0,
-    p: '16px',
+  layout: cva({
+    base: {
+      position: 'relative',
+      flexShrink: 0,
+      backgroundColor: 'fill.normal',
+      borderRadius: '10px',
+      p: '16px',
+    },
+    variants: {
+      variant: {
+        vertical: { width: '146px', height: '208px' },
+        horizontal: { display: 'flex', alignItems: 'center', height: '100px' },
+      },
+    },
   }),
-  link: flex({
-    position: 'relative',
-    direction: 'column',
-    alignItems: 'center',
+  link: cva({
+    base: {
+      w: 'full',
+      display: 'flex',
+      position: 'relative',
+    },
+    variants: {
+      variant: {
+        vertical: {
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+        horizontal: {
+          alignItems: 'center',
+        },
+      },
+    },
   }),
-  image: css({
-    position: 'relative',
-    w: '60px',
-    h: '60px',
-    mb: '12px',
+  imageLayout: cva({
+    base: {
+      position: 'relative',
+      w: '60px',
+      h: '60px',
+    },
+    variants: {
+      variant: {
+        vertical: {
+          mb: '12px',
+        },
+        horizontal: {},
+      },
+    },
   }),
   nickname: css({
     textStyle: 'body2.normal',
     fontWeight: 600,
     mb: '2px',
   }),
-  introduction: css({
-    textStyle: 'label2',
-    fontWeight: 400,
-    color: 'text.alternative',
-    textAlign: 'center',
-    lineClamp: 2,
+  introduction: cva({
+    base: {
+      textStyle: 'label2',
+      fontWeight: 400,
+      color: 'text.alternative',
+      lineClamp: 2,
+    },
+    variants: {
+      variant: {
+        vertical: {
+          textAlign: 'center',
+        },
+        horizontal: { wordBreak: 'keep-all' },
+      },
+    },
   }),
-  followButton: css({
-    w: 'full',
-    p: '0 20px',
-    position: 'absolute',
-    bottom: '16px',
+  textLayout: cva({
+    base: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    variants: {
+      variant: {
+        vertical: {
+          alignItems: 'center',
+        },
+        horizontal: {
+          justifyContent: 'center',
+          ml: '12px',
+          w: '50%',
+        },
+      },
+    },
+  }),
+  followButton: cva({
+    base: {
+      position: 'absolute',
+    },
+    variants: {
+      variant: {
+        vertical: {
+          w: 'full',
+          p: '0 20px',
+          bottom: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        },
+        horizontal: {
+          right: '16px',
+        },
+      },
+    },
   }),
 };
