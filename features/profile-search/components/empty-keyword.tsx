@@ -1,5 +1,12 @@
+import { lazy, Suspense } from 'react';
+
 import { Divider } from '@/components/atoms/divider';
-import { RecommendedProfileItemList } from '@/features/profile-recommend';
+import { RecommendedProfileCardListSkeleton } from '@/features/profile-recommend';
+const RecommendedProfileItemList = lazy(() =>
+  import('@/features/profile-recommend').then((module) => ({
+    default: module.RecommendedProfileItemList,
+  })),
+);
 import { css } from '@/styled-system/css';
 
 export const EmptyKeyword = () => {
@@ -11,7 +18,16 @@ export const EmptyKeyword = () => {
         서로의 기록에 응원을 보내보세요.
       </div>
       <Divider variant="thick" />
-      <RecommendedProfileItemList title="다른 수영인과 응원을 주고 받아보세요" />
+      <Suspense
+        fallback={
+          <RecommendedProfileCardListSkeleton
+            variant="vertical"
+            itemStyle={{ height: '64px' }}
+          />
+        }
+      >
+        <RecommendedProfileItemList title="다른 수영인과 응원을 주고 받아보세요" />
+      </Suspense>
     </>
   );
 };

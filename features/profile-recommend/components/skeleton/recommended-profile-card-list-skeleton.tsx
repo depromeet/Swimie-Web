@@ -4,7 +4,8 @@ import { ProfileCardListProps } from '../organisms';
 
 export function RecommendedProfileCardListSkeleton({
   variant = 'horizontal',
-}: Pick<ProfileCardListProps, 'variant'>) {
+  itemStyle,
+}: Pick<ProfileCardListProps, 'variant'> & { itemStyle?: object }) {
   return (
     <>
       <div className={RecommendedProfileCardListSkeletonStyle.title} />
@@ -21,6 +22,7 @@ export function RecommendedProfileCardListSkeleton({
                 variant: variant === 'horizontal' ? 'vertical' : 'horizontal',
               }),
             )}
+            style={itemStyle}
           />
         ))}
       </div>
