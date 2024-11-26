@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import { useCurrentMemberInfo, useMemberFollowingState } from '@/hooks';
 import { css, cva } from '@/styled-system/css';
 
@@ -30,18 +28,16 @@ export function RecommendedProfileCardList({
   return (
     <section className={ProfileCardListStyle.layout}>
       <p className={ProfileCardListStyle.title}>{title}</p>
-      <Suspense>
-        <div className={css(ProfileCardListStyle.slider.raw({ variant }))}>
-          {recommendedMemberIds.map((memberId) => (
-            <RecommendedProfileCard
-              key={memberId}
-              variant={variant === 'vertical' ? 'horizontal' : 'vertical'}
-              memberId={memberId}
-              isMyProfile={getIsMyProfile(memberId)}
-            />
-          ))}
-        </div>
-      </Suspense>
+      <div className={css(ProfileCardListStyle.slider.raw({ variant }))}>
+        {recommendedMemberIds.map((memberId) => (
+          <RecommendedProfileCard
+            key={memberId}
+            variant={variant === 'vertical' ? 'horizontal' : 'vertical'}
+            memberId={memberId}
+            isMyProfile={getIsMyProfile(memberId)}
+          />
+        ))}
+      </div>
     </section>
   );
 }

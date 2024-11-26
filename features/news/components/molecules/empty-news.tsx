@@ -1,8 +1,14 @@
 import Link from 'next/link';
+import { lazy, Suspense } from 'react';
 
 import { SpeechBubbleIcon } from '@/components/atoms';
 import { Divider } from '@/components/atoms/divider';
-import { RecommendedProfileCardList } from '@/features/profile-recommend';
+import { RecommendedProfileCardListSkeleton } from '@/features/profile-recommend';
+const LazyRecommendedProfileCardList = lazy(() =>
+  import('@/features/profile-recommend').then((module) => ({
+    default: module.RecommendedProfileCardList,
+  })),
+);
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -23,10 +29,14 @@ export const EmptyNews = () => {
         </Link>
       </div>
       <Divider variant="thick" />
-      <RecommendedProfileCardList
-        title="다른 수영인과 응원을 주고 받아보세요"
-        variant="vertical"
-      />
+      <Suspense
+        fallback={<RecommendedProfileCardListSkeleton variant="vertical" />}
+      >
+        <LazyRecommendedProfileCardList
+          title="다른 수영인과 응원을 주고 받아보세요"
+          variant="vertical"
+        />
+      </Suspense>
     </>
   );
 };
