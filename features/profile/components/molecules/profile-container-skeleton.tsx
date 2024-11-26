@@ -1,3 +1,4 @@
+import { RecommendedProfileCardListSkeleton } from '@/features/profile-recommend';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
 
@@ -25,6 +26,7 @@ export function ProfileContainerSkeleton() {
         </div>
         <div className={followerFollowingButton} />
       </div>
+      <RecommendedProfileCardListSkeleton />
       <div className={tabContainserStyles}>
         <div className={tabItemStyles}>
           <div className={tabStyles} />

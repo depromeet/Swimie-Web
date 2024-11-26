@@ -1,11 +1,7 @@
 'use client';
 
 import NotFound from '@/app/not-found';
-import {
-  BackButton,
-  GlobalNavigationBar,
-  HeaderBar,
-} from '@/components/molecules';
+import { GlobalNavigationBar, HeaderBar } from '@/components/molecules';
 import { ProfileContainerSkeleton, useProfileData } from '@/features/profile';
 import {
   MyPageHeader,
@@ -34,9 +30,9 @@ export default function Profile({ params }: Mypage) {
     return (
       <article className={containerStyle}>
         <HeaderBar>
-          <HeaderBar.LeftContent>
+          {/* <HeaderBar.LeftContent>
             <BackButton />
-          </HeaderBar.LeftContent>
+          </HeaderBar.LeftContent> */}
         </HeaderBar>
         <ProfileContainerSkeleton />
         <GlobalNavigationBar />
