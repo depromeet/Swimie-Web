@@ -51,27 +51,14 @@ export function RecommendedProfileCard({
       </Link>
       <div className={css(ProfileCardStyle.followButton.raw({ variant }))}>
         {!isMyProfile && (
-          <>
-            {isFollowing ? (
-              <Button
-                size="small"
-                label="팔로잉"
-                variant="outlined"
-                buttonType="assistive"
-                className={css({ w: 'full' })}
-                onClick={handleClickFollow}
-              />
-            ) : (
-              <Button
-                size="small"
-                label="팔로우"
-                variant="outlined"
-                buttonType="primary"
-                className={css({ w: 'full' })}
-                onClick={handleClickFollow}
-              />
-            )}
-          </>
+          <Button
+            size="small"
+            label={isFollowing ? '팔로잉' : '팔로우'}
+            variant="outlined"
+            buttonType={isFollowing ? 'assistive' : 'primary'}
+            className={css({ w: 'full' })}
+            onClick={handleClickFollow}
+          />
         )}
       </div>
     </div>
