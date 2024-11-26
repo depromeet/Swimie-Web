@@ -26,7 +26,7 @@ export function RecommendedProfileCard({
     void toggleFollow(memberId);
   };
 
-  if (!profileData) return null;
+  if (!profileData || isMyProfile) return null;
   return (
     <div className={css(ProfileCardStyle.layout.raw({ variant }))}>
       <Link
@@ -50,16 +50,14 @@ export function RecommendedProfileCard({
         </div>
       </Link>
       <div className={css(ProfileCardStyle.followButton.raw({ variant }))}>
-        {!isMyProfile && (
-          <Button
-            size="small"
-            label={isFollowing ? '팔로잉' : '팔로우'}
-            variant="outlined"
-            buttonType={isFollowing ? 'assistive' : 'primary'}
-            className={css({ w: 'full' })}
-            onClick={handleClickFollow}
-          />
-        )}
+        <Button
+          size="small"
+          label={isFollowing ? '팔로잉' : '팔로우'}
+          variant="outlined"
+          buttonType={isFollowing ? 'assistive' : 'primary'}
+          className={css({ w: 'full' })}
+          onClick={handleClickFollow}
+        />
       </div>
     </div>
   );
