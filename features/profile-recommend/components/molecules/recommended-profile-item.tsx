@@ -12,11 +12,7 @@ export function RecommendedProfileItem({
   const { data: myData } = useCurrentMemberInfo();
   const { data: profileData } = useProfileData(memberId);
 
-  const getIsMyProfile = (memberId: number) => {
-    if (!myData?.data) return false;
-    const myMemberId = myData?.data.id;
-    return myMemberId === memberId;
-  };
+  const getIsMyProfile = myData?.data?.id === memberId;
 
   if (!profileData) return null;
   return (
@@ -25,7 +21,7 @@ export function RecommendedProfileItem({
       nickname={profileData?.nickname}
       introduction={profileData?.introduction}
       profileImageUrl={profileData.profileImageUrl}
-      isMyProfile={getIsMyProfile(memberId)}
+      isMyProfile={getIsMyProfile}
     />
   );
 }
