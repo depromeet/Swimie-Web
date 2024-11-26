@@ -1,13 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 
 import { Button } from '@/components/atoms';
 import { StatisticsIcon } from '@/components/atoms';
 import BadgeIcon from '@/components/atoms/icons/badge-icon';
 import { Tab, TabItem } from '@/components/molecules';
-import { RecommendedProfileCardList } from '@/features/profile-recommend';
+const LazyRecommendedProfileCardList = lazy(() =>
+  import('@/features/profile-recommend').then((module) => ({
+    default: module.RecommendedProfileCardList,
+  })),
+);
+import { RecommendedProfileCardListSkeleton } from '@/features/profile-recommend';
 import { useToast } from '@/hooks';
 import { css } from '@/styled-system/css';
 import { flex } from '@/styled-system/patterns';
@@ -61,7 +66,9 @@ export function MyProfile({
           />
         </div>
       </section>
-      <RecommendedProfileCardList title="다른 수영인과 응원을 주고 받아보세요" />
+      <Suspense fallback={<RecommendedProfileCardListSkeleton />}>
+        <LazyRecommendedProfileCardList title="다른 수영인과 응원을 주고 받아보세요" />
+      </Suspense>
       <Tab type="primary">
         <TabItem
           text="통계"
