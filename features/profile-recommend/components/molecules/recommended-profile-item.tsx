@@ -14,14 +14,13 @@ export function RecommendedProfileItem({
 
   const getIsMyProfile = myData?.data?.id === memberId;
 
-  if (!profileData) return null;
+  if (!profileData || getIsMyProfile) return null;
   return (
     <ProfileListItem
       memberId={memberId}
       nickname={profileData?.nickname}
       introduction={profileData?.introduction}
       profileImageUrl={profileData.profileImageUrl}
-      isMyProfile={getIsMyProfile}
     />
   );
 }
