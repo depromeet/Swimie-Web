@@ -16,6 +16,7 @@ export type ModalProps = {
   };
   isDim?: boolean;
   isBodyFadeOut?: boolean;
+  content?: string;
 };
 
 export const Modal = ({
@@ -27,6 +28,7 @@ export const Modal = ({
   button,
   isDim = true,
   isBodyFadeOut,
+  content = '',
 }: ModalProps) => {
   if (!isOpen) return null;
   return (
@@ -43,6 +45,7 @@ export const Modal = ({
             {children}
           </div>
         )}
+        {content && <span>{content}</span>}
         {button && (
           <Button
             label={button.text}
